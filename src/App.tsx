@@ -1,4 +1,3 @@
-import KakaoMap from "./KakaoMap";
 import Map from "./GoogleMap";
 
 function App() {
