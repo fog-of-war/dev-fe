@@ -3,7 +3,6 @@
 .env
 package-lock.json
 package.json
-App.tsx
 
 # dependencies
 /node_modules
