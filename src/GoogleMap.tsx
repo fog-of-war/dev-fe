@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { GoogleMap, LoadScriptNext, Polygon } from "@react-google-maps/api";
+
 import seoulData from "./data/seoul2.json";
+import retroMapStyle from "./data/retroMapStyle.json";
 
 const containerStyle = {
   width: "650px",
@@ -142,6 +144,7 @@ const Map = () => {
               latLngBounds: bounds,
               strictBounds: false,
             },
+            styles: retroMapStyle, // retro맵 스타일 적용
           }}
           onLoad={(map) => {
             mapRef.current = map;
