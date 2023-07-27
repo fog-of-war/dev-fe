@@ -1,4 +1,5 @@
-import { css } from "@emotion/css";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "./constants/theme";
 
@@ -8,7 +9,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div
-        className={css`
+        css={css`
           width: 100%;
           height: 100vh;
           background-color: grey;

@@ -15,7 +15,8 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["kakao.maps.d.ts"]
+    "types": ["@emotion/react/types/css-prop"],
+    "jsxImportSource": "@emotion/react"
   },
   "include": ["src"]
 }
