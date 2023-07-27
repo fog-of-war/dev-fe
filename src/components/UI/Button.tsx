@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import styled from "@emotion/styled";
-
+import colors from "../../constants/colors";
 interface ButtonProps {
   children: React.ReactNode;
   onClick: () => void;
@@ -19,9 +19,9 @@ const Button = ({ children, onClick, isHoverColor }: ButtonProps) => {
 export default Button;
 
 const StyledButton = styled.button<ButtonProps>`
-  background-color: #53af7b;
+  background-color: ${colors.primary};
   border: none;
-  border-radius: 7px;
+  border-radius: 10px;
   color: #fff;
   width: 350px;
   height: 55px;
@@ -32,5 +32,6 @@ const StyledButton = styled.button<ButtonProps>`
   font-weight: bold;
   font-size: 22px;
   cursor: pointer;
-  ${(props) => props.isHoverColor && "&:hover { background-color: #11522D; }"}
+  ${(props) =>
+    props.isHoverColor && `&:hover { background-color: ${colors.secondary}; }`}
 `;
