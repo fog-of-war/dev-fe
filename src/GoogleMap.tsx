@@ -87,6 +87,8 @@ const Map = () => {
   // 지도의 인스턴스를 참조하기 위한 ref 생성
   const mapRef = useRef<google.maps.Map | null>(null);
 
+  const [mapCenter, setMapCenter] = useState(defaultCenter);
+
   function getCentroid(coords: any[]) {
     let center = coords.reduce(
       (x, y) => {
@@ -99,7 +101,7 @@ const Map = () => {
 
   useEffect(() => {
     if (view.center && mapRef.current) {
-      mapRef.current.setCenter(view.center);
+      setMapCenter(view.center);
       mapRef.current.setZoom(view.zoom);
     }
   }, [view]);
@@ -132,7 +134,7 @@ const Map = () => {
       <LoadScriptNext googleMapsApiKey="AIzaSyB3ixB-V1mYdr7uNucQaUs_z3lOlVc4XzA">
         <GoogleMap
           mapContainerStyle={containerStyle}
-          center={defaultCenter}
+          center={mapCenter}
           zoom={view.zoom}
           options={{
             minZoom: 11,
