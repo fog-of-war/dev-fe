@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { GoogleMap, LoadScriptNext, Polygon } from "@react-google-maps/api";
 import seoulData from "./data/seoul2.json";
 
@@ -7,7 +7,7 @@ const containerStyle = {
   height: "600px",
 };
 
-const center = {
+const defaultCenter = {
   lat: 37.566826,
   lng: 126.9786567,
 };
@@ -80,6 +80,30 @@ const Map = () => {
     }[]
   >([]);
 
+  const [hoveredPolygon, setHoveredPolygon] = useState<string | null>(null);
+
+  const [view, setView] = useState({ center: defaultCenter, zoom: 11 });
+
+  // 지도의 인스턴스를 참조하기 위한 ref 생성
+  const mapRef = useRef<google.maps.Map | null>(null);
+
+  function getCentroid(coords: any[]) {
+    let center = coords.reduce(
+      (x, y) => {
+        return [x[0] + y.lng / coords.length, x[1] + y.lat / coords.length];
+      },
+      [0, 0]
+    );
+    return { lat: center[1], lng: center[0] };
+  }
+
+  useEffect(() => {
+    if (view.center && mapRef.current) {
+      mapRef.current.setCenter(view.center);
+      mapRef.current.setZoom(view.zoom);
+    }
+  }, [view]);
+
   useEffect(() => {
     const data = seoulData.features.map((feature) => {
       const name = feature.properties.name;
@@ -108,14 +132,17 @@ const Map = () => {
       <LoadScriptNext googleMapsApiKey="AIzaSyB3ixB-V1mYdr7uNucQaUs_z3lOlVc4XzA">
         <GoogleMap
           mapContainerStyle={containerStyle}
-          center={center}
-          zoom={11}
+          center={defaultCenter}
+          zoom={view.zoom}
           options={{
             minZoom: 11,
             restriction: {
               latLngBounds: bounds,
               strictBounds: false,
             },
+          }}
+          onLoad={(map) => {
+            mapRef.current = map;
           }}
         >
           {/* 한반도를 덮는 검은색 폴리곤 */}
@@ -128,27 +155,19 @@ const Map = () => {
             }}
           />
           {/* 서울 지역을 표시하는 다른 색상의 폴리곤 */}
-          {/* <Polygon
-            paths={[seoulCoordinates]}
-            options={{
-              fillColor: "#d0d0d0", // 서울 지역의 폴리곤 색상
-              fillOpacity: 0.8, // 서울 지역의 폴리곤 투명도
-              strokeOpacity: 0,
-            }}
-          /> */}
           {polygons.map((polygon, index) => {
             const name_eng = polygon.name_eng;
             const point = options[name_eng].point;
             let opacity =
-              point < 1000
+              hoveredPolygon === name_eng
+                ? 0.7
+                : point < 1000
                 ? 0.9
                 : point < 2000
                 ? 0.7
                 : point < 3000
                 ? 0.5
                 : 0.3;
-
-            console.log(polygon.path);
             return (
               <Polygon
                 key={index}
@@ -160,7 +179,12 @@ const Map = () => {
                   strokeOpacity: 1,
                   strokeWeight: 4,
                 }}
-                onClick={() => alert("바보")}
+                onClick={() => {
+                  const center = getCentroid(polygon.path);
+                  setView({ center, zoom: 16 }); // 먼저 줌 레벨을 변경하고 그 다음에 중심을 변경
+                }}
+                onMouseOver={() => setHoveredPolygon(name_eng)}
+                onMouseOut={() => setHoveredPolygon(null)}
               />
             );
           })}
