@@ -14,7 +14,7 @@ const defaultCenter = {
   lng: 126.9786567,
 };
 
-// 한반도를 덮는 좌 표
+// 한반도를 덮는 좌표
 const OUTER_BOUNDS = [
   { lat: 38.634, lng: 125.776 },
   { lat: 33.004, lng: 125.776 },
