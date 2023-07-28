@@ -44,6 +44,9 @@ const Map = () => {
 
   const [mapCenter, setMapCenter] = useState(defaultCenter);
 
+  // 현재의 확대 레벨을 추적하는 상태
+  const [zoomLevel, setZoomLevel] = useState(11);
+
   function getCentroid(coords: any[]) {
     let center = coords.reduce(
       (x, y) => {
@@ -73,10 +76,14 @@ const Map = () => {
       return { name, name_eng, path, options: {} };
     });
 
-    setPolygons(data);
+    if (zoomLevel < 14) {
+      setPolygons(data);
+    } else {
+      setPolygons([]); // 확대 레벨이 14 이상이면 색상이 있는 폴리곤을 숨깁니다.
+    }
 
     return () => setPolygons([]);
-  }, []);
+  }, [zoomLevel]);
 
   return (
     <div
@@ -103,6 +110,10 @@ const Map = () => {
           }}
           onLoad={(map) => {
             mapRef.current = map;
+          }}
+          onZoomChanged={() => {
+            const newZoomLevel = mapRef.current?.getZoom() || 11;
+            setZoomLevel(newZoomLevel);
           }}
         >
           {/* 한반도를 덮는 검은색 폴리곤 */}
