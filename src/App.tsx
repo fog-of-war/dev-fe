@@ -3,8 +3,6 @@ import { css } from "@emotion/react";
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "./constants/theme";
 
-import CertificationModal from "./components/CertificationModal";
-
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -16,7 +14,6 @@ function App() {
         `}
       >
         Hellow World!
-        <CertificationModal />
       </div>
     </ThemeProvider>
   );
