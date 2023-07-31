@@ -57,9 +57,13 @@ const ProgressText = styled.span<{ isWhite: boolean }>`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-weight: bold;
+  font-weight: bold
   font-size: 12px;
-  color: ${({ isWhite }) => (isWhite ? "white" : colors.primary)};
+
+  /* color: ${colors.primary}; */
+  color: white;
+  text-shadow: -0.2px 0 #000, 0 0.2px #000, 0.2px 0 #000, 0 -0.2px #000;
+  /* -webkit-text-stroke: 0.2px #fff; */
 `;
 
 const FollowDiv = styled.div<{ progress: number }>`
