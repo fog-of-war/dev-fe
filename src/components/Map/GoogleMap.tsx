@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-
 import { useState, useEffect, useRef } from "react";
 import { GoogleMap, LoadScriptNext } from "@react-google-maps/api";
 
@@ -9,10 +8,16 @@ import { defaultCenter, bounds, options } from "../../data/mapData";
 
 import SeoulPolygon from "./SeoulPolygon";
 import BlackPolygon from "./BlackPolygon";
+import CustomMarker from "./CustomMarker";
 
 const containerStyle = {
   width: "375px",
   height: "667px",
+};
+
+const seongnyemunLocation = {
+  lat: 37.55999955137636,
+  lng: 126.97530447956169,
 };
 
 const Map = () => {
@@ -27,12 +32,9 @@ const Map = () => {
 
   const [view, setView] = useState({ center: defaultCenter, zoom: 11 });
 
-  // 지도의 인스턴스를 참조하기 위한 ref 생성
   const mapRef = useRef<google.maps.Map | null>(null);
 
   const [mapCenter, setMapCenter] = useState(defaultCenter);
-
-  // 현재의 확대 레벨을 추적하는 상태
   const [zoomLevel, setZoomLevel] = useState(11);
 
   function getCentroid(coords: any[]) {
@@ -67,7 +69,7 @@ const Map = () => {
     if (zoomLevel < 14) {
       setPolygons(data);
     } else {
-      setPolygons([]); // 확대 레벨이 14 이상이면 색상이 있는 폴리곤을 숨깁니다.
+      setPolygons([]);
     }
 
     return () => setPolygons([]);
@@ -104,8 +106,11 @@ const Map = () => {
             setZoomLevel(newZoomLevel);
           }}
         >
-          {/* BlackPolygon 컴포넌트와 SeoulPolygon 컴포넌트 */}
           <BlackPolygon />
+
+          {/* CustomMarker 컴포넌트를 사용합니다. */}
+          <CustomMarker position={seongnyemunLocation} />
+
           {polygons.map((polygon, index) => (
             <SeoulPolygon
               key={index}
