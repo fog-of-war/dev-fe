@@ -17,6 +17,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-kakao-maps-sdk": "^1.1.9",
+    "react-router-dom": "^6.14.2",
     "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4",
@@ -47,6 +48,7 @@
     ]
   },
   "devDependencies": {
-    "@types/xml2js": "^0.4.11"
+    "@types/xml2js": "^0.4.11",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
