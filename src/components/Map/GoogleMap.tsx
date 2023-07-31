@@ -32,12 +32,9 @@ const Map = () => {
 
   const [view, setView] = useState({ center: defaultCenter, zoom: 11 });
 
-  // 지도의 인스턴스를 참조하기 위한 ref 생성
   const mapRef = useRef<google.maps.Map | null>(null);
 
   const [mapCenter, setMapCenter] = useState(defaultCenter);
-
-  // 현재의 확대 레벨을 추적하는 상태
   const [zoomLevel, setZoomLevel] = useState(11);
 
   function getCentroid(coords: any[]) {
@@ -72,7 +69,7 @@ const Map = () => {
     if (zoomLevel < 14) {
       setPolygons(data);
     } else {
-      setPolygons([]); // 확대 레벨이 14 이상이면 색상이 있는 폴리곤을 숨깁니다.
+      setPolygons([]);
     }
 
     return () => setPolygons([]);
