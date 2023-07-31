@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+
 import { useState, useEffect, useRef } from "react";
 import { GoogleMap, LoadScriptNext } from "@react-google-maps/api";
 
@@ -73,7 +75,7 @@ const Map = () => {
 
   return (
     <div
-      style={{
+      css={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
