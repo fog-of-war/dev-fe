@@ -1,38 +1,49 @@
 /** @jsxImportSource @emotion/react */
 import { useState } from "react";
-import { InfoWindow, Marker } from "@react-google-maps/api";
+import { Marker, OverlayView } from "@react-google-maps/api";
 
 interface CustomMarkerProps {
   position: google.maps.LatLngLiteral;
 }
 
 const CustomMarker: React.FC<CustomMarkerProps> = ({ position }) => {
-  const [infoWindowOpen, setInfoWindowOpen] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
 
   return (
     <>
       <Marker
         position={position}
         onClick={() => {
-          setInfoWindowOpen(!infoWindowOpen);
+          setIsClicked(!isClicked);
         }}
       />
-      {infoWindowOpen && (
-        <InfoWindow
+      {isClicked && (
+        <OverlayView
           position={position}
-          onCloseClick={() => {
-            setInfoWindowOpen(false);
-          }}
+          mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET} // 마우스 이벤트를 허용하기 위해 오버레이를 마커 위로 배치합니다.
         >
           <div
             css={{
-              backgroundColor: "#F0C22E",
-              padding: "8px",
+              width: "250px",
+              height: "70px",
+              backgroundColor: "#FFFAEE",
+              padding: "12px",
               borderRadius: "40px",
-              boxShadow: "0 2px 6px rgba(0, 0, 0, 0.3)",
+              boxShadow: "2px 3px 7px rgba(0, 0, 0, 0.25)",
               fontSize: "14px",
               display: "flex",
               alignItems: "center",
+              "::after": {
+                content: '""',
+                position: "absolute",
+                bottom: "-10px",
+                left: "50%",
+                width: "0",
+                height: "0",
+                borderLeft: "7px solid transparent",
+                borderRight: "7px solid transparent",
+                borderTop: "10px solid #FFFAEE",
+              },
             }}
           >
             <div
@@ -51,12 +62,26 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({ position }) => {
               />
             </div>
             <div>
-              숭례문
+              <span
+                css={{
+                  fontSize: "18px",
+                  fontWeight: "bold",
+                  color: "#E5A602",
+                }}
+              >
+                숭례문
+              </span>
               <br />
-              서울특별시 중구 세종대로 40
+              <span
+                css={{
+                  color: "#CEB268",
+                }}
+              >
+                서울특별시 중구 세종대로 40
+              </span>
             </div>
           </div>
-        </InfoWindow>
+        </OverlayView>
       )}
     </>
   );
