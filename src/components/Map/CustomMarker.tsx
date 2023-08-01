@@ -9,6 +9,8 @@ interface CustomMarkerProps {
 const CustomMarker: React.FC<CustomMarkerProps> = ({ position }) => {
   const [isClicked, setIsClicked] = useState(false);
 
+  const overlayPixelOffset = { x: -125, y: -120 }; // 오버레이를 마커 오프셋 설정
+
   return (
     <>
       <Marker
@@ -20,7 +22,8 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({ position }) => {
       {isClicked && (
         <OverlayView
           position={position}
-          mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET} // 마우스 이벤트를 허용하기 위해 오버레이를 마커 위로 배치합니다.
+          mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+          getPixelPositionOffset={() => overlayPixelOffset}
         >
           <div
             css={{
@@ -33,6 +36,7 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({ position }) => {
               fontSize: "14px",
               display: "flex",
               alignItems: "center",
+              position: "relative",
               "::after": {
                 content: '""',
                 position: "absolute",
@@ -43,13 +47,14 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({ position }) => {
                 borderLeft: "7px solid transparent",
                 borderRight: "7px solid transparent",
                 borderTop: "10px solid #FFFAEE",
+                transform: "translateX(-50%)",
               },
             }}
           >
             <div
               css={{
-                width: "40px",
-                height: "40px",
+                width: "50px",
+                height: "50px",
                 borderRadius: "100%",
                 overflow: "hidden",
                 marginRight: "8px",
