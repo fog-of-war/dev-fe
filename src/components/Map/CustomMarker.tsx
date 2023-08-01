@@ -28,7 +28,7 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({ position }) => {
             css={{
               backgroundColor: "#F0C22E",
               padding: "8px",
-              borderRadius: "8px",
+              borderRadius: "40px",
               boxShadow: "0 2px 6px rgba(0, 0, 0, 0.3)",
               fontSize: "14px",
               display: "flex",
@@ -51,7 +51,7 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({ position }) => {
               />
             </div>
             <div>
-              숭례문 (Sungnyemun)
+              숭례문
               <br />
               서울특별시 중구 세종대로 40
             </div>
