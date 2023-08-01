@@ -1,4 +1,3 @@
-import React from "react";
 import colors from "../../constants/colors";
 import styled from "@emotion/styled";
 
