@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import { useState, useEffect, useRef } from "react";
 import { GoogleMap, LoadScriptNext } from "@react-google-maps/api";
 
@@ -7,10 +8,16 @@ import { defaultCenter, bounds, options } from "../../data/mapData";
 
 import SeoulPolygon from "./SeoulPolygon";
 import BlackPolygon from "./BlackPolygon";
+import CustomMarker from "./CustomMarker";
 
 const containerStyle = {
   width: "375px",
   height: "667px",
+};
+
+const seongnyemunLocation = {
+  lat: 37.55999955137636,
+  lng: 126.97530447956169,
 };
 
 const Map = () => {
@@ -73,7 +80,7 @@ const Map = () => {
 
   return (
     <div
-      style={{
+      css={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -102,8 +109,10 @@ const Map = () => {
             setZoomLevel(newZoomLevel);
           }}
         >
-          {/* BlackPolygon 컴포넌트와 SeoulPolygon 컴포넌트 */}
           <BlackPolygon />
+
+          <CustomMarker position={seongnyemunLocation} />
+
           {polygons.map((polygon, index) => (
             <SeoulPolygon
               key={index}
