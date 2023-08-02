@@ -21,7 +21,7 @@ const ProfileStat = ({
     <div
       css={{
         color: colors.primary,
-        fontWeight: 400,
+        fontWeight: "bold",
         fontSize: "15px",
         display: "flex",
         alignItems: "center",
@@ -38,6 +38,7 @@ const ProfileStat = ({
       <p
         css={{
           padding: "0px 5px",
+          color: colors.secondary,
         }}
       >
         {type}
