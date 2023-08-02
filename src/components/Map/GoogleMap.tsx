@@ -9,10 +9,11 @@ import { defaultCenter, bounds, options } from "../../data/mapData";
 import SeoulPolygon from "./SeoulPolygon";
 import BlackPolygon from "./BlackPolygon";
 import CustomMarker from "./CustomMarker";
+import CurrentLocationButton from "./CurrentLocationButton";
 
 const containerStyle = {
-  width: "400px",
-  height: "700px",
+  width: "100%",
+  height: "100%",
 };
 
 const seongnyemunLocation = {
@@ -81,9 +82,9 @@ const Map = () => {
   return (
     <div
       css={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        position: "relative",
+        width: "100%",
+        height: "100%",
       }}
     >
       <LoadScriptNext
@@ -100,6 +101,9 @@ const Map = () => {
               strictBounds: false,
             },
             styles: retroMapStyle,
+            mapTypeControl: false, // 지도/위성 전환 버튼 비활성화
+            fullscreenControl: false, // 구글 지도 전체 화면 보기 아이콘 비활성화
+            streetViewControl: false, // 로드뷰 버튼 비활성화
           }}
           onLoad={(map) => {
             mapRef.current = map;
@@ -125,6 +129,11 @@ const Map = () => {
               }}
             />
           ))}
+          <CurrentLocationButton
+            map={mapRef.current}
+            setMapCenter={setMapCenter}
+            setView={setView}
+          />
         </GoogleMap>
       </LoadScriptNext>
     </div>
