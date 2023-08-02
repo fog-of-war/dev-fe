@@ -11,8 +11,8 @@ const BottomNavigation = () => {
       css={{
         position: "fixed",
         bottom: 0,
-        left: 0,
         width: "100%",
+        maxWidth: "400px",
         height: 80,
         backgroundColor: "white",
         display: "flex",
@@ -20,6 +20,7 @@ const BottomNavigation = () => {
         justifyContent: "space-around",
         padding: "0 10px",
         zIndex: "50",
+        borderTop: "1px solid #d9d9d9",
       }}
     >
       <BottomNavIcon
