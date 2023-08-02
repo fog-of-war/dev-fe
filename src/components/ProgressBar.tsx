@@ -9,8 +9,9 @@ interface ProgressBarProps {
 const ProgressBar = ({ progress }: ProgressBarProps) => {
   return (
     <ProgressBarContainer>
-      <StyledProgressBar progress={progress} />
-      <ProgressText isWhite={progress > 0}>다음 탐험 레벨까지</ProgressText>
+      <StyledProgressBar progress={progress}>
+        <ProgressText isWhite={progress > 0}>다음 탐험 레벨까지</ProgressText>
+      </StyledProgressBar>
       <FollowDiv progress={progress}>4,300</FollowDiv>
     </ProgressBarContainer>
   );
@@ -22,6 +23,7 @@ const ProgressBarContainer = styled.div`
   position: relative;
   width: 350px;
   height: 22px;
+  margin-top: 20px;
 `;
 
 const StyledProgressBar = styled.div<ProgressBarProps>`
@@ -54,16 +56,13 @@ const StyledProgressBar = styled.div<ProgressBarProps>`
 
 const ProgressText = styled.span<{ isWhite: boolean }>`
   position: absolute;
-  top: 50%;
+  top: 47%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-weight: bold
+  font-weight: bold;
   font-size: 12px;
-
-  /* color: ${colors.primary}; */
   color: white;
   text-shadow: -0.2px 0 #000, 0 0.2px #000, 0.2px 0 #000, 0 -0.2px #000;
-  /* -webkit-text-stroke: 0.2px #fff; */
 `;
 
 const FollowDiv = styled.div<{ progress: number }>`
