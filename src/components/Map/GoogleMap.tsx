@@ -9,6 +9,7 @@ import { defaultCenter, bounds, options } from "../../data/mapData";
 import SeoulPolygon from "./SeoulPolygon";
 import BlackPolygon from "./BlackPolygon";
 import CustomMarker from "./CustomMarker";
+import CurrentLocationButton from "./CurrentLocationButton";
 
 const containerStyle = {
   width: "100%",
@@ -50,6 +51,24 @@ const Map = () => {
     return { lat: center[1], lng: center[0] };
   }
 
+  // 사용자의 현재 위치로 이동하는 함수
+  const handleCurrentLocationClick = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setMapCenter({ lat: latitude, lng: longitude });
+          setView({ center: { lat: latitude, lng: longitude }, zoom: 16 });
+        },
+        (error) => {
+          console.error("현재 위치를 가져오는데 에러가 발생했습니다:", error);
+        }
+      );
+    } else {
+      console.error("이 브라우저에서는 위치 정보를 지원하지 않습니다.");
+    }
+  };
+
   useEffect(() => {
     if (view.center && mapRef.current) {
       setMapCenter(view.center);
@@ -81,6 +100,7 @@ const Map = () => {
   return (
     <div
       css={{
+        position: "relative",
         width: "100%",
         height: "100%",
       }}
@@ -99,6 +119,9 @@ const Map = () => {
               strictBounds: false,
             },
             styles: retroMapStyle,
+            mapTypeControl: false, // 지도/위성 전환 버튼 비활성화
+            fullscreenControl: false, // 구글 지도 전체 화면 보기 아이콘 비활성화
+            streetViewControl: false, // 로드뷰 버튼 비활성화
           }}
           onLoad={(map) => {
             mapRef.current = map;
@@ -124,6 +147,7 @@ const Map = () => {
               }}
             />
           ))}
+          <CurrentLocationButton onClick={handleCurrentLocationClick} />
         </GoogleMap>
       </LoadScriptNext>
     </div>
