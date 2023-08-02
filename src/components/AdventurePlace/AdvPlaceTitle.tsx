@@ -18,14 +18,15 @@ const AdvPlaceTitle = () => {
           width={16}
           height={23}
         />
-        <h1
+        <p
           css={{
-            fontSzie: "20px",
+            fontSize: "20px",
+            fontWeight: "bold",
             color: colors.secondary,
           }}
         >
           탐험한 장소
-        </h1>
+        </p>
       </div>
     </div>
   );
