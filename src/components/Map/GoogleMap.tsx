@@ -11,8 +11,8 @@ import BlackPolygon from "./BlackPolygon";
 import CustomMarker from "./CustomMarker";
 
 const containerStyle = {
-  width: "375px",
-  height: "667px",
+  width: "400px",
+  height: "700px",
 };
 
 const seongnyemunLocation = {
@@ -30,7 +30,7 @@ const Map = () => {
     }[]
   >([]);
 
-  const [view, setView] = useState({ center: defaultCenter, zoom: 11 });
+  const [view, setView] = useState({ center: defaultCenter, zoom: 10 });
 
   // 지도의 인스턴스를 참조하기 위한 ref 생성
   const mapRef = useRef<google.maps.Map | null>(null);
@@ -94,7 +94,7 @@ const Map = () => {
           center={mapCenter}
           zoom={view.zoom}
           options={{
-            minZoom: 11,
+            minZoom: 10,
             restriction: {
               latLngBounds: bounds,
               strictBounds: false,
