@@ -11,8 +11,8 @@ import BlackPolygon from "./BlackPolygon";
 import CustomMarker from "./CustomMarker";
 
 const containerStyle = {
-  width: "400px",
-  height: "700px",
+  width: "100%",
+  height: "100%",
 };
 
 const seongnyemunLocation = {
@@ -81,9 +81,8 @@ const Map = () => {
   return (
     <div
       css={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        width: "100%",
+        height: "100%",
       }}
     >
       <LoadScriptNext
