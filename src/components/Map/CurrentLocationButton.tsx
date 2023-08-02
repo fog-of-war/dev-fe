@@ -1,29 +1,60 @@
-import React from "react";
+import { useEffect, useRef } from "react";
 
 interface CurrentLocationButtonProps {
-  onClick: () => void;
+  map: google.maps.Map | null;
+  setMapCenter: React.Dispatch<
+    React.SetStateAction<{ lat: number; lng: number }>
+  >;
+  setView: React.Dispatch<
+    React.SetStateAction<{ center: { lat: number; lng: number }; zoom: number }>
+  >;
 }
 
 const CurrentLocationButton: React.FC<CurrentLocationButtonProps> = ({
-  onClick,
+  map,
+  setMapCenter,
+  setView,
 }) => {
-  console.log("tlqkf");
+  const controlButtonRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (map && controlButtonRef.current) {
+      // 지도의 오른쪽 아래에 컨트롤을 추가합니다.
+      map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(
+        controlButtonRef.current
+      );
+    }
+  }, [map]);
+
+  // 사용자의 현재 위치로 이동하는 함수
+  const handleCurrentLocationClick = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setMapCenter({ lat: latitude, lng: longitude });
+          setView({ center: { lat: latitude, lng: longitude }, zoom: 16 });
+        },
+        (error) => {
+          console.error("현재 위치를 가져오는데 에러가 발생했습니다:", error);
+        }
+      );
+    } else {
+      console.error("이 브라우저에서는 위치 정보를 지원하지 않습니다.");
+    }
+  };
 
   return (
-    <div>
+    <div ref={controlButtonRef}>
       <img
-        src="./currentLocation.png"
+        src="/images/map/currentLocation.png"
         width="57px"
         height="57px"
-        css={{
-          position: "absolute",
-          bottom: "110px",
-          right: "0px",
-          zIndex: 1,
+        style={{
           cursor: "pointer",
         }}
         alt="현재 위치로 이동"
-        onClick={onClick}
+        onClick={handleCurrentLocationClick}
       />
     </div>
   );

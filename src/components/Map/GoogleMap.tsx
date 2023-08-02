@@ -51,24 +51,6 @@ const Map = () => {
     return { lat: center[1], lng: center[0] };
   }
 
-  // 사용자의 현재 위치로 이동하는 함수
-  const handleCurrentLocationClick = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setMapCenter({ lat: latitude, lng: longitude });
-          setView({ center: { lat: latitude, lng: longitude }, zoom: 16 });
-        },
-        (error) => {
-          console.error("현재 위치를 가져오는데 에러가 발생했습니다:", error);
-        }
-      );
-    } else {
-      console.error("이 브라우저에서는 위치 정보를 지원하지 않습니다.");
-    }
-  };
-
   useEffect(() => {
     if (view.center && mapRef.current) {
       setMapCenter(view.center);
@@ -147,7 +129,11 @@ const Map = () => {
               }}
             />
           ))}
-          <CurrentLocationButton onClick={handleCurrentLocationClick} />
+          <CurrentLocationButton
+            map={mapRef.current}
+            setMapCenter={setMapCenter}
+            setView={setView}
+          />
         </GoogleMap>
       </LoadScriptNext>
     </div>
