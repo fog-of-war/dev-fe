@@ -22,6 +22,7 @@ const ReviewListHeader = ({
         justifyContent: "space-between",
         alignItems: "center",
         width: "100%",
+        maxWidth: "420px",
         height: "50px",
         position: "fixed",
         top: "0",
