@@ -21,7 +21,10 @@ const ReviewListHeader = ({
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        width: "375px",
+        width: "100%",
+        height: "50px",
+        position: "fixed",
+        top: "0",
       }}
     >
       <div
