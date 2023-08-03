@@ -12,7 +12,7 @@ const BottomNavigation = () => {
         position: "fixed",
         bottom: 0,
         width: "100%",
-        maxWidth: "400px",
+        maxWidth: "420px",
         height: 80,
         backgroundColor: "white",
         display: "flex",
