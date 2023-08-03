@@ -25,7 +25,7 @@ const Layout = ({ children }: LayoutProps) => {
           justifyContent: "center",
           alignItems: "center",
           width: "100%",
-          maxWidth: "400px",
+          maxWidth: "420px",
           background: "white",
         }}
       >
