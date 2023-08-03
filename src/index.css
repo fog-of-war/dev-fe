@@ -1,3 +1,10 @@
+@font-face {
+  font-family: "Cooper Std Black";
+  font-style: normal;
+  font-weight: normal;
+  src: url("./assets/fonts/CooperBlack-Std.woff") format("woff");
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
