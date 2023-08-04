@@ -89,7 +89,7 @@ const MainCard = () => {
         </div>
         랭킹 5400위
       </div>
-      <div>
+      <div css={{ display: "flex", justifyContent: "center" }}>
         <img
           src="/images/main/map.png"
           alt="맵"
@@ -116,7 +116,7 @@ const MainCard = () => {
       <div
         css={{
           display: "flex",
-          justifyContent: "center",
+          justifyContent: "space-between",
           gap: 10,
           marginTop: 10,
         }}
