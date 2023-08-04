@@ -89,6 +89,64 @@ const MainCard = () => {
         </div>
         랭킹 5400위
       </div>
+      <div>
+        <img
+          src="/images/main/map.png"
+          alt="맵"
+          css={{ width: 344, height: 288 }}
+        />
+      </div>
+      <div
+        css={{
+          display: "flex",
+          alignItems: "center",
+          color: "#53AF7B",
+          fontWeight: "bold",
+          fontSize: 20,
+          marginBottom: 10,
+        }}
+      >
+        <img
+          src="/images/main/badgeIcon.png"
+          alt="뱃지 아이콘"
+          css={{ width: 18, height: 22, marginRight: 5 }}
+        />
+        뱃지
+      </div>
+      <div
+        css={{
+          display: "flex",
+          justifyContent: "center",
+          gap: 10,
+          marginTop: 10,
+        }}
+      >
+        <img
+          src="/images/main/dummyBadge.png"
+          alt="더미뱃지"
+          css={{ width: 56, height: 56, gap: 10 }}
+        />
+        <img
+          src="/images/main/dummyBadge.png"
+          alt="더미뱃지"
+          css={{ width: 56, height: 56, gap: 10 }}
+        />
+        <img
+          src="/images/main/dummyBadge.png"
+          alt="더미뱃지"
+          css={{ width: 56, height: 56, gap: 10 }}
+        />
+        <img
+          src="/images/main/dummyBadge.png"
+          alt="더미뱃지"
+          css={{ width: 56, height: 56, gap: 10 }}
+        />
+        <img
+          src="/images/main/dummyBadge.png"
+          alt="더미뱃지"
+          css={{ width: 56, height: 56, gap: 10 }}
+        />
+      </div>
     </div>
   );
 };
