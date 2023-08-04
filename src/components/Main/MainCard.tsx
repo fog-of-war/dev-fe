@@ -19,7 +19,7 @@ const MainCard = () => {
         flexDirection: "column",
         margin: "auto",
         borderRadius: 25,
-        width: "95%",
+        width: "100%",
         backgroundColor: "#E4F6ED",
         padding: 20,
       }}
