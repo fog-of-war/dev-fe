@@ -56,7 +56,7 @@ const MainCard = () => {
           여러분과함께라면행복해
         </div>
       </div>
-      <div css={{ ...smallTextStyle, marginTop: 15 }}>
+      <div css={{ ...smallTextStyle, whiteSpace: "nowrap", marginTop: 15 }}>
         <div css={{ marginRight: 5, marginTop: 5 }}>
           <img
             src="/images/main/flagIcon.png"
@@ -65,11 +65,11 @@ const MainCard = () => {
           />
         </div>
         총탐험포인트
-        <div css={{ marginLeft: 5, marginBottom: 18 }}>
-          <ProgressBar progress={60} containerWidth={230} />
+        <div css={{ width: "100%", marginLeft: 5, marginBottom: 18 }}>
+          <ProgressBar progress={60} />
         </div>
       </div>
-      <div css={{ ...smallTextStyle, marginTop: -13 }}>
+      <div css={{ ...smallTextStyle, marginTop: -12 }}>
         <div css={{ marginRight: 5, marginTop: 5 }}>
           <img
             src="/images/main/rankingIcon.png"
