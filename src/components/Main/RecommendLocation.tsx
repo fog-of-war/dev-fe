@@ -46,7 +46,6 @@ const RecommendLocation = () => {
       <div
         style={{
           display: "grid",
-          alignItems: "center",
           gridTemplateColumns: "repeat(3, 1fr)",
           gap: 8,
           marginTop: 10,
