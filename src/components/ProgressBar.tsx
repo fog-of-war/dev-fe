@@ -21,8 +21,8 @@ export default ProgressBar;
 
 const ProgressBarContainer = styled.div`
   position: relative;
-  width: 350px;
-  height: 22px;
+  width: 100%; /* Change the width to 100% */
+  height: 22px; /* You can adjust the height here if needed */
   margin-top: 20px;
 `;
 
@@ -81,5 +81,5 @@ const FollowDiv = styled.div<{ progress: number }>`
     to {
       opacity: 1;
     }
-  } */
+  }
 `;

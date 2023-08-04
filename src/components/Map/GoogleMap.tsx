@@ -9,7 +9,6 @@ import { defaultCenter, bounds, options } from "../../data/mapData";
 import SeoulPolygon from "./SeoulPolygon";
 import BlackPolygon from "./BlackPolygon";
 import CustomMarker from "./CustomMarker";
-import CurrentLocationButton from "./CurrentLocationButton";
 
 const containerStyle = {
   width: "100%",
@@ -50,6 +49,24 @@ const Map = () => {
     );
     return { lat: center[1], lng: center[0] };
   }
+
+  // 사용자의 현재 위치로 이동하는 함수
+  const handleCurrentLocationClick = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setMapCenter({ lat: latitude, lng: longitude });
+          setView({ center: { lat: latitude, lng: longitude }, zoom: 16 });
+        },
+        (error) => {
+          console.error("현재 위치를 가져오는데 에러가 발생했습니다:", error);
+        }
+      );
+    } else {
+      console.error("이 브라우저에서는 위치 정보를 지원하지 않습니다.");
+    }
+  };
 
   useEffect(() => {
     if (view.center && mapRef.current) {
@@ -114,9 +131,7 @@ const Map = () => {
           }}
         >
           <BlackPolygon />
-
           <CustomMarker position={seongnyemunLocation} />
-
           {polygons.map((polygon, index) => (
             <SeoulPolygon
               key={index}
@@ -129,11 +144,24 @@ const Map = () => {
               }}
             />
           ))}
-          <CurrentLocationButton
-            map={mapRef.current}
-            setMapCenter={setMapCenter}
-            setView={setView}
-          />
+          {/* 현재위치로 가는 아이콘 */}
+          <div
+            css={{
+              position: "absolute",
+              bottom: "115px",
+              right: "0px",
+              cursor: "pointer",
+              zIndex: 1,
+            }}
+            onClick={handleCurrentLocationClick}
+          >
+            <img
+              src="/images/map/currentLocation.png"
+              width="57px"
+              height="57px"
+              alt="현재 위치로 이동"
+            />
+          </div>
         </GoogleMap>
       </LoadScriptNext>
     </div>
