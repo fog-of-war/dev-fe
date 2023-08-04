@@ -4,11 +4,17 @@ import colors from "../constants/colors";
 
 interface ProgressBarProps {
   progress: number;
+  containerWidth?: number; // 추가: ProgressBarContainer의 width를 조절하기 위한 prop
+  containerHeight?: number; // 추가: ProgressBarContainer의 height를 조절하기 위한 prop
 }
 
-const ProgressBar = ({ progress }: ProgressBarProps) => {
+const ProgressBar = ({
+  progress,
+  containerWidth,
+  containerHeight,
+}: ProgressBarProps) => {
   return (
-    <ProgressBarContainer>
+    <ProgressBarContainer width={containerWidth} height={containerHeight}>
       <StyledProgressBar progress={progress}>
         <ProgressText isWhite={progress > 0}>다음 탐험 레벨까지</ProgressText>
       </StyledProgressBar>
@@ -19,10 +25,10 @@ const ProgressBar = ({ progress }: ProgressBarProps) => {
 
 export default ProgressBar;
 
-const ProgressBarContainer = styled.div`
+const ProgressBarContainer = styled.div<{ width?: number; height?: number }>`
   position: relative;
-  width: 350px;
-  height: 22px;
+  width: ${({ width }) => (width ? `${width}px` : "350px")};
+  height: ${({ height }) => (height ? `${height}px` : "22px")};
   margin-top: 20px;
 `;
 
