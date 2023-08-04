@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
 import { BrowserRouter as Router } from "react-router-dom";
-import { css } from "@emotion/react";
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "./constants/theme";
 

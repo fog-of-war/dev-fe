@@ -1,11 +1,13 @@
 /** @jsxImportSource @emotion/react */
 
-import IconButton from "../components/UI/IconButton";
+import IconButton from "../../components/UI/IconButton";
 
 const AuthPage = () => {
   return (
     <div
       css={{
+        position: "absolute",
+        inset: 0,
         display: "flex",
         justifyContent: "center",
         backgroundImage: `url("/images/mainImage.png")`,
@@ -43,12 +45,12 @@ const AuthPage = () => {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            gap: 10,
+            gap: 20,
           }}
         >
           <p
             css={{
-              fontSize: "17px",
+              fontSize: "18px",
               fontWeight: "500",
             }}
           >

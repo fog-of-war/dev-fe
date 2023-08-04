@@ -23,7 +23,7 @@ const StyledButton = styled.button<ButtonProps>`
   border: none;
   border-radius: 10px;
   color: #fff;
-  width: 350px;
+  width: 100%;
   height: 55px;
   text-align: center;
   display: flex;
