@@ -26,6 +26,7 @@ const ReviewListHeader = ({
         height: "50px",
         position: "fixed",
         top: "0",
+        backgroundColor: "#FFFFFF",
       }}
     >
       <div
