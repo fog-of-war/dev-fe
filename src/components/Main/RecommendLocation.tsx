@@ -63,6 +63,7 @@ const RecommendLocation = () => {
               alignItems: "center",
               borderRadius: "25px",
               fontSize: "16px",
+              textShadow: "1px 1px 2px rgba(0, 0, 0, 1)",
               fontWeight: 600,
               color: "#FFFFFF",
               aspectRatio: 1,
