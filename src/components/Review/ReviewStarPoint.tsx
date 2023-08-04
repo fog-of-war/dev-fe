@@ -1,11 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-interface ReviewStarPointProps {
-  starPoint: number;
-  icon: string;
-}
-
-const ReviewStarPoint = ({ starPoint, icon }: ReviewStarPointProps) => {
+const ReviewStarPoint = ({ rating }: { rating: number }) => {
   return (
     <div
       css={{
@@ -28,7 +23,7 @@ const ReviewStarPoint = ({ starPoint, icon }: ReviewStarPointProps) => {
             width: "100%",
             height: "100%",
           }}
-          src={icon}
+          src="./images/starPointIcon.png"
           alt="starIcon"
         />
       </div>
@@ -40,7 +35,7 @@ const ReviewStarPoint = ({ starPoint, icon }: ReviewStarPointProps) => {
             textAlign: "center",
           }}
         >
-          {starPoint}
+          {rating}
         </p>
       </div>
     </div>
