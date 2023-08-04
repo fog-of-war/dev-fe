@@ -2,6 +2,29 @@
 
 import ProgressBar from "../ProgressBar";
 
+const DUMMY_BADGES = [
+  {
+    imageUrl: "/images/main/dummyBadge.png",
+    badgeName: "더미뱃지",
+  },
+  {
+    imageUrl: "/images/main/dummyBadge.png",
+    badgeName: "더미뱃지",
+  },
+  {
+    imageUrl: "/images/main/dummyBadge.png",
+    badgeName: "더미뱃지",
+  },
+  {
+    imageUrl: "/images/main/dummyBadge.png",
+    badgeName: "더미뱃지",
+  },
+  {
+    imageUrl: "/images/main/dummyBadge.png",
+    badgeName: "더미뱃지",
+  },
+];
+
 const MainCard = () => {
   // 작은 글자 스타일
   const smallTextStyle = {
@@ -56,7 +79,7 @@ const MainCard = () => {
           여러분과함께라면행복해
         </div>
       </div>
-      <div css={{ ...smallTextStyle, whiteSpace: "nowrap", marginTop: 15 }}>
+      <div css={{ ...smallTextStyle, whiteSpace: "nowrap", marginTop: 10 }}>
         <div css={{ marginRight: 5, marginTop: 5 }}>
           <img
             src="/images/main/flagIcon.png"
@@ -115,37 +138,20 @@ const MainCard = () => {
       </div>
       <div
         css={{
-          display: "flex",
-          justifyContent: "space-between",
+          display: "grid",
+          gridTemplateColumns: "repeat(5, 1fr)",
           gap: 10,
           marginTop: 10,
         }}
       >
-        <img
-          src="/images/main/dummyBadge.png"
-          alt="더미뱃지"
-          css={{ width: 56, height: 56, gap: 10 }}
-        />
-        <img
-          src="/images/main/dummyBadge.png"
-          alt="더미뱃지"
-          css={{ width: 56, height: 56, gap: 10 }}
-        />
-        <img
-          src="/images/main/dummyBadge.png"
-          alt="더미뱃지"
-          css={{ width: 56, height: 56, gap: 10 }}
-        />
-        <img
-          src="/images/main/dummyBadge.png"
-          alt="더미뱃지"
-          css={{ width: 56, height: 56, gap: 10 }}
-        />
-        <img
-          src="/images/main/dummyBadge.png"
-          alt="더미뱃지"
-          css={{ width: 56, height: 56, gap: 10 }}
-        />
+        {DUMMY_BADGES.map((badge, index) => (
+          <img
+            key={index}
+            src={badge.imageUrl}
+            alt={badge.badgeName}
+            css={{ width: 56, aspectRatio: 1 }}
+          />
+        ))}
       </div>
     </div>
   );
