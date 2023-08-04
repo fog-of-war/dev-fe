@@ -1,5 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
+import ProgressBar from "../ProgressBar";
+
 const MainCard = () => {
   // 작은 글자 스타일
   const smallTextStyle = {
@@ -63,8 +65,11 @@ const MainCard = () => {
           />
         </div>
         총탐험포인트
+        <div css={{ marginLeft: 5, marginBottom: 18 }}>
+          <ProgressBar progress={60} containerWidth={230} />
+        </div>
       </div>
-      <div css={{ ...smallTextStyle }}>
+      <div css={{ ...smallTextStyle, marginTop: -13 }}>
         <div css={{ marginRight: 5, marginTop: 5 }}>
           <img
             src="/images/main/rankingIcon.png"
