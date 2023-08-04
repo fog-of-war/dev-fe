@@ -56,7 +56,7 @@ const MainCard = () => {
           여러분과함께라면행복해
         </div>
       </div>
-      <div css={{ ...smallTextStyle, whiteSpace: "nowrap", marginTop: 15 }}>
+      <div css={{ ...smallTextStyle, whiteSpace: "nowrap", marginTop: 10 }}>
         <div css={{ marginRight: 5, marginTop: 5 }}>
           <img
             src="/images/main/flagIcon.png"
