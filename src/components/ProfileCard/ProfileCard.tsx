@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 
 const DUMMY_DATA = {
-  username: "죽어가는카드지갑",
+  username: "여러분과함께라면행복",
   profileText: "마포구 워렌버핏",
   profileImage: "./images/dummyUserImage.png",
   level: 3,
@@ -36,7 +36,7 @@ const ProfileCard = () => {
             />
           </ProfileEditButton>
         </ProfileBadgeContainer>
-        <ProfileNicknameBox>{DUMMY_DATA.username}님</ProfileNicknameBox>
+        <ProfileNicknameBox>{DUMMY_DATA.username}</ProfileNicknameBox>
       </ProfileInfoContainer>
     </ProfileCardWrapper>
   );
@@ -103,7 +103,7 @@ const ProfileInfoContainer = styled.div`
 
 const ProfileBadgeContainer = styled.div`
   display: flex;
-  gap: 2px;
+  gap: 6px;
 `;
 
 const ProfileBadgeBox = styled.div`
