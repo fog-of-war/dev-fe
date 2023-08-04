@@ -14,7 +14,7 @@ export interface ProfileData {
 const ProfileSetupPage = () => {
   const [profileData, setProfileData] = useState<ProfileData>({
     nickName: "",
-    profileImage: "",
+    profileImage: "/images/auth/defaultProfile.png",
   });
 
   const [Funnel, Step, setStep] = useFunnel("닉네임");
@@ -44,6 +44,7 @@ const ProfileSetupPage = () => {
             onNext={handleSubmit}
             onPrev={() => setStep("닉네임")}
             setProfileData={setProfileData}
+            profileData={profileData}
           />
         </Step>
       </Funnel>
