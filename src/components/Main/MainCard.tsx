@@ -19,7 +19,7 @@ const MainCard = () => {
         flexDirection: "column",
         margin: "auto",
         borderRadius: 25,
-        width: "95%",
+        width: "100%",
         backgroundColor: "#E4F6ED",
         padding: 20,
       }}
@@ -89,7 +89,7 @@ const MainCard = () => {
         </div>
         랭킹 5400위
       </div>
-      <div>
+      <div css={{ display: "flex", justifyContent: "center" }}>
         <img
           src="/images/main/map.png"
           alt="맵"
@@ -116,7 +116,7 @@ const MainCard = () => {
       <div
         css={{
           display: "flex",
-          justifyContent: "center",
+          justifyContent: "space-between",
           gap: 10,
           marginTop: 10,
         }}
