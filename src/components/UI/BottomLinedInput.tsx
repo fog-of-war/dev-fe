@@ -16,12 +16,14 @@ const BottomLinedInput = forwardRef(
     ref: ForwardedRef<HTMLInputElement>
   ) => {
     return (
-      <div css={{
-        display: "flex",
-        flexDirection: "column",
-        width: "100%",
-        gap: "10px",
-      }}>
+      <div
+        css={{
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+          gap: "10px",
+        }}
+      >
         <label
           htmlFor="search"
           css={{
@@ -77,7 +79,7 @@ const BottomLinedInput = forwardRef(
             </div>
           )}
         </div>
-      </>
+      </div>
     );
   }
 );
