@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
+import { Toaster } from "react-hot-toast";
 import BottomNavigation from "./BottomNavigation";
 
 interface LayoutProps {
@@ -30,6 +31,7 @@ const Layout = ({ children }: LayoutProps) => {
           paddingBottom: "80px",
         }}
       >
+        <Toaster />
         {children}
         <BottomNavigation />
       </div>

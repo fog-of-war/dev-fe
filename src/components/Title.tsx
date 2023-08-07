@@ -1,11 +1,14 @@
 /** @jsxImportSource @emotion/react */
 
-interface TitleProps {
+import colors from "../constants/colors";
+
+interface TitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
   text: string;
-  icon: string;
+  size?: "small" | "medium" | "large";
+  icon?: string;
 }
 
-const Title = ({ text, icon }: TitleProps) => {
+const Title = ({ text, size = "medium", icon, ...props }: TitleProps) => {
   return (
     <div
       css={{
@@ -14,12 +17,14 @@ const Title = ({ text, icon }: TitleProps) => {
         gap: 8,
       }}
     >
-      <img src={icon} alt={icon} height={22} />
+      {icon && <img src={icon} alt={icon} height={22} />}
       <h2
         css={{
-          fontSize: "18px",
+          color: colors.primary,
           fontWeight: "bold",
+          ...TYPE_SIZES[size],
         }}
+        {...props}
       >
         {text}
       </h2>
@@ -28,3 +33,15 @@ const Title = ({ text, icon }: TitleProps) => {
 };
 
 export default Title;
+
+const TYPE_SIZES = {
+  small: {
+    fontSize: "14px",
+  },
+  medium: {
+    fontSize: "18px",
+  },
+  large: {
+    fontSize: "26px",
+  },
+};

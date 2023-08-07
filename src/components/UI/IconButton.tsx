@@ -9,7 +9,7 @@ interface IconButtonProps extends React.HTMLAttributes<HTMLDivElement> {
 const IconButton = ({ icon, onClick, height, ...props }: IconButtonProps) => {
   return (
     <div onClick={onClick} {...props}>
-      <img src={icon} alt="o_auth_icon" height={height ? height : 45} />
+      <img src={icon} alt="o_auth_icon" height={height ? height : 65} />
     </div>
   );
 };

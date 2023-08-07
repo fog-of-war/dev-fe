@@ -2,6 +2,29 @@
 
 import ProgressBar from "../ProgressBar";
 
+const DUMMY_BADGES = [
+  {
+    imageUrl: "/images/main/dummyBadge.png",
+    badgeName: "더미뱃지",
+  },
+  {
+    imageUrl: "/images/main/dummyBadge.png",
+    badgeName: "더미뱃지",
+  },
+  {
+    imageUrl: "/images/main/dummyBadge.png",
+    badgeName: "더미뱃지",
+  },
+  {
+    imageUrl: "/images/main/dummyBadge.png",
+    badgeName: "더미뱃지",
+  },
+  {
+    imageUrl: "/images/main/dummyBadge.png",
+    badgeName: "더미뱃지",
+  },
+];
+
 const MainCard = () => {
   // 작은 글자 스타일
   const smallTextStyle = {
@@ -19,7 +42,7 @@ const MainCard = () => {
         flexDirection: "column",
         margin: "auto",
         borderRadius: 25,
-        width: "95%",
+        width: "100%",
         backgroundColor: "#E4F6ED",
         padding: 20,
       }}
@@ -56,7 +79,7 @@ const MainCard = () => {
           여러분과함께라면행복해
         </div>
       </div>
-      <div css={{ ...smallTextStyle, marginTop: 15 }}>
+      <div css={{ ...smallTextStyle, whiteSpace: "nowrap", marginTop: 10 }}>
         <div css={{ marginRight: 5, marginTop: 5 }}>
           <img
             src="/images/main/flagIcon.png"
@@ -65,11 +88,11 @@ const MainCard = () => {
           />
         </div>
         총탐험포인트
-        <div css={{ marginLeft: 5, marginBottom: 18 }}>
-          <ProgressBar progress={60} containerWidth={230} />
+        <div css={{ width: "100%", marginLeft: 5, marginBottom: 18 }}>
+          <ProgressBar progress={60} />
         </div>
       </div>
-      <div css={{ ...smallTextStyle, marginTop: -13 }}>
+      <div css={{ ...smallTextStyle, marginTop: -12 }}>
         <div css={{ marginRight: 5, marginTop: 5 }}>
           <img
             src="/images/main/rankingIcon.png"
@@ -88,6 +111,47 @@ const MainCard = () => {
           />
         </div>
         랭킹 5400위
+      </div>
+      <div css={{ display: "flex", justifyContent: "center" }}>
+        <img
+          src="/images/main/map.png"
+          alt="맵"
+          css={{ width: 344, height: 288 }}
+        />
+      </div>
+      <div
+        css={{
+          display: "flex",
+          alignItems: "center",
+          color: "#53AF7B",
+          fontWeight: "bold",
+          fontSize: 20,
+          marginBottom: 10,
+        }}
+      >
+        <img
+          src="/images/main/badgeIcon.png"
+          alt="뱃지 아이콘"
+          css={{ width: 18, height: 22, marginRight: 5 }}
+        />
+        뱃지
+      </div>
+      <div
+        css={{
+          display: "grid",
+          gridTemplateColumns: "repeat(5, 1fr)",
+          gap: 10,
+          marginTop: 10,
+        }}
+      >
+        {DUMMY_BADGES.map((badge, index) => (
+          <img
+            key={index}
+            src={badge.imageUrl}
+            alt={badge.badgeName}
+            css={{ width: 56, aspectRatio: 1 }}
+          />
+        ))}
       </div>
     </div>
   );
