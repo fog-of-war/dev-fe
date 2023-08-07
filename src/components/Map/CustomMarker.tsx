@@ -4,9 +4,15 @@ import { Marker, OverlayView } from "@react-google-maps/api";
 
 interface CustomMarkerProps {
   position: google.maps.LatLngLiteral;
+  placeName: string;
+  roadAddress: string;
 }
 
-const CustomMarker: React.FC<CustomMarkerProps> = ({ position }) => {
+const CustomMarker: React.FC<CustomMarkerProps> = ({
+  position,
+  placeName,
+  roadAddress,
+}) => {
   const [isClicked, setIsClicked] = useState(false);
 
   const overlayPixelOffset = { x: -125, y: -120 }; // 오버레이를 마커 오프셋 설정
@@ -74,7 +80,7 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({ position }) => {
                   color: "#E5A602",
                 }}
               >
-                숭례문
+                {placeName}
               </span>
               <br />
               <span
@@ -82,7 +88,7 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({ position }) => {
                   color: "#CEB268",
                 }}
               >
-                서울특별시 중구 세종대로 40
+                {roadAddress}
               </span>
             </div>
           </div>

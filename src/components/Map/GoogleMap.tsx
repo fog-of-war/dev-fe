@@ -14,7 +14,8 @@ import CustomMarker from "./CustomMarker";
 // Marker 데이터 인터페이스 정의
 interface MarkerData {
   position: google.maps.LatLngLiteral;
-  title: string;
+  placeName: string;
+  roadAddress: string;
 }
 
 // 컨테이너 크기 정의
@@ -101,7 +102,8 @@ const Map = () => {
               lat: parseFloat(document.y),
               lng: parseFloat(document.x),
             },
-            title: document.place_name,
+            placeName: document.place_name,
+            roadAddress: document.road_address_name,
           })
         );
         // 마커 데이터 업데이트
@@ -185,7 +187,12 @@ const Map = () => {
           {/* 마커 렌더링 */}
           {zoomLevel >= 14 &&
             markers.map((marker, index) => (
-              <CustomMarker key={index} position={marker.position} />
+              <CustomMarker
+                key={index}
+                position={marker.position}
+                placeName={marker.placeName}
+                roadAddress={marker.roadAddress}
+              />
             ))}
           {polygons.map((polygon, index) => (
             <SeoulPolygon
