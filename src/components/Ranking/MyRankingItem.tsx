@@ -1,5 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
+import colors from "../../constants/colors";
+
 interface MyRankingItemProps {
   index: number;
   image: string;
@@ -88,6 +90,7 @@ const MyRankingItem = ({
           css={{
             fontSize: 16,
             fontWeight: "semibold",
+            color: colors.darkGrey,
           }}
         >
           {district}
