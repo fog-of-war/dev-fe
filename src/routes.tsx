@@ -5,6 +5,7 @@ import Map from "./components/Map/GoogleMap";
 import AuthPage from "./pages/auth/AuthPage";
 import ProfileSetupPage from "./pages/auth/ProfileSetupPage";
 import ReviewPage from "./pages/ReviewPage";
+import RankingPage from "./pages/RankingPage";
 
 const AppRoutes = () => {
   return (
@@ -15,6 +16,7 @@ const AppRoutes = () => {
       <Route path="/profile" Component={MyPage} />
       <Route path="/map" Component={Map} />
       <Route path="/reviewList" Component={ReviewPage} />
+      <Route path="/ranking" Component={RankingPage} />
     </Routes>
   );
 };
