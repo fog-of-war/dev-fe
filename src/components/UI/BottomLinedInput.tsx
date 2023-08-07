@@ -54,7 +54,7 @@ const BottomLinedInput = forwardRef(
             css={{
               width: "100%",
               fontSize: "20px",
-              color: colors.mainFont,
+              color: colors.darkGrey,
               border: "none",
               outline: "none",
             }}

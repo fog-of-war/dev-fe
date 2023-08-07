@@ -98,7 +98,7 @@ const ProfileImageWrapper = styled.div`
   height: 127px;
   overflow: hidden;
   border-radius: 9999px;
-  background: ${colors.tertiary};
+  background: ${colors.pastel};
 `;
 
 const ProfileImage = styled.img`

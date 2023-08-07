@@ -21,7 +21,7 @@ const PlaceTitle = ({ icon, name, category }: PlaceTitleProps) => {
         <h1
           css={{
             fontSize: "22px",
-            color: colors.mainFont,
+            color: colors.darkGrey,
           }}
         >
           {name}

@@ -1,9 +1,12 @@
 const colors = {
   primary: "#53AF7B",
   secondary: "#11522D",
-  tertiary: "#E4F6ED",
-  mainFont: "#414141",
-  subFont: "#6F6F6F",
+  accent: "#B5DCC6",
+  pastel: "#E4F6ED",
+  darkGrey: "#414141",
+  mediumGrey: "#848484",
+  lightGrey: "AAAAAA",
+  paleGrey: "#D9D9D9",
 };
 
 export default colors;
