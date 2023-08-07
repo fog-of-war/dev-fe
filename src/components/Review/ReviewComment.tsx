@@ -40,7 +40,7 @@ const ReviewComment = ({
             borderRadius: "5px",
             fontSize: "16px",
             fontFamily: "inherit",
-            color: colors.subFont,
+            color: colors.lightGrey,
             resize: "none",
             outline: "none",
             "&::-webkit-scrollbar": {
