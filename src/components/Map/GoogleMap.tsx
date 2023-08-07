@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import { GoogleMap, LoadScriptNext } from "@react-google-maps/api";
 
 import seoulData from "../../data/seoul2.json";
@@ -10,11 +11,20 @@ import SeoulPolygon from "./SeoulPolygon";
 import BlackPolygon from "./BlackPolygon";
 import CustomMarker from "./CustomMarker";
 
+// Marker 데이터 인터페이스 정의
+interface MarkerData {
+  position: google.maps.LatLngLiteral;
+  placeName: string;
+  roadAddress: string;
+}
+
+// 컨테이너 크기 정의
 const containerStyle = {
   width: "100%",
   height: "100%",
 };
 
+// 숭례문 좌표
 const seongnyemunLocation = {
   lat: 37.55999955137636,
   lng: 126.97530447956169,
@@ -39,6 +49,9 @@ const Map = () => {
 
   // 현재의 확대 레벨을 추적하는 상태
   const [zoomLevel, setZoomLevel] = useState(11);
+
+  // 마커 데이터 상태 관리
+  const [markers, setMarkers] = useState<MarkerData[]>([]);
 
   function getCentroid(coords: any[]) {
     let center = coords.reduce(
@@ -65,6 +78,41 @@ const Map = () => {
       );
     } else {
       console.error("이 브라우저에서는 위치 정보를 지원하지 않습니다.");
+    }
+  };
+
+  // 음식점 검색 및 마커 데이터 업데이트 함수
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(
+        `https://dapi.kakao.com/v2/local/search/category.json?category_group_code=FD6&x=${defaultCenter.lng}&y=${defaultCenter.lat}&radius=2000`, // 음식점 카테고리 코드와 반경 2키로 이내 설정
+        {
+          headers: {
+            Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_API_KEY}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        const data = response.data;
+        // API에서 받아온 데이터를 기반으로 마커 데이터 생성
+        const newMarkers: MarkerData[] = data.documents.map(
+          (document: any) => ({
+            position: {
+              lat: parseFloat(document.y),
+              lng: parseFloat(document.x),
+            },
+            placeName: document.place_name,
+            roadAddress: document.road_address_name,
+          })
+        );
+        // 마커 데이터 업데이트
+        setMarkers(newMarkers);
+      } else {
+        console.error("API 호출 중 오류 발생");
+      }
+    } catch (error) {
+      console.error("오류 발생:", error);
     }
   };
 
@@ -95,6 +143,11 @@ const Map = () => {
 
     return () => setPolygons([]);
   }, [zoomLevel]);
+
+  useEffect(() => {
+    // 컴포넌트가 마운트되었을 때 음식점 검색 및 마커 업데이트 실행
+    handleSearch();
+  }, []);
 
   return (
     <div
@@ -131,7 +184,16 @@ const Map = () => {
           }}
         >
           <BlackPolygon />
-          <CustomMarker position={seongnyemunLocation} />
+          {/* 마커 렌더링 */}
+          {zoomLevel >= 14 &&
+            markers.map((marker, index) => (
+              <CustomMarker
+                key={index}
+                position={marker.position}
+                placeName={marker.placeName}
+                roadAddress={marker.roadAddress}
+              />
+            ))}
           {polygons.map((polygon, index) => (
             <SeoulPolygon
               key={index}
