@@ -14,13 +14,14 @@ const Title = ({ text, size = "medium", icon, ...props }: TitleProps) => {
       css={{
         display: "flex",
         flexDirection: "row",
+        alignItems: "center",
         gap: 8,
       }}
     >
       {icon && <img src={icon} alt={icon} height={22} />}
       <h2
         css={{
-          color: colors.primary,
+          color: colors.darkGrey,
           fontWeight: "bold",
           ...TYPE_SIZES[size],
         }}
