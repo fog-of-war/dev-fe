@@ -41,7 +41,7 @@ const MyRanking = () => {
       <div
         css={{
           display: "flex",
-          backgroundColor: colors.tertiary,
+          backgroundColor: colors.pastel,
           padding: "25px",
           borderRadius: "15px",
           gap: "25px",

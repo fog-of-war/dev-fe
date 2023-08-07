@@ -19,7 +19,7 @@ const BottomNavIcon = ({
       onClick={onClick}
       css={{
         textDecoration: "none",
-        padding: 14,
+        padding: "0 14px",
       }}
       {...props}
     >

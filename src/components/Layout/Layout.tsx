@@ -28,7 +28,7 @@ const Layout = ({ children }: LayoutProps) => {
           width: "100%",
           maxWidth: "420px",
           background: "white",
-          paddingBottom: "80px",
+          paddingBottom: "65px",
         }}
       >
         <Toaster />

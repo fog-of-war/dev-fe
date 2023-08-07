@@ -23,11 +23,11 @@ const SearchBar = ({
         justifyContent: "center",
         gap: 10,
         width: "100%",
-        height: "50px",
+        height: "45px",
         padding: "0 20px",
-        borderRadius: "8px",
+        borderRadius: "10px",
         background: "white",
-        boxShadow: "0px 4px 10px 0px rgba(0, 0, 0, 0.25)",
+        boxShadow: "0px 0px 5px 0px rgba(0, 0, 0, 0.25)",
       }}
     >
       <img
@@ -43,8 +43,14 @@ const SearchBar = ({
         css={{
           border: "none",
           outline: "none",
-          fontSize: "18px",
+          fontSize: "16px",
+          fontWeight: "500",
+          lineHeight: "20px",
+          letterSpacing: "-0.5px",
           flex: 1,
+          "&::placeholder": {
+            color: "#aaa",
+          },
         }}
         placeholder={placeholder}
       />
