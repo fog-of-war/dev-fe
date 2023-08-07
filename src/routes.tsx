@@ -5,6 +5,7 @@ import AuthPage from "./pages/auth/AuthPage";
 import ProfileSetupPage from "./pages/auth/ProfileSetupPage";
 import ReviewPage from "./pages/ReviewPage";
 import MapPage from "./pages/MapPage";
+import RankingPage from "./pages/RankingPage";
 
 const AppRoutes = () => {
   return (
@@ -15,6 +16,7 @@ const AppRoutes = () => {
       <Route path="/profile" Component={MyPage} />
       <Route path="/map" Component={MapPage} />
       <Route path="/reviewList" Component={ReviewPage} />
+      <Route path="/ranking" Component={RankingPage} />
     </Routes>
   );
 };

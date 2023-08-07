@@ -8,6 +8,7 @@ const DUMMY_REVIEWS = {
   reviews: [
     {
       authorInfo: {
+        _id: "1",
         profileImage: "./images/dummyUserImage.png",
         nickname: "여러분과함께라면행복",
       },
@@ -15,10 +16,11 @@ const DUMMY_REVIEWS = {
       date: "2023-08-02 오후 7:00",
       placeImage: "./images/placeImage.png",
       comment:
-        "입력한 글자의 개수를 바로 확인하여 주는 도구입니다. 글자수나 단어수를 세는 것은 이력서나 자기소개서(자소서)를 작성할 때나 블로그 글을 작성할 때 입력한 글자의 개수를 바로 확인하여 주는 도구입니다. 글자수나 단어수를 세는 것은 이력서나 자기소개서",
+        "맥북을 하고있는 목동최고미남 정훈님의 모습입니다. 글자수나 단어수를 세는 것은 이력서나 자기소개서(자소서)를 작성할 때나 블로그 글을 작성할 때 입력한 글자의 개수를 바로 확인하여 주는 도구입니다. 글자수나 단어수를 세는 것은 이력서나 자기소개서",
     },
     {
       authorInfo: {
+        _id: "2",
         profileImage: "./images/dummyUserImage.png",
         nickname: "동균님과함께춤을",
       },
@@ -29,6 +31,7 @@ const DUMMY_REVIEWS = {
     },
     {
       authorInfo: {
+        _id: "3",
         profileImage: "./images/dummyUserImage.png",
         nickname: "코딩괴수윤수님",
       },

@@ -13,6 +13,7 @@ export interface Review {
 }
 
 export interface AuthorInfo {
+  _id: string;
   profileImage: string;
   nickname: string;
 }
