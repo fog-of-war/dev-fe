@@ -10,17 +10,17 @@ const BottomNavigation = () => {
     <div
       css={{
         position: "fixed",
-        bottom: 0,
+        bottom: "0",
         width: "100%",
         maxWidth: "420px",
-        height: 80,
-        backgroundColor: "white",
+        height: 65,
+        backgroundColor: "rgba(255, 255, 255, 0.9)",
+        backdropFilter: "blur(10px)",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-around",
         padding: "0 10px",
         zIndex: "50",
-        borderTop: "1px solid #d9d9d9",
       }}
     >
       <BottomNavIcon
@@ -35,7 +35,7 @@ const BottomNavigation = () => {
       />
       <BottomNavIcon
         onClick={() => navigate("/camera")}
-        height={48}
+        height={55}
         src="/images/cameraIcon.png"
         alt="home"
       />
