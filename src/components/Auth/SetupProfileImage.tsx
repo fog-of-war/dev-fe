@@ -2,33 +2,33 @@
 
 import { ChangeEvent, useRef, useState } from "react";
 import { ProfileData } from "../../pages/auth/ProfileSetupPage";
+import uploadImage from "../../api/aws";
+import styled from "@emotion/styled";
+import colors from "../../constants/colors";
 
 import SetupProfileForm from "./SetupProfileForm";
 import Title from "../Title";
 import Button from "../UI/Button";
 import SetupProfileHeader from "./SetupProfileHeader";
-import uploadImage from "../../api/aws";
-import colors from "../../constants/colors";
 
 interface SetupProfileImageProps {
   onNext: () => void;
   onPrev: () => void;
+  profileData: ProfileData;
   setProfileData: React.Dispatch<React.SetStateAction<ProfileData>>;
 }
 
 const SetupProfileImage = ({
   onNext,
   onPrev,
+  profileData,
   setProfileData,
 }: SetupProfileImageProps) => {
-  const [profileImage, setProfileImage] = useState("");
+  const [profileImage, setProfileImage] = useState(
+    profileData.profileImage || "/images/default_profile_image.png"
+  );
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleNextStep = () => {
-    setProfileData((prev) => ({ ...prev, profileImage }));
-    onNext();
-  };
 
   const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -38,6 +38,7 @@ const SetupProfileImage = ({
         const imageUrl = response.imageUrl;
 
         setProfileImage(imageUrl);
+        setProfileData({ ...profileData, profileImage: imageUrl });
       } catch (error: any) {
         console.error("Image upload failed:", error);
       }
@@ -47,66 +48,65 @@ const SetupProfileImage = ({
   return (
     <SetupProfileForm>
       <SetupProfileHeader onClick={onPrev} />
-      <div
-        css={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "36px",
-        }}
-      >
-        <Title text="프로필 사진을 설정해주세요." size="large" />
-        <div
-          css={{
-            position: "relative",
-            width: "127px",
-            height: "127px",
-            overflow: "hidden",
-            borderRadius: "9999px",
-            background: colors.tertiary,
-          }}
-        >
-          <img
-            src={profileImage || "/images/auth/defaultProfile.png"}
-            alt="profile_image"
-            css={{ objectFit: "cover", width: "100%", height: "100%" }}
-          />
-          <div
-            css={{
-              position: "absolute",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              bottom: 0,
-              height: "32px",
-              width: "100%",
-              background: "#444",
-              color: `#fff`,
-              paddingBottom: "3px",
-            }}
-            onClick={() => {
-              if (fileInputRef.current) {
-                fileInputRef.current.click();
-              }
-            }}
-          >
+      <SetupProfileImageWrapper>
+        <Title text="프로필 사진을 설정해주세요" size="large" />
+        <ProfileImageWrapper>
+          <ProfileImage src={profileImage} alt="profile_image" />
+          <EditImageButton onClick={() => fileInputRef?.current?.click()}>
             <span>편집</span>
-            <input
+            <ProfileImageInput
               type="file"
               accept="image/*"
               onChange={handleImageChange}
               ref={fileInputRef}
-              css={{
-                display: "none",
-              }}
             />
-          </div>
-        </div>
-      </div>
-      <Button onClick={handleNextStep}>프로필 설정 완료</Button>
+          </EditImageButton>
+        </ProfileImageWrapper>
+      </SetupProfileImageWrapper>
+      <Button onClick={onNext}>프로필 설정 완료</Button>
     </SetupProfileForm>
   );
 };
 
 export default SetupProfileImage;
+
+const SetupProfileImageWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+`;
+
+const EditImageButton = styled.div`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: 0;
+  height: 32px;
+  width: 100%;
+  background: #444;
+  color: #fff;
+  padding-bottom: 3px;
+  cursor: pointer;
+`;
+
+const ProfileImageWrapper = styled.div`
+  position: relative;
+  width: 127px;
+  height: 127px;
+  overflow: hidden;
+  border-radius: 9999px;
+  background: ${colors.tertiary};
+`;
+
+const ProfileImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+const ProfileImageInput = styled.input`
+  display: none;
+`;

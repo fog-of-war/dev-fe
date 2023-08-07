@@ -8,6 +8,8 @@ import BottomLinedInput from "../UI/BottomLinedInput";
 import Button from "../UI/Button";
 import SetupProfileForm from "./SetupProfileForm";
 import Title from "../Title";
+import SetupProfileHeader from "./SetupProfileHeader";
+import { useNavigate } from "react-router-dom";
 
 interface SetupNickNameProps {
   onNext: () => void;
@@ -23,6 +25,7 @@ const SetupNickName = ({
   const [nickName, setNickName] = useState(profileData.nickName);
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   const validateNickName = (nickName: string) => {
     if (nickName.trim().length === 0) {
@@ -47,6 +50,7 @@ const SetupNickName = ({
 
   return (
     <SetupProfileForm>
+      <SetupProfileHeader onClick={() => navigate(-1)} />
       <div
         css={{
           width: "100%",
@@ -56,7 +60,7 @@ const SetupNickName = ({
           gap: "36px",
         }}
       >
-        <Title text="닉네임을 입력해주세요." size="large" />
+        <Title text="닉네임을 입력해주세요" size="large" />
         <BottomLinedInput
           value={nickName}
           onChange={(e) => setNickName(e.target.value)}
