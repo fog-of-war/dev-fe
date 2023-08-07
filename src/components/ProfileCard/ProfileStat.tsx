@@ -22,9 +22,9 @@ const ProfileStat = ({
       css={{
         color: colors.primary,
         fontWeight: "bold",
-        fontSize: "15px",
         display: "flex",
         alignItems: "center",
+        gap: "8px",
       }}
     >
       <img
@@ -37,20 +37,29 @@ const ProfileStat = ({
       />
       <p
         css={{
-          padding: "0px 5px",
           color: colors.secondary,
+          fontSize: "16px",
         }}
       >
         {type}
       </p>
-      <p css={{ paddingLeft: "5px" }}>
-        {level
-          ? `${level} Lv`
-          : badge
-          ? `${badge} 개`
-          : rank
-          ? `${rank} 위`
-          : null}
+      <p css={{ fontSize: "15px" }}>
+        {level ? (
+          <>
+            <span>{level}</span>
+            <span css={{ marginLeft: "10px" }}>Lv</span>
+          </>
+        ) : badge ? (
+          <>
+            <span>{badge}</span>
+            <span css={{ marginLeft: "10px" }}>개</span>
+          </>
+        ) : rank ? (
+          <>
+            <span>{rank}</span>
+            <span css={{ marginLeft: "10px" }}>위</span>
+          </>
+        ) : null}
       </p>
     </div>
   );

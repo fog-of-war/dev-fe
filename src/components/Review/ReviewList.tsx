@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
+import { useState } from "react";
 import ReviewAuthorInfo from "./ReviewAuthorInfo";
 import ReviewContent from "./ReviewContent";
 import { Review } from "../../types/types";
@@ -9,6 +10,16 @@ interface ReviewListProps {
 }
 
 const ReviewList = ({ reviews }: ReviewListProps) => {
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+
+  const handleCompleteEditing = () => {
+    setIsEditing(false);
+  };
+
+  const handleEditComment = (editedComment: string) => {
+    handleCompleteEditing();
+  };
+
   return (
     <>
       {reviews.map((review: Review, index: number) => (
@@ -31,12 +42,18 @@ const ReviewList = ({ reviews }: ReviewListProps) => {
                 marginBottom: "20px",
               }}
             >
-              <ReviewAuthorInfo authorInfo={review.authorInfo} />
+              <ReviewAuthorInfo
+                authorInfo={review.authorInfo}
+                isEditing={isEditing}
+                setIsEditing={setIsEditing}
+              />
               <ReviewContent
                 placeImage={review.placeImage}
                 comment={review.comment}
                 rating={review.rating}
                 date={review.date}
+                isEditing={isEditing}
+                onEditComment={handleEditComment}
               />
             </div>
           </div>
