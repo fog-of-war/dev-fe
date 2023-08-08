@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { useState } from "react";
-import colors from "../../constants/colors";
+import SkeletonLoader from "../UI/SkeletonLoader";
 
 interface AdvPlaceImageProps {
   imageUrl: string;
@@ -8,7 +8,7 @@ interface AdvPlaceImageProps {
 }
 
 const AdvPlaceImage = ({ imageUrl, placeName }: AdvPlaceImageProps) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   return (
     <div
@@ -49,33 +49,7 @@ const AdvPlaceImage = ({ imageUrl, placeName }: AdvPlaceImageProps) => {
           display: isLoading ? "block" : "none",
         }}
       />
-      {!isLoading && (
-        <div
-          css={{
-            width: "100%",
-            height: "100%",
-            borderRadius: "10px",
-            border: "1px solid #d0d0d0",
-            backgroundColor: "#f2f2f2",
-            position: "relative",
-            overflow: "hidden",
-            "&::after": {
-              content: '""',
-              position: "absolute",
-              top: 0,
-              left: "-100%",
-              width: "100%",
-              height: "100%",
-              background: `linear-gradient(90deg, transparent, #e0e0e0, transparent)`,
-              animation: "loading 1.5s infinite",
-            },
-            "@keyframes loading": {
-              "0%": { left: "-100%" },
-              "100%": { left: "100%" },
-            },
-          }}
-        />
-      )}
+      {!isLoading && <SkeletonLoader width="100%" height="100%" />}
     </div>
   );
 };
