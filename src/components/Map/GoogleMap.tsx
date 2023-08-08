@@ -17,6 +17,7 @@ interface MarkerData {
   position: google.maps.LatLngLiteral;
   placeName: string;
   roadAddress: string;
+  category: string;
 }
 
 // 컨테이너 크기 정의
@@ -54,6 +55,9 @@ const Map = () => {
   // 마커 데이터 상태 관리
   const [markers, setMarkers] = useState<MarkerData[]>([]);
 
+  // 카테고리 상태 관리 아직 사용하지 않음
+  const categories = ["역사", "미술관", "커피", "맛집", "헬스"];
+
   // 중심점을 기준으로 지도의 확대 레벨을 변경하는 함수
   const getCentroid = (coords: any[]) => {
     let center = coords.reduce(
@@ -86,17 +90,23 @@ const Map = () => {
   // 음식점 검색 및 마커 데이터 업데이트 함수
   const handleSearch = async () => {
     try {
+      const category = "맛집";
+
       const response = await axios.get(
-        `https://dapi.kakao.com/v2/local/search/category.json?category_group_code=FD6&x=${defaultCenter.lng}&y=${defaultCenter.lat}&radius=2000`, // 음식점 카테고리 코드와 반경 2키로 이내 설정
+        `https://dapi.kakao.com/v2/local/search/keyword.json?y=${defaultCenter.lat}&x=${defaultCenter.lng}&radius=2000`,
         {
           headers: {
             Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_API_KEY}`,
+          },
+          params: {
+            query: category,
           },
         }
       );
 
       if (response.status === 200) {
         const data = response.data;
+        console.log(data);
         // API에서 받아온 데이터를 기반으로 마커 데이터 생성
         const newMarkers: MarkerData[] = data.documents.map(
           (document: any) => ({
@@ -106,6 +116,7 @@ const Map = () => {
             },
             placeName: document.place_name,
             roadAddress: document.road_address_name,
+            category: category,
           })
         );
         // 마커 데이터 업데이트
@@ -195,6 +206,7 @@ const Map = () => {
                 position={marker.position}
                 placeName={marker.placeName}
                 roadAddress={marker.roadAddress}
+                category={marker.category}
               />
             ))}
           {polygons.map((polygon, index) => (

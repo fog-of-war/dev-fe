@@ -6,12 +6,14 @@ interface CustomMarkerProps {
   position: google.maps.LatLngLiteral;
   placeName: string;
   roadAddress: string;
+  category: string;
 }
 
 const CustomMarker: React.FC<CustomMarkerProps> = ({
   position,
   placeName,
   roadAddress,
+  category,
 }) => {
   const [isClicked, setIsClicked] = useState(false);
 
