@@ -59,7 +59,7 @@ const RankingPage = () => {
       <Title text="전체 랭킹 확인하기" icon="./images/mapIcon.png" />
       <div
         css={{
-          borderTop: "1px solid #e1e1e1",
+          borderTop: "1px solid #f1f1f1",
         }}
       >
         {DUMMY_DATA.map((data, index) => (
