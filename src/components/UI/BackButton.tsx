@@ -1,7 +1,15 @@
-const BackButton = ({ onClick }: { onClick: () => void }) => {
+interface BackButtonProps extends React.HTMLAttributes<HTMLDivElement> {
+  size?: number;
+}
+
+const BackButton = ({ size, ...props }: BackButtonProps) => {
   return (
-    <div onClick={onClick}>
-      <img src="/images/backBtn.png" alt="back_button" height={24} />
+    <div {...props}>
+      <img
+        src="/images/backBtn.png"
+        alt="back_button"
+        height={size ? size : 24}
+      />
     </div>
   );
 };
