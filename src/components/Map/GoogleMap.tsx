@@ -53,7 +53,8 @@ const Map = () => {
   // 마커 데이터 상태 관리
   const [markers, setMarkers] = useState<MarkerData[]>([]);
 
-  function getCentroid(coords: any[]) {
+  // 중심점을 기준으로 지도의 확대 레벨을 변경하는 함수
+  const getCentroid = (coords: any[]) => {
     let center = coords.reduce(
       (x, y) => {
         return [x[0] + y.lng / coords.length, x[1] + y.lat / coords.length];
@@ -61,7 +62,7 @@ const Map = () => {
       [0, 0]
     );
     return { lat: center[1], lng: center[0] };
-  }
+  };
 
   // 사용자의 현재 위치로 이동하는 함수
   const handleCurrentLocationClick = () => {
