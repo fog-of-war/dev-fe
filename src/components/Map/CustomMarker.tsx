@@ -87,10 +87,11 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
         <OverlayView
           position={position}
           mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
-          getPixelPositionOffset={() => overlayPixelOffset}
         >
           <div
             css={{
+              position: "absolute",
+              transform: `translate(${overlayPixelOffset.x}px, ${overlayPixelOffset.y}px)`,
               width: "250px",
               height: "70px",
               backgroundColor: overlayBackgroundColor,
@@ -100,7 +101,6 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
               fontSize: "14px",
               display: "flex",
               alignItems: "center",
-              position: "relative",
               "::after": {
                 content: '""',
                 position: "absolute",
