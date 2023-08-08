@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { GoogleMap, LoadScriptNext } from "@react-google-maps/api";
 
+import { toast } from "react-hot-toast";
 import seoulData from "../../data/seoul2.json";
 import retroMapStyle from "../../data/retroMapStyle.json";
 import { defaultCenter, bounds, options } from "../../data/mapData";
@@ -110,9 +111,10 @@ const Map = () => {
         // 마커 데이터 업데이트
         setMarkers(newMarkers);
       } else {
-        console.error("API 호출 중 오류 발생");
+        toast.error("API 호출 중 오류 발생");
       }
     } catch (error) {
+      toast.error("API 호출 중 오류 발생");
       console.error("오류 발생:", error);
     }
   };
