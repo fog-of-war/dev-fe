@@ -1,20 +1,11 @@
 /** @jsxImportSource @emotion/react */
 
-import { KeyboardEvent } from "react";
-
-interface SearchBarProps {
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
+interface SearchBarProps extends React.InputHTMLAttributes<HTMLInputElement> {
   inputValue: string;
   placeholder?: string;
 }
 
-const SearchBar = ({
-  onChange,
-  onKeyDown,
-  inputValue,
-  placeholder,
-}: SearchBarProps) => {
+const SearchBar = ({ inputValue, placeholder, ...props }: SearchBarProps) => {
   return (
     <div
       css={{
@@ -28,6 +19,7 @@ const SearchBar = ({
         borderRadius: "10px",
         background: "white",
         boxShadow: "0px 0px 5px 0px rgba(0, 0, 0, 0.25)",
+        zIndex: 1,
       }}
     >
       <img
@@ -37,8 +29,6 @@ const SearchBar = ({
       />
       <input
         type="text"
-        onChange={onChange}
-        onKeyDown={onKeyDown}
         value={inputValue}
         css={{
           border: "none",
@@ -52,7 +42,7 @@ const SearchBar = ({
             color: "#aaa",
           },
         }}
-        placeholder={placeholder}
+        {...props}
       />
     </div>
   );
