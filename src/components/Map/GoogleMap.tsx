@@ -90,7 +90,7 @@ const Map = () => {
   // 음식점 검색 및 마커 데이터 업데이트 함수
   const handleSearch = async () => {
     try {
-      const category = "맛집";
+      const category = "역사";
 
       const response = await axios.get(
         `https://dapi.kakao.com/v2/local/search/keyword.json?y=${defaultCenter.lat}&x=${defaultCenter.lng}&radius=2000`,

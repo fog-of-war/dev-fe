@@ -19,6 +19,10 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
 
   const overlayPixelOffset = { x: -125, y: -120 }; // 오버레이를 마커 오프셋 설정
 
+  // placeName이 8글자 이상인 경우 자르고 '...'을 추가
+  const truncatedPlaceName =
+    placeName.length > 8 ? `${placeName.slice(0, 8)}...` : placeName;
+
   return (
     <>
       <Marker
@@ -69,7 +73,7 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
               }}
             >
               <img
-                src="https://source.unsplash.com/random"
+                src="/images/map/historyIcon.png"
                 alt="Circular Icon"
                 css={{ width: "100%", height: "100%" }}
               />
@@ -82,7 +86,7 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
                   color: "#E5A602",
                 }}
               >
-                {placeName}
+                {truncatedPlaceName}
               </span>
               <br />
               <span
