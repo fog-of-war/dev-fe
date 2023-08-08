@@ -6,6 +6,7 @@ import ProfileSetupPage from "./pages/auth/ProfileSetupPage";
 import ReviewPage from "./pages/ReviewPage";
 // import MapPage from "./pages/MapPage";
 import RankingPage from "./pages/RankingPage";
+import ProfileEditPage from "./pages/ProfileEditPage";
 
 const AppRoutes = () => {
   return (
@@ -14,6 +15,7 @@ const AppRoutes = () => {
       <Route path="/profile_setup" Component={ProfileSetupPage} />
       <Route path="/" Component={Home} />
       <Route path="/profile" Component={MyPage} />
+      <Route path="/profile_edit" Component={ProfileEditPage} />
       {/* <Route path="/map" Component={MapPage} /> */}
       <Route path="/reviewList" Component={ReviewPage} />
       <Route path="/ranking" Component={RankingPage} />

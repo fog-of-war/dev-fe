@@ -29,7 +29,7 @@ const ProfileCard = () => {
           <ProfileTextBox>
             <span>{DUMMY_DATA.profileText}</span>
           </ProfileTextBox>
-          <ProfileEditButton onClick={() => navigate("/profileEdit")}>
+          <ProfileEditButton onClick={() => navigate("/profile_edit")}>
             <ProfileEditIcon
               src="./images/profileEditIcon.svg"
               alt="editIcon"
