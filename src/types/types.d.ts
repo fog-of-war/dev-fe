@@ -17,3 +17,15 @@ export interface AuthorInfo {
   profileImage: string;
   nickname: string;
 }
+
+export interface MapTag {
+  id: number;
+  name: string;
+  icon: string;
+}
+
+export interface Search {
+  id: number;
+  search: string;
+  type: string;
+}
