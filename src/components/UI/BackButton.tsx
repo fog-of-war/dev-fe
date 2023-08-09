@@ -1,10 +1,19 @@
+/** @jsxImportSource @emotion/react */
+
 interface BackButtonProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: number;
 }
 
 const BackButton = ({ size, ...props }: BackButtonProps) => {
   return (
-    <div {...props}>
+    <div
+      css={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+      {...props}
+    >
       <img
         src="/images/backBtn.png"
         alt="back_button"
