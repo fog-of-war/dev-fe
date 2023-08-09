@@ -213,7 +213,11 @@ const Map = () => {
                 category={marker.category}
                 isMarkerOpen={index === openMarkerIndex}
                 onClick={() => {
-                  setOpenMarkerIndex(index);
+                  if (openMarkerIndex === index) {
+                    setOpenMarkerIndex(null);
+                  } else {
+                    setOpenMarkerIndex(index);
+                  }
                 }}
               />
             ))}
