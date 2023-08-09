@@ -66,8 +66,8 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
     iconSrc = "/images/map/cafeIcon.png";
   }
 
-  // 헬스 카테고리
-  if (category === "헬스") {
+  // 스포츠시설 카테고리
+  if (category === "스포츠시설") {
     overlayBackgroundColor = "#E7F6FF";
     borderTopColor = "#E7F6FF";
     placeNameColor = "#2C7DF5";
