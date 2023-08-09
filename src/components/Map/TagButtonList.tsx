@@ -1,13 +1,41 @@
 /** @jsxImportSource @emotion/react */
 
+import { useNavigate } from "react-router-dom";
 import { MapTag } from "../../types/types";
+
 import TagButton from "./TagButton";
 
-interface TagButtonListProps {
-  tags: MapTag[];
-}
+const DUMMY_DATA = [
+  {
+    id: 1,
+    name: "미식",
+    icon: "/images/mapTag/food.png",
+  },
+  {
+    id: 2,
+    name: "운동",
+    icon: "/images/mapTag/exercise.png",
+  },
+  {
+    id: 3,
+    name: "미술관",
+    icon: "/images/mapTag/art.png",
+  },
+  {
+    id: 4,
+    name: "역사",
+    icon: "/images/mapTag/history.png",
+  },
+  {
+    id: 5,
+    name: "커피",
+    icon: "/images/mapTag/cafe.png",
+  },
+];
 
-const TagButtonList = ({ tags }: TagButtonListProps) => {
+const TagButtonList = () => {
+  const navigate = useNavigate();
+
   return (
     <div
       css={{
@@ -16,7 +44,7 @@ const TagButtonList = ({ tags }: TagButtonListProps) => {
         display: "flex",
         overflowX: "auto",
         padding: "2px 20px 2px 20px",
-        zIndex: 1,
+        zIndex: 70,
         position: "relative",
         "&::-webkit-scrollbar": {
           display: "none",
@@ -30,8 +58,12 @@ const TagButtonList = ({ tags }: TagButtonListProps) => {
           flexWrap: "nowrap",
         }}
       >
-        {tags.map((tag: MapTag) => (
-          <TagButton key={tag.id} icon={tag.icon} onClick={() => {}}>
+        {DUMMY_DATA.map((tag: MapTag) => (
+          <TagButton
+            key={tag.id}
+            icon={tag.icon}
+            onClick={() => navigate(`/search?query=${tag.name}`)}
+          >
             {tag.name}
           </TagButton>
         ))}
