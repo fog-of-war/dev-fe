@@ -1,5 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
+import { useEffect, useState } from "react";
+import SkeletonLoader from "../UI/SkeletonLoader";
+
 const DUMMY_BOXES = [
   {
     imageUrl: "https://source.unsplash.com/random ",
@@ -24,6 +27,36 @@ const DUMMY_BOXES = [
 ];
 
 const RecommendLocation = () => {
+  const [loadingStates, setLoadingStates] = useState<boolean[]>(
+    new Array(DUMMY_BOXES.length).fill(true)
+  );
+
+  useEffect(() => {
+    // 각 이미지의 로딩 상태를 체크하고 업데이트
+    const imageLoadHandlers = DUMMY_BOXES.map((place, index) => {
+      const image = new Image();
+      image.src = place.imageUrl;
+
+      const handleImageLoaded = () => {
+        setLoadingStates((prevStates) => {
+          const updatedStates = [...prevStates];
+          updatedStates[index] = false;
+          return updatedStates;
+        });
+      };
+
+      image.onload = handleImageLoaded;
+      return image;
+    });
+
+    return () => {
+      // 컴포넌트 언마운트 시 이미지 로딩 핸들러 정리
+      imageLoadHandlers.forEach((image) => {
+        image.onload = null;
+      });
+    };
+  }, []);
+
   return (
     <>
       <div
@@ -69,7 +102,11 @@ const RecommendLocation = () => {
               aspectRatio: 1,
             }}
           >
-            {place.placeName}
+            {loadingStates[index] ? (
+              <SkeletonLoader width="100%" height="100%" />
+            ) : (
+              place.placeName
+            )}
           </div>
         ))}
       </div>
