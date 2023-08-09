@@ -55,6 +55,9 @@ const Map = () => {
   // 마커 데이터 상태 관리
   const [markers, setMarkers] = useState<MarkerData[]>([]);
 
+  // 마커 클릭 시 정보창을 열기 위한 상태
+  const [openMarkerIndex, setOpenMarkerIndex] = useState<number | null>(null);
+
   // 카테고리 상태 관리 아직 사용하지 않음
   const categories = ["역사", "미술관", "커피", "맛집", "스포스시설"];
 
@@ -208,6 +211,10 @@ const Map = () => {
                 placeName={marker.placeName}
                 roadAddress={marker.roadAddress}
                 category={marker.category}
+                isMarkerOpen={index === openMarkerIndex}
+                onClick={() => {
+                  setOpenMarkerIndex(index);
+                }}
               />
             ))}
           {polygons.map((polygon, index) => (
