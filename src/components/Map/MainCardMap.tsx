@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { useState, useEffect, useRef } from "react";
 import { GoogleMap, LoadScriptNext } from "@react-google-maps/api";
+import { useNavigate } from "react-router-dom";
 
 import seoulData from "../../data/seoul2.json";
 import mainCardMapStyle from "../../data/mainCardMapStyle.json";
@@ -35,23 +36,12 @@ const MainCardMap = () => {
   // 현재의 확대 레벨을 추적하는 상태
   const [zoomLevel, setZoomLevel] = useState(11);
 
-  // 중심점을 기준으로 지도의 확대 레벨을 변경하는 함수
-  const getCentroid = (coords: any[]) => {
-    let center = coords.reduce(
-      (x, y) => {
-        return [x[0] + y.lng / coords.length, x[1] + y.lat / coords.length];
-      },
-      [0, 0]
-    );
-    return { lat: center[1], lng: center[0] };
-  };
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    if (view.center && mapRef.current) {
-      setMapCenter(view.center);
-      mapRef.current.setZoom(view.zoom);
-    }
-  }, [view]);
+  // map으로 이동하는 함수
+  const handleMapClick = () => {
+    navigate("/map");
+  };
 
   useEffect(() => {
     const data = seoulData.features.map((feature) => {
@@ -65,11 +55,7 @@ const MainCardMap = () => {
       return { name, name_eng, path, options: {} };
     });
 
-    if (zoomLevel < 14) {
-      setPolygons(data);
-    } else {
-      setPolygons([]); // 확대 레벨이 14 이상이면 색상이 있는 폴리곤을 숨깁니다.
-    }
+    setPolygons(data);
 
     return () => setPolygons([]);
   }, [zoomLevel]);
@@ -90,10 +76,6 @@ const MainCardMap = () => {
           center={mapCenter}
           zoom={view.zoom}
           options={{
-            minZoom: 10,
-            maxZoom: 10, // 최대 확대 레벨 설정
-            zoomControl: false, // 기본 확대 컨트롤 비활성화
-            gestureHandling: "none", // 사용자 제스처 비활성화 (패닝 및 확대/축소)
             restriction: {
               latLngBounds: bounds,
               strictBounds: false,
@@ -104,6 +86,7 @@ const MainCardMap = () => {
             streetViewControl: false,
             keyboardShortcuts: false, // 키보드 단축키 비활성화
             scaleControl: false, // 스케일 컨트롤 숨기기
+            zoomControl: false, // 확대 축소 버튼 숨기기
           }}
           onLoad={(map) => {
             mapRef.current = map;
@@ -120,10 +103,7 @@ const MainCardMap = () => {
               nameEng={polygon.name_eng}
               path={polygon.path}
               point={options[polygon.name_eng].point}
-              onPolygonClick={() => {
-                const center = getCentroid(polygon.path);
-                setView({ center, zoom: 16 });
-              }}
+              onPolygonClick={handleMapClick}
             />
           ))}
         </GoogleMap>
