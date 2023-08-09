@@ -129,6 +129,15 @@ const MainCard = () => {
       >
         <MainCardMap />
       </div>
+      <div
+        css={{
+          width: "100%",
+          height: 30,
+          backgroundColor: "#E4F6ED",
+          marginTop: -25,
+          zIndex: 1,
+        }}
+      ></div>
       <div onClick={() => navigate("/badgeList")}>
         <div
           css={{
