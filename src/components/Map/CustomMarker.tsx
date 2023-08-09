@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Marker, OverlayView } from "@react-google-maps/api";
 
 interface CustomMarkerProps {
@@ -7,13 +7,16 @@ interface CustomMarkerProps {
   placeName: string;
   roadAddress: string;
   category: string;
+  onClick: () => void;
 }
 
-const CustomMarker: React.FC<CustomMarkerProps> = ({
+const CustomMarker: React.FC<CustomMarkerProps & { isMarkerOpen: boolean }> = ({
   position,
   placeName,
   roadAddress,
   category,
+  isMarkerOpen,
+  onClick,
 }) => {
   const [isClicked, setIsClicked] = useState(false);
 
@@ -22,6 +25,10 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
   // placeName이 8글자 이상인 경우 자르고 '...'을 추가
   const truncatedPlaceName =
     placeName.length > 8 ? `${placeName.slice(0, 8)}...` : placeName;
+
+  useEffect(() => {
+    setIsClicked(isMarkerOpen);
+  }, [isMarkerOpen]);
 
   // 카테고리에 따른 스타일 및 아이콘 설정
   let overlayBackgroundColor = "#E4F6ED";
@@ -66,8 +73,8 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
     iconSrc = "/images/map/cafeIcon.png";
   }
 
-  // 헬스 카테고리
-  if (category === "헬스") {
+  // 스포츠시설 카테고리
+  if (category === "스포츠시설") {
     overlayBackgroundColor = "#E7F6FF";
     borderTopColor = "#E7F6FF";
     placeNameColor = "#2C7DF5";
@@ -81,6 +88,7 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
         position={position}
         onClick={() => {
           setIsClicked(!isClicked);
+          onClick();
         }}
       />
       {isClicked && (
