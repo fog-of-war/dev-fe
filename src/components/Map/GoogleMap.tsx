@@ -80,10 +80,11 @@ const Map = () => {
         },
         (error) => {
           console.error("현재 위치를 가져오는데 에러가 발생했습니다:", error);
+          toast.error("현재 위치를 가져오는데 에러가 발생했습니다.");
         }
       );
     } else {
-      console.error("이 브라우저에서는 위치 정보를 지원하지 않습니다.");
+      toast.error("이 브라우저에서는 위치 정보를 지원하지 않습니다.");
     }
   };
 
