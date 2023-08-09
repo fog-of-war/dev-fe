@@ -3,6 +3,7 @@
 import { useNavigate } from "react-router-dom";
 
 import ProgressBar from "../ProgressBar";
+import MainCardMap from "../Map/MainCardMap";
 
 const DUMMY_BADGES = [
   {
@@ -116,12 +117,17 @@ const MainCard = () => {
         </div>
         랭킹 5400위
       </div>
-      <div css={{ display: "flex", justifyContent: "center" }}>
-        <img
-          src="/images/main/map.png"
-          alt="맵"
-          css={{ width: 344, height: 288 }}
-        />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: 300,
+          height: 300,
+          margin: "0 auto",
+        }}
+      >
+        <MainCardMap />
       </div>
       <div onClick={() => navigate("/badgeList")}>
         <div
