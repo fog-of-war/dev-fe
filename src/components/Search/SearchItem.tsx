@@ -3,16 +3,25 @@ import { Search } from "../../types/types";
 import colors from "../../constants/colors";
 
 import B1 from "../UI/B1";
+import { useSetRecoilState } from "recoil";
+import { searchState } from "../../store/searchAtom";
 
 interface SearchItemProps {
   search: Search;
-  handleSearchDelete: () => void;
 }
 
-const SearchItem = ({ search, handleSearchDelete }: SearchItemProps) => {
+const SearchItem = ({ search }: SearchItemProps) => {
+  const setRecentSearches = useSetRecoilState(searchState);
+
+  const handleSearchDelete = () => {
+    setRecentSearches((prev: Search[]) =>
+      prev.filter((item) => item.id !== search.id)
+    );
+  };
+
   return (
-    <SearchItemContainer key={search.id}>
-      <IconContainer>
+    <SearchItemContainer>
+      <SearchContentWrapper>
         <div>
           <img
             src={
@@ -24,7 +33,7 @@ const SearchItem = ({ search, handleSearchDelete }: SearchItemProps) => {
           />
         </div>
         <B1 css={{ fontWeight: "400" }}>{search.search}</B1>
-      </IconContainer>
+      </SearchContentWrapper>
       <DeleteButton onClick={handleSearchDelete}>
         <img src="/images/search/xIcon.png" alt="icon" height={12} />
       </DeleteButton>
@@ -34,15 +43,15 @@ const SearchItem = ({ search, handleSearchDelete }: SearchItemProps) => {
 
 export default SearchItem;
 
-const SearchItemContainer = styled.li`
+export const SearchItemContainer = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 12px 20px;
-  border-bottom: 1px solid ${colors.lightGrey};
+  border-bottom: 0.5px solid ${colors.paleGrey};
 `;
 
-const IconContainer = styled.div`
+export const SearchContentWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;

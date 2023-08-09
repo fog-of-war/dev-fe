@@ -2,12 +2,12 @@
 
 import colors from "../../constants/colors";
 
-interface TagButtonProps extends React.HTMLAttributes<HTMLDivElement> {
+interface TagButtonProps extends React.HTMLAttributes<HTMLLIElement> {
   children?: React.ReactNode;
   icon?: string;
 }
 
-const TagButton = ({ icon, children }: TagButtonProps) => {
+const TagButton = ({ icon, children, ...props }: TagButtonProps) => {
   return (
     <li
       css={{
@@ -20,6 +20,7 @@ const TagButton = ({ icon, children }: TagButtonProps) => {
         boxShadow: "0px 0px 3px 0px rgba(0, 0, 0, 0.3)",
         background: "#fff",
       }}
+      {...props}
     >
       <img
         src={icon}

@@ -6,15 +6,18 @@ import { theme } from "./constants/theme";
 
 import AppRoutes from "./routes";
 import Layout from "./components/Layout/Layout";
+import { RecoilRoot } from "recoil";
 
 function App() {
   return (
     <Router>
-      <ThemeProvider theme={theme}>
-        <Layout>
-          <AppRoutes />
-        </Layout>
-      </ThemeProvider>
+      <RecoilRoot>
+        <ThemeProvider theme={theme}>
+          <Layout>
+            <AppRoutes />
+          </Layout>
+        </ThemeProvider>
+      </RecoilRoot>
     </Router>
   );
 }
