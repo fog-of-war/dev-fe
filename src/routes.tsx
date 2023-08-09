@@ -4,7 +4,7 @@ import MyPage from "./pages/MyPage";
 import AuthPage from "./pages/auth/AuthPage";
 import ProfileSetupPage from "./pages/auth/ProfileSetupPage";
 import ReviewPage from "./pages/ReviewPage";
-// import MapPage from "./pages/MapPage";
+import MapPage from "./pages/MapPage";
 import RankingPage from "./pages/RankingPage";
 import ProfileEditPage from "./pages/ProfileEditPage";
 import BadgeListPage from "./pages/BadgeListPage";
@@ -17,7 +17,7 @@ const AppRoutes = () => {
       <Route path="/" Component={Home} />
       <Route path="/profile" Component={MyPage} />
       <Route path="/profile_edit" Component={ProfileEditPage} />
-      {/* <Route path="/map" Component={MapPage} /> */}
+      <Route path="/map" Component={MapPage} />
       <Route path="/reviewList" Component={ReviewPage} />
       <Route path="/ranking" Component={RankingPage} />
       <Route path="/badgeList" Component={BadgeListPage} />
