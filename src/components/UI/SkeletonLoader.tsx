@@ -14,7 +14,7 @@ const SkeletonLoader = ({
       css={{
         width: width,
         height: height,
-        borderRadius: "10px",
+        borderRadius: "20px",
         border: "1px solid #d0d0d0",
         backgroundColor: "#f2f2f2",
         position: "relative",
