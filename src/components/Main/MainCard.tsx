@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSpring, animated } from "react-spring";
 
 import ProgressBar from "../ProgressBar";
 import MainCardMap from "../Map/MainCardMap";
@@ -30,6 +32,22 @@ const DUMMY_BADGES = [
 
 const MainCard = () => {
   const navigate = useNavigate();
+
+  const [fogVisible, setFogVisible] = useState(false);
+
+  useEffect(() => {
+    setFogVisible(true);
+  }, []);
+
+  const fogTopAnimation = useSpring({
+    transform: fogVisible ? "translateX(0)" : "translateX(-300px)",
+    config: { duration: 1000 },
+  });
+
+  const fogBottomAnimation = useSpring({
+    transform: fogVisible ? "translateX(0)" : "translateX(300px)",
+    config: { duration: 1000 },
+  });
 
   // 작은 글자 스타일
   const smallTextStyle = {
@@ -119,16 +137,56 @@ const MainCard = () => {
       </div>
       <div
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+          position: "relative",
           width: 300,
           height: 300,
           margin: "0 auto",
+          overflow: "hidden",
+        }}
+        onClick={() => {
+          navigate("/map");
         }}
       >
-        <MainCardMap />
+        <animated.img
+          src="/images/map/fogTop.png"
+          alt="안개 탑 이미지"
+          style={{
+            ...fogTopAnimation,
+            position: "absolute",
+            top: 10,
+            left: 0,
+            width: 300,
+            height: 200,
+            zIndex: 2,
+          }}
+        />
+        <animated.img
+          src="/images/map/fogBottom.png"
+          alt="안개 바텀 이미지"
+          style={{
+            ...fogBottomAnimation,
+            position: "absolute",
+            top: 100,
+            left: 10,
+            width: 300,
+            height: 200,
+            zIndex: 2,
+          }}
+        />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: 300,
+            height: 300,
+            zIndex: 1,
+          }}
+        >
+          <MainCardMap />
+        </div>
       </div>
+
       <div
         css={{
           width: "100%",

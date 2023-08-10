@@ -87,6 +87,7 @@ const MainCardMap = () => {
             keyboardShortcuts: false, // 키보드 단축키 비활성화
             scaleControl: false, // 스케일 컨트롤 숨기기
             zoomControl: false, // 확대 축소 버튼 숨기기
+            gestureHandling: "none", // 제스처 핸들링 비활성화
           }}
           onLoad={(map) => {
             mapRef.current = map;
