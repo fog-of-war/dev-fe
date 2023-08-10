@@ -24,7 +24,7 @@ const AppRoutes = () => {
       <Route path="/edit/search" Component={EditRecentSearchPage} />
       <Route path="/search/result" Component={SearchResultPage} />
       <Route path="/profile_edit" Component={ProfileEditPage} />
-      <Route path="/map" Component={MapPage} />
+      {/* <Route path="/map" Component={Map} /> */}
       <Route path="/reviewList" Component={ReviewPage} />
       <Route path="/ranking" Component={RankingPage} />
       <Route path="/badgeList" Component={BadgeListPage} />

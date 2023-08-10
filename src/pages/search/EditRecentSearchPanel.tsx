@@ -7,7 +7,7 @@ import { useState } from "react";
 import colors from "../../constants/colors";
 import styled from "@emotion/styled";
 
-import { SearchList } from "../../components/Map/RecentSearchesPanel";
+import { SearchList } from "../../components/Search/RecentSearchesPanel";
 import { Search } from "../../types/types";
 import BackButton from "../../components/UI/BackButton";
 import EditSearchItem from "../../components/Search/EditSearchItem";

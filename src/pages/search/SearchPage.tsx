@@ -8,8 +8,8 @@ import { useLocation } from "react-router-dom";
 
 import SearchBar from "../../components/Search/SearchBar";
 import TagButtonList from "../../components/Map/TagButtonList";
-import SearchResultPanel from "../../components/Map/SearchResultPanel";
-import RecentSearchesPanel from "../../components/Map/RecentSearchesPanel";
+import RecentSearchesPanel from "../../components/Search/RecentSearchesPanel";
+import SearchResultPanel from "../../components/Search/SearchResultPanel";
 
 const SearchPage = () => {
   const { inputValue, handleSearchMap, setInputValue } = useSearchMap();
