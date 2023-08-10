@@ -94,7 +94,7 @@ const RecommendLocation = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              borderRadius: "25px",
+              borderRadius: "20px",
               fontSize: "16px",
               textShadow: "1px 1px 2px rgba(0, 0, 0, 1)",
               fontWeight: 600,
