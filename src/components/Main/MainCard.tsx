@@ -131,7 +131,7 @@ const MainCard = () => {
           alt="안개 탑 이미지"
           style={{
             position: "absolute",
-            top: 30,
+            top: 10,
             left: 0,
             width: 300,
             height: 200,
@@ -143,7 +143,7 @@ const MainCard = () => {
           alt="안개 바텀 이미지"
           style={{
             position: "absolute",
-            top: 70,
+            top: 100,
             left: 10,
             width: 300,
             height: 200,
