@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSpring, animated } from "react-spring";
 
 import ProgressBar from "../ProgressBar";
 import MainCardMap from "../Map/MainCardMap";
@@ -30,6 +32,22 @@ const DUMMY_BADGES = [
 
 const MainCard = () => {
   const navigate = useNavigate();
+
+  const [fogVisible, setFogVisible] = useState(false);
+
+  useEffect(() => {
+    setFogVisible(true);
+  }, []);
+
+  const fogTopAnimation = useSpring({
+    transform: fogVisible ? "translateX(0)" : "translateX(-300px)",
+    config: { duration: 1000 },
+  });
+
+  const fogBottomAnimation = useSpring({
+    transform: fogVisible ? "translateX(0)" : "translateX(300px)",
+    config: { duration: 1000 },
+  });
 
   // 작은 글자 스타일
   const smallTextStyle = {
@@ -123,13 +141,17 @@ const MainCard = () => {
           width: 300,
           height: 300,
           margin: "0 auto",
+          overflow: "hidden",
         }}
-        onClick={() => navigate("/map")}
+        onClick={() => {
+          navigate("/map");
+        }}
       >
-        <img
+        <animated.img
           src="/images/map/fogTop.png"
           alt="안개 탑 이미지"
           style={{
+            ...fogTopAnimation,
             position: "absolute",
             top: 10,
             left: 0,
@@ -138,10 +160,11 @@ const MainCard = () => {
             zIndex: 2,
           }}
         />
-        <img
+        <animated.img
           src="/images/map/fogBottom.png"
           alt="안개 바텀 이미지"
           style={{
+            ...fogBottomAnimation,
             position: "absolute",
             top: 100,
             left: 10,
