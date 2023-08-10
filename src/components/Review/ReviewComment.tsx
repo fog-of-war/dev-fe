@@ -36,11 +36,11 @@ const ReviewComment = ({
             width: "100%",
             height: "100%",
             minHeight: "100px",
-            border: `1px solid ${colors.primary}`,
+            border: `2px solid ${colors.accent}`,
             borderRadius: "5px",
             fontSize: "16px",
             fontFamily: "inherit",
-            color: colors.subFont,
+            color: colors.darkGrey,
             resize: "none",
             outline: "none",
             "&::-webkit-scrollbar": {
@@ -54,7 +54,7 @@ const ReviewComment = ({
               backgroundColor: "#ededed",
               borderRadius: "10px",
             },
-            borderColor: isCommentChanged ? colors.secondary : undefined,
+            borderColor: isCommentChanged ? colors.primary : undefined,
           }}
           maxLength={140}
           value={editedComment}

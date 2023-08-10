@@ -21,7 +21,7 @@ const SeoulPolygon: React.FC<SeoulPolygonProps> = ({
     <Polygon
       paths={path}
       options={{
-        fillColor: "#222",
+        fillColor: "#15473E",
         fillOpacity: opacity,
         strokeColor: "#555",
         strokeOpacity: 1,

@@ -29,3 +29,18 @@ export interface Search {
   search: string;
   type: string;
 }
+
+export interface Badge {
+  id: number;
+  name: string;
+  category: string;
+  requirement: number;
+  description: string;
+  imageUrl: string;
+  isAcquired: boolean;
+}
+
+export interface BadgeListProps {
+  badges: Badge[];
+  showAllBadges: boolean;
+}

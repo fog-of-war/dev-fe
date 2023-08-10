@@ -1,7 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import { GoogleMap, LoadScriptNext } from "@react-google-maps/api";
 
+import { toast } from "react-hot-toast";
 import seoulData from "../../data/seoul2.json";
 import retroMapStyle from "../../data/retroMapStyle.json";
 import { defaultCenter, bounds, options } from "../../data/mapData";
@@ -10,11 +12,21 @@ import SeoulPolygon from "./SeoulPolygon";
 import BlackPolygon from "./BlackPolygon";
 import CustomMarker from "./CustomMarker";
 
+// Marker 데이터 인터페이스 정의
+interface MarkerData {
+  position: google.maps.LatLngLiteral;
+  placeName: string;
+  roadAddress: string;
+  category: string;
+}
+
+// 컨테이너 크기 정의
 const containerStyle = {
   width: "100%",
   height: "100%",
 };
 
+// 숭례문 좌표
 const seongnyemunLocation = {
   lat: 37.55999955137636,
   lng: 126.97530447956169,
@@ -40,7 +52,17 @@ const Map = () => {
   // 현재의 확대 레벨을 추적하는 상태
   const [zoomLevel, setZoomLevel] = useState(11);
 
-  function getCentroid(coords: any[]) {
+  // 마커 데이터 상태 관리
+  const [markers, setMarkers] = useState<MarkerData[]>([]);
+
+  // 마커 클릭 시 정보창을 열기 위한 상태
+  const [openMarkerIndex, setOpenMarkerIndex] = useState<number | null>(null);
+
+  // 카테고리 상태 관리 아직 사용하지 않음
+  const categories = ["역사", "미술관", "커피", "맛집", "스포스시설"];
+
+  // 중심점을 기준으로 지도의 확대 레벨을 변경하는 함수
+  const getCentroid = (coords: any[]) => {
     let center = coords.reduce(
       (x, y) => {
         return [x[0] + y.lng / coords.length, x[1] + y.lat / coords.length];
@@ -48,7 +70,7 @@ const Map = () => {
       [0, 0]
     );
     return { lat: center[1], lng: center[0] };
-  }
+  };
 
   // 사용자의 현재 위치로 이동하는 함수
   const handleCurrentLocationClick = () => {
@@ -61,10 +83,54 @@ const Map = () => {
         },
         (error) => {
           console.error("현재 위치를 가져오는데 에러가 발생했습니다:", error);
+          toast.error("현재 위치를 가져오는데 에러가 발생했습니다.");
         }
       );
     } else {
-      console.error("이 브라우저에서는 위치 정보를 지원하지 않습니다.");
+      toast.error("이 브라우저에서는 위치 정보를 지원하지 않습니다.");
+    }
+  };
+
+  // 음식점 검색 및 마커 데이터 업데이트 함수
+  const handleSearch = async () => {
+    try {
+      const category = "스포츠시설";
+
+      const response = await axios.get(
+        `https://dapi.kakao.com/v2/local/search/keyword.json?y=${defaultCenter.lat}&x=${defaultCenter.lng}&radius=2000`,
+        {
+          headers: {
+            Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_API_KEY}`,
+          },
+          params: {
+            query: category,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        const data = response.data;
+        console.log(data);
+        // API에서 받아온 데이터를 기반으로 마커 데이터 생성
+        const newMarkers: MarkerData[] = data.documents.map(
+          (document: any) => ({
+            position: {
+              lat: parseFloat(document.y),
+              lng: parseFloat(document.x),
+            },
+            placeName: document.place_name,
+            roadAddress: document.road_address_name,
+            category: category,
+          })
+        );
+        // 마커 데이터 업데이트
+        setMarkers(newMarkers);
+      } else {
+        toast.error("API 호출 중 오류 발생");
+      }
+    } catch (error) {
+      toast.error("API 호출 중 오류 발생");
+      console.error("오류 발생:", error);
     }
   };
 
@@ -95,6 +161,11 @@ const Map = () => {
 
     return () => setPolygons([]);
   }, [zoomLevel]);
+
+  useEffect(() => {
+    // 컴포넌트가 마운트되었을 때 음식점 검색 및 마커 업데이트 실행
+    handleSearch();
+  }, []);
 
   return (
     <div
@@ -131,7 +202,25 @@ const Map = () => {
           }}
         >
           <BlackPolygon />
-          <CustomMarker position={seongnyemunLocation} />
+          {/* 마커 렌더링 */}
+          {zoomLevel >= 14 &&
+            markers.map((marker, index) => (
+              <CustomMarker
+                key={index}
+                position={marker.position}
+                placeName={marker.placeName}
+                roadAddress={marker.roadAddress}
+                category={marker.category}
+                isMarkerOpen={index === openMarkerIndex}
+                onClick={() => {
+                  if (openMarkerIndex === index) {
+                    setOpenMarkerIndex(null);
+                  } else {
+                    setOpenMarkerIndex(index);
+                  }
+                }}
+              />
+            ))}
           {polygons.map((polygon, index) => (
             <SeoulPolygon
               key={index}

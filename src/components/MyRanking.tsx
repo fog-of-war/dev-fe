@@ -6,20 +6,17 @@ import Title from "./Title";
 
 const DUMMY_DATA = [
   {
-    image:
-      "https://i.namu.wiki/i/yVl7fn_IBAp2giYJhk-pRn9C1b8po7VCoD7-HemHRX0Ahp6E9VKMvUUHrKYnO-cJvqBGlsXWroRuHF_TEEi-VWzrHFPKTFXOSAqE-tiIqlobtj0LynjnzXxqjuuCR2n4r_gLmz_7Iz2w5Zdl9IbMWg.webp",
+    image: "https://source.unsplash.com/random",
     ranking: 1,
     district: "강남구",
   },
   {
-    image:
-      "https://i.namu.wiki/i/yVl7fn_IBAp2giYJhk-pRn9C1b8po7VCoD7-HemHRX0Ahp6E9VKMvUUHrKYnO-cJvqBGlsXWroRuHF_TEEi-VWzrHFPKTFXOSAqE-tiIqlobtj0LynjnzXxqjuuCR2n4r_gLmz_7Iz2w5Zdl9IbMWg.webp",
+    image: "https://source.unsplash.com/random",
     ranking: 10,
     district: "강서구",
   },
   {
-    image:
-      "https://i.namu.wiki/i/yVl7fn_IBAp2giYJhk-pRn9C1b8po7VCoD7-HemHRX0Ahp6E9VKMvUUHrKYnO-cJvqBGlsXWroRuHF_TEEi-VWzrHFPKTFXOSAqE-tiIqlobtj0LynjnzXxqjuuCR2n4r_gLmz_7Iz2w5Zdl9IbMWg.webp",
+    image: "https://source.unsplash.com/random",
     ranking: 32,
     district: "양천구",
   },

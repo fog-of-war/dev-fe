@@ -9,6 +9,8 @@ import ExplorePage from "./pages/ExplorePage";
 import SearchPage from "./pages/search/SearchPage";
 import EditRecentSearchPage from "./pages/search/EditRecentSearchPanel";
 import SearchResultPage from "./pages/search/SearchResultPage";
+import ProfileEditPage from "./pages/ProfileEditPage";
+import BadgeListPage from "./pages/BadgeListPage";
 
 const AppRoutes = () => {
   return (
@@ -21,8 +23,11 @@ const AppRoutes = () => {
       <Route path="/search" Component={SearchPage} />
       <Route path="/edit/search" Component={EditRecentSearchPage} />
       <Route path="/search/result" Component={SearchResultPage} />
+      <Route path="/profile_edit" Component={ProfileEditPage} />
+      <Route path="/map" Component={MapPage} />
       <Route path="/reviewList" Component={ReviewPage} />
       <Route path="/ranking" Component={RankingPage} />
+      <Route path="/badgeList" Component={BadgeListPage} />
     </Routes>
   );
 };

@@ -1,6 +1,9 @@
 /** @jsxImportSource @emotion/react */
 
+import { useNavigate } from "react-router-dom";
+
 import ProgressBar from "../ProgressBar";
+import MainCardMap from "../Map/MainCardMap";
 
 const DUMMY_BADGES = [
   {
@@ -26,6 +29,8 @@ const DUMMY_BADGES = [
 ];
 
 const MainCard = () => {
+  const navigate = useNavigate();
+
   // 작은 글자 스타일
   const smallTextStyle = {
     display: "flex",
@@ -112,46 +117,62 @@ const MainCard = () => {
         </div>
         랭킹 5400위
       </div>
-      <div css={{ display: "flex", justifyContent: "center" }}>
-        <img
-          src="/images/main/map.png"
-          alt="맵"
-          css={{ width: 344, height: 288 }}
-        />
-      </div>
       <div
-        css={{
+        style={{
           display: "flex",
+          justifyContent: "center",
           alignItems: "center",
-          color: "#53AF7B",
-          fontWeight: "bold",
-          fontSize: 20,
-          marginBottom: 10,
+          width: 300,
+          height: 300,
+          margin: "0 auto",
         }}
       >
-        <img
-          src="/images/main/badgeIcon.png"
-          alt="뱃지 아이콘"
-          css={{ width: 18, height: 22, marginRight: 5 }}
-        />
-        뱃지
+        <MainCardMap />
       </div>
       <div
         css={{
-          display: "grid",
-          gridTemplateColumns: "repeat(5, 1fr)",
-          gap: 10,
-          marginTop: 10,
+          width: "100%",
+          height: 30,
+          backgroundColor: "#E4F6ED",
+          marginTop: -25,
+          zIndex: 1,
         }}
-      >
-        {DUMMY_BADGES.map((badge, index) => (
+      ></div>
+      <div onClick={() => navigate("/badgeList")}>
+        <div
+          css={{
+            display: "flex",
+            alignItems: "center",
+            color: "#53AF7B",
+            fontWeight: "bold",
+            fontSize: 20,
+            marginBottom: 10,
+          }}
+        >
           <img
-            key={index}
-            src={badge.imageUrl}
-            alt={badge.badgeName}
-            css={{ width: 56, aspectRatio: 1 }}
+            src="/images/main/badgeIcon.png"
+            alt="뱃지 아이콘"
+            css={{ width: 18, height: 22, marginRight: 5 }}
           />
-        ))}
+          뱃지
+        </div>
+        <div
+          css={{
+            display: "grid",
+            gridTemplateColumns: "repeat(5, 1fr)",
+            gap: 10,
+            marginTop: 10,
+          }}
+        >
+          {DUMMY_BADGES.map((badge, index) => (
+            <img
+              key={index}
+              src={badge.imageUrl}
+              alt={badge.badgeName}
+              css={{ width: 56, aspectRatio: 1 }}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

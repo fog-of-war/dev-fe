@@ -21,7 +21,7 @@ const Title = ({ text, size = "medium", icon, ...props }: TitleProps) => {
       {icon && <img src={icon} alt={icon} height={22} />}
       <h2
         css={{
-          color: colors.darkGrey,
+          color: colors.secondary,
           fontWeight: "bold",
           ...TYPE_SIZES[size],
         }}
