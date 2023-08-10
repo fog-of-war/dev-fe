@@ -119,16 +119,39 @@ const MainCard = () => {
       </div>
       <div
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+          position: "relative", // 부모 요소를 relative로 설정
           width: 300,
           height: 300,
           margin: "0 auto",
         }}
+        onClick={() => navigate("/map")}
       >
-        <MainCardMap />
+        <img
+          src="/images/map/fog.png"
+          alt="안개 이미지"
+          style={{
+            position: "absolute", // 이미지를 absolute로 설정하여 부모 요소 내에서 위치 조정
+            top: 20,
+            left: 0,
+            width: 280,
+            height: 280,
+            zIndex: 2, // 이미지를 MainCardMap 위에 겹치도록 z-index 설정
+          }}
+        />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: 300,
+            height: 300,
+            zIndex: 2, // MainCardMap의 z-index를 설정하여 이미지 위에 표시되도록 함
+          }}
+        >
+          <MainCardMap />
+        </div>
       </div>
+
       <div
         css={{
           width: "100%",
