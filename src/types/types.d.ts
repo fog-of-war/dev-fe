@@ -42,4 +42,5 @@ export interface Badge {
 
 export interface BadgeListProps {
   badges: Badge[];
+  showAllBadges: boolean;
 }

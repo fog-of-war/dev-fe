@@ -16,8 +16,8 @@ type BadgeColors = {
 
 const badgeColors: BadgeColors = {
   미획득: {
-    background: "#cacaca",
-    border: "#a3a3a3",
+    background: "#d9d9d9",
+    border: "#aaaaaa",
   },
   "기본 칭호": {
     background: "#ddfcea",
@@ -71,6 +71,7 @@ const BadgeItem = ({ badge }: BadgeItemProps) => {
           borderRadius: "100%",
           border: `5px solid ${badgeColor.border}`,
           backgroundColor: badgeColor.background,
+          opacity: badge.isAcquired ? 1 : 0.5,
         }}
       >
         <img

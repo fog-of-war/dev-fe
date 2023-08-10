@@ -1,11 +1,16 @@
 /** @jsxImportSource @emotion/react */
 
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import ArtBadgeList from "../components/Badge/ArtBadgeList";
 import BaseBadgeList from "../components/Badge/BaseBadgeList";
 import CoffeeBadgeList from "../components/Badge/CoffeeBadgeList";
 import HistoryBadgeList from "../components/Badge/HistoryBadgeList";
 import FoodBadgeList from "../components/Badge/FoodBadgeList";
 import GymBadgeList from "../components/Badge/GymBadgeList";
+import BadgePageHeader from "../components/Badge/BadgePageHeader";
+import Button from "../components/UI/Button";
+import { Badge } from "../types/types";
 import colors from "../constants/colors";
 
 const DUMMY_BADGE = [
@@ -26,7 +31,7 @@ const DUMMY_BADGE = [
     requirement: 3,
     description: "장소 3개",
     imageUrl: "images/badge/시민.png",
-    isAcquired: false,
+    isAcquired: true,
   },
   {
     id: 3,
@@ -64,7 +69,7 @@ const DUMMY_BADGE = [
     requirement: 1,
     description: "맛집 1개",
     imageUrl: "images/badge/냠냠이.png",
-    isAcquired: false,
+    isAcquired: true,
   },
   {
     id: 7,
@@ -203,6 +208,19 @@ const DUMMY_BADGE = [
 ];
 
 const BadgeListPage = () => {
+  const [showAllBadges, setShowAllBadges] = useState<boolean>(true);
+
+  const filterBadges = (badges: Badge[]) => {
+    if (showAllBadges) {
+      return badges;
+    }
+    return badges.filter((badge) => badge.isAcquired);
+  };
+
+  const handleToggleClick = () => {
+    setShowAllBadges((prevState) => !prevState);
+  };
+
   const baseBadges = DUMMY_BADGE.filter(
     (badge) => badge.category === "기본 칭호"
   );
@@ -231,43 +249,81 @@ const BadgeListPage = () => {
         width: "100%",
         display: "flex",
         flexDirection: "column",
+        height: "100%",
         gap: "30px",
+        paddingTop: "40px",
       }}
     >
-      <div
-        css={{
-          display: "flex",
-          alignItems: "center",
-          marginLeft: "20px",
-          marginTop: "20px",
-          flexDirection: "row",
-          gap: "10px",
-        }}
-      >
-        <img
-          src="/images/badgeIcon.svg"
-          alt="badge_icon"
+      <BadgePageHeader
+        showAllBadges={showAllBadges}
+        handleToggleClick={handleToggleClick}
+        acquiredBadgesCount={acquiredBadgesCount}
+      />
+      <BaseBadgeList
+        badges={filterBadges(baseBadges)}
+        showAllBadges={showAllBadges}
+      />
+      <FoodBadgeList
+        badges={filterBadges(foodBadges)}
+        showAllBadges={showAllBadges}
+      />
+      <GymBadgeList
+        badges={filterBadges(exerciseBadges)}
+        showAllBadges={showAllBadges}
+      />
+      <ArtBadgeList
+        badges={filterBadges(artBadges)}
+        showAllBadges={showAllBadges}
+      />
+      <HistoryBadgeList
+        badges={filterBadges(historyBadges)}
+        showAllBadges={showAllBadges}
+      />
+      <CoffeeBadgeList
+        badges={filterBadges(coffeeBadges)}
+        showAllBadges={showAllBadges}
+      />
+      {!showAllBadges && (
+        <div
           css={{
-            width: "18px",
-            height: "22px",
-          }}
-        />
-        <span
-          css={{
-            color: colors.primary,
-            fontSize: "20px",
-            fontWeight: "bold",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: "30px",
+            flexDirection: "column",
+            gap: "20px",
+            width: "100%",
+            height: "100%",
           }}
         >
-          배지 획득 {acquiredBadgesCount}개
-        </span>
-      </div>
-      <BaseBadgeList badges={baseBadges} />
-      <FoodBadgeList badges={foodBadges} />
-      <GymBadgeList badges={exerciseBadges} />
-      <ArtBadgeList badges={artBadges} />
-      <HistoryBadgeList badges={historyBadges} />
-      <CoffeeBadgeList badges={coffeeBadges} />
+          <span
+            css={{
+              fontSize: "20px",
+              fontWeight: "bold",
+              color: colors.primary,
+            }}
+          >
+            목표를 달성하여 뱃지를 획득해보세요!
+          </span>
+          <Link
+            to="/map"
+            css={{
+              textDecoration: "none",
+            }}
+          >
+            <Button onClick={() => {}}>
+              <span
+                css={{
+                  fontSize: "18px",
+                  padding: "10px",
+                }}
+              >
+                목표 달성하러 가기
+              </span>
+            </Button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

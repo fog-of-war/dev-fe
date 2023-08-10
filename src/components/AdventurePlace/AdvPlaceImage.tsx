@@ -45,7 +45,7 @@ const AdvPlaceImage = ({ imageUrl, placeName }: AdvPlaceImageProps) => {
           width: "100%",
           height: "100%",
           objectFit: "cover",
-          borderRadius: "10px",
+          borderRadius: "20px",
           display: isLoading ? "block" : "none",
         }}
       />

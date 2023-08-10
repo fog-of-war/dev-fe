@@ -3,8 +3,10 @@
 import BadgeItem from "./BadgeItem";
 import { BadgeListProps } from "../../types/types";
 
-const CoffeeBadgeList = ({ badges }: BadgeListProps) => {
+const CoffeeBadgeList = ({ badges, showAllBadges }: BadgeListProps) => {
   const hasAcquiredBadge = badges.some((badge) => badge.isAcquired);
+
+  if (!showAllBadges && !hasAcquiredBadge) return null;
 
   return (
     <>

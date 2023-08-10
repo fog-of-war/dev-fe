@@ -1,20 +1,22 @@
 /** @jsxImportSource @emotion/react */
 import BackButton from "../UI/BackButton";
+import { useNavigate } from "react-router-dom";
 
 interface ReviewListHeaderProps {
   placeName: string;
   reviewCount?: number;
 }
 
-const handleBackButtonClick = () => {
-  console.log("back button clicked");
-  // 뒤로가기 로직
-};
-
 const ReviewListHeader = ({
   placeName,
   reviewCount,
 }: ReviewListHeaderProps) => {
+  const navigate = useNavigate();
+
+  const handleBackButtonClick = () => {
+    navigate(-1);
+  };
+
   return (
     <div
       css={{
@@ -33,7 +35,7 @@ const ReviewListHeader = ({
         css={{
           width: "10px",
           height: "20px",
-          paddingLeft: "20px",
+          paddingLeft: "30px",
         }}
       >
         <BackButton onClick={handleBackButtonClick} />
