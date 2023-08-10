@@ -53,7 +53,7 @@ const useSearchMap = () => {
         type: "keword",
       };
       updateRecentSearches(newRecentSearch);
-      navigate(`/search?query=${inputValue}`);
+      navigate(`/search/result?query=${inputValue}`);
       // 검색 로직
     }
   };
