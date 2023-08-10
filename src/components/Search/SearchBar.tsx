@@ -1,25 +1,28 @@
 /** @jsxImportSource @emotion/react */
 
 import { ForwardedRef, forwardRef } from "react";
+import BackButton from "../UI/BackButton";
+import { useNavigate } from "react-router-dom";
 
 interface SearchBarProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  inputValue: string;
+  inputValue?: string;
   placeholder?: string;
-  isSearchIcon?: boolean;
 }
 
 const SearchBar = forwardRef(
   (
-    { inputValue, placeholder, isSearchIcon, ...props }: SearchBarProps,
+    { inputValue, placeholder, ...props }: SearchBarProps,
     ref: ForwardedRef<HTMLInputElement>
   ) => {
+    const navigate = useNavigate();
+
     return (
       <div
         css={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          gap: 10,
+          gap: 20,
           width: "100%",
           height: "45px",
           padding: "0 20px",
@@ -29,13 +32,12 @@ const SearchBar = forwardRef(
           zIndex: 70,
         }}
       >
-        {isSearchIcon && (
-          <img
-            src="/images/searchIcon.png"
-            alt="search_icon"
-            css={{ height: 18 }}
-          />
-        )}
+        <BackButton
+          size={18}
+          onClick={() => {
+            navigate(-1);
+          }}
+        />
         <input
           type="text"
           value={inputValue}
