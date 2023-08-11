@@ -2,32 +2,38 @@ import colors from "../../constants/colors";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 
-const DUMMY_DATA = {
-  username: "여러분과함께라면행복",
-  profileText: "마포구 워렌버핏",
-  profileImage: "./images/dummyUserImage.png",
-  level: 3,
-  badgeIcon: "./images/badgeIcon.svg",
-};
+interface ProfileCardProps {
+  username?: string;
+  profileText?: string;
+  profileImage?: string;
+  level?: number;
+  badgeIcon?: string;
+}
 
-const ProfileCard = () => {
+const ProfileCard = ({
+  username,
+  profileText,
+  profileImage,
+  level,
+  badgeIcon,
+}: ProfileCardProps) => {
   const navigate = useNavigate();
 
   return (
     <ProfileCardWrapper>
       <ProfileImageContainer>
-        <ProfileLevelBox>Lv.{DUMMY_DATA.level}</ProfileLevelBox>
+        <ProfileLevelBox>Lv.{level}</ProfileLevelBox>
         <ProfileImgBox>
-          <ProfileImg src={DUMMY_DATA.profileImage} alt="profileImage" />
+          <ProfileImg src={profileImage} alt="profileImage" />
         </ProfileImgBox>
       </ProfileImageContainer>
       <ProfileInfoContainer>
         <ProfileBadgeContainer>
           <ProfileBadgeBox>
-            <img src={DUMMY_DATA.badgeIcon} alt="badgeIcon" />
+            <img src={badgeIcon} alt="badgeIcon" />
           </ProfileBadgeBox>
           <ProfileTextBox>
-            <span>{DUMMY_DATA.profileText}</span>
+            <span>{profileText}</span>
           </ProfileTextBox>
           <ProfileEditButton onClick={() => navigate("/profile_edit")}>
             <ProfileEditIcon
@@ -36,7 +42,7 @@ const ProfileCard = () => {
             />
           </ProfileEditButton>
         </ProfileBadgeContainer>
-        <ProfileNicknameBox>{DUMMY_DATA.username}</ProfileNicknameBox>
+        <ProfileNicknameBox>{username}</ProfileNicknameBox>
       </ProfileInfoContainer>
     </ProfileCardWrapper>
   );
