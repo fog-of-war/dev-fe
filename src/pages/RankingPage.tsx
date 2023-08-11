@@ -1,8 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import ProfileCard from "../components/ProfileCard/ProfileCard";
-import ProfileInfo from "../components/ProfileCard/ProfileInfo";
-import ProgressBar from "../components/ProgressBar";
+import UserProfile from "../components/ProfileCard/UserProfile";
 import MyRanking from "../components/MyRanking";
 import TotalRanking from "../components/Ranking/TotalRanking";
 import Title from "../components/Title";
@@ -46,9 +44,7 @@ const RankingPage = () => {
         gap: "20px",
       }}
     >
-      <ProfileCard />
-      <ProfileInfo />
-      <ProgressBar progress={80} />
+      <UserProfile />
       <div
         css={{
           marginTop: "10px",
