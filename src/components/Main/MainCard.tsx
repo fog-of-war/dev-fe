@@ -102,7 +102,7 @@ const MainCard = () => {
         </div>
         총탐험포인트
         <div css={{ width: "100%", marginLeft: 5, marginBottom: 18 }}>
-          <ProgressBar progress={60} />
+          <ProgressBar progress={60} level={3} />
         </div>
       </div>
       <div css={{ ...smallTextStyle, marginTop: -12 }}>

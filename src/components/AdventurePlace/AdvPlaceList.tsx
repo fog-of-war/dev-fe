@@ -1,8 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import colors from "../../constants/colors";
+
 import AdvPlaceTitle from "./AdvPlaceTitle";
 import AdvPlaceImage from "./AdvPlaceImage";
-import PlaceTitle from "../Certification/PlaceTitle";
 
 const DUMMY_PLACE = [
   {
