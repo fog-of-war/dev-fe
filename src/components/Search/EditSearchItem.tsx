@@ -1,5 +1,8 @@
 import { Search } from "../../types/types";
-import { SearchContentWrapper, SearchItemContainer } from "./SearchItem";
+import {
+  SearchContentWrapper,
+  RecentSearchItemContainer,
+} from "./RecentSearchItem";
 
 import B1 from "../UI/B1";
 
@@ -15,7 +18,7 @@ const EditSearchItem = ({
   handleClick,
 }: EditSearchItemProps) => {
   return (
-    <SearchItemContainer onClick={() => handleClick(search)}>
+    <RecentSearchItemContainer onClick={() => handleClick(search)}>
       <SearchContentWrapper>
         <div>
           <img
@@ -29,7 +32,7 @@ const EditSearchItem = ({
         </div>
         <B1 css={{ fontWeight: "400" }}>{search.search}</B1>
       </SearchContentWrapper>
-    </SearchItemContainer>
+    </RecentSearchItemContainer>
   );
 };
 

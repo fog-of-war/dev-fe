@@ -1,17 +1,19 @@
 import styled from "@emotion/styled";
 import { Search } from "../../types/types";
 import colors from "../../constants/colors";
-
-import B1 from "../UI/B1";
 import { useSetRecoilState } from "recoil";
 import { searchState } from "../../store/searchAtom";
+import { useNavigate } from "react-router-dom";
 
-interface SearchItemProps {
+import B1 from "../UI/B1";
+
+interface RecentSearchItemProps {
   search: Search;
 }
 
-const SearchItem = ({ search }: SearchItemProps) => {
+const RecentSearchItem = ({ search }: RecentSearchItemProps) => {
   const setRecentSearches = useSetRecoilState(searchState);
+  const navigate = useNavigate();
 
   const handleSearchDelete = () => {
     setRecentSearches((prev: Search[]) =>
@@ -20,8 +22,10 @@ const SearchItem = ({ search }: SearchItemProps) => {
   };
 
   return (
-    <SearchItemContainer>
-      <SearchContentWrapper>
+    <RecentSearchItemContainer>
+      <SearchContentWrapper
+        onClick={() => navigate(`/search/result?query=${search.search}`)}
+      >
         <div>
           <img
             src={
@@ -32,18 +36,18 @@ const SearchItem = ({ search }: SearchItemProps) => {
             alt="icon"
           />
         </div>
-        <B1 css={{ fontWeight: "400" }}>{search.search}</B1>
+        <B1 css={{ fontWeight: "400", flexGrow: 1 }}>{search.search}</B1>
       </SearchContentWrapper>
       <DeleteButton onClick={handleSearchDelete}>
         <img src="/images/search/xIcon.png" alt="icon" height={12} />
       </DeleteButton>
-    </SearchItemContainer>
+    </RecentSearchItemContainer>
   );
 };
 
-export default SearchItem;
+export default RecentSearchItem;
 
-export const SearchItemContainer = styled.li`
+export const RecentSearchItemContainer = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -54,6 +58,8 @@ export const SearchItemContainer = styled.li`
 export const SearchContentWrapper = styled.div`
   display: flex;
   align-items: center;
+  justify-content: start;
+  flex-grow: 1;
   gap: 16px;
 
   div {

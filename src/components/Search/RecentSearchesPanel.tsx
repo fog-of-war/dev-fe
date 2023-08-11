@@ -8,7 +8,7 @@ import { Search } from "../../types/types";
 import { useNavigate } from "react-router-dom";
 
 import B2 from "../UI/B2";
-import SearchItem from "../Search/SearchItem";
+import SearchItem from "./RecentSearchItem";
 
 const RecentSearchesPanel = () => {
   const recentSearches = useRecoilValue(searchState);

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import ProgressBar from "../ProgressBar";
 import MainCardMap from "../Map/MainCardMap";
+import { useEffect, useState } from "react";
 
 const DUMMY_BADGES = [
   {
@@ -31,6 +32,12 @@ const DUMMY_BADGES = [
 const MainCard = () => {
   const navigate = useNavigate();
 
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
   // 작은 글자 스타일
   const smallTextStyle = {
     display: "flex",
@@ -50,6 +57,7 @@ const MainCard = () => {
         width: "100%",
         backgroundColor: "#E4F6ED",
         padding: 20,
+        overflow: "hidden",
       }}
     >
       <div
@@ -119,16 +127,64 @@ const MainCard = () => {
       </div>
       <div
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+          position: "relative",
           width: 300,
           height: 300,
           margin: "0 auto",
         }}
+        onClick={() => {
+          setIsLoaded(false);
+          setTimeout(() => {
+            navigate("/map");
+          }, 500);
+        }}
       >
-        <MainCardMap />
+        <div>
+          <img
+            src="/images/map/fogTop.png"
+            alt="안개 탑 이미지"
+            style={{
+              position: "absolute",
+              top: 10,
+              left: 0,
+              width: 300,
+              height: 200,
+              zIndex: 2,
+              transition: "transform 0.5s",
+              transform: `translateX(${isLoaded ? 0 : -300}px)`, // 애니메이션 적용
+            }}
+          />
+        </div>
+        <div>
+          <img
+            src="/images/map/fogBottom.png"
+            alt="안개 바텀 이미지"
+            style={{
+              position: "absolute",
+              top: 100,
+              left: 10,
+              width: 300,
+              height: 200,
+              zIndex: 2,
+              transition: "transform 0.5s",
+              transform: `translateX(${isLoaded ? 0 : 300}px)`, // 애니메이션 적용
+            }}
+          />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: 300,
+            height: 300,
+            zIndex: 1,
+          }}
+        >
+          <MainCardMap />
+        </div>
       </div>
+
       <div
         css={{
           width: "100%",
