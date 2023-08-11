@@ -57,6 +57,7 @@ const MainCard = () => {
         width: "100%",
         backgroundColor: "#E4F6ED",
         padding: 20,
+        overflow: "hidden",
       }}
     >
       <div
@@ -130,7 +131,6 @@ const MainCard = () => {
           width: 300,
           height: 300,
           margin: "0 auto",
-          overflow: "hidden",
         }}
         onClick={() => {
           setIsLoaded(false);
