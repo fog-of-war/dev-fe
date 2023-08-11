@@ -7,16 +7,21 @@ import { theme } from "./constants/theme";
 import AppRoutes from "./routes";
 import Layout from "./components/Layout/Layout";
 import { RecoilRoot } from "recoil";
+import { LoadingProvider } from "./context/LoadingContext";
+import LoadingComponent from "./components/UI/LoadingComponent";
 
 function App() {
   return (
     <Router>
       <RecoilRoot>
-        <ThemeProvider theme={theme}>
-          <Layout>
-            <AppRoutes />
-          </Layout>
-        </ThemeProvider>
+        <LoadingProvider>
+          <ThemeProvider theme={theme}>
+            <Layout>
+              <AppRoutes />
+              <LoadingComponent />
+            </Layout>
+          </ThemeProvider>
+        </LoadingProvider>
       </RecoilRoot>
     </Router>
   );
