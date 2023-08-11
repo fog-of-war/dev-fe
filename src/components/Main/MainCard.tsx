@@ -1,11 +1,10 @@
 /** @jsxImportSource @emotion/react */
 
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useSpring, animated } from "react-spring";
 
 import ProgressBar from "../ProgressBar";
 import MainCardMap from "../Map/MainCardMap";
+import { useEffect, useState } from "react";
 
 const DUMMY_BADGES = [
   {
@@ -33,31 +32,11 @@ const DUMMY_BADGES = [
 const MainCard = () => {
   const navigate = useNavigate();
 
-  const [fogVisible, setFogVisible] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    setFogVisible(true);
+    setIsLoaded(true);
   }, []);
-
-  const fogTopAnimation = useSpring({
-    transform: fogVisible ? "translateX(0)" : "translateX(-300px)",
-    config: { duration: 1000 },
-  });
-
-  const fogBottomAnimation = useSpring({
-    transform: fogVisible ? "translateX(0)" : "translateX(300px)",
-    config: { duration: 1000 },
-  });
-
-  const fadeInfogTopAnimation = useSpring({
-    transform: !fogVisible ? "translateX(-300px)" : "translateX(0)",
-    config: { duration: 1000 },
-  });
-
-  const fadeOutfogBottomAnimation = useSpring({
-    transform: !fogVisible ? "translateX(300px)" : "translateX(0)",
-    config: { duration: 1000 },
-  });
 
   // 작은 글자 스타일
   const smallTextStyle = {
@@ -91,7 +70,7 @@ const MainCard = () => {
             width: 40,
             height: 40,
             borderRadius: "100%",
-            border: "2px solid #53AF7B",
+            border: "3px solid #53AF7B",
             overflow: "hidden",
             marginRight: 5,
           }}
@@ -107,7 +86,6 @@ const MainCard = () => {
             fontSize: 22,
             color: "#53AF7B",
             fontWeight: 600,
-            marginBottom: 3,
           }}
         >
           여러분과함께라면행복해
@@ -155,38 +133,44 @@ const MainCard = () => {
           overflow: "hidden",
         }}
         onClick={() => {
-          setFogVisible(false);
-          setTimeout(() => navigate("/map"), 2000);
+          setIsLoaded(false);
+          setTimeout(() => {
+            navigate("/map");
+          }, 500);
         }}
       >
-        <animated.img
-          src="/images/map/fogTop.png"
-          alt="안개 탑 이미지"
-          style={{
-            ...fogTopAnimation,
-            ...fadeInfogTopAnimation,
-            position: "absolute",
-            top: 10,
-            left: 0,
-            width: 300,
-            height: 200,
-            zIndex: 2,
-          }}
-        />
-        <animated.img
-          src="/images/map/fogBottom.png"
-          alt="안개 바텀 이미지"
-          style={{
-            ...fogBottomAnimation,
-            ...fadeOutfogBottomAnimation,
-            position: "absolute",
-            top: 100,
-            left: 10,
-            width: 300,
-            height: 200,
-            zIndex: 2,
-          }}
-        />
+        <div>
+          <img
+            src="/images/map/fogTop.png"
+            alt="안개 탑 이미지"
+            style={{
+              position: "absolute",
+              top: 10,
+              left: 0,
+              width: 300,
+              height: 200,
+              zIndex: 2,
+              transition: "transform 0.5s",
+              transform: `translateX(${isLoaded ? 0 : -300}px)`, // 애니메이션 적용
+            }}
+          />
+        </div>
+        <div>
+          <img
+            src="/images/map/fogBottom.png"
+            alt="안개 바텀 이미지"
+            style={{
+              position: "absolute",
+              top: 100,
+              left: 10,
+              width: 300,
+              height: 200,
+              zIndex: 2,
+              transition: "transform 0.5s",
+              transform: `translateX(${isLoaded ? 0 : 300}px)`, // 애니메이션 적용
+            }}
+          />
+        </div>
         <div
           style={{
             display: "flex",
