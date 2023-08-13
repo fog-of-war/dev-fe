@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+
 import Home from "./pages/Home";
 import MyPage from "./pages/MyPage";
 import AuthPage from "./pages/auth/AuthPage";
@@ -7,7 +8,7 @@ import ReviewPage from "./pages/ReviewPage";
 import RankingPage from "./pages/RankingPage";
 import ExplorePage from "./pages/ExplorePage";
 import SearchPage from "./pages/search/SearchPage";
-import EditRecentSearchPage from "./pages/search/EditRecentSearchPanel";
+import EditRecentSearchPage from "./pages/search/EditRecentSearchPage";
 import SearchResultPage from "./pages/search/SearchResultPage";
 import ProfileEditPage from "./pages/ProfileEditPage";
 import BadgeListPage from "./pages/BadgeListPage";

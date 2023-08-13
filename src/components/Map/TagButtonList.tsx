@@ -62,7 +62,7 @@ const TagButtonList = () => {
           <TagButton
             key={tag.id}
             icon={tag.icon}
-            onClick={() => navigate(`/search?query=${tag.name}`)}
+            onClick={() => navigate(`/search/result?query=${tag.name}`)}
           >
             {tag.name}
           </TagButton>

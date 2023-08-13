@@ -9,12 +9,16 @@ import styled from "@emotion/styled";
 
 import { SearchList } from "../../components/Search/RecentSearchesPanel";
 import { Search } from "../../types/types";
+import useModal from "../../hooks/useModal";
+
 import BackButton from "../../components/UI/BackButton";
 import EditSearchItem from "../../components/Search/EditSearchItem";
 import Button from "../../components/UI/Button";
+import RecentSearchesDeleteModal from "../../components/Search/RecentSearchesDeleteModal";
 
 const EditRecentSearchPage = () => {
   const navigate = useNavigate();
+  const modal = useModal();
   const [recentSearches, setRecentSearches] = useRecoilState(searchState);
   const [selectedSearches, setSelectedSearches] = useState<Search[]>([]);
 
@@ -39,10 +43,17 @@ const EditRecentSearchPage = () => {
       prev.filter((search) => !selectedSearches.includes(search))
     );
     setSelectedSearches([]);
+    modal.handleClose();
   };
 
   return (
     <Layout>
+      {modal.isOpen && (
+        <RecentSearchesDeleteModal
+          onClose={modal.handleClose}
+          onDelete={handleDelete}
+        />
+      )}
       <Header>
         <BackButton onClick={() => navigate(-1)} size={18} />
         <Title>
@@ -64,8 +75,16 @@ const EditRecentSearchPage = () => {
         })}
       </SearchList>
       <ButtonsContainer>
-        <Button onClick={handleSelectAll}>전체선택</Button>
-        <Button onClick={handleDelete}>삭제 {selectedSearches.length}</Button>
+        <Button
+          onClick={handleSelectAll}
+          variant="secondary"
+          isFullWidth={true}
+        >
+          전체선택
+        </Button>
+        <Button onClick={modal.handleOpen} variant="primary" isFullWidth={true}>
+          삭제 {selectedSearches.length}
+        </Button>
       </ButtonsContainer>
     </Layout>
   );
