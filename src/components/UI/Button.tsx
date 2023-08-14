@@ -6,7 +6,6 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   variant?: "primary" | "secondary" | "textOnly";
   size?: "small" | "medium" | "large";
-  isFullWidth?: boolean;
   disabled?: boolean;
 }
 
@@ -14,7 +13,6 @@ const Button = ({
   children,
   variant = "primary",
   size = "medium",
-  isFullWidth,
   disabled,
   ...props
 }: ButtonProps) => {
@@ -25,7 +23,6 @@ const Button = ({
         outline: "none",
         borderRadius: "10px",
         transition: "all .4s ease",
-        width: isFullWidth ? "100%" : "auto",
         cursor: disabled ? "not-allowed" : "pointer",
         filter: disabled ? "opacity(0.5)" : "none",
         ...TYPE_VARIANTS[variant],
