@@ -4,8 +4,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { ExplorePageLayout } from "../../styles/styles";
 import styled from "@emotion/styled";
 import { useState } from "react";
+
 import SearchBarDisplay from "../../components/Search/SearchBarDisplay";
-import SearchResultItem from "../../components/Search/SearchResultItem";
+import PlaceItem from "../../components/Place/PlaceItem";
 
 const DUMMY_DATA = [
   {
@@ -17,6 +18,9 @@ const DUMMY_DATA = [
     reviewCount: 123,
     distance: 0.5,
     images: [
+      "https://source.unsplash.com/random",
+      "https://source.unsplash.com/random",
+      "https://source.unsplash.com/random",
       "https://source.unsplash.com/random",
       "https://source.unsplash.com/random",
       "https://source.unsplash.com/random",
@@ -34,6 +38,9 @@ const DUMMY_DATA = [
       "https://source.unsplash.com/random",
       "https://source.unsplash.com/random",
       "https://source.unsplash.com/random",
+      "https://source.unsplash.com/random",
+      "https://source.unsplash.com/random",
+      "https://source.unsplash.com/random",
     ],
   },
   {
@@ -45,6 +52,9 @@ const DUMMY_DATA = [
     reviewCount: 123,
     distance: 0.5,
     images: [
+      "https://source.unsplash.com/random",
+      "https://source.unsplash.com/random",
+      "https://source.unsplash.com/random",
       "https://source.unsplash.com/random",
       "https://source.unsplash.com/random",
       "https://source.unsplash.com/random",
@@ -93,11 +103,11 @@ const SearchResultPage = () => {
           }}
         />
       ) : (
-        <SearchResultList>
-          {DUMMY_DATA.map((data) => (
-            <SearchResultItem searchResult={data} />
+        <PlaceList>
+          {DUMMY_DATA.map((place) => (
+            <PlaceItem key={place.id} place={place} displayAmount={3} />
           ))}
-        </SearchResultList>
+        </PlaceList>
       )}
     </ExplorePageLayout>
   );
@@ -123,7 +133,7 @@ const IconWrapper = styled.div`
   height: 30px;
 `;
 
-const SearchResultList = styled.ul`
+const PlaceList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 15px;
