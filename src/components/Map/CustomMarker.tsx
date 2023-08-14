@@ -28,8 +28,19 @@ const CustomMarker: React.FC<CustomMarkerProps & { isMarkerOpen: boolean }> = ({
   const truncatedPlaceName =
     placeName.length > 8 ? `${placeName.slice(0, 8)}...` : placeName;
 
-  const handleOverlayClick = () => {
+  const handleOverlayClick = (e: { stopPropagation: () => void }) => {
+    e.stopPropagation();
     setIsModalOpen(true); // OverlayView 클릭 시 모달 열기
+  };
+
+  // 오버레이를 닫는 함수
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  // 모달 클릭 이벤트 전파 방지
+  const handleModalClick = (e: { stopPropagation: () => void }) => {
+    e.stopPropagation();
   };
 
   useEffect(() => {
@@ -168,7 +179,21 @@ const CustomMarker: React.FC<CustomMarkerProps & { isMarkerOpen: boolean }> = ({
         </OverlayView>
       )}
       {isModalOpen && (
-        <CertificationModal placeName={placeName} category={category} />
+        <div
+          css={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            zIndex: 100,
+          }}
+          onClick={handleCloseModal} // 배경 클릭 시 모달 닫기
+        >
+          <div onClick={handleModalClick}>
+            <CertificationModal placeName={placeName} category={category} />
+          </div>
+        </div>
       )}
     </>
   );
