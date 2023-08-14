@@ -78,11 +78,15 @@ const EditRecentSearchPage = () => {
         <Button
           onClick={handleSelectAll}
           variant="secondary"
-          isFullWidth={true}
+          css={{ width: "100%" }}
         >
           전체선택
         </Button>
-        <Button onClick={modal.handleOpen} variant="primary" isFullWidth={true}>
+        <Button
+          onClick={modal.handleOpen}
+          variant="primary"
+          css={{ width: "100%" }}
+        >
           삭제 {selectedSearches.length}
         </Button>
       </ButtonsContainer>

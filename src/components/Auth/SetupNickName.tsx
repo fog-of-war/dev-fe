@@ -71,7 +71,16 @@ const SetupNickName = ({
           resetFiled={() => setNickName("")}
         />
       </div>
-      <Button onClick={handleNextStep}>다음</Button>
+      <Button
+        onClick={handleNextStep}
+        size="large"
+        css={{
+          width: "100%",
+          height: "55px",
+        }}
+      >
+        다음
+      </Button>
     </SetupProfileForm>
   );
 };
