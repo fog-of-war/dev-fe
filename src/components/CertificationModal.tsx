@@ -11,12 +11,12 @@ const DUMMY_DATA = {
   category: "역사적 명소",
   icon: "/dev/categoryIcon.png",
   images: [
-    "https://i.namu.wiki/i/yVl7fn_IBAp2giYJhk-pRn9C1b8po7VCoD7-HemHRX0Ahp6E9VKMvUUHrKYnO-cJvqBGlsXWroRuHF_TEEi-VWzrHFPKTFXOSAqE-tiIqlobtj0LynjnzXxqjuuCR2n4r_gLmz_7Iz2w5Zdl9IbMWg.webp",
-    "https://i.namu.wiki/i/yVl7fn_IBAp2giYJhk-pRn9C1b8po7VCoD7-HemHRX0Ahp6E9VKMvUUHrKYnO-cJvqBGlsXWroRuHF_TEEi-VWzrHFPKTFXOSAqE-tiIqlobtj0LynjnzXxqjuuCR2n4r_gLmz_7Iz2w5Zdl9IbMWg.webp",
-    "https://i.namu.wiki/i/yVl7fn_IBAp2giYJhk-pRn9C1b8po7VCoD7-HemHRX0Ahp6E9VKMvUUHrKYnO-cJvqBGlsXWroRuHF_TEEi-VWzrHFPKTFXOSAqE-tiIqlobtj0LynjnzXxqjuuCR2n4r_gLmz_7Iz2w5Zdl9IbMWg.webp",
-    "https://i.namu.wiki/i/yVl7fn_IBAp2giYJhk-pRn9C1b8po7VCoD7-HemHRX0Ahp6E9VKMvUUHrKYnO-cJvqBGlsXWroRuHF_TEEi-VWzrHFPKTFXOSAqE-tiIqlobtj0LynjnzXxqjuuCR2n4r_gLmz_7Iz2w5Zdl9IbMWg.webp",
-    "https://i.namu.wiki/i/yVl7fn_IBAp2giYJhk-pRn9C1b8po7VCoD7-HemHRX0Ahp6E9VKMvUUHrKYnO-cJvqBGlsXWroRuHF_TEEi-VWzrHFPKTFXOSAqE-tiIqlobtj0LynjnzXxqjuuCR2n4r_gLmz_7Iz2w5Zdl9IbMWg.webp",
-    "https://i.namu.wiki/i/yVl7fn_IBAp2giYJhk-pRn9C1b8po7VCoD7-HemHRX0Ahp6E9VKMvUUHrKYnO-cJvqBGlsXWroRuHF_TEEi-VWzrHFPKTFXOSAqE-tiIqlobtj0LynjnzXxqjuuCR2n4r_gLmz_7Iz2w5Zdl9IbMWg.webp",
+    "https://source.unsplash.com/random",
+    "https://source.unsplash.com/random",
+    "https://source.unsplash.com/random",
+    "https://source.unsplash.com/random",
+    "https://source.unsplash.com/random",
+    "https://source.unsplash.com/random",
   ],
   point: 500,
 };
