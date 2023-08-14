@@ -22,7 +22,7 @@ const CustomMarker: React.FC<CustomMarkerProps & { isMarkerOpen: boolean }> = ({
   const [isClicked, setIsClicked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const overlayPixelOffset = { x: -125, y: -120 }; // 오버레이를 마커 오프셋 설정
+  const overlayPixelOffset = { x: -125, y: -120 }; // 오버레이를 마커 오프셋 설정하기
 
   // placeName이 8글자 이상인 경우 자르고 '...'을 추가
   const truncatedPlaceName =
