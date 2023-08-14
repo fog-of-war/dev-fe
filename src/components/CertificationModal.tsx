@@ -21,7 +21,15 @@ const DUMMY_DATA = {
   point: 500,
 };
 
-const CertificationModal = () => {
+interface CertificationModalProps {
+  placeName: string;
+  category: string;
+}
+
+const CertificationModal = ({
+  placeName,
+  category,
+}: CertificationModalProps) => {
   return (
     <BottomModal>
       <div
@@ -32,8 +40,8 @@ const CertificationModal = () => {
         }}
       >
         <PlaceTitle
-          name={DUMMY_DATA.name}
-          category={DUMMY_DATA.category}
+          name={placeName}
+          category={category}
           icon={DUMMY_DATA.icon}
         />
         <PlaceImages
