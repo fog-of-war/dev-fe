@@ -44,3 +44,14 @@ export interface BadgeListProps {
   badges: Badge[];
   showAllBadges: boolean;
 }
+
+export interface Place {
+  id: string;
+  name: string;
+  category: string;
+  rating: number;
+  reviewCount: number;
+  distance: number;
+  address: string;
+  images: string[];
+}

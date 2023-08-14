@@ -63,7 +63,16 @@ const SetupProfileImage = ({
           </EditImageButton>
         </ProfileImageWrapper>
       </SetupProfileImageWrapper>
-      <Button onClick={onNext}>프로필 설정 완료</Button>
+      <Button
+        onClick={onNext}
+        size="large"
+        css={{
+          width: "100%",
+          height: "55px",
+        }}
+      >
+        프로필 설정 완료
+      </Button>
     </SetupProfileForm>
   );
 };

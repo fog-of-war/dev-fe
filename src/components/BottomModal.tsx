@@ -14,11 +14,13 @@ const BottomModal = ({ children }: BottomModalProps) => {
         border-top-left-radius: 25px;
         border-top-right-radius: 25px;
         position: fixed;
-        width: 90%;
+        width: 100%;
+        max-width: 420px;
         bottom: 0;
         left: 50%;
         transform: translateX(-50%);
         box-shadow: 0px -1px 4px 0px rgba(0, 0, 0, 0.25);
+        z-index: 70;
       `}
     >
       {children}
