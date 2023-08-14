@@ -8,6 +8,9 @@ interface PlaceTitleProps {
 }
 
 const PlaceTitle = ({ icon, name, category }: PlaceTitleProps) => {
+  // 글자 수가 16자 이상인 경우에는 줄이고 '...'을 붙임
+  const truncatedName = name.length > 16 ? name.slice(0, 16) + "..." : name;
+
   return (
     <div
       css={{
@@ -20,11 +23,11 @@ const PlaceTitle = ({ icon, name, category }: PlaceTitleProps) => {
         <img src={icon} alt="categoryIcon" width={16} height={20} />
         <h1
           css={{
-            fontSize: "22px",
+            fontSize: "20px",
             color: colors.darkGrey,
           }}
         >
-          {name}
+          {truncatedName}
         </h1>
       </div>
       <h2
