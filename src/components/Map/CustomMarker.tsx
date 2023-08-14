@@ -167,7 +167,9 @@ const CustomMarker: React.FC<CustomMarkerProps & { isMarkerOpen: boolean }> = ({
           </div>
         </OverlayView>
       )}
-      {isModalOpen && <CertificationModal />}
+      {isModalOpen && (
+        <CertificationModal placeName={placeName} category={category} />
+      )}
     </>
   );
 };
