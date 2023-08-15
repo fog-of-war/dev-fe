@@ -12,7 +12,7 @@ import EditRecentSearchPage from "./pages/search/EditRecentSearchPage";
 import SearchResultPage from "./pages/search/SearchResultPage";
 import ProfileEditPage from "./pages/ProfileEditPage";
 import BadgeListPage from "./pages/BadgeListPage";
-import Map from "./components/Map/GoogleMap";
+import MapPage from "./pages/MapPage";
 import GetBadgePage from "./pages/GetBadgePage";
 
 const AppRoutes = () => {
@@ -27,7 +27,7 @@ const AppRoutes = () => {
       <Route path="/edit/search" Component={EditRecentSearchPage} />
       <Route path="/search/result" Component={SearchResultPage} />
       <Route path="/profile_edit" Component={ProfileEditPage} />
-      <Route path="/map" Component={Map} />
+      <Route path="/map" Component={MapPage} />
       <Route path="/reviewList" Component={ReviewPage} />
       <Route path="/ranking" Component={RankingPage} />
       <Route path="/badgeList" Component={BadgeListPage} />
