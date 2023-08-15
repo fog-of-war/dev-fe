@@ -13,6 +13,7 @@ import SearchResultPage from "./pages/search/SearchResultPage";
 import ProfileEditPage from "./pages/ProfileEditPage";
 import BadgeListPage from "./pages/BadgeListPage";
 import Map from "./components/Map/GoogleMap";
+import GetBadgePage from "./pages/GetBadgePage";
 
 const AppRoutes = () => {
   return (
@@ -30,6 +31,7 @@ const AppRoutes = () => {
       <Route path="/reviewList" Component={ReviewPage} />
       <Route path="/ranking" Component={RankingPage} />
       <Route path="/badgeList" Component={BadgeListPage} />
+      <Route path="/getBadge" Component={GetBadgePage} />
     </Routes>
   );
 };
