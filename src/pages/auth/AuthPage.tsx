@@ -17,7 +17,9 @@ const OAUTH_ICONS = [
 const AuthPage = () => {
   const navigate = useNavigate();
 
-  const handleAuthButtonClick = async (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleAuthButtonClick = async (
+    e: React.MouseEvent<HTMLDivElement>
+  ): Promise<void> => {
     const oAuthName = e.currentTarget.id;
     const token = await oAuthLogin(oAuthName);
     console.log(token);
