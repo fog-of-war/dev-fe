@@ -20,7 +20,7 @@ const BottomModal = ({ children }: BottomModalProps) => {
         left: 50%;
         transform: translateX(-50%);
         box-shadow: 0px -1px 4px 0px rgba(0, 0, 0, 0.25);
-        z-index: 70;
+        z-index: 100;
       `}
     >
       {children}

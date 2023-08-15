@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useState } from "react";
 import { Marker, OverlayView } from "@react-google-maps/api";
+import CertificationModal from "../CertificationModal";
 
 interface CustomMarkerProps {
   position: google.maps.LatLngLiteral;
@@ -19,12 +20,28 @@ const CustomMarker: React.FC<CustomMarkerProps & { isMarkerOpen: boolean }> = ({
   onClick,
 }) => {
   const [isClicked, setIsClicked] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const overlayPixelOffset = { x: -125, y: -120 }; // 오버레이를 마커 오프셋 설정
+  const overlayPixelOffset = { x: -125, y: -120 }; // 오버레이를 마커 오프셋 설정하기
 
   // placeName이 8글자 이상인 경우 자르고 '...'을 추가
   const truncatedPlaceName =
     placeName.length > 8 ? `${placeName.slice(0, 8)}...` : placeName;
+
+  const handleOverlayClick = (e: { stopPropagation: () => void }) => {
+    e.stopPropagation();
+    setIsModalOpen(true); // OverlayView 클릭 시 모달 열기
+  };
+
+  // 오버레이를 닫는 함수
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  // 모달 클릭 이벤트 전파 방지
+  const handleModalClick = (e: { stopPropagation: () => void }) => {
+    e.stopPropagation();
+  };
 
   useEffect(() => {
     setIsClicked(isMarkerOpen);
@@ -122,6 +139,7 @@ const CustomMarker: React.FC<CustomMarkerProps & { isMarkerOpen: boolean }> = ({
                 transform: "translateX(-50%)",
               },
             }}
+            onClick={handleOverlayClick}
           >
             <div
               css={{
@@ -159,6 +177,27 @@ const CustomMarker: React.FC<CustomMarkerProps & { isMarkerOpen: boolean }> = ({
             </div>
           </div>
         </OverlayView>
+      )}
+      {isModalOpen && (
+        <div
+          css={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            zIndex: 100,
+          }}
+          onClick={handleCloseModal} // 배경 클릭 시 모달 닫기
+        >
+          <div onClick={handleModalClick}>
+            <CertificationModal
+              placeName={placeName}
+              category={category}
+              roadAddress={roadAddress}
+            />
+          </div>
+        </div>
       )}
     </>
   );
