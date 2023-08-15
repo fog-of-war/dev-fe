@@ -19,7 +19,7 @@ const AuthPage = () => {
 
   const handleAuthButtonClick = async (e: React.MouseEvent<HTMLDivElement>) => {
     const oAuthName = e.currentTarget.id;
-    const token = oAuthLogin(oAuthName);
+    const token = await oAuthLogin(oAuthName);
     console.log(token);
 
     // navigate("/profile_setup");
