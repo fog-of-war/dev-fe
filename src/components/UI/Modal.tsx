@@ -29,7 +29,7 @@ const Modal = ({ children, ...props }: ModalProps) => {
           justifyContent: "center",
           alignItems: "center",
           borderRadius: "10px",
-          gap: "20px",
+          gap: "10px",
         }}
         {...props}
       >

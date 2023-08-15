@@ -19,6 +19,9 @@ const Button = ({
   return (
     <button
       css={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         fontFamily: "inherit",
         outline: "none",
         borderRadius: "10px",
