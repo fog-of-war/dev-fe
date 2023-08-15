@@ -39,7 +39,7 @@ const AuthPage = () => {
               key={oAuth.name}
               icon={oAuth.icon}
               id={oAuth.name}
-              onClick={handleAuthButtonClick}
+              onClick={(e)=>handleAuthButtonClick(e)}
             />
           ))}
         </AuthButtonWrapper>
