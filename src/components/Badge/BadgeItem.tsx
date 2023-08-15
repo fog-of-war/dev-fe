@@ -14,7 +14,7 @@ type BadgeColors = {
   };
 };
 
-const badgeColors: BadgeColors = {
+export const badgeColors: BadgeColors = {
   미획득: {
     background: "#d9d9d9",
     border: "#aaaaaa",
