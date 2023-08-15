@@ -17,13 +17,15 @@ const OAUTH_ICONS = [
 const AuthPage = () => {
   const navigate = useNavigate();
 
-  const handleAuthButtonClick = async (
-    e: React.MouseEvent<HTMLDivElement>
-  ): Promise<void> => {
+  const handleAuthButtonClick = async (e: React.MouseEvent<HTMLDivElement>) => {
     const oAuthName = e.currentTarget.id;
-    const token = await oAuthLogin(oAuthName);
-    console.log(token);
 
+    try {
+      const token = await oAuthLogin(oAuthName);
+      console.log(token);
+    } catch (error: any) {
+      console.log(error);
+    }
     // navigate("/profile_setup");
   };
   return (
