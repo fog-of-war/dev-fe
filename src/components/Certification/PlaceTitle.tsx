@@ -5,9 +5,10 @@ interface PlaceTitleProps {
   icon: string;
   name: string;
   category: string;
+  roadAddress: string;
 }
 
-const PlaceTitle = ({ icon, name, category }: PlaceTitleProps) => {
+const PlaceTitle = ({ icon, name, category, roadAddress }: PlaceTitleProps) => {
   // 글자 수가 16자 이상인 경우에는 줄이고 '...'을 붙임
   const truncatedName = name.length > 16 ? name.slice(0, 16) + "..." : name;
 
@@ -64,22 +65,33 @@ const PlaceTitle = ({ icon, name, category }: PlaceTitleProps) => {
       </div>
       <div
         css={{
-          flex: "1",
-          minWidth: "70px",
-          padding: "5px 10px",
-          borderRadius: 20,
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
-          color: colors.mediumGrey,
-          fontSize: "14px",
-          fontWeight: 600,
-          boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.3)",
-          gap: 5,
+          gap: 8,
         }}
       >
-        <img src={categoryIcon} alt="categoryIcon" width={16} height={16} />
-        {displayCategory}
+        <div
+          css={{
+            flex: "1",
+            minWidth: "70px",
+            padding: "5px 10px",
+            borderRadius: 20,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: colors.mediumGrey,
+            fontSize: "14px",
+            fontWeight: 600,
+            boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.3)",
+            gap: 5,
+          }}
+        >
+          <img src={categoryIcon} alt="categoryIcon" width={16} height={16} />
+          {displayCategory}
+        </div>
+        <div css={{ color: colors.lightGrey, fontWeight: "bold" }}>
+          {roadAddress}
+        </div>
       </div>
     </div>
   );

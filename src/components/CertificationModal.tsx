@@ -24,11 +24,13 @@ const DUMMY_DATA = {
 interface CertificationModalProps {
   placeName: string;
   category: string;
+  roadAddress: string;
 }
 
 const CertificationModal = ({
   placeName,
   category,
+  roadAddress,
 }: CertificationModalProps) => {
   return (
     <BottomModal>
@@ -42,6 +44,7 @@ const CertificationModal = ({
         <PlaceTitle
           name={placeName}
           category={category}
+          roadAddress={roadAddress}
           icon={DUMMY_DATA.icon}
         />
         <PlaceImages

@@ -191,7 +191,11 @@ const CustomMarker: React.FC<CustomMarkerProps & { isMarkerOpen: boolean }> = ({
           onClick={handleCloseModal} // 배경 클릭 시 모달 닫기
         >
           <div onClick={handleModalClick}>
-            <CertificationModal placeName={placeName} category={category} />
+            <CertificationModal
+              placeName={placeName}
+              category={category}
+              roadAddress={roadAddress}
+            />
           </div>
         </div>
       )}
