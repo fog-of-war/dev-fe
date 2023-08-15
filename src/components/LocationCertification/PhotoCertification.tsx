@@ -2,64 +2,109 @@ import React, { useState } from "react";
 import exifr from "exifr";
 
 const PhotoCertification = () => {
-  // 컴포넌트의 상태를 정의합니다. photoData 객체는 추출한 EXIF 데이터를 저장합니다.
   const [photoData, setPhotoData] = useState<{
     latitude?: number;
     longitude?: number;
     date?: Date;
   }>({});
 
-  // 파일 입력이 변경되었을 때 호출되는 핸들러 함수입니다.
+  const [certificationResults, setCertificationResults] = useState<{
+    location: "통과" | "미통과";
+    date: "통과" | "미통과";
+  }>({
+    location: "통과",
+    date: "통과",
+  });
+
   const handleFileInputChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = event.target.files?.[0];
 
     if (file) {
-      // 선택한 파일의 EXIF 데이터를 읽어옵니다.
       const exifData = await readExifData(file);
-      const latitude = exifData?.latitude; // 이미지의 위도 정보
-      const longitude = exifData?.longitude; // 이미지의 경도 정보
-      const dateStr = exifData?.DateTimeOriginal; // 이미지의 촬영 날짜 및 시간 정보
+      const latitude = exifData?.latitude;
+      const longitude = exifData?.longitude;
+      const dateStr = exifData?.DateTimeOriginal;
 
       if (dateStr) {
-        // 날짜 문자열을 Date 객체로 변환합니다.
         const date = new Date(dateStr);
-        // photoData 상태를 업데이트하여 위도, 경도 및 날짜 정보를 저장합니다.
         setPhotoData({ latitude, longitude, date });
+
+        // 목데이터 거제 집 근처 좌표
+        const mockLatitude = 34.86168611111111;
+        const mockLongitude = 128.63741944444445;
+        const mockDate = new Date();
+
+        const distance = calculateDistance(
+          latitude,
+          longitude,
+          mockLatitude,
+          mockLongitude
+        );
+        const timeDiff = Math.abs(date.getTime() - mockDate.getTime());
+
+        const locationResult = distance > 100 ? "미통과" : "통과";
+        const dateResult = timeDiff >= 24 * 60 * 60 * 1000 ? "미통과" : "통과";
+
+        setCertificationResults({
+          location: locationResult,
+          date: dateResult,
+        });
       }
     }
   };
 
-  // 파일의 EXIF 데이터를 읽어오는 비동기 함수입니다.
   const readExifData = async (file: File): Promise<any> => {
     try {
-      // exifr 라이브러리를 사용하여 파일의 GPS(EXIF) 데이터를 읽어옵니다.
       const exifData = await exifr.parse(file, { gps: true });
-      return exifData; // 읽어온 데이터를 반환합니다.
+      return exifData;
     } catch (error) {
       console.error("Error reading EXIF data:", error);
-      return undefined; // 에러가 발생한 경우 undefined를 반환합니다.
+      return undefined;
     }
   };
 
-  // 컴포넌트의 렌더링 부분입니다.
+  const calculateDistance = (
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number
+  ): number => {
+    const R = 6371e3;
+    const φ1 = (lat1 * Math.PI) / 180;
+    const φ2 = (lat2 * Math.PI) / 180;
+    const Δφ = ((lat2 - lat1) * Math.PI) / 180;
+    const Δλ = ((lon2 - lon1) * Math.PI) / 180;
+
+    const a =
+      Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+      Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    const distance = R * c;
+    return distance;
+  };
+
   return (
     <div>
-      {/* 파일 입력 요소를 렌더링하고, 파일 선택 시 핸들러 함수를 호출합니다. */}
       <input
         type="file"
         accept=".heic, .heif, image/*"
         onChange={handleFileInputChange}
       />
-      {/* 위도 및 경도 데이터가 존재할 경우에만 해당 정보를 표시합니다. */}
       {photoData.latitude && photoData.longitude && (
         <p>
-          위도: {photoData.latitude}, 경도: {photoData.longitude}
+          위도 및 경도: {photoData.latitude}, {photoData.longitude} (
+          {certificationResults.location})
         </p>
       )}
-      {/* 날짜 데이터가 존재할 경우에만 해당 정보를 표시합니다. */}
-      {photoData.date && <p>날짜 및 시간: {photoData.date.toLocaleString()}</p>}
+      {photoData.date && (
+        <p>
+          날짜 및 시간: {photoData.date.toLocaleString()} (
+          {certificationResults.date})
+        </p>
+      )}
     </div>
   );
 };
