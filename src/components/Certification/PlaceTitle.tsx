@@ -15,12 +15,13 @@ const PlaceTitle = ({ icon, name, category }: PlaceTitleProps) => {
     <div
       css={{
         display: "flex",
-        alignItems: "end",
+        flexDirection: "column",
+        alignItems: "start",
         gap: "5px",
       }}
     >
       <div css={{ display: "flex", alignItems: "center", gap: 5 }}>
-        <img src={icon} alt="categoryIcon" width={16} height={20} />
+        {/* <img src={icon} alt="categoryIcon" width={16} height={20} /> */}
         <h1
           css={{
             fontSize: "20px",
@@ -30,15 +31,23 @@ const PlaceTitle = ({ icon, name, category }: PlaceTitleProps) => {
           {truncatedName}
         </h1>
       </div>
-      <h2
+      <div
         css={{
-          fontSize: "16px",
-          lineHeight: "24px",
-          color: colors.primary,
+          flex: "1",
+          minWidth: "70px",
+          padding: "5px 10px",
+          borderRadius: 20,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: colors.mediumGrey,
+          fontSize: "14px",
+          fontWeight: 600,
+          boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.3)",
         }}
       >
         {category}
-      </h2>
+      </div>
     </div>
   );
 };
