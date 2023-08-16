@@ -28,7 +28,7 @@ const SearchBar = forwardRef(
           padding: "0 20px",
           borderRadius: "10px",
           background: "white",
-          boxShadow: "0px 0px 5px 0px rgba(0, 0, 0, 0.25)",
+          border: "1px solid #d9d9d9",
           zIndex: 70,
         }}
       >
