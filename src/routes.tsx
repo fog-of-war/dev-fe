@@ -14,6 +14,7 @@ import ProfileEditPage from "./pages/ProfileEditPage";
 import BadgeListPage from "./pages/BadgeListPage";
 import MapPage from "./pages/MapPage";
 import GetBadgePage from "./pages/GetBadgePage";
+import PhotoCertification from "./components/LocationCertification/PhotoCertification";
 
 const AppRoutes = () => {
   return (
@@ -32,6 +33,7 @@ const AppRoutes = () => {
       <Route path="/ranking" Component={RankingPage} />
       <Route path="/badgeList" Component={BadgeListPage} />
       <Route path="/getBadge" Component={GetBadgePage} />
+      <Route path="/locationcertification" Component={PhotoCertification} />
     </Routes>
   );
 };
