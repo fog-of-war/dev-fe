@@ -12,7 +12,9 @@ interface CertificationResults {
 }
 
 const PhotoCertificationLogic = async (
-  file: File
+  file: File,
+  x: number,
+  y: number
 ): Promise<{
   photoData: PhotoData;
   certificationResults: CertificationResults;
@@ -30,25 +32,26 @@ const PhotoCertificationLogic = async (
       console.log("사진에 EXIF data를 찾을 수 없음");
       return { photoData, certificationResults };
     }
-    const latitude = exifData?.latitude;
     const longitude = exifData?.longitude;
+    const latitude = exifData?.latitude;
+
     const dateStr = exifData?.DateTimeOriginal;
 
     if (dateStr) {
       const date = new Date(dateStr);
-      photoData.latitude = latitude;
       photoData.longitude = longitude;
+      photoData.latitude = latitude;
       photoData.date = date;
 
-      const mockLatitude = 34.86168611111111;
-      const mockLongitude = 128.63741944444445;
+      const mockLongitude = x; //경도
+      const mockLatitude = y; //위도
       const mockDate = new Date();
 
       const distance = calculateDistance(
-        latitude,
         longitude,
-        mockLatitude,
-        mockLongitude
+        latitude,
+        mockLongitude,
+        mockLatitude
       );
       const timeDiff = Math.abs(date.getTime() - mockDate.getTime());
 

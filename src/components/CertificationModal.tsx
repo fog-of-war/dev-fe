@@ -37,6 +37,7 @@ const CertificationModal = ({
   x,
   y,
 }: CertificationModalProps) => {
+  // 사진 인증
   const handleCertificationClick = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -45,7 +46,8 @@ const CertificationModal = ({
 
       if (file) {
         const { photoData, certificationResults } =
-          await PhotoCertificationLogic(file);
+          await PhotoCertificationLogic(file, x, y);
+        console.log("x:", x, "y:", y);
 
         console.log("Photo Data:", photoData);
         console.log("Certification Results:", certificationResults);
