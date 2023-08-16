@@ -1,12 +1,9 @@
 /** @jsxImportSource @emotion/react */
 
 import styled from "@emotion/styled";
-import { useNavigate } from "react-router-dom";
-import { axiosBase } from "../../api/axios";
+import { Link } from "react-router-dom";
 
-import IconButton from "../../components/UI/IconButton";
 import Spacing from "../../components/UI/Spacing";
-import { oAuthLogin } from "../../api/auth";
 
 const OAUTH_ICONS = [
   { name: "google", icon: "/images/auth/googleIcon.png" },
@@ -15,19 +12,6 @@ const OAUTH_ICONS = [
 ];
 
 const AuthPage = () => {
-  const navigate = useNavigate();
-
-  const handleAuthButtonClick = async (e: React.MouseEvent<HTMLDivElement>) => {
-    const oAuthName = e.currentTarget.id;
-
-    try {
-      const token = await oAuthLogin(oAuthName);
-      console.log(token);
-    } catch (error: any) {
-      console.log(error);
-    }
-    // navigate("/profile_setup");
-  };
   return (
     <ImageCoveredLayout>
       <Container>
@@ -37,12 +21,12 @@ const AuthPage = () => {
         <Spacing size={20} direction="vertical" />
         <AuthButtonWrapper>
           {OAUTH_ICONS.map((oAuth) => (
-            <IconButton
+            <Link
               key={oAuth.name}
-              icon={oAuth.icon}
-              id={oAuth.name}
-              onClick={handleAuthButtonClick}
-            />
+              to={`${process.env.REACT_APP_API_URL}v1/auth/${oAuth.name}`}
+            >
+              <img src={oAuth.icon} alt={oAuth.name} height={65} />
+            </Link>
           ))}
         </AuthButtonWrapper>
       </Container>
