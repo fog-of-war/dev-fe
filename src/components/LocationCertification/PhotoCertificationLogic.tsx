@@ -19,12 +19,17 @@ const PhotoCertificationLogic = async (
 }> => {
   const photoData: PhotoData = {};
   const certificationResults: CertificationResults = {
-    location: "통과",
-    date: "통과",
+    location: "미통과",
+    date: "미통과", // 기본값을 "미통과"로 설정
   };
 
   try {
     const exifData = await readExifData(file);
+
+    if (!exifData) {
+      console.log("사진에 EXIF data를 찾을 수 없음");
+      return { photoData, certificationResults };
+    }
     const latitude = exifData?.latitude;
     const longitude = exifData?.longitude;
     const dateStr = exifData?.DateTimeOriginal;
