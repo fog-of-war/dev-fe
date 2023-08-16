@@ -8,6 +8,8 @@ interface CustomMarkerProps {
   placeName: string;
   roadAddress: string;
   category: string;
+  x: number;
+  y: number;
   onClick: () => void;
 }
 
@@ -17,6 +19,8 @@ const CustomMarker: React.FC<CustomMarkerProps & { isMarkerOpen: boolean }> = ({
   roadAddress,
   category,
   isMarkerOpen,
+  x,
+  y,
   onClick,
 }) => {
   const [isClicked, setIsClicked] = useState(false);
@@ -195,6 +199,8 @@ const CustomMarker: React.FC<CustomMarkerProps & { isMarkerOpen: boolean }> = ({
               placeName={placeName}
               category={category}
               roadAddress={roadAddress}
+              x={x}
+              y={y}
             />
           </div>
         </div>
