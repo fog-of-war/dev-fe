@@ -1,11 +1,18 @@
 /** @jsxImportSource @emotion/react */
 
 import colors from "../../constants/colors";
+
 import Modal from "../UI/Modal";
 
-const NavigateModal = () => {
+interface NavigateModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  url: string;
+}
+
+const NavigateModal = ({ isOpen, onClose, url }: NavigateModalProps) => {
   return (
-    <Modal css={{ width: "300px", padding: "30px 32px" }}>
+    <Modal isOpen={isOpen} css={{ width: "300px", padding: "30px 32px" }}>
       <div
         css={{
           width: "100%",
@@ -16,7 +23,9 @@ const NavigateModal = () => {
         }}
       >
         <h2>지도 자세히 보기</h2>
-        <img src="/images/xIcon.png" alt="close_button" height={22} />
+        <div onClick={onClose} css={{ cursor: "pointer" }}>
+          <img src="/images/xIcon.png" alt="close_button" height={22} />
+        </div>
       </div>
       <button
         css={{
@@ -26,6 +35,7 @@ const NavigateModal = () => {
           padding: "15px",
           borderRadius: "10px",
           color: colors.darkGrey,
+          cursor: "pointer",
         }}
       >
         <h4>카카오맵으로 열기</h4>
@@ -38,6 +48,7 @@ const NavigateModal = () => {
           padding: "15px",
           borderRadius: "10px",
           color: "#fff",
+          cursor: "pointer",
         }}
       >
         <h4>네이버지도로 열기</h4>
