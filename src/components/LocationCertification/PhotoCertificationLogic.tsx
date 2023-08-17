@@ -43,9 +43,9 @@ const PhotoCertificationLogic = async (
       photoData.latitude = latitude;
       photoData.date = date;
 
-      const mockLongitude = x; // 경도
-      const mockLatitude = y; // 위도
-      const mockDate = new Date();
+      const placeLongitude = x; // 장소의 경도
+      const placeLatitude = y; // 장소의 위도
+      const placeDate = new Date();
 
       // 사진을 찍은 자정 시간을 계산
       const photoMidnight = new Date(date);
@@ -54,12 +54,12 @@ const PhotoCertificationLogic = async (
       const distance = calculateDistance(
         longitude,
         latitude,
-        mockLongitude,
-        mockLatitude
+        placeLongitude,
+        placeLatitude
       );
 
       // 자정까지의 시간 차이를 계산
-      const timeDiff = Math.abs(photoMidnight.getTime() - mockDate.getTime());
+      const timeDiff = Math.abs(photoMidnight.getTime() - placeDate.getTime());
 
       // 100m 이내의 거리이면 통과, 그렇지 않으면 미통과
       const locationResult = distance > 100 ? "미통과" : "통과";
