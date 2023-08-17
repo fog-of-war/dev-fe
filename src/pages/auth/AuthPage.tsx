@@ -2,12 +2,12 @@
 
 import styled from "@emotion/styled";
 
-import Spacing from "../../components/UI/Spacing";
 import { useEffect } from "react";
-import { axiosBase } from "../../api/axios";
-import { useSetRecoilState } from "recoil";
-import { tokenState } from "../../store/tokenAtom";
+import { useQueryClient } from "react-query";
+import { getCurrentUser, oAuthLogin } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
+
+import Spacing from "../../components/UI/Spacing";
 
 const OAUTH_ICONS = [
   { name: "google", icon: "/images/auth/googleIcon.png" },
@@ -16,39 +16,54 @@ const OAUTH_ICONS = [
 ];
 
 const AuthPage = () => {
-  const setToken = useSetRecoilState(tokenState);
-
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.MouseEvent<HTMLDivElement>) => {
+  const queryClient = useQueryClient();
+
+  const handleClickOAuthButton = (e: React.MouseEvent<HTMLDivElement>) => {
     const oAuthName = e.currentTarget.id;
 
     // OAuth 제공자의 로그인 페이지로 리다이렉션
     window.location.href = `${process.env.REACT_APP_API_URL}v1/auth/${oAuthName}`;
   };
 
-  const handleAccessToken = async (code: string) => {
-    // 백엔드 서버로 인증 코드를 보내어 액세스 토큰 교환
+  const handleAuthentication = async (code: string, oAuthName: string) => {
     try {
-      const response = await axiosBase.post(`v1/auth/google/oauth`, {
-        code,
-      });
-      const accessToken = response?.data;
-      console.log(accessToken);
+      // 액세스 토큰을 받아 로컬 스토리지에 저장
+      const accessToken = oAuthLogin(code, oAuthName);
       localStorage.setItem("accessToken", JSON.stringify(accessToken));
+
+      // 유저정보 요청 및 유저 캐시 업데이트
+      const currentUser = await getCurrentUser();
+      queryClient.setQueryData(["currentUser"], currentUser);
+
+      // 유저 프로필 셋없이 안돼있으면 프로필 셋업 페이지로 이동 아니면 메인페이지로 이동
+      if (
+        currentUser &&
+        (!currentUser?.user_nickname || !currentUser?.user_image_url)
+      ) {
+        navigate("/profile_setup");
+      } else {
+        navigate("/");
+      }
     } catch (error: any) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    // URL 파라미터를 파싱하여 인증 코드와 state 값을 얻음
+    // URL 쿼리 파라미터에서 코드를 가져옴
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code");
 
+    // 현재 URL에서 OAuth 제공자 이름을 필터링
+    const currentUrl = window.location.href;
+    const oAuthNAme = ["google", "kakao", "naver"].filter((oAuthName) =>
+      currentUrl.includes(oAuthName)
+    );
+
     if (code) {
-      handleAccessToken(code!);
-      // navigate("/profile_setup");
+      handleAuthentication(code!, oAuthNAme[0]);
     }
   }, []);
 
@@ -64,7 +79,7 @@ const AuthPage = () => {
             <div
               key={oAuth.name}
               id={oAuth.name}
-              onClick={(e) => handleLogin(e)}
+              onClick={(e) => handleClickOAuthButton(e)}
               css={{ cursor: "pointer" }}
             >
               <img src={oAuth.icon} alt={oAuth.name} height={65} />

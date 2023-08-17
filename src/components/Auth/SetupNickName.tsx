@@ -3,13 +3,13 @@
 import { useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import { ProfileData } from "../../pages/auth/ProfileSetupPage";
+import { useNavigate } from "react-router-dom";
 
 import BottomLinedInput from "../UI/BottomLinedInput";
 import Button from "../UI/Button";
 import SetupProfileForm from "./SetupProfileForm";
 import Title from "../Title";
 import SetupProfileHeader from "./SetupProfileHeader";
-import { useNavigate } from "react-router-dom";
 
 interface SetupNickNameProps {
   onNext: () => void;
@@ -24,6 +24,7 @@ const SetupNickName = ({
 }: SetupNickNameProps) => {
   const [nickName, setNickName] = useState(profileData.user_nickname);
   const [isFocused, setIsFocused] = useState(false);
+
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
@@ -44,7 +45,7 @@ const SetupNickName = ({
   const handleNextStep = () => {
     if (!validateNickName(nickName)) return;
 
-    setProfileData((prev) => ({ ...prev, nickName }));
+    setProfileData((prev) => ({ ...prev, user_nickname: nickName }));
     onNext();
   };
 

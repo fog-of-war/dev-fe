@@ -1,8 +1,6 @@
+import { ProfileData } from "../pages/auth/ProfileSetupPage";
 import { axiosBase } from "./axios";
 
-export const setUpProfile = async (data: {
-  user_nickname: string;
-  user_image_url: string;
-}) => {
-  axiosBase.patch("v1/users/me", { data });
+export const setUpProfile = async (data: ProfileData) => {
+  axiosBase.patch("v1/users/me", data);
 };

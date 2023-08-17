@@ -20,6 +20,7 @@ const Modal = ({ children, isOpen, ...props }: ModalProps) => {
       <div
         css={{
           position: "fixed",
+          width: "300px",
           top: "50%",
           left: "50%",
           transform: isOpen ? "translate(-50%, -50%)" : "translate(-50%, -75%)",
