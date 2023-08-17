@@ -1,9 +1,13 @@
 /** @jsxImportSource @emotion/react */
 
 import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
 
 import Spacing from "../../components/UI/Spacing";
+import { useEffect } from "react";
+import { axiosBase } from "../../api/axios";
+import { useSetRecoilState } from "recoil";
+import { tokenState } from "../../store/tokenAtom";
+import { useNavigate } from "react-router-dom";
 
 const OAUTH_ICONS = [
   { name: "google", icon: "/images/auth/googleIcon.png" },
@@ -12,6 +16,43 @@ const OAUTH_ICONS = [
 ];
 
 const AuthPage = () => {
+  const setToken = useSetRecoilState(tokenState);
+
+  const navigate = useNavigate();
+
+  const handleLogin = (e: React.MouseEvent<HTMLDivElement>) => {
+    const oAuthName = e.currentTarget.id;
+
+    // OAuth 제공자의 로그인 페이지로 리다이렉션
+    window.location.href = `${process.env.REACT_APP_API_URL}v1/auth/${oAuthName}`;
+  };
+
+  const handleAccessToken = async (code: string) => {
+    // 백엔드 서버로 인증 코드를 보내어 액세스 토큰 교환
+    try {
+      const response = await axiosBase.post(`v1/auth/google/tokenplease`, {
+        code,
+      });
+      const accessToken = response.data;
+      setToken({ accessToken });
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    // URL 파라미터를 파싱하여 인증 코드와 state 값을 얻음
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get("code");
+
+    console.log(urlParams);
+
+    if (code) {
+      handleAccessToken(code!);
+      // navigate("/profile_setup");
+    }
+  }, []);
+
   return (
     <ImageCoveredLayout>
       <Container>
@@ -21,12 +62,14 @@ const AuthPage = () => {
         <Spacing size={20} direction="vertical" />
         <AuthButtonWrapper>
           {OAUTH_ICONS.map((oAuth) => (
-            <Link
+            <div
               key={oAuth.name}
-              to={`${process.env.REACT_APP_API_URL}v1/auth/${oAuth.name}`}
+              id={oAuth.name}
+              onClick={(e) => handleLogin(e)}
+              css={{ cursor: "pointer" }}
             >
               <img src={oAuth.icon} alt={oAuth.name} height={65} />
-            </Link>
+            </div>
           ))}
         </AuthButtonWrapper>
       </Container>
