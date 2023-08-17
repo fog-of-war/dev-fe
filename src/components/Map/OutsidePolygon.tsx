@@ -13,12 +13,12 @@ const parseCoordinates = (coordinateString: string) => {
 // 서울 지역의 좌표를 파싱하고 순서를 반전
 const seoulCoordinates = parseCoordinates(COORDINATES_STRING);
 
-const BlackPolygon = () => {
+const OutsidePolygon = () => {
   return (
     <Polygon
       paths={[OUTER_BOUNDS, seoulCoordinates]}
       options={{
-        fillColor: "#000",
+        fillColor: "#B5DCC6",
         fillOpacity: 1,
         strokeOpacity: 0,
       }}
@@ -26,4 +26,4 @@ const BlackPolygon = () => {
   );
 };
 
-export default BlackPolygon;
+export default OutsidePolygon;

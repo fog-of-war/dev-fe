@@ -9,7 +9,7 @@ import retroMapStyle from "../../data/retroMapStyle.json";
 import { defaultCenter, bounds, options } from "../../data/mapData";
 
 import SeoulPolygon from "./SeoulPolygon";
-import BlackPolygon from "./BlackPolygon";
+import OutsidePolygon from "./OutsidePolygon";
 import CustomMarker from "./CustomMarker";
 
 // Marker 데이터 인터페이스 정의
@@ -18,6 +18,8 @@ interface MarkerData {
   placeName: string;
   roadAddress: string;
   category: string;
+  x: number;
+  y: number;
 }
 
 // 컨테이너 크기 정의
@@ -121,6 +123,8 @@ const Map = () => {
             placeName: document.place_name,
             roadAddress: document.road_address_name,
             category: category,
+            x: document.x,
+            y: document.y,
           })
         );
         // 마커 데이터 업데이트
@@ -183,7 +187,7 @@ const Map = () => {
           center={mapCenter}
           zoom={view.zoom}
           options={{
-            minZoom: 10,
+            minZoom: 10.3,
             restriction: {
               latLngBounds: bounds,
               strictBounds: false,
@@ -197,11 +201,11 @@ const Map = () => {
             mapRef.current = map;
           }}
           onZoomChanged={() => {
-            const newZoomLevel = mapRef.current?.getZoom() || 11;
+            const newZoomLevel = mapRef.current?.getZoom() || 10.3;
             setZoomLevel(newZoomLevel);
           }}
         >
-          <BlackPolygon />
+          <OutsidePolygon />
           {/* 마커 렌더링 */}
           {zoomLevel >= 14 &&
             markers.map((marker, index) => (
@@ -211,6 +215,8 @@ const Map = () => {
                 placeName={marker.placeName}
                 roadAddress={marker.roadAddress}
                 category={marker.category}
+                x={marker.x}
+                y={marker.y}
                 isMarkerOpen={index === openMarkerIndex}
                 onClick={() => {
                   if (openMarkerIndex === index) {
