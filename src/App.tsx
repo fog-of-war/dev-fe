@@ -22,11 +22,13 @@ function App() {
         <RecoilRoot>
           <LoadingProvider>
             <ThemeProvider theme={theme}>
-              <Layout>
-                <AppRoutes />
-                <LoadingComponent />
-              </Layout>
-              </CertifiedImageProvider>
+              <CropImageProvider>
+                <CertifiedImageProvider>
+                  <Layout>
+                    <AppRoutes />
+                    <LoadingComponent />
+                  </Layout>
+                </CertifiedImageProvider>
               </CropImageProvider>
             </ThemeProvider>
           </LoadingProvider>
