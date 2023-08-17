@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import colors from "../constants/colors";
-import Button from "../components/UI/Button";
+import colors from "../../constants/colors";
+import Button from "../../components/UI/Button";
 import { useNavigate } from "react-router-dom";
 
 const PostingCompletePage = () => {

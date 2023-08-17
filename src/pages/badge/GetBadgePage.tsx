@@ -1,17 +1,15 @@
 /** @jsxImportSource @emotion/react */
 
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import ArtBadgeList from "../components/Badge/ArtBadgeList";
-import BaseBadgeList from "../components/Badge/BaseBadgeList";
-import CoffeeBadgeList from "../components/Badge/CoffeeBadgeList";
-import HistoryBadgeList from "../components/Badge/HistoryBadgeList";
-import FoodBadgeList from "../components/Badge/FoodBadgeList";
-import GymBadgeList from "../components/Badge/GymBadgeList";
-import BadgePageHeader from "../components/Badge/BadgePageHeader";
-import Button from "../components/UI/Button";
-import { Badge } from "../types/types";
-import colors from "../constants/colors";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "../../components/UI/Button";
+import { GetBadgePageLayout } from "../../styles/styles";
+import { Badge } from "../../types/types";
+import { badgeColors } from "../../components/Badge/BadgeItem";
+
+interface BadgeItemProps {
+  badge?: Badge[];
+}
 
 const DUMMY_BADGE = [
   // 기본 칭호
@@ -31,7 +29,7 @@ const DUMMY_BADGE = [
     requirement: 3,
     description: "장소 3개",
     imageUrl: "images/badge/시민.png",
-    isAcquired: true,
+    isAcquired: false,
   },
   {
     id: 3,
@@ -207,125 +205,93 @@ const DUMMY_BADGE = [
   },
 ];
 
-const BadgeListPage = () => {
-  const [showAllBadges, setShowAllBadges] = useState<boolean>(true);
+const GetBadgePage = ({ badge = DUMMY_BADGE }: BadgeItemProps) => {
+  const navigate = useNavigate();
 
-  const filterBadges = (badges: Badge[]) => {
-    if (showAllBadges) {
-      return badges;
+  const [acquiredBadge, setAcquiredBadge] = useState<Badge | null>(null);
+
+  const badgeColor = badgeColors[acquiredBadge?.category || "미획득"];
+
+  useEffect(() => {
+    const newlyAcquiredBadge = badge.find(
+      (b) => b.isAcquired && (!acquiredBadge || b.id !== acquiredBadge.id)
+    );
+    if (newlyAcquiredBadge) {
+      setAcquiredBadge(newlyAcquiredBadge);
     }
-    return badges.filter((badge) => badge.isAcquired);
+  }, [badge]);
+
+  const handleBackClick = () => {
+    navigate("/");
   };
-
-  const handleToggleClick = () => {
-    setShowAllBadges((prevState) => !prevState);
-  };
-
-  const baseBadges = DUMMY_BADGE.filter(
-    (badge) => badge.category === "기본 칭호"
-  );
-
-  const foodBadges = DUMMY_BADGE.filter((badge) => badge.category === "미식");
-
-  const exerciseBadges = DUMMY_BADGE.filter(
-    (badge) => badge.category === "운동"
-  );
-
-  const artBadges = DUMMY_BADGE.filter((badge) => badge.category === "미술관");
-
-  const historyBadges = DUMMY_BADGE.filter(
-    (badge) => badge.category === "역사"
-  );
-
-  const coffeeBadges = DUMMY_BADGE.filter((badge) => badge.category === "커피");
-
-  const acquiredBadgesCount = DUMMY_BADGE.filter(
-    (badge) => badge.isAcquired
-  ).length;
 
   return (
-    <div
-      css={{
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-        gap: "30px",
-        paddingTop: "40px",
-      }}
-    >
-      <BadgePageHeader
-        showAllBadges={showAllBadges}
-        handleToggleClick={handleToggleClick}
-        acquiredBadgesCount={acquiredBadgesCount}
-      />
-      <BaseBadgeList
-        badges={filterBadges(baseBadges)}
-        showAllBadges={showAllBadges}
-      />
-      <FoodBadgeList
-        badges={filterBadges(foodBadges)}
-        showAllBadges={showAllBadges}
-      />
-      <GymBadgeList
-        badges={filterBadges(exerciseBadges)}
-        showAllBadges={showAllBadges}
-      />
-      <ArtBadgeList
-        badges={filterBadges(artBadges)}
-        showAllBadges={showAllBadges}
-      />
-      <HistoryBadgeList
-        badges={filterBadges(historyBadges)}
-        showAllBadges={showAllBadges}
-      />
-      <CoffeeBadgeList
-        badges={filterBadges(coffeeBadges)}
-        showAllBadges={showAllBadges}
-      />
-      {!showAllBadges && (
-        <div
-          css={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            marginBottom: "30px",
-            flexDirection: "column",
-            gap: "20px",
-            width: "100%",
-            height: "100%",
-          }}
-        >
-          <span
+    <GetBadgePageLayout>
+      {acquiredBadge && (
+        <>
+          <div></div>
+          <div
             css={{
-              fontSize: "20px",
-              fontWeight: "bold",
-              color: colors.primary,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            목표를 달성하여 뱃지를 획득해보세요!
-          </span>
-          <Link
-            to="/map"
-            css={{
-              textDecoration: "none",
-            }}
-          >
-            <Button onClick={() => {}}>
-              <span
+            <div
+              css={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "165px",
+                height: "165px",
+                borderRadius: "100%",
+                border: `10px solid ${badgeColor.border}`,
+                backgroundColor: badgeColor.background,
+              }}
+            >
+              <img
                 css={{
-                  fontSize: "18px",
-                  padding: "10px",
+                  width: "85px",
+                  height: "85px",
+                  overflow: "hidden",
                 }}
-              >
-                목표 달성하러 가기
-              </span>
-            </Button>
-          </Link>
-        </div>
+                src={acquiredBadge.imageUrl}
+                alt={acquiredBadge.name}
+              />
+            </div>
+            <span
+              css={{
+                fontSize: "26px",
+                fontWeight: "bold",
+                color: badgeColor.border,
+                paddingTop: "10px",
+              }}
+            >
+              {acquiredBadge.name} 뱃지 획득!
+            </span>
+            <span
+              css={{
+                fontSize: "20px",
+                fontWeight: "400",
+                color: "#6f6f6f",
+                display: "block",
+              }}
+            >
+              {acquiredBadge.description} 달성 완료
+            </span>
+          </div>
+        </>
       )}
-    </div>
+      <Button
+        css={{ width: "100%", height: "55px" }}
+        size="large"
+        onClick={handleBackClick}
+      >
+        닫기
+      </Button>
+    </GetBadgePageLayout>
   );
 };
 
-export default BadgeListPage;
+export default GetBadgePage;

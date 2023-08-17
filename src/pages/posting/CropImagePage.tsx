@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCroppedImage } from "../context/CropImageContext";
-import CropPageHeader from "../components/Certification/CropPageHeader";
-import CropImage from "../components/Certification/CropImage";
-import Button from "../components/UI/Button";
-import { CropImagePageLayout } from "../styles/styles";
+import { useCroppedImage } from "../../context/CropImageContext";
+import CropPageHeader from "../../components/Certification/CropPageHeader";
+import CropImage from "../../components/Certification/CropImage";
+import Button from "../../components/UI/Button";
+import { CropImagePageLayout } from "../../styles/styles";
 import { css } from "@emotion/react";
 import { toast } from "react-hot-toast";
 
