@@ -20,6 +20,7 @@
     "heic-decode": "^1.1.2",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
+    "react-cropper": "^2.3.3",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
     "react-kakao-maps-sdk": "^1.1.9",
