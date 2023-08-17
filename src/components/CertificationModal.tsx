@@ -1,5 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { useImageContext } from "../context/CertifiedImageContext";
 
 import colors from "../constants/colors";
@@ -40,6 +42,7 @@ const CertificationModal = ({
   y,
 }: CertificationModalProps) => {
   const { addCertifiedImage } = useImageContext(); // 이미지 저장 Context 사용
+  const navigate = useNavigate();
 
   // 사진 인증
   const handleCertificationClick = async (
@@ -56,6 +59,7 @@ const CertificationModal = ({
         );
         console.log("Certification Results:", certificationResults);
 
+        // 인증에 성공했을 경우
         if (
           certificationResults.location === "통과" &&
           certificationResults.date === "통과"
@@ -65,11 +69,37 @@ const CertificationModal = ({
 
           // 이미지 저장 Context에 인증된 이미지 URL 추가
           addCertifiedImage(imageURL);
-          console.log("인증 성공 : ", imageURL);
+          toast.success("인증에 성공했습니다.");
+          navigate("/crop_image");
+        }
+
+        // 장소만 인증에 성공했을 경우
+        if (
+          certificationResults.location === "통과" &&
+          certificationResults.date === "미통과"
+        ) {
+          toast.error("시간 인증에 실패했습니다.");
+        }
+
+        // 시간만 인증에 성공했을 경우
+        if (
+          certificationResults.location === "미통과" &&
+          certificationResults.date === "통과"
+        ) {
+          toast.error("장소 인증에 실패했습니다.");
+        }
+
+        // 장소와 시간 모두 인증에 실패했을 경우
+        if (
+          certificationResults.location === "미통과" &&
+          certificationResults.date === "미통과"
+        ) {
+          toast.error("장소와 시간 인증에 실패했습니다.");
         }
       }
     } catch (error) {
       console.error("Error during certification:", error);
+      toast.error("인증에 실패했습니다.");
     }
   };
 

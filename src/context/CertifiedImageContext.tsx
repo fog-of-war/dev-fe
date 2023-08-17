@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 interface ImageContextProps {
-  certifiedImages: any[]; // 'any' 대신 이미지에 적합한 타입으로 대체해야 합니다
-  addCertifiedImage: (image: any) => void; // 'any' 대신 적절한 타입으로 대체해야 합니다
+  certifiedImages: string[];
+  addCertifiedImage: (image: string) => void;
 }
 
 const ImageContext = createContext<ImageContextProps>({
@@ -18,10 +18,9 @@ interface ImageProviderProps {
 
 export function CertifiedImageProvider({ children }: ImageProviderProps) {
   // children 속성을 명시적으로 타입 지정합니다
-  const [certifiedImages, setCertifiedImages] = useState<any[]>([]);
+  const [certifiedImages, setCertifiedImages] = useState<string[]>([]);
 
-  const addCertifiedImage = (image: any) => {
-    // 'any' 대신 적절한 타입으로 대체해야 합니다
+  const addCertifiedImage = (image: string) => {
     setCertifiedImages((prevImages) => [...prevImages, image]);
   };
 
