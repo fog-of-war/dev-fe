@@ -3,6 +3,7 @@ import { css } from "@emotion/react";
 import colors from "../../constants/colors";
 import Button from "../../components/UI/Button";
 import { useNavigate } from "react-router-dom";
+import { UploadPageLayout } from "./UploadPage";
 
 const PostingCompletePage = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const PostingCompletePage = () => {
   };
 
   return (
-    <div css={PostingCompletePageLayout}>
+    <div css={UploadPageLayout}>
       <div></div>
       <div css={ContentBox}>
         <div css={ImageBox}>
@@ -43,18 +44,6 @@ const PostingCompletePage = () => {
 };
 
 export default PostingCompletePage;
-
-const PostingCompletePageLayout = css`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  padding: 20px;
-  background-color: white;
-  gap: 3px;
-`;
 
 const ContentBox = css`
   display: flex;

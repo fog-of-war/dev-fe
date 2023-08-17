@@ -55,14 +55,19 @@ const UploadPage = () => {
 
 export default UploadPage;
 
-const UploadPageLayout = css`
+export const UploadPageLayout = css`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
   height: 100%;
+  top: 0;
+  left: 0;
   padding: 20px;
   gap: 20px;
+  position: absolute;
+  z-index: 77;
+  background-color: white;
 `;
 
 const PostingContainer = css`

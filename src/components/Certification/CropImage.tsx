@@ -39,7 +39,7 @@ const CropImage = ({ enableCropper, setEnableCropper }: CropState) => {
   const getCroppedImage = () => {
     if (cropperRef.current) {
       const cropper = cropperRef.current.cropper;
-      cropper.getCroppedCanvas().toBlob((blob) => {
+      cropper.getCroppedCanvas().toBlob((blob: any) => {
         if (blob) {
           const croppedImageUrl = URL.createObjectURL(blob);
           setCroppedImage(croppedImageUrl);
