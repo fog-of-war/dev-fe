@@ -6,6 +6,8 @@ import colors from "../../constants/colors";
 import B1 from "../UI/B1";
 import { Place } from "../../types/types";
 import PlaceImageList from "./PlaceImageList";
+import { useNavigateModal } from "../../hooks/useNavigateModal";
+import NavigateModal from "../Map/NavigateModal";
 
 interface PlaceItemProps extends React.HTMLAttributes<HTMLLIElement> {
   place: Place;
@@ -13,8 +15,15 @@ interface PlaceItemProps extends React.HTMLAttributes<HTMLLIElement> {
 }
 
 const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
+  const navigateModal = useNavigateModal();
+
   return (
     <PlaceItemContainer {...props}>
+      <NavigateModal
+        isOpen={navigateModal.isOpen}
+        onClose={navigateModal.onClose}
+        url={place.address}
+      />
       <TitleContainer>
         <TitleWrapper>
           <h4>{place.name}</h4>
@@ -23,8 +32,9 @@ const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
         <B1
           css={{
             color: colors.lightGrey,
+            cursor: "pointer",
           }}
-          onClick={() => {}}
+          onClick={navigateModal.onOpen}
         >
           지도 자세히 보기
         </B1>

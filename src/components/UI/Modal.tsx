@@ -1,18 +1,20 @@
 /** @jsxImportSource @emotion/react */
 
-interface ModalProps {
+interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
+  isOpen: boolean;
 }
 
-const Modal = ({ children, ...props }: ModalProps) => {
+const Modal = ({ children, isOpen, ...props }: ModalProps) => {
   return (
     <>
       <div
         css={{
           position: "fixed",
           inset: 0,
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          backgroundColor: "rgba(0, 0, 0, 0.3)",
           zIndex: 1000,
+          visibility: isOpen ? "visible" : "hidden",
         }}
       />
       <div
@@ -20,7 +22,8 @@ const Modal = ({ children, ...props }: ModalProps) => {
           position: "fixed",
           top: "50%",
           left: "50%",
-          transform: "translate(-50%, -50%)",
+          transform: isOpen ? "translate(-50%, -50%)" : "translate(-50%, -75%)",
+          opacity: isOpen ? 1 : 0,
           zIndex: 1001,
           padding: "20px",
           background: "white",
@@ -29,7 +32,9 @@ const Modal = ({ children, ...props }: ModalProps) => {
           justifyContent: "center",
           alignItems: "center",
           borderRadius: "10px",
-          gap: "20px",
+          gap: "10px",
+          visibility: isOpen ? "visible" : "hidden",
+          transition: "all 0.1s ease-out",
         }}
         {...props}
       >

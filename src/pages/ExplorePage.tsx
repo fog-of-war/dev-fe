@@ -18,7 +18,7 @@ const ExplorePage = () => {
           backgroundSize: "cover",
         }}
       />
-      <SearchBarDisplay placeholder="어디로 떠나보실래요?" />
+      <SearchBarDisplay placeholder="어디로 떠나보실래요?" isMap={true} />
       <TagButtonList />
     </ExplorePageLayout>
   );

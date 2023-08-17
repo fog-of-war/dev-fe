@@ -87,7 +87,7 @@ const SearchResultPage = () => {
           </IconWrapper>
         )}
 
-        <SearchBarDisplay value={searchQuery} />
+        <SearchBarDisplay value={searchQuery} isMap={false} />
         <IconWrapper onClick={() => navigate("/explore")}>
           <img src="/images/search/xIconBold.png" alt="map_icon" height={22} />
         </IconWrapper>
