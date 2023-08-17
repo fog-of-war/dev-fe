@@ -12,7 +12,7 @@ import EditRecentSearchPage from "./pages/search/EditRecentSearchPage";
 import SearchResultPage from "./pages/search/SearchResultPage";
 import ProfileEditPage from "./pages/ProfileEditPage";
 import BadgeListPage from "./pages/BadgeListPage";
-import Map from "./components/Map/GoogleMap";
+import MapPage from "./pages/MapPage";
 import GetBadgePage from "./pages/GetBadgePage";
 import UploadPage from "./pages/UploadPage";
 import CropImagePage from "./pages/CropImagePage";
