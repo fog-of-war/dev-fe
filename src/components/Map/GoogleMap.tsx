@@ -9,7 +9,7 @@ import retroMapStyle from "../../data/retroMapStyle.json";
 import { defaultCenter, bounds, options } from "../../data/mapData";
 
 import SeoulPolygon from "./SeoulPolygon";
-import BlackPolygon from "./BlackPolygon";
+import OutsidePolygon from "./OutsidePolygon";
 import CustomMarker from "./CustomMarker";
 
 // Marker 데이터 인터페이스 정의
@@ -187,7 +187,7 @@ const Map = () => {
           center={mapCenter}
           zoom={view.zoom}
           options={{
-            minZoom: 10,
+            minZoom: 10.3,
             restriction: {
               latLngBounds: bounds,
               strictBounds: false,
@@ -201,11 +201,11 @@ const Map = () => {
             mapRef.current = map;
           }}
           onZoomChanged={() => {
-            const newZoomLevel = mapRef.current?.getZoom() || 11;
+            const newZoomLevel = mapRef.current?.getZoom() || 10.3;
             setZoomLevel(newZoomLevel);
           }}
         >
-          <BlackPolygon />
+          <OutsidePolygon />
           {/* 마커 렌더링 */}
           {zoomLevel >= 14 &&
             markers.map((marker, index) => (
