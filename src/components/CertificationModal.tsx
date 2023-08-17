@@ -1,5 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
+import { useImageContext } from "../context/CertifiedImageContext";
+
 import colors from "../constants/colors";
 import BottomModal from "./BottomModal";
 import PlaceImages from "./Certification/PlaceImages";
@@ -37,6 +39,8 @@ const CertificationModal = ({
   x,
   y,
 }: CertificationModalProps) => {
+  const { addCertifiedImage } = useImageContext(); // 이미지 저장 Context 사용
+
   // 사진 인증
   const handleCertificationClick = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -45,17 +49,30 @@ const CertificationModal = ({
       const file = event.target.files?.[0];
 
       if (file) {
-        const { photoData, certificationResults } =
-          await PhotoCertificationLogic(file, x, y);
-        console.log("x:", x, "y:", y);
-
-        console.log("Photo Data:", photoData);
+        const { certificationResults } = await PhotoCertificationLogic(
+          file,
+          x,
+          y
+        );
         console.log("Certification Results:", certificationResults);
+
+        if (
+          certificationResults.location === "통과" &&
+          certificationResults.date === "통과"
+        ) {
+          // 이미지 URL을 생성
+          const imageURL = URL.createObjectURL(file);
+
+          // 이미지 저장 Context에 인증된 이미지 URL 추가
+          addCertifiedImage(imageURL);
+          console.log("인증 성공 : ", imageURL);
+        }
       }
     } catch (error) {
       console.error("Error during certification:", error);
     }
   };
+
   return (
     <BottomModal>
       <div
