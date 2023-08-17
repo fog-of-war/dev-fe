@@ -11,6 +11,7 @@ const BackButton = ({ size, ...props }: BackButtonProps) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        cursor: "pointer",
       }}
       {...props}
     >

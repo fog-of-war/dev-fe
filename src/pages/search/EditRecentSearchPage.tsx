@@ -8,19 +8,21 @@ import colors from "../../constants/colors";
 import styled from "@emotion/styled";
 
 import { SearchList } from "../../components/Search/RecentSearchesPanel";
-import { Search } from "../../types/types";
 import useModal from "../../hooks/useModal";
+import { Search } from "../../types/types";
 
 import BackButton from "../../components/UI/BackButton";
 import EditSearchItem from "../../components/Search/EditSearchItem";
 import Button from "../../components/UI/Button";
 import RecentSearchesDeleteModal from "../../components/Search/RecentSearchesDeleteModal";
+import { useDeleteComfirmModal } from "../../hooks/useDeleteComfirmModal";
 
 const EditRecentSearchPage = () => {
-  const navigate = useNavigate();
-  const modal = useModal();
   const [recentSearches, setRecentSearches] = useRecoilState(searchState);
   const [selectedSearches, setSelectedSearches] = useState<Search[]>([]);
+  const deleteConfirmModal = useDeleteComfirmModal();
+
+  const navigate = useNavigate();
 
   const handleSelect = (search: Search) => {
     if (selectedSearches.includes(search)) {
@@ -43,17 +45,16 @@ const EditRecentSearchPage = () => {
       prev.filter((search) => !selectedSearches.includes(search))
     );
     setSelectedSearches([]);
-    modal.handleClose();
+    deleteConfirmModal.onClose();
   };
 
   return (
     <Layout>
-      {modal.isOpen && (
-        <RecentSearchesDeleteModal
-          onClose={modal.handleClose}
-          onDelete={handleDelete}
-        />
-      )}
+      <RecentSearchesDeleteModal
+        onClose={deleteConfirmModal.onClose}
+        onDelete={handleDelete}
+      />
+
       <Header>
         <BackButton onClick={() => navigate(-1)} size={18} />
         <Title>
@@ -61,6 +62,7 @@ const EditRecentSearchPage = () => {
           <ColoredText>{recentSearches.length}</ColoredText>
         </Title>
       </Header>
+
       <SearchList>
         {recentSearches.map((search: Search) => {
           const isSelected = selectedSearches.includes(search);
@@ -74,6 +76,7 @@ const EditRecentSearchPage = () => {
           );
         })}
       </SearchList>
+
       <ButtonsContainer>
         <Button
           onClick={handleSelectAll}
@@ -83,7 +86,7 @@ const EditRecentSearchPage = () => {
           전체선택
         </Button>
         <Button
-          onClick={modal.handleOpen}
+          onClick={deleteConfirmModal.onOpen}
           variant="primary"
           css={{ width: "100%" }}
         >

@@ -1,17 +1,17 @@
 /** @jsxImportSource @emotion/react */
 
 import styled from "@emotion/styled";
-import IconButton from "../../components/UI/IconButton";
+import { Link } from "react-router-dom";
+
 import Spacing from "../../components/UI/Spacing";
-import { useNavigate } from "react-router-dom";
+
+const OAUTH_ICONS = [
+  { name: "google", icon: "/images/auth/googleIcon.png" },
+  { name: "kakao", icon: "/images/auth/kakaoIcon.png" },
+  { name: "naver", icon: "/images/auth/naverIcon.png" },
+];
 
 const AuthPage = () => {
-  const navigate = useNavigate();
-
-  const handleAuthButtonClick = () => {
-    console.log("authButton clicked");
-    navigate("/profile_setup");
-  };
   return (
     <ImageCoveredLayout>
       <Container>
@@ -20,18 +20,14 @@ const AuthPage = () => {
         <StyledText>SNS계정으로 간편하게 회원가입</StyledText>
         <Spacing size={20} direction="vertical" />
         <AuthButtonWrapper>
-          <IconButton
-            icon="/images/auth/googleIcon.png"
-            onClick={handleAuthButtonClick}
-          />
-          <IconButton
-            icon="/images/auth/kakaoIcon.png"
-            onClick={handleAuthButtonClick}
-          />
-          <IconButton
-            icon="/images/auth/naverIcon.png"
-            onClick={handleAuthButtonClick}
-          />
+          {OAUTH_ICONS.map((oAuth) => (
+            <Link
+              key={oAuth.name}
+              to={`${process.env.REACT_APP_API_URL}v1/auth/${oAuth.name}`}
+            >
+              <img src={oAuth.icon} alt={oAuth.name} height={65} />
+            </Link>
+          ))}
         </AuthButtonWrapper>
       </Container>
     </ImageCoveredLayout>

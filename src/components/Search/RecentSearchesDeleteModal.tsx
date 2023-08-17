@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import colors from "../../constants/colors";
+import { useDeleteComfirmModal } from "../../hooks/useDeleteComfirmModal";
 import B1 from "../UI/B1";
 import Button from "../UI/Button";
 import Modal from "../UI/Modal";
@@ -14,8 +15,10 @@ const RecentSearchesDeleteModal = ({
   onClose,
   onDelete,
 }: RecentSearchesDeleteModalProps) => {
+  const modal = useDeleteComfirmModal();
+
   return (
-    <Modal css={{ paddingBottom: "15px" }}>
+    <Modal isOpen={modal.isOpen} css={{ paddingBottom: "15px" }}>
       <B1>선택한 기록을 모두 삭제 하시겠습니까?</B1>
       <div
         css={{
