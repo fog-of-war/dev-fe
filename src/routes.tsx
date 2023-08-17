@@ -11,12 +11,12 @@ import SearchPage from "./pages/search/SearchPage";
 import EditRecentSearchPage from "./pages/search/EditRecentSearchPage";
 import SearchResultPage from "./pages/search/SearchResultPage";
 import ProfileEditPage from "./pages/ProfileEditPage";
-import BadgeListPage from "./pages/BadgeListPage";
+import BadgeListPage from "./pages/badge/BadgeListPage";
 import MapPage from "./pages/MapPage";
-import GetBadgePage from "./pages/GetBadgePage";
-import UploadPage from "./pages/UploadPage";
-import CropImagePage from "./pages/CropImagePage";
-import PostingCompletePage from "./pages/PostingCompletePage";
+import GetBadgePage from "./pages/badge/GetBadgePage";
+import UploadPage from "./pages/posting/UploadPage";
+import CropImagePage from "./pages/posting/CropImagePage";
+import PostingCompletePage from "./pages/posting/PostingCompletePage";
 
 const AppRoutes = () => {
   return (

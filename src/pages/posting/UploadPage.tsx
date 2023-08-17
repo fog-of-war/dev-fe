@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
-import { useLoading } from "../context/LoadingContext";
-import UploadPostPageHeader from "../components/Certification/UploadPostPageHeader";
-import UploadPostImage from "../components/Certification/UploadPostImage";
-import UploadPostComment from "../components/Certification/UploadPostComment";
-import Button from "../components/UI/Button";
+import { useLoading } from "../../context/LoadingContext";
+import UploadPostPageHeader from "../../components/Certification/UploadPostPageHeader";
+import UploadPostImage from "../../components/Certification/UploadPostImage";
+import UploadPostComment from "../../components/Certification/UploadPostComment";
+import Button from "../../components/UI/Button";
 import { toast } from "react-hot-toast";
 
 const UploadPage = () => {
