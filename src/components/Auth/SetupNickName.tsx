@@ -22,7 +22,7 @@ const SetupNickName = ({
   profileData,
   setProfileData,
 }: SetupNickNameProps) => {
-  const [nickName, setNickName] = useState(profileData.nickName);
+  const [nickName, setNickName] = useState(profileData.user_nickname);
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();

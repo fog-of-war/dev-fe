@@ -5,22 +5,33 @@ import { useFunnel } from "../../hooks/useFunnel";
 
 import SetupNickName from "../../components/Auth/SetupNickName";
 import SetupProfileImage from "../../components/Auth/SetupProfileImage";
+import { setUpProfile } from "../../api/user";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export interface ProfileData {
-  nickName: string;
-  profileImage: string;
+  user_nickname: string;
+  user_image_url: string;
 }
 
 const ProfileSetupPage = () => {
   const [profileData, setProfileData] = useState<ProfileData>({
-    nickName: "",
-    profileImage: "/images/auth/defaultProfile.png",
+    user_nickname: "",
+    user_image_url: "/images/auth/defaultProfile.png",
   });
+
+  const navigate = useNavigate();
 
   const [Funnel, Step, setStep] = useFunnel("닉네임");
 
-  const handleSubmit = () => {
-    console.log(profileData);
+  const handleSubmit = async () => {
+    try {
+      await setUpProfile(profileData);
+      toast.success("가입이 완료되었습니다.");
+      navigate("/");
+    } catch (error: any) {
+      toast.error(error.response.data.message);
+    }
   };
 
   return (
