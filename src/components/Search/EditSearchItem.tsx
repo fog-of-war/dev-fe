@@ -25,7 +25,7 @@ const EditSearchItem = ({
             src={
               isSelected
                 ? "/images/search/checkIcon.png"
-                : "/images/search/unCheckIcon.png"
+                : "/images/search/uncheckIcon.png"
             }
             alt="icon"
           />
