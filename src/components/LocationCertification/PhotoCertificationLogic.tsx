@@ -64,7 +64,7 @@ const PhotoCertificationLogic = async (
       // 100m 이내의 거리이면 통과, 그렇지 않으면 미통과
       const locationResult = distance > 100 ? "미통과" : "통과";
 
-      // 24시간 이내의 시간 차이이면 통과, 그렇지 않으면 미통과
+      // 자정까지의 시간만 통과
       const dateResult = timeDiff <= 24 * 60 * 60 * 1000 ? "통과" : "미통과";
 
       certificationResults.location = locationResult;
