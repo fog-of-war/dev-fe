@@ -14,6 +14,9 @@ import ProfileEditPage from "./pages/ProfileEditPage";
 import BadgeListPage from "./pages/BadgeListPage";
 import Map from "./components/Map/GoogleMap";
 import GetBadgePage from "./pages/GetBadgePage";
+import UploadPage from "./pages/UploadPage";
+import CropImagePage from "./pages/CropImagePage";
+import PostingCompletePage from "./pages/PostingCompletePage";
 
 const AppRoutes = () => {
   return (
@@ -32,6 +35,9 @@ const AppRoutes = () => {
       <Route path="/ranking" Component={RankingPage} />
       <Route path="/badgeList" Component={BadgeListPage} />
       <Route path="/getBadge" Component={GetBadgePage} />
+      <Route path="/crop_image" Component={CropImagePage} />
+      <Route path="/upload" Component={UploadPage} />
+      <Route path="/posting_complete" Component={PostingCompletePage} />
     </Routes>
   );
 };
