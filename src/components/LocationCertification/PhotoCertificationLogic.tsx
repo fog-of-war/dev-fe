@@ -22,7 +22,7 @@ const PhotoCertificationLogic = async (
   const photoData: PhotoData = {};
   const certificationResults: CertificationResults = {
     location: "미통과",
-    date: "미통과", // 기본값을 "미통과"로 설정
+    date: "미통과",
   };
 
   try {
@@ -43,9 +43,13 @@ const PhotoCertificationLogic = async (
       photoData.latitude = latitude;
       photoData.date = date;
 
-      const mockLongitude = x; //경도
-      const mockLatitude = y; //위도
+      const mockLongitude = x; // 경도
+      const mockLatitude = y; // 위도
       const mockDate = new Date();
+
+      // 사진을 찍은 자정 시간을 계산
+      const photoMidnight = new Date(date);
+      photoMidnight.setHours(0, 0, 0, 0);
 
       const distance = calculateDistance(
         longitude,
@@ -53,10 +57,15 @@ const PhotoCertificationLogic = async (
         mockLongitude,
         mockLatitude
       );
-      const timeDiff = Math.abs(date.getTime() - mockDate.getTime());
 
+      // 자정까지의 시간 차이를 계산
+      const timeDiff = Math.abs(photoMidnight.getTime() - mockDate.getTime());
+
+      // 100m 이내의 거리이면 통과, 그렇지 않으면 미통과
       const locationResult = distance > 100 ? "미통과" : "통과";
-      const dateResult = timeDiff >= 24 * 60 * 60 * 1000 ? "미통과" : "통과";
+
+      // 24시간 이내의 시간 차이이면 통과, 그렇지 않으면 미통과
+      const dateResult = timeDiff <= 24 * 60 * 60 * 1000 ? "통과" : "미통과";
 
       certificationResults.location = locationResult;
       certificationResults.date = dateResult;
