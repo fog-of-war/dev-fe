@@ -283,7 +283,13 @@ const GetBadgePage = ({ badge = DUMMY_BADGE }: BadgeItemProps) => {
           </div>
         </>
       )}
-      <Button onClick={handleBackClick}>닫기</Button>
+      <Button
+        css={{ width: "100%", height: "55px" }}
+        size="large"
+        onClick={handleBackClick}
+      >
+        닫기
+      </Button>
     </GetBadgePageLayout>
   );
 };
