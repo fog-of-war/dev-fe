@@ -30,11 +30,12 @@ const AuthPage = () => {
   const handleAccessToken = async (code: string) => {
     // 백엔드 서버로 인증 코드를 보내어 액세스 토큰 교환
     try {
-      const response = await axiosBase.post(`v1/auth/google/tokenplease`, {
+      const response = await axiosBase.post(`v1/auth/google/oauth`, {
         code,
       });
-      const accessToken = response.data;
-      setToken({ accessToken });
+      const accessToken = response?.data;
+      console.log(accessToken);
+      localStorage.setItem("accessToken", JSON.stringify(accessToken));
     } catch (error: any) {
       console.log(error);
     }
@@ -44,8 +45,6 @@ const AuthPage = () => {
     // URL 파라미터를 파싱하여 인증 코드와 state 값을 얻음
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code");
-
-    console.log(urlParams);
 
     if (code) {
       handleAccessToken(code!);
