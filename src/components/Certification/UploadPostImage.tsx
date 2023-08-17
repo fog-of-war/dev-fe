@@ -39,8 +39,8 @@ const LayoutContainer = css`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 300px;
-  border: 1px solid ${colors.primary};
+  aspect-ratio: 1;
+  /* border: 1px solid ${colors.primary}; */
   overflow: hidden;
   background-color: ${colors.paleGrey};
 `;
