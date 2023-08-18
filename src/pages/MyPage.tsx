@@ -10,7 +10,7 @@ const MyPage = () => {
 
   // 비동기 로직 처리
   const fetchData = async () => {
-    // setLoadingMessage("정훈짱최고");
+    setLoadingMessage("Loading...");
     setLoading(true);
 
     await new Promise((resolve) => setTimeout(resolve, 2000));

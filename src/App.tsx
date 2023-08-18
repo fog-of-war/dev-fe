@@ -10,10 +10,10 @@ import { LoadingProvider } from "./context/LoadingContext";
 import LoadingComponent from "./components/UI/LoadingComponent";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { CropImageProvider } from "./context/CropImageContext";
+import ToasterContext from "./context/ToasterContext";
 import { CertifiedImageProvider } from "./context/CertifiedImageContext";
 
 const queryClient = new QueryClient();
-
 
 function App() {
   return (
@@ -25,6 +25,7 @@ function App() {
               <CropImageProvider>
                 <CertifiedImageProvider>
                   <Layout>
+                    <ToasterContext />
                     <AppRoutes />
                     <LoadingComponent />
                   </Layout>
