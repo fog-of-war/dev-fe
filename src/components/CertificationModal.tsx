@@ -143,7 +143,17 @@ const CertificationModal = ({
           </div>
         </div>
         <Button>
-          <label css={{ display: "flex", gap: 8, cursor: "pointer" }}>
+          <label
+            css={{
+              display: "flex",
+              gap: 8,
+              cursor: "pointer",
+              width: "100%",
+              height: "100%",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <input
               type="file"
               accept=".heic, .heif, image/*"
