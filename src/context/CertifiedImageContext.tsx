@@ -1,31 +1,29 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 
 interface ImageContextProps {
-  certifiedImages: string[];
-  addCertifiedImage: (image: string) => void;
+  certifiedImage: string | null;
+  setCertifiedImage: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-const ImageContext = createContext<ImageContextProps>({
-  certifiedImages: [],
-  addCertifiedImage: () => {},
-});
+const ImageContext = createContext<ImageContextProps | undefined>(undefined);
 
-export const useImageContext = () => useContext(ImageContext);
+export const useImageContext = (): ImageContextProps => {
+  const context = useContext(ImageContext);
+  if (!context) {
+    throw new Error("ImageProvider에 문제가 발생했습니다.");
+  }
+  return context;
+};
 
 interface ImageProviderProps {
   children: ReactNode;
 }
 
 export function CertifiedImageProvider({ children }: ImageProviderProps) {
-  // children 속성을 명시적으로 타입 지정합니다
-  const [certifiedImages, setCertifiedImages] = useState<string[]>([]);
-
-  const addCertifiedImage = (image: string) => {
-    setCertifiedImages((prevImages) => [...prevImages, image]);
-  };
+  const [certifiedImage, setCertifiedImage] = useState<string | null>(null);
 
   return (
-    <ImageContext.Provider value={{ certifiedImages, addCertifiedImage }}>
+    <ImageContext.Provider value={{ certifiedImage, setCertifiedImage }}>
       {children}
     </ImageContext.Provider>
   );

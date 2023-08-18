@@ -41,7 +41,7 @@ const CertificationModal = ({
   x,
   y,
 }: CertificationModalProps) => {
-  const { addCertifiedImage } = useImageContext(); // 이미지 저장 Context 사용
+  const { setCertifiedImage } = useImageContext(); // 이미지 저장 Context 사용
   const navigate = useNavigate();
 
   // 사진 인증
@@ -68,7 +68,8 @@ const CertificationModal = ({
           const imageURL = URL.createObjectURL(file);
 
           // 이미지 저장 Context에 인증된 이미지 URL 추가
-          addCertifiedImage(imageURL);
+          setCertifiedImage(imageURL);
+          console.log("인증된 이미지 URL:", imageURL);
           toast.success("인증에 성공했습니다.");
           navigate("/crop_image");
         }
