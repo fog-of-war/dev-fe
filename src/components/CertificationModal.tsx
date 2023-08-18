@@ -41,7 +41,7 @@ const CertificationModal = ({
   x,
   y,
 }: CertificationModalProps) => {
-  const { addCertifiedImage } = useImageContext(); // 이미지 저장 Context 사용
+  const { setCertifiedImage } = useImageContext(); // 이미지 저장 Context 사용
   const navigate = useNavigate();
 
   // 사진 인증
@@ -50,7 +50,6 @@ const CertificationModal = ({
   ) => {
     try {
       const file = event.target.files?.[0];
-
       if (file) {
         const { certificationResults } = await PhotoCertificationLogic(
           file,
@@ -59,16 +58,22 @@ const CertificationModal = ({
         );
         console.log("Certification Results:", certificationResults);
 
+        const reader = new FileReader();
+        reader.onload = () => {
+          setCertifiedImage(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+
         // 인증에 성공했을 경우
         if (
           certificationResults.location === "통과" &&
           certificationResults.date === "통과"
         ) {
           // 이미지 URL을 생성
-          const imageURL = URL.createObjectURL(file);
+          // const imageURL = URL.createObjectURL(file);
 
           // 이미지 저장 Context에 인증된 이미지 URL 추가
-          addCertifiedImage(imageURL);
+          // setCertifiedImage(imageURL);
           toast.success("인증에 성공했습니다.");
           navigate("/crop_image");
         }
