@@ -48,6 +48,7 @@ const TYPE_VARIANTS = {
     "@media (min-width: 768px)": {
       "&:hover": {
         backgroundColor: colors.secondary,
+        borderColor: colors.secondary,
       },
     },
   },

@@ -25,7 +25,7 @@ const SetupProfileImage = ({
   setProfileData,
 }: SetupProfileImageProps) => {
   const [profileImage, setProfileImage] = useState(
-    profileData.profileImage || "/images/default_profile_image.png"
+    profileData.user_image_url || "/images/default_profile_image.png"
   );
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -38,7 +38,7 @@ const SetupProfileImage = ({
         const imageUrl = response.imageUrl;
 
         setProfileImage(imageUrl);
-        setProfileData({ ...profileData, profileImage: imageUrl });
+        setProfileData({ ...profileData, user_image_url: imageUrl });
       } catch (error: any) {
         console.error("Image upload failed:", error);
       }
