@@ -10,6 +10,7 @@ import { RecoilRoot } from "recoil";
 import { LoadingProvider } from "./context/LoadingContext";
 import LoadingComponent from "./components/UI/LoadingComponent";
 import { CropImageProvider } from "./context/CropImageContext";
+import ToasterContext from "./context/ToasterContext";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <ThemeProvider theme={theme}>
             <CropImageProvider>
               <Layout>
+                <ToasterContext />
                 <AppRoutes />
                 <LoadingComponent />
               </Layout>
