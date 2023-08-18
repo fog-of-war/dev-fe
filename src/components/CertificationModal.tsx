@@ -58,28 +58,26 @@ const CertificationModal = ({
         );
         console.log("Certification Results:", certificationResults);
 
-        const reader = new FileReader();
-        reader.onload = () => {
-          setCertifiedImage(reader.result as string);
-        };
-        reader.readAsDataURL(file);
-
         // 인증에 성공했을 경우
         if (
           certificationResults.location === "통과" &&
           certificationResults.date === "통과"
         ) {
-          // 이미지 URL을 생성
-          // const imageURL = URL.createObjectURL(file);
+          // 이미지 저장
+          const reader = new FileReader();
 
-          // 이미지 저장 Context에 인증된 이미지 URL 추가
-          // setCertifiedImage(imageURL);
-          setCertifiedImage({
-            imageURL,
-            placeName,
-            x,
-            y,
-          });
+          reader.onload = () => {
+            const imageURL = reader.result as string;
+
+            setCertifiedImage({
+              imageURL,
+              placeName,
+              x,
+              y,
+            });
+          };
+          reader.readAsDataURL(file);
+
           toast.success("인증에 성공했습니다.");
           navigate("/crop_image");
         }
@@ -143,7 +141,17 @@ const CertificationModal = ({
           </div>
         </div>
         <Button>
-          <label css={{ display: "flex", gap: 8, cursor: "pointer" }}>
+          <label
+            css={{
+              display: "flex",
+              gap: 8,
+              cursor: "pointer",
+              width: "100%",
+              height: "100%",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <input
               type="file"
               accept=".heic, .heif, image/*"

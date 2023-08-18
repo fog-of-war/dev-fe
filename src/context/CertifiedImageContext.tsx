@@ -1,8 +1,20 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 
 interface ImageContextProps {
-  certifiedImage: string | null;
-  setCertifiedImage: React.Dispatch<React.SetStateAction<string | null>>;
+  certifiedImage: {
+    imageURL: string | null;
+    placeName: string | null;
+    x: number | null;
+    y: number | null;
+  };
+  setCertifiedImage: React.Dispatch<
+    React.SetStateAction<{
+      imageURL: string | null;
+      placeName: string | null;
+      x: number | null;
+      y: number | null;
+    }>
+  >;
 }
 
 const ImageContext = createContext<ImageContextProps | undefined>(undefined);
@@ -20,7 +32,17 @@ interface ImageProviderProps {
 }
 
 export function CertifiedImageProvider({ children }: ImageProviderProps) {
-  const [certifiedImage, setCertifiedImage] = useState<string | null>(null);
+  const [certifiedImage, setCertifiedImage] = useState<{
+    imageURL: string | null;
+    placeName: string | null;
+    x: number | null;
+    y: number | null;
+  }>({
+    imageURL: null,
+    placeName: null,
+    x: null,
+    y: null,
+  });
 
   return (
     <ImageContext.Provider value={{ certifiedImage, setCertifiedImage }}>
