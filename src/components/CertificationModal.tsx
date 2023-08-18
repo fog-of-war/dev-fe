@@ -74,6 +74,12 @@ const CertificationModal = ({
 
           // 이미지 저장 Context에 인증된 이미지 URL 추가
           // setCertifiedImage(imageURL);
+          setCertifiedImage({
+            imageURL,
+            placeName,
+            x,
+            y,
+          });
           toast.success("인증에 성공했습니다.");
           navigate("/crop_image");
         }
