@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import { useState } from "react";
 import { css } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
 import { useLoading } from "../../context/LoadingContext";
@@ -7,20 +8,39 @@ import UploadPostImage from "../../components/Certification/UploadPostImage";
 import UploadPostComment from "../../components/Certification/UploadPostComment";
 import Button from "../../components/UI/Button";
 import { toast } from "react-hot-toast";
+import { uploadPost } from "../../api/post";
+
+export interface PostingData {
+  place_name: string;
+  post_star_rating: number;
+  post_description: string;
+  post_image_url: string;
+  place_latitude: number;
+  place_longitude: number;
+}
 
 const UploadPage = () => {
   const navigate = useNavigate();
   const { setLoading, setLoadingMessage } = useLoading();
+  const [postingData, setPostingData] = useState<PostingData>({
+    place_name: "",
+    post_star_rating: 0,
+    post_description: "",
+    post_image_url: "",
+    place_latitude: 0,
+    place_longitude: 0,
+  });
 
   const handleUploadPostClick = async () => {
-    // todo : 게시글 작성 api 로직 추가
     try {
       setLoading(true);
       setLoadingMessage("게시글 작성 중...");
-
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await uploadPost(postingData);
 
       setLoading(false);
+      toast.success("게시글 작성에 성공했습니다.", {
+        id: "upload-post-success",
+      });
       navigate("/posting_complete");
     } catch (error) {
       setLoading(false);
@@ -36,8 +56,14 @@ const UploadPage = () => {
       <UploadPostPageHeader />
       <div css={UploadPageLayout}>
         <div css={PostingContainer}>
-          <UploadPostImage />
-          <UploadPostComment />
+          <UploadPostImage
+            postingData={postingData}
+            setPostingData={setPostingData}
+          />
+          <UploadPostComment
+            postingData={postingData}
+            setPostingData={setPostingData}
+          />
         </div>
         <div css={ButtonContainer}>
           <Button

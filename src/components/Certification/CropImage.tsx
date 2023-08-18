@@ -7,6 +7,7 @@ import { useCroppedImage } from "../../context/CropImageContext";
 import Button from "../../components/UI/Button";
 import colors from "../../constants/colors";
 import { toast } from "react-hot-toast";
+import { useImageContext } from "../../context/CertifiedImageContext";
 
 type CropState = {
   enableCropper: boolean;
@@ -17,6 +18,20 @@ const CropImage = ({ enableCropper, setEnableCropper }: CropState) => {
   const cropperRef = useRef<Cropper | null>(null);
   const { setCroppedImage } = useCroppedImage();
   const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const { certifiedImage } = useImageContext();
+
+  useEffect(() => {
+    if (!certifiedImage) {
+      toast.error("이미지를 불러오는데 실패했습니다.", {
+        id: "iamge-load-error",
+      });
+    }
+
+    if (certifiedImage) {
+      setImageSrc(certifiedImage);
+      console.log(certifiedImage);
+    }
+  }, [certifiedImage]);
 
   useEffect(() => {
     if (enableCropper && cropperRef.current) {
@@ -25,16 +40,16 @@ const CropImage = ({ enableCropper, setEnableCropper }: CropState) => {
     }
   }, [enableCropper]);
 
-  const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files && e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setImageSrc(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  // const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files && e.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       setImageSrc(reader.result as string);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
   const getCroppedImage = () => {
     if (cropperRef.current) {
@@ -54,7 +69,7 @@ const CropImage = ({ enableCropper, setEnableCropper }: CropState) => {
 
   return (
     <div css={Container}>
-      <label css={StyledLabel} htmlFor="fileInput">
+      {/* <label css={StyledLabel} htmlFor="fileInput">
         이미지 선택
       </label>
       <input
@@ -63,7 +78,7 @@ const CropImage = ({ enableCropper, setEnableCropper }: CropState) => {
         type="file"
         accept="image/*"
         onChange={onFileChange}
-      />
+      /> */}
       <div css={BoxStyle}>
         {imageSrc ? (
           <div css={CropperContainer}>
