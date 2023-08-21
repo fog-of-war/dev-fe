@@ -13,6 +13,7 @@ import { CropImageProvider } from "./context/CropImageContext";
 import ToasterContext from "./context/ToasterContext";
 import { CertifiedImageProvider } from "./context/CertifiedImageContext";
 import AuthGuard from "./components/Auth/AuthGuard";
+import { PostingDataProvider } from "./context/PostingDataContext";
 
 const queryClient = new QueryClient();
 
@@ -23,17 +24,19 @@ function App() {
         <RecoilRoot>
           <LoadingProvider>
             <ThemeProvider theme={theme}>
-              <CropImageProvider>
-                <CertifiedImageProvider>
-                  <AuthGuard>
-                    <Layout>
-                      <ToasterContext />
-                      <AppRoutes />
-                      <LoadingComponent />
-                    </Layout>
-                  </AuthGuard>
-                </CertifiedImageProvider>
-              </CropImageProvider>
+              <PostingDataProvider>
+                <CropImageProvider>
+                  <CertifiedImageProvider>
+                    <AuthGuard>
+                      <Layout>
+                        <ToasterContext />
+                        <AppRoutes />
+                        <LoadingComponent />
+                      </Layout>
+                    </AuthGuard>
+                  </CertifiedImageProvider>
+                </CropImageProvider>
+              </PostingDataProvider>
             </ThemeProvider>
           </LoadingProvider>
         </RecoilRoot>

@@ -2,9 +2,18 @@
 import { css } from "@emotion/react";
 import { useState } from "react";
 import colors from "../../constants/colors";
+import { usePostingContext } from "../../context/PostingDataContext";
 
 const UploadPostComment = () => {
   const [isCommentChanged, setIsCommentChanged] = useState<boolean>(false);
+  const [comment, setComment] = useState<string>("");
+  const { setPostingData } = usePostingContext();
+
+  const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    setComment(value);
+    setPostingData((prevData) => ({ ...prevData, post_description: value }));
+  };
 
   return (
     <div
@@ -20,6 +29,8 @@ const UploadPostComment = () => {
         `}
         onFocus={() => setIsCommentChanged(true)}
         onBlur={() => setIsCommentChanged(false)}
+        onChange={handleCommentChange}
+        value={comment}
         placeholder="오늘 방문한 장소는 어떠셨나요?"
         maxLength={140}
       ></textarea>

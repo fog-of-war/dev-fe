@@ -1,37 +1,38 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from "react";
 import { css } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
 import { useLoading } from "../../context/LoadingContext";
 import UploadPostPageHeader from "../../components/Certification/UploadPostPageHeader";
 import UploadPostImage from "../../components/Certification/UploadPostImage";
 import UploadPostComment from "../../components/Certification/UploadPostComment";
+import StarRating from "../../components/Posting/StarRating";
 import Button from "../../components/UI/Button";
 import { toast } from "react-hot-toast";
 import { uploadPost } from "../../api/post";
+import { usePostingContext } from "../../context/PostingDataContext";
 
 export interface PostingData {
-  place_name: string;
-  post_star_rating: number;
-  post_description: string;
-  post_image_url: string;
-  place_latitude: number;
-  place_longitude: number;
+  place_name: string | null;
+  post_star_rating: number | null;
+  post_description: string | null;
+  post_image_url: string | null;
+  place_latitude: number | null;
+  place_longitude: number | null;
 }
 
 const UploadPage = () => {
   const navigate = useNavigate();
   const { setLoading, setLoadingMessage } = useLoading();
-  const [postingData, setPostingData] = useState<PostingData>({
-    place_name: "",
-    post_star_rating: 0,
-    post_description: "",
-    post_image_url: "",
-    place_latitude: 0,
-    place_longitude: 0,
-  });
+  const { postingData } = usePostingContext();
 
   const handleUploadPostClick = async () => {
+    if (!postingData) {
+      toast.error("게시글 작성에 실패했습니다.", {
+        id: "upload-post-fail",
+      });
+      return;
+    }
+
     try {
       setLoading(true);
       setLoadingMessage("게시글 작성 중...");
@@ -45,8 +46,8 @@ const UploadPage = () => {
     } catch (error) {
       setLoading(false);
       console.log(error);
-      toast.error("게시글 작성에 실패했습니다.", {
-        id: "upload-post-fail",
+      toast.error("게시글 작성중 에러가 발생했습니다.", {
+        id: "upload-post-error",
       });
     }
   };
@@ -56,14 +57,9 @@ const UploadPage = () => {
       <UploadPostPageHeader />
       <div css={UploadPageLayout}>
         <div css={PostingContainer}>
-          <UploadPostImage
-            postingData={postingData}
-            setPostingData={setPostingData}
-          />
-          <UploadPostComment
-            postingData={postingData}
-            setPostingData={setPostingData}
-          />
+          <UploadPostImage />
+          <StarRating />
+          <UploadPostComment />
         </div>
         <div css={ButtonContainer}>
           <Button

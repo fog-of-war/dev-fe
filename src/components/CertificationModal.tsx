@@ -27,19 +27,19 @@ const DUMMY_DATA = {
 };
 
 interface CertificationModalProps {
-  placeName: string;
+  place_name: string;
   category: string;
   roadAddress: string;
-  x: number;
-  y: number;
+  place_latitude: number;
+  place_longitude: number;
 }
 
 const CertificationModal = ({
-  placeName,
+  place_name,
   category,
   roadAddress,
-  x,
-  y,
+  place_latitude,
+  place_longitude,
 }: CertificationModalProps) => {
   const { setCertifiedImage } = useImageContext(); // 이미지 저장 Context 사용
   const navigate = useNavigate();
@@ -53,14 +53,21 @@ const CertificationModal = ({
       if (file) {
         const { certificationResults } = await PhotoCertificationLogic(
           file,
-          x,
-          y
+          place_latitude,
+          place_longitude
         );
         console.log("Certification Results:", certificationResults);
-
         const reader = new FileReader();
+
         reader.onload = () => {
-          setCertifiedImage(reader.result as string);
+          const imageURL = reader.result as string;
+          localStorage.setItem("recent-item", imageURL);
+          setCertifiedImage({
+            imageURL,
+            place_name,
+            place_latitude,
+            place_longitude,
+          });
         };
         reader.readAsDataURL(file);
 
@@ -69,17 +76,6 @@ const CertificationModal = ({
           certificationResults.location === "통과" &&
           certificationResults.date === "통과"
         ) {
-          // 이미지 URL을 생성
-          // const imageURL = URL.createObjectURL(file);
-
-          // 이미지 저장 Context에 인증된 이미지 URL 추가
-          // setCertifiedImage(imageURL);
-          setCertifiedImage({
-            imageURL,
-            placeName,
-            x,
-            y,
-          });
           toast.success("인증에 성공했습니다.");
           navigate("/crop_image");
         }
@@ -124,7 +120,7 @@ const CertificationModal = ({
         }}
       >
         <PlaceTitle
-          name={placeName}
+          name={place_name}
           category={category}
           roadAddress={roadAddress}
           icon={DUMMY_DATA.icon}
@@ -143,7 +139,17 @@ const CertificationModal = ({
           </div>
         </div>
         <Button>
-          <label css={{ display: "flex", gap: 8, cursor: "pointer" }}>
+          <label
+            css={{
+              display: "flex",
+              gap: 8,
+              cursor: "pointer",
+              width: "100%",
+              height: "100%",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <input
               type="file"
               accept=".heic, .heif, image/*"
