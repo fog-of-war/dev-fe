@@ -201,6 +201,45 @@ const Map = () => {
     updateCurrentLocation();
   }, []);
 
+  // 서울에 있지않으면 지도를 숨김
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          const currentLocationLatLng = new google.maps.LatLng(
+            latitude,
+            longitude
+          );
+
+          // 현재 위치가 서울 폴리곤 내부에 있는지 확인합니다.
+          const seoulPolygon = new google.maps.Polygon({
+            paths: seoulData.features[0].geometry.coordinates[0][0].map(
+              ([lng, lat]) => new google.maps.LatLng(lat, lng)
+            ),
+          });
+          const isWithinSeoul = google.maps.geometry.poly.containsLocation(
+            currentLocationLatLng,
+            seoulPolygon
+          );
+
+          // 만약 서울 폴리곤 내부에 있다면 현재 위치를 업데이트하고, 그렇지 않다면 숨깁니다.
+          if (isWithinSeoul) {
+            setCurrentLocation({ lat: latitude, lng: longitude });
+          } else {
+            setCurrentLocation(null); // 아이콘 숨김
+          }
+        },
+        (error) => {
+          console.error("현재 위치를 가져오는데 에러가 발생했습니다:", error);
+          toast.error("현재 위치를 가져오는데 에러가 발생했습니다.");
+        }
+      );
+    } else {
+      toast.error("이 브라우저에서는 위치 정보를 지원하지 않습니다.");
+    }
+  }, []);
+
   return (
     <div
       css={{
@@ -271,23 +310,26 @@ const Map = () => {
             />
           ))}
           {/* 현재위치로 가는 아이콘 */}
-          <div
-            css={{
-              position: "absolute",
-              bottom: "115px",
-              right: "0px",
-              cursor: "pointer",
-              zIndex: 1,
-            }}
-            onClick={handleCurrentLocationClick}
-          >
-            <img
-              src="/images/map/currentLocation.png"
-              width="57px"
-              height="57px"
-              alt="현재 위치로 이동"
-            />
-          </div>
+          {currentLocation && (
+            <div
+              css={{
+                position: "absolute",
+                bottom: "115px",
+                right: "0px",
+                cursor: "pointer",
+                zIndex: 1,
+              }}
+              onClick={handleCurrentLocationClick}
+            >
+              <img
+                src="/images/map/currentLocation.png"
+                width="57px"
+                height="57px"
+                alt="현재 위치로 이동"
+              />
+            </div>
+          )}
+
           {/* 현재 위치 마커 */}
           {zoomLevel >= 14 && currentLocation && (
             <Marker
