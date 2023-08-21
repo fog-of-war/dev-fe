@@ -2,53 +2,19 @@
 import { css } from "@emotion/react";
 import { useState } from "react";
 import { usePostingContext } from "../../context/PostingDataContext";
+import FullStarIcon from "./FullStarIcon";
+import HalfStarIcon from "./HalfStarIcon";
+import EmptyStarIcon from "./EmptyStarIcon";
 
 const StarRating = () => {
   const { setPostingData } = usePostingContext();
   const [rating, setRating] = useState<number | null>(null);
   const [hover, setHover] = useState<number | null>(null);
 
-  const fullStar = (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="#FFD700"
-      viewBox="0 0 24 24"
-      css={starStyle}
-    >
-      <path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z" />
-    </svg>
-  );
-
-  const emptyStar = (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="#e4e5e9"
-      viewBox="0 0 24 24"
-      css={starStyle}
-    >
-      <path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z" />
-    </svg>
-  );
-
-  const halfStar = (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" css={starStyle}>
-      <defs>
-        <linearGradient id="halfGradient">
-          <stop offset="50%" stopColor="#FFD700" />
-          <stop offset="50%" stopColor="#e4e5e9" />
-        </linearGradient>
-      </defs>
-      <path
-        fill="url(#halfGradient)"
-        d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z"
-      />
-    </svg>
-  );
-
   const starsArray = Array.from({ length: 5 });
 
-  const handleClick = (index: number, e: any) => {
-    const rect = e.target.getBoundingClientRect();
+  const handleClick = (index: number, e: React.MouseEvent<HTMLSpanElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
     const offsetX = e.clientX - rect.left;
     const selectedValue = offsetX < rect.width / 2 ? index + 0.5 : index + 1;
     setRating(selectedValue);
@@ -58,8 +24,11 @@ const StarRating = () => {
     }));
   };
 
-  const handleMouseOver = (index: number, e: any) => {
-    const rect = e.target.getBoundingClientRect();
+  const handleMouseOver = (
+    index: number,
+    e: React.MouseEvent<HTMLSpanElement>
+  ) => {
+    const rect = e.currentTarget.getBoundingClientRect();
     const offsetX = e.clientX - rect.left;
     const hoverValue = offsetX < rect.width / 2 ? index + 0.5 : index + 1;
     setHover(hoverValue);
@@ -87,9 +56,9 @@ const StarRating = () => {
             onMouseMove={(e) => handleMouseOver(index, e)}
             onMouseLeave={() => setHover(null)}
           >
-            {displayStar === "full" && fullStar}
-            {displayStar === "half" && halfStar}
-            {displayStar === "empty" && emptyStar}
+            {displayStar === "full" && <FullStarIcon />}
+            {displayStar === "half" && <HalfStarIcon />}
+            {displayStar === "empty" && <EmptyStarIcon />}
           </span>
         );
       })}
@@ -112,7 +81,7 @@ const StarRating = () => {
 
 export default StarRating;
 
-const starStyle = css`
+export const starStyle = css`
   width: 40px;
   height: 40px;
   cursor: pointer;
