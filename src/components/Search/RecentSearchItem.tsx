@@ -53,6 +53,7 @@ export const RecentSearchItemContainer = styled.li`
   align-items: center;
   padding: 12px 20px;
   border-bottom: 0.5px solid ${colors.paleGrey};
+  cursor: pointer;
 `;
 
 export const SearchContentWrapper = styled.div`

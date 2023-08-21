@@ -12,22 +12,25 @@ import RecentSearchesPanel from "../../components/Search/RecentSearchesPanel";
 import SearchResultPanel from "../../components/Search/SearchResultPanel";
 
 const SearchPage = () => {
-  const { inputValue, handleSearchMap, setInputValue } = useSearchMap();
   const [isTyping, setIsTyping] = useState(false);
-  const searchRef = useRef<HTMLInputElement>(null);
+  const { inputValue, handleSearchMap, setInputValue } = useSearchMap();
 
+  const searchRef = useRef<HTMLInputElement>(null);
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const searchQuery = query.get("query") ?? "";
 
+  // 검색창에 타이핑중이면 true, 아니면 false
   useEffect(() => {
     inputValue.length > 0 ? setIsTyping(true) : setIsTyping(false);
   }, [inputValue]);
 
+  // 컴포넌트가 마운트되면 검색창에 포커스
   useEffect(() => {
     searchRef.current?.focus();
   }, []);
 
+  // 검색쿼리가 있으면 검색창에 검색쿼리 입력
   useEffect(() => {
     if (searchQuery) {
       setInputValue(searchQuery);
