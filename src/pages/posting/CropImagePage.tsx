@@ -27,6 +27,7 @@ const CropImagePage = () => {
     toast.success("이미지 편집을 취소했습니다.", {
       id: "crop-cancle",
     });
+    navigate(-1);
   };
 
   const handleSelectClick = () => {
