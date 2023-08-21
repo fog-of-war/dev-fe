@@ -34,8 +34,7 @@ const SetupProfileImage = ({
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       try {
-        const response = await uploadImage(file);
-        const imageUrl = response.imageUrl;
+        const imageUrl = await uploadImage(file);
 
         setProfileImage(imageUrl);
         setProfileData({ ...profileData, user_image_url: imageUrl });
