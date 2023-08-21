@@ -3,6 +3,7 @@
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useImageContext } from "../context/CertifiedImageContext";
+import uploadImage from "../api/aws";
 
 import colors from "../constants/colors";
 import BottomModal from "./BottomModal";
@@ -10,6 +11,8 @@ import PlaceImages from "./Certification/PlaceImages";
 import PlaceTitle from "./Certification/PlaceTitle";
 import PhotoCertificationLogic from "./LocationCertification/PhotoCertificationLogic";
 import Button from "./UI/Button";
+import heic2any from "heic2any";
+import { useLoading } from "../context/LoadingContext";
 
 const DUMMY_DATA = {
   name: "숭례문",
@@ -43,6 +46,7 @@ const CertificationModal = ({
 }: CertificationModalProps) => {
   const { setCertifiedImage } = useImageContext(); // 이미지 저장 Context 사용
   const navigate = useNavigate();
+  const { setLoading, setLoadingMessage } = useLoading();
 
   // 사진 인증
   const handleCertificationClick = async (
@@ -51,31 +55,51 @@ const CertificationModal = ({
     try {
       const file = event.target.files?.[0];
       if (file) {
+        setLoading(true);
+        setLoadingMessage("사진 인증 중...");
         const { certificationResults } = await PhotoCertificationLogic(
           file,
           place_latitude,
           place_longitude
         );
         console.log("Certification Results:", certificationResults);
-        const reader = new FileReader();
 
-        reader.onload = () => {
-          const imageURL = reader.result as string;
-          localStorage.setItem("recent-item", imageURL);
-          setCertifiedImage({
-            imageURL,
-            place_name,
-            place_latitude,
-            place_longitude,
+        // HEIC 파일을 JPG로 변환
+        const fileType = file.type;
+        let convertedBlob: Blob;
+        if (fileType === "image/heic" || fileType === "image/heif") {
+          const conversionResult = await heic2any({
+            blob: file,
+            toType: "image/jpeg",
           });
-        };
-        reader.readAsDataURL(file);
+
+          if (Array.isArray(conversionResult)) {
+            throw new Error("예상치 못한 변환 타입입니다.");
+          } else {
+            convertedBlob = conversionResult as Blob;
+          }
+        } else {
+          convertedBlob = file;
+        }
+        const convertedFile = new File([convertedBlob], file.name, {
+          type: "image/jpeg",
+        });
 
         // 인증에 성공했을 경우
         if (
           certificationResults.location === "통과" &&
           certificationResults.date === "통과"
         ) {
+          const imageURL = await uploadImage(convertedFile);
+          console.log(imageURL);
+
+          setCertifiedImage({
+            imageURL,
+            place_name,
+            place_latitude,
+            place_longitude,
+          });
+
           toast.success("인증에 성공했습니다.");
           navigate("/crop_image");
         }
@@ -103,6 +127,8 @@ const CertificationModal = ({
         ) {
           toast.error("장소와 시간 인증에 실패했습니다.");
         }
+
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error during certification:", error);

@@ -58,7 +58,7 @@ const CropImagePage = () => {
             display: "flex",
             gap: "10px",
             width: "100%",
-            marginTop: "auto",
+            marginTop: "20px",
           }}
         >
           <Button
@@ -92,6 +92,7 @@ const CropImageContainer = css`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  height: 100%;
   margin-top: 40px;
   box-sizing: border-box;
 `;

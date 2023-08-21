@@ -30,7 +30,7 @@ const AuthPage = () => {
   const handleAuthentication = async (code: string, oAuthName: string) => {
     try {
       // 액세스 토큰을 받아 로컬 스토리지에 저장
-      const accessToken = oAuthLogin(code, oAuthName);
+      const accessToken = await oAuthLogin(code, oAuthName);
       localStorage.setItem("accessToken", JSON.stringify(accessToken));
 
       // 유저정보 요청 및 유저 캐시 업데이트
