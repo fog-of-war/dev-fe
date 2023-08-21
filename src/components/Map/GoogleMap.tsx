@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { GoogleMap, LoadScriptNext } from "@react-google-maps/api";
+import { GoogleMap, LoadScriptNext, Marker } from "@react-google-maps/api";
 
 import { toast } from "react-hot-toast";
 import seoulData from "../../data/seoul2.json";
@@ -60,6 +60,13 @@ const Map = () => {
   // 마커 클릭 시 정보창을 열기 위한 상태
   const [openMarkerIndex, setOpenMarkerIndex] = useState<number | null>(null);
 
+  // 현재 위치를 저장하는 상태
+  const [currentLocation, setCurrentLocation] =
+    useState<google.maps.LatLngLiteral | null>(null);
+
+  // 현재 위치 마커 아이콘 이미지 URL
+  const currentLocationIconUrl = "/images/map/humanIcon.png";
+
   // 카테고리 상태 관리 아직 사용하지 않음
   const categories = ["역사", "미술관", "커피", "맛집", "스포스시설"];
 
@@ -82,6 +89,24 @@ const Map = () => {
           const { latitude, longitude } = position.coords;
           setMapCenter({ lat: latitude, lng: longitude });
           setView({ center: { lat: latitude, lng: longitude }, zoom: 16 });
+        },
+        (error) => {
+          console.error("현재 위치를 가져오는데 에러가 발생했습니다:", error);
+          toast.error("현재 위치를 가져오는데 에러가 발생했습니다.");
+        }
+      );
+    } else {
+      toast.error("이 브라우저에서는 위치 정보를 지원하지 않습니다.");
+    }
+  };
+
+  // 사용자의 현재 위치를 가져와서 상태를 업데이트하는 함수
+  const updateCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setCurrentLocation({ lat: latitude, lng: longitude });
         },
         (error) => {
           console.error("현재 위치를 가져오는데 에러가 발생했습니다:", error);
@@ -171,6 +196,11 @@ const Map = () => {
     handleSearch();
   }, []);
 
+  useEffect(() => {
+    // 컴포넌트가 마운트되었을 때 현재 위치 업데이트 실행
+    updateCurrentLocation();
+  }, []);
+
   return (
     <div
       css={{
@@ -205,6 +235,7 @@ const Map = () => {
             setZoomLevel(newZoomLevel);
           }}
         >
+          {/* 서울 주변 폴리곤 */}
           <OutsidePolygon />
           {/* 마커 렌더링 */}
           {zoomLevel >= 14 &&
@@ -257,6 +288,16 @@ const Map = () => {
               alt="현재 위치로 이동"
             />
           </div>
+          {/* 현재 위치 마커 */}
+          {zoomLevel >= 14 && currentLocation && (
+            <Marker
+              position={currentLocation}
+              icon={{
+                url: currentLocationIconUrl,
+                scaledSize: new google.maps.Size(30, 30),
+              }}
+            />
+          )}
         </GoogleMap>
       </LoadScriptNext>
     </div>
