@@ -23,11 +23,11 @@ const PostingCompletePage = () => {
               height: "100%",
               objectFit: "cover",
             }}
-            src="images/completeIcon.png"
+            src="/images/completeIcon.png"
             alt="complete_icon"
           />
         </div>
-        <span css={Text}>게시물 작성 완료</span>
+        <span css={Text}>게시글 작성 완료!</span>
       </div>
       <Button
         css={{
