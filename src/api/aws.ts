@@ -23,9 +23,7 @@ const formattedDateTime: string = currentDateTime
   .replace(/T/g, "-")
   .substring(0, 17);
 
-export default async function uploadImage(
-  file: File
-): Promise<{ imageUrl: string }> {
+export default async function uploadImage(file: File): Promise<string> {
   try {
     const fileKey: string = `${formattedDateTime}_${file.name}`;
     console.log(process.env.REACT_APP_S3_BUCKET_NAME!);
@@ -37,7 +35,7 @@ export default async function uploadImage(
     };
     await s3.upload(params).promise();
     const imageUrl: string = `https://${process.env.REACT_APP_S3_BUCKET_NAME}.s3.amazonaws.com/${fileKey}`;
-    return { imageUrl };
+    return imageUrl;
   } catch (error) {
     console.error("Image upload failed:", error);
     throw new Error("이미지 업로드에 실패했습니다.");
