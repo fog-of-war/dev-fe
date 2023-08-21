@@ -9,6 +9,7 @@ import StarRating from "../../components/Posting/StarRating";
 import Button from "../../components/UI/Button";
 import { toast } from "react-hot-toast";
 import { uploadPost } from "../../api/post";
+import uploadImage from "../../api/aws";
 import { usePostingContext } from "../../context/PostingDataContext";
 
 export interface PostingData {
@@ -23,7 +24,30 @@ export interface PostingData {
 const UploadPage = () => {
   const navigate = useNavigate();
   const { setLoading, setLoadingMessage } = useLoading();
-  const { postingData } = usePostingContext();
+  const { postingData, setPostingData } = usePostingContext();
+
+  const changeBlobToFile = async (blob: any) => {
+    if (postingData.post_image_url) {
+      const blob = await fetch(postingData.post_image_url).then((res) =>
+        res.blob()
+      );
+
+      const file = new File([blob], "image.jpg", {
+        type: blob.type,
+      });
+
+      console.log(file);
+
+      const AWSImageUrl = await uploadImage(file);
+
+      console.log(AWSImageUrl);
+
+      setPostingData((prevData) => ({
+        ...prevData,
+        post_image_url: AWSImageUrl,
+      }));
+    }
+  };
 
   const handleUploadPostClick = async () => {
     if (!postingData) {
@@ -36,6 +60,9 @@ const UploadPage = () => {
     try {
       setLoading(true);
       setLoadingMessage("게시글 작성 중...");
+
+      await changeBlobToFile(postingData.post_image_url);
+
       await uploadPost(postingData);
 
       setLoading(false);
