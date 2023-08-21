@@ -196,11 +196,11 @@ const CustomMarker: React.FC<CustomMarkerProps & { isMarkerOpen: boolean }> = ({
         >
           <div onClick={handleModalClick}>
             <CertificationModal
-              placeName={placeName}
+              place_name={placeName}
               category={category}
               roadAddress={roadAddress}
-              x={x}
-              y={y}
+              place_latitude={x}
+              place_longitude={y}
             />
           </div>
         </div>

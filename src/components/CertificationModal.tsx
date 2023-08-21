@@ -27,19 +27,19 @@ const DUMMY_DATA = {
 };
 
 interface CertificationModalProps {
-  placeName: string;
+  place_name: string;
   category: string;
   roadAddress: string;
-  x: number;
-  y: number;
+  place_latitude: number;
+  place_longitude: number;
 }
 
 const CertificationModal = ({
-  placeName,
+  place_name,
   category,
   roadAddress,
-  x,
-  y,
+  place_latitude,
+  place_longitude,
 }: CertificationModalProps) => {
   const { setCertifiedImage } = useImageContext(); // 이미지 저장 Context 사용
   const navigate = useNavigate();
@@ -53,31 +53,29 @@ const CertificationModal = ({
       if (file) {
         const { certificationResults } = await PhotoCertificationLogic(
           file,
-          x,
-          y
+          place_latitude,
+          place_longitude
         );
         console.log("Certification Results:", certificationResults);
+        const reader = new FileReader();
+
+        reader.onload = () => {
+          const imageURL = reader.result as string;
+          localStorage.setItem("recent-item", imageURL);
+          setCertifiedImage({
+            imageURL,
+            place_name,
+            place_latitude,
+            place_longitude,
+          });
+        };
+        reader.readAsDataURL(file);
 
         // 인증에 성공했을 경우
         if (
           certificationResults.location === "통과" &&
           certificationResults.date === "통과"
         ) {
-          // 이미지 저장
-          const reader = new FileReader();
-
-          reader.onload = () => {
-            const imageURL = reader.result as string;
-
-            setCertifiedImage({
-              imageURL,
-              placeName,
-              x,
-              y,
-            });
-          };
-          reader.readAsDataURL(file);
-
           toast.success("인증에 성공했습니다.");
           navigate("/crop_image");
         }
@@ -122,7 +120,7 @@ const CertificationModal = ({
         }}
       >
         <PlaceTitle
-          name={placeName}
+          name={place_name}
           category={category}
           roadAddress={roadAddress}
           icon={DUMMY_DATA.icon}

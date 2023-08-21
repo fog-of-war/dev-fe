@@ -4,10 +4,11 @@ import { useRef, useState, useEffect, ChangeEvent } from "react";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { useCroppedImage } from "../../context/CropImageContext";
+import { useImageContext } from "../../context/CertifiedImageContext";
+import { usePostingContext } from "../../context/PostingDataContext";
 import Button from "../../components/UI/Button";
 import colors from "../../constants/colors";
 import { toast } from "react-hot-toast";
-import { useImageContext } from "../../context/CertifiedImageContext";
 
 type CropState = {
   enableCropper: boolean;
@@ -19,19 +20,7 @@ const CropImage = ({ enableCropper, setEnableCropper }: CropState) => {
   const { setCroppedImage } = useCroppedImage();
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const { certifiedImage } = useImageContext();
-
-  useEffect(() => {
-    if (!certifiedImage) {
-      toast.error("이미지를 불러오는데 실패했습니다.", {
-        id: "iamge-load-error",
-      });
-    }
-
-    if (certifiedImage) {
-      setImageSrc(certifiedImage);
-      console.log(certifiedImage);
-    }
-  }, [certifiedImage]);
+  const { setPostingData } = usePostingContext();
 
   useEffect(() => {
     if (enableCropper && cropperRef.current) {
@@ -62,6 +51,15 @@ const CropImage = ({ enableCropper, setEnableCropper }: CropState) => {
           toast.success("이미지 자르기 성공!", {
             id: "crop-success",
           });
+
+          // PostingData에 자른 이미지 url 및 장소 정보 저장
+          setPostingData((prevData) => ({
+            ...prevData,
+            place_name: certifiedImage.place_name,
+            place_latitude: certifiedImage.place_latitude,
+            place_longitude: certifiedImage.place_longitude,
+            place_image_url: croppedImageUrl,
+          }));
         }
       });
     }

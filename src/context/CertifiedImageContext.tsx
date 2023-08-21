@@ -3,16 +3,16 @@ import { createContext, useContext, useState, ReactNode } from "react";
 interface ImageContextProps {
   certifiedImage: {
     imageURL: string | null;
-    placeName: string | null;
-    x: number | null;
-    y: number | null;
+    place_name: string | null;
+    place_latitude: number | null;
+    place_longitude: number | null;
   };
   setCertifiedImage: React.Dispatch<
     React.SetStateAction<{
       imageURL: string | null;
-      placeName: string | null;
-      x: number | null;
-      y: number | null;
+      place_name: string | null;
+      place_latitude: number | null;
+      place_longitude: number | null;
     }>
   >;
 }
@@ -34,14 +34,14 @@ interface ImageProviderProps {
 export function CertifiedImageProvider({ children }: ImageProviderProps) {
   const [certifiedImage, setCertifiedImage] = useState<{
     imageURL: string | null;
-    placeName: string | null;
-    x: number | null;
-    y: number | null;
+    place_name: string | null;
+    place_latitude: number | null;
+    place_longitude: number | null;
   }>({
     imageURL: null,
-    placeName: null,
-    x: null,
-    y: null,
+    place_name: null,
+    place_latitude: null,
+    place_longitude: null,
   });
 
   return (

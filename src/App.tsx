@@ -12,6 +12,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { CropImageProvider } from "./context/CropImageContext";
 import ToasterContext from "./context/ToasterContext";
 import { CertifiedImageProvider } from "./context/CertifiedImageContext";
+import { PostingDataProvider } from "./context/PostingDataContext";
 
 const queryClient = new QueryClient();
 
@@ -22,15 +23,17 @@ function App() {
         <RecoilRoot>
           <LoadingProvider>
             <ThemeProvider theme={theme}>
-              <CropImageProvider>
-                <CertifiedImageProvider>
-                  <Layout>
-                    <ToasterContext />
-                    <AppRoutes />
-                    <LoadingComponent />
-                  </Layout>
-                </CertifiedImageProvider>
-              </CropImageProvider>
+              <PostingDataProvider>
+                <CropImageProvider>
+                  <CertifiedImageProvider>
+                    <Layout>
+                      <ToasterContext />
+                      <AppRoutes />
+                      <LoadingComponent />
+                    </Layout>
+                  </CertifiedImageProvider>
+                </CropImageProvider>
+              </PostingDataProvider>
             </ThemeProvider>
           </LoadingProvider>
         </RecoilRoot>
