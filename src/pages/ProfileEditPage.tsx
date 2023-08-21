@@ -57,6 +57,7 @@ const ProfileEditPage = () => {
     <div
       css={{
         padding: "80px 20px",
+        width: "100%",
         height: "100%",
         display: "flex",
         flexDirection: "column",
@@ -68,24 +69,22 @@ const ProfileEditPage = () => {
         onBackClick={handleBackClick}
         onCompleteClick={handleCompleteClick}
       />
-      <div>
-        <EditProfileImage
-          profileData={DUMMY_USER}
-          setEditProfileData={setEditProfileData}
-          css={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        />
-      </div>
-      <div>
-        <EditProfileNickName
-          profileData={DUMMY_USER}
-          setEditProfileData={setEditProfileData}
-          inputRef={nickNameInputRef}
-        />
-      </div>
+
+      <EditProfileImage
+        profileData={DUMMY_USER}
+        setEditProfileData={setEditProfileData}
+        css={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      />
+
+      <EditProfileNickName
+        profileData={DUMMY_USER}
+        setEditProfileData={setEditProfileData}
+        inputRef={nickNameInputRef}
+      />
     </div>
   );
 };
