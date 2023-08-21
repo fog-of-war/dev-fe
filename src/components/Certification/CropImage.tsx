@@ -59,10 +59,13 @@ const CropImage = ({ enableCropper, setEnableCropper }: CropState) => {
           setPostingData((prevData) => ({
             ...prevData,
             place_name: certifiedImage.place_name,
-            place_latitude: certifiedImage.place_latitude,
-            place_longitude: certifiedImage.place_longitude,
-            place_image_url: croppedImageUrl,
+            place_latitude: Number(certifiedImage.place_latitude),
+            place_longitude: Number(certifiedImage.place_longitude),
+            post_image_url: croppedImageUrl,
           }));
+
+          console.log(certifiedImage.place_latitude);
+          console.log(certifiedImage.place_longitude);
         }
       });
     }

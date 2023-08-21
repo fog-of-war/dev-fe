@@ -20,7 +20,7 @@ const StarRating = () => {
     setRating(selectedValue);
     setPostingData((prevData) => ({
       ...prevData,
-      place_star_rating: selectedValue,
+      post_star_rating: selectedValue,
     }));
   };
 
