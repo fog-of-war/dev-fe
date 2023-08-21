@@ -3,6 +3,7 @@
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useImageContext } from "../context/CertifiedImageContext";
+import uploadImage from "../api/aws";
 
 import colors from "../constants/colors";
 import BottomModal from "./BottomModal";
@@ -57,25 +58,25 @@ const CertificationModal = ({
           place_longitude
         );
         console.log("Certification Results:", certificationResults);
-        const reader = new FileReader();
-
-        reader.onload = () => {
-          const imageURL = reader.result as string;
-          localStorage.setItem("recent-item", imageURL);
-          setCertifiedImage({
-            imageURL,
-            place_name,
-            place_latitude,
-            place_longitude,
-          });
-        };
-        reader.readAsDataURL(file);
 
         // 인증에 성공했을 경우
         if (
           certificationResults.location === "통과" &&
           certificationResults.date === "통과"
         ) {
+          const reader = new FileReader();
+          const imageURL = await uploadImage(file);
+          console.log(imageURL);
+          reader.onload = () => {
+            setCertifiedImage({
+              imageURL,
+              place_name,
+              place_latitude,
+              place_longitude,
+            });
+          };
+          reader.readAsDataURL(file);
+
           toast.success("인증에 성공했습니다.");
           navigate("/crop_image");
         }
