@@ -16,18 +16,20 @@ const CropImagePage = () => {
 
   const handleCancleClick = () => {
     if (!croppedImage) {
-      toast.error("선택된 이미지가 없습니다.", {
+      toast.error("선택된 이미지가 없습니다. ", {
         id: "no-image-selected",
       });
       return;
     }
 
-    setCroppedImage(null);
-    setEnalbeCropper(true);
-    toast.success("이미지 편집을 취소했습니다.", {
-      id: "crop-cancle",
-    });
-    navigate(-1);
+    if (window.confirm("이미지 편집이 초기화됩니다. 정말 취소하시겠어요?")) {
+      setCroppedImage(null);
+      setEnalbeCropper(true);
+      toast.success("이미지 편집을 취소했습니다.", {
+        id: "crop-cancle",
+      });
+      navigate(-1);
+    }
   };
 
   const handleSelectClick = () => {
