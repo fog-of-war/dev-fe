@@ -18,9 +18,12 @@ type CropState = {
 const CropImage = ({ enableCropper, setEnableCropper }: CropState) => {
   const cropperRef = useRef<Cropper | null>(null);
   const { setCroppedImage } = useCroppedImage();
-  const [imageSrc, setImageSrc] = useState<string | null>(null);
+  // const [imageSrc, setImageSrc] = useState<string | null>(null);
   const { certifiedImage } = useImageContext();
   const { setPostingData } = usePostingContext();
+
+  const imageSrc = certifiedImage.imageURL;
+  console.log(imageSrc);
 
   useEffect(() => {
     if (enableCropper && cropperRef.current) {
@@ -165,7 +168,7 @@ const PlaceholderStyle = css`
   color: ${colors.secondary};
 `;
 
-const CropperContainer = () => css`
+const CropperContainer = css`
   width: 100%;
   height: 100%;
 `;
@@ -173,5 +176,5 @@ const CropperContainer = () => css`
 const CropButtonStyle = css`
   position: absolute;
   bottom: -35px;
-  right: 90px;
+  right: 0px;
 `;
