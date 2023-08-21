@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { useFunnel } from "../../hooks/useFunnel";
-
-import SetupNickName from "../../components/Auth/SetupNickName";
-import SetupProfileImage from "../../components/Auth/SetupProfileImage";
 import { setUpProfile } from "../../api/user";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+
+import SetupNickName from "../../components/Auth/SetupNickName";
+import SetupProfileImage from "../../components/Auth/SetupProfileImage";
+import styled from "@emotion/styled";
 
 export interface ProfileData {
   user_nickname: string;
@@ -17,7 +18,8 @@ export interface ProfileData {
 const ProfileSetupPage = () => {
   const [profileData, setProfileData] = useState<ProfileData>({
     user_nickname: "",
-    user_image_url: "/images/auth/defaultProfile.png",
+    user_image_url:
+      "https://fog-of-war.s3.ap-northeast-2.amazonaws.com/defaultProfile.png",
   });
 
   const navigate = useNavigate();
@@ -35,13 +37,7 @@ const ProfileSetupPage = () => {
   };
 
   return (
-    <div
-      css={{
-        padding: "0 20px",
-        height: "100%",
-        width: "100%",
-      }}
-    >
+    <ProfileSetupLayout>
       <Funnel>
         <Step name="닉네임">
           <SetupNickName
@@ -59,8 +55,14 @@ const ProfileSetupPage = () => {
           />
         </Step>
       </Funnel>
-    </div>
+    </ProfileSetupLayout>
   );
 };
 
 export default ProfileSetupPage;
+
+const ProfileSetupLayout = styled.div`
+  padding: 0 20px;
+  height: 100%;
+  width: 100%;
+`;
