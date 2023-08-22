@@ -60,7 +60,7 @@ const Map = () => {
     handleZoomChange,
     handleMapChange,
   } = useGoogleMap(mapRef);
-  const currentLocation = useCurrentLocation();
+  const { currentLocation, isInSeoul } = useCurrentLocation();
   const polygons = usePolygon(view.zoom);
 
   // 음식점 검색 및 마커 데이터 업데이트 함수
@@ -188,7 +188,7 @@ const Map = () => {
           ))}
 
           {/* 현재위치로 가는 아이콘 */}
-          {currentLocation && (
+          {isInSeoul && (
             <CurrentLocationButton onClick={handleCurrentLocationClick} />
           )}
 
