@@ -175,17 +175,18 @@ const Map = () => {
                 }}
               />
             ))}
-          {polygons.map((polygon, index) => (
-            <SeoulPolygon
-              key={index}
-              nameEng={polygon.name_eng}
-              path={polygon.path}
-              point={options[polygon.name_eng].point}
-              onPolygonClick={() => {
-                handlePolygonClick(polygon.path);
-              }}
-            />
-          ))}
+          {view.zoom <= 11 &&
+            polygons.map((polygon, index) => (
+              <SeoulPolygon
+                key={index}
+                nameEng={polygon.name_eng}
+                path={polygon.path}
+                point={options[polygon.name_eng].point}
+                onPolygonClick={() => {
+                  handlePolygonClick(polygon.path);
+                }}
+              />
+            ))}
 
           {/* 현재위치로 가는 아이콘 */}
           {isInSeoul && (
