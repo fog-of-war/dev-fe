@@ -64,6 +64,9 @@ const Map = () => {
   const [currentLocation, setCurrentLocation] =
     useState<google.maps.LatLngLiteral | null>(null);
 
+  // 현재 위치가 서울 내에 있는지 여부를 다루는 새로운 상태
+  const [isInSeoul, setIsInSeoul] = useState<boolean>(false);
+
   // 현재 위치 마커 아이콘 이미지 URL
   const currentLocationIconUrl = "/images/map/humanIcon.png";
 
@@ -201,7 +204,7 @@ const Map = () => {
     updateCurrentLocation();
   }, []);
 
-  // 서울에 있지않으면 지도를 숨김
+  // 서울에 있지않으면 아이콘을 숨김
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -229,6 +232,9 @@ const Map = () => {
           } else {
             setCurrentLocation(null); // 아이콘 숨김
           }
+
+          // 현재 위치가 서울 내에 있는지 여부를 상태로 설정
+          setIsInSeoul(isWithinSeoul);
         },
         (error) => {
           console.error("현재 위치를 가져오는데 에러가 발생했습니다:", error);
@@ -310,7 +316,7 @@ const Map = () => {
             />
           ))}
           {/* 현재위치로 가는 아이콘 */}
-          {currentLocation && (
+          {isInSeoul && currentLocation && (
             <div
               css={{
                 position: "absolute",
