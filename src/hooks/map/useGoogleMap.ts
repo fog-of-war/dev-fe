@@ -1,17 +1,22 @@
-import { MutableRefObject, useEffect, useState } from "react";
-import { defaultCenter, bounds, options } from "../../data/mapData";
+import { MutableRefObject, useState } from "react";
+import { defaultCenter } from "../../data/mapData";
+import { mapViewAtomState } from "../../store/mapAtom";
 import { toast } from "react-hot-toast";
+import { useRecoilState } from "recoil";
 
 const useGoogleMap = (mapRef: MutableRefObject<google.maps.Map | null>) => {
-  const [mapCenter, setMapCenter] = useState(defaultCenter);
-  const [view, setView] = useState({ center: defaultCenter, zoom: 10 });
+  const [mapViewState, setMapViewState] = useRecoilState(mapViewAtomState);
+  const [view, setView] = useState(
+    mapViewState ?? { center: defaultCenter, zoom: 10 }
+  );
+
+  console.log(mapViewState);
 
   const handleCurrentLocationClick = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          setMapCenter({ lat: latitude, lng: longitude });
           setView({ center: { lat: latitude, lng: longitude }, zoom: 16 });
         },
         (error) => {
@@ -41,14 +46,44 @@ const useGoogleMap = (mapRef: MutableRefObject<google.maps.Map | null>) => {
     setView({ center, zoom: 16 });
   };
 
-  useEffect(() => {
-    if (view.center && mapRef.current) {
-      setMapCenter(view.center);
-      mapRef.current.setZoom(view.zoom);
-    }
-  }, [view]);
+  let debounceTimer: NodeJS.Timeout;
 
-  return { mapCenter, view, handleCurrentLocationClick, handlePolygonClick };
+  const handleMapChange = () => {
+    if (mapRef.current) {
+      const center = mapRef.current.getCenter();
+      const lat = center?.lat() ?? mapViewState.center.lat ?? defaultCenter.lat;
+      const lng = center?.lng() ?? mapViewState.center.lng ?? defaultCenter.lng;
+      const zoom = mapRef.current.getZoom()!;
+
+      // 기존 타이머를 취소하고 새로운 타이머를 설정
+      clearTimeout(debounceTimer);
+
+      // 새로운 타이머 설정
+      debounceTimer = setTimeout(() => {
+        setMapViewState({ center: { lat, lng }, zoom });
+      }, 500); // 디바운스 딜레이 (예: 500 밀리초)
+    }
+  };
+
+  const handleZoomChange = () => {
+    const zoom = mapRef.current?.getZoom() ?? mapViewState.zoom ?? 10.3;
+
+    // 기존 타이머를 취소하고 새로운 타이머를 설정
+    clearTimeout(debounceTimer);
+
+    // 새로운 타이머 설정
+    debounceTimer = setTimeout(() => {
+      setMapViewState({ ...mapViewState, zoom });
+    }, 500); // 디바운스 딜레이 (예: 500 밀리초)
+  };
+
+  return {
+    view,
+    handleCurrentLocationClick,
+    handlePolygonClick,
+    handleZoomChange,
+    handleMapChange,
+  };
 };
 
 export default useGoogleMap;
