@@ -68,40 +68,46 @@ const Map = () => {
     try {
       const category = "스포츠시설";
 
-      const response = await axios.get(
-        `https://dapi.kakao.com/v2/local/search/keyword.json?y=${defaultCenter.lat}&x=${defaultCenter.lng}&radius=2000`,
-        {
-          headers: {
-            Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_API_KEY}`,
-          },
-          params: {
-            query: category,
-          },
-        }
-      );
+      // 현재 위치 가져오기
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
 
-      if (response.status === 200) {
-        const data = response.data;
-        console.log(data);
-        // API에서 받아온 데이터를 기반으로 마커 데이터 생성
-        const newMarkers: MarkerData[] = data.documents.map(
-          (document: any) => ({
-            position: {
-              lat: parseFloat(document.y),
-              lng: parseFloat(document.x),
+        const response = await axios.get(
+          `https://dapi.kakao.com/v2/local/search/keyword.json?y=${latitude}&x=${longitude}&radius=2000`,
+          {
+            headers: {
+              Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_API_KEY}`,
             },
-            placeName: document.place_name,
-            roadAddress: document.road_address_name,
-            category: category,
-            x: document.x,
-            y: document.y,
-          })
+            params: {
+              query: category,
+            },
+          }
         );
-        // 마커 데이터 업데이트
-        setMarkers(newMarkers);
-      } else {
-        toast.error("API 호출 중 오류 발생");
-      }
+
+        if (response.status === 200) {
+          const data = response.data;
+          console.log(data);
+          // API에서 받아온 데이터를 기반으로 마커 데이터 생성
+          const newMarkers: MarkerData[] = data.documents.map(
+            (document: any) => ({
+              position: {
+                lat: parseFloat(document.y),
+                lng: parseFloat(document.x),
+              },
+              placeName: document.place_name,
+              roadAddress: document.road_address_name,
+              category: category,
+              x: document.x,
+              y: document.y,
+            })
+          );
+          // 마커 데이터 업데이트
+          setMarkers(newMarkers);
+        } else {
+          toast.error("API 호출 중 오류 발생");
+        }
+      });
     } catch (error) {
       toast.error("API 호출 중 오류 발생");
       console.error("오류 발생:", error);
