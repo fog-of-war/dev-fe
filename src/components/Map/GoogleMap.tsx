@@ -41,9 +41,6 @@ const Map = () => {
   // 지도의 인스턴스를 참조하기 위한 ref 생성
   const mapRef = useRef<google.maps.Map | null>(null);
 
-  // 현재의 확대 레벨을 추적하는 상태
-  const [zoomLevel, setZoomLevel] = useState(11);
-
   // 마커 데이터 상태 관리
   const [markers, setMarkers] = useState<MarkerData[]>([]);
 
@@ -56,12 +53,15 @@ const Map = () => {
   // 카테고리 상태 관리 아직 사용하지 않음
   const categories = ["역사", "미술관", "커피", "맛집", "스포스시설"];
 
-  const { mapCenter, view, handleCurrentLocationClick, handlePolygonClick } =
-    useGoogleMap(mapRef);
+  const {
+    view,
+    handleCurrentLocationClick,
+    handlePolygonClick,
+    handleZoomChange,
+    handleMapChange,
+  } = useGoogleMap(mapRef);
   const currentLocation = useCurrentLocation();
-  const polygons = usePolygon(zoomLevel);
-
-  console.log(currentLocation);
+  const polygons = usePolygon(view.zoom);
 
   // 음식점 검색 및 마커 데이터 업데이트 함수
   const handleSearch = async () => {
@@ -133,7 +133,7 @@ const Map = () => {
       >
         <GoogleMap
           mapContainerStyle={containerStyle}
-          center={mapCenter}
+          center={view.center}
           zoom={view.zoom}
           options={{
             minZoom: 10.3,
@@ -149,15 +149,13 @@ const Map = () => {
           onLoad={(map) => {
             mapRef.current = map;
           }}
-          onZoomChanged={() => {
-            const newZoomLevel = mapRef.current?.getZoom() || 10.3;
-            setZoomLevel(newZoomLevel);
-          }}
+          onZoomChanged={handleZoomChange}
+          onCenterChanged={handleMapChange}
         >
           {/* 서울 주변 폴리곤 */}
           <OutsidePolygon />
           {/* 마커 렌더링 */}
-          {zoomLevel >= 14 &&
+          {view.zoom >= 14 &&
             markers.map((marker, index) => (
               <CustomMarker
                 key={index}
@@ -195,7 +193,7 @@ const Map = () => {
           )}
 
           {/* 현재 위치 마커 */}
-          {zoomLevel >= 14 && currentLocation && (
+          {view.zoom >= 14 && currentLocation && (
             <Marker
               position={currentLocation}
               icon={{
