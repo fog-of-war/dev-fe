@@ -16,7 +16,7 @@ export interface PostingData {
   place_name: string | null;
   post_star_rating: number | null;
   post_description: string | null;
-  post_image_url: string | null;
+  post_image_url: string | undefined;
   place_latitude: number | null;
   place_longitude: number | null;
 }
