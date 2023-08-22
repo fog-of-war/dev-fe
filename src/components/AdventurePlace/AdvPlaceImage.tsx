@@ -1,13 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { useState } from "react";
 import SkeletonLoader from "../UI/SkeletonLoader";
+import { PostingData } from "../../pages/posting/UploadPage";
 
 interface AdvPlaceImageProps {
-  imageUrl: string;
-  placeName: string;
+  post_image_url: PostingData["post_image_url"];
+  place_name: PostingData["place_name"];
 }
 
-const AdvPlaceImage = ({ imageUrl, placeName }: AdvPlaceImageProps) => {
+const AdvPlaceImage = ({ post_image_url, place_name }: AdvPlaceImageProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   return (
@@ -35,11 +36,11 @@ const AdvPlaceImage = ({ imageUrl, placeName }: AdvPlaceImageProps) => {
           textShadow: "1px 1px 2px rgba(0, 0, 0, 1)",
         }}
       >
-        {placeName}
+        {place_name}
       </h1>
       <img
-        src={imageUrl}
-        alt={`${placeName}`}
+        src={post_image_url}
+        alt={`${place_name}`}
         onLoad={() => setIsLoading(true)}
         css={{
           width: "100%",
