@@ -23,6 +23,7 @@
     "react": "^18.2.0",
     "react-cropper": "^2.3.3",
     "react-dom": "^18.2.0",
+    "react-geocode": "^0.2.3",
     "react-hot-toast": "^2.4.1",
     "react-kakao-maps-sdk": "^1.1.9",
     "react-query": "^3.39.3",
@@ -62,6 +63,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/lodash": "^4.14.196",
+    "@types/react-geocode": "^0.2.1",
     "@types/xml2js": "^0.4.11"
   }
 }
