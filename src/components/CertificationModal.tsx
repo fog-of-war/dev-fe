@@ -85,14 +85,14 @@ const CertificationModal = ({
           type: "image/jpeg",
         });
 
+        const imageURL = URL.createObjectURL(convertedFile);
+        console.log("imageURL:", imageURL);
+
         // 인증에 성공했을 경우
         if (
           certificationResults.location === "통과" &&
           certificationResults.date === "통과"
         ) {
-          const imageURL = await uploadImage(convertedFile);
-          console.log(imageURL);
-
           setCertifiedImage({
             imageURL,
             place_name,

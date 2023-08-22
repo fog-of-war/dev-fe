@@ -1,32 +1,27 @@
 /** @jsxImportSource @emotion/react */
 
+import { useEffect, useState } from "react";
 import AdvPlaceTitle from "./AdvPlaceTitle";
 import AdvPlaceImage from "./AdvPlaceImage";
-
-const DUMMY_PLACE = [
-  {
-    imageUrl: "https://source.unsplash.com/random ",
-    placeName: "카페",
-  },
-  {
-    imageUrl: "https://source.unsplash.com/random ",
-    placeName: "냄셴테월",
-  },
-  {
-    imageUrl: "https://source.unsplash.com/random ",
-    placeName: "거시기와인바",
-  },
-  {
-    imageUrl: "https://source.unsplash.com/random ",
-    placeName: "머시기버거",
-  },
-  {
-    imageUrl: "https://source.unsplash.com/random ",
-    placeName: "경복궁",
-  },
-];
+import { getMyPosts } from "../../api/post";
+import { PostingData } from "../../pages/posting/UploadPage";
 
 const AdvPlaceList = () => {
+  const [userPosts, setUserPosts] = useState<PostingData[]>([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const posts = await getMyPosts();
+        setUserPosts(posts);
+      } catch (error) {
+        console.error("post data fetch error:", error);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
   return (
     <>
       <div
@@ -40,11 +35,11 @@ const AdvPlaceList = () => {
         }}
       >
         <AdvPlaceTitle />
-        {DUMMY_PLACE.map((place, index) => (
+        {userPosts.map((place, index) => (
           <AdvPlaceImage
             key={index}
-            imageUrl={place.imageUrl}
-            placeName={place.placeName}
+            post_image_url={place.post_image_url}
+            place_name={place.place_name}
           />
         ))}
       </div>

@@ -27,14 +27,14 @@ export function PostingDataProvider({ children }: PostingDataProviderProps) {
     place_name: string | null;
     post_star_rating: number | null;
     post_description: string | null;
-    post_image_url: string | null;
+    post_image_url: string | undefined;
     place_latitude: number | null;
     place_longitude: number | null;
   }>({
     place_name: null,
     post_star_rating: null,
     post_description: null,
-    post_image_url: null,
+    post_image_url: undefined,
     place_latitude: null,
     place_longitude: null,
   });

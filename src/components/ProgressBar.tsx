@@ -12,7 +12,7 @@ const ProgressBar = ({ progress, level }: ProgressBarProps) => {
   return (
     <>
       <ProgressBarContainer>
-        <ProgressText>레벨업까지 1,500 포인트가 남았어요</ProgressText>
+        <ProgressText>다음 레벨업까지 1,500 포인트</ProgressText>
         <StyledProgressBar progress={progress} level={level} />
         <LevelText left>{level} Lv</LevelText>
         <LevelText right>{level + 1} Lv</LevelText>
