@@ -175,7 +175,7 @@ const Map = () => {
                 }}
               />
             ))}
-          {view.zoom <= 11 &&
+          {view.zoom <= 14 &&
             polygons.map((polygon, index) => (
               <SeoulPolygon
                 key={index}
