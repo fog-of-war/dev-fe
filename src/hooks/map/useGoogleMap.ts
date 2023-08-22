@@ -68,6 +68,8 @@ const useGoogleMap = (mapRef: MutableRefObject<google.maps.Map | null>) => {
   const handleZoomChange = () => {
     const zoom = mapRef.current?.getZoom() ?? mapViewState.zoom ?? 10.3;
 
+    setView({ ...view, zoom });
+
     // 기존 타이머를 취소하고 새로운 타이머를 설정
     clearTimeout(debounceTimer);
 
