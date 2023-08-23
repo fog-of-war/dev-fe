@@ -190,7 +190,7 @@ const MainCard = () => {
             marginTop: 10,
           }}
         >
-          {DUMMY_BADGES.map((badge, index) => (
+          {DUMMY_BADGES.slice(0, 5).map((badge, index) => (
             <img
               key={index}
               src={badge.imageUrl}
