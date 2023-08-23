@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import ProgressBar from "../ProgressBar";
 import MainCardMap from "../Map/MainCardMap";
 import FogEffect from "./FogEffect";
+import MainBadgeList from "./MainBadgeList";
 
 const DUMMY_BADGES = [
   {
@@ -164,42 +165,7 @@ const MainCard = () => {
           zIndex: 1,
         }}
       ></div>
-      <div onClick={() => navigate("/badgeList")}>
-        <div
-          css={{
-            display: "flex",
-            alignItems: "center",
-            color: "#53AF7B",
-            fontWeight: "bold",
-            fontSize: 20,
-            marginBottom: 10,
-          }}
-        >
-          <img
-            src="/images/main/badgeIcon.png"
-            alt="뱃지 아이콘"
-            css={{ width: 18, height: 22, marginRight: 5 }}
-          />
-          뱃지
-        </div>
-        <div
-          css={{
-            display: "grid",
-            gridTemplateColumns: "repeat(5, 1fr)",
-            gap: 10,
-            marginTop: 10,
-          }}
-        >
-          {DUMMY_BADGES.slice(0, 5).map((badge, index) => (
-            <img
-              key={index}
-              src={badge.imageUrl}
-              alt={badge.badgeName}
-              css={{ width: 56, aspectRatio: 1 }}
-            />
-          ))}
-        </div>
-      </div>
+      <MainBadgeList badges={DUMMY_BADGES} />
     </div>
   );
 };
