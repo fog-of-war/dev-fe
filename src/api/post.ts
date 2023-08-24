@@ -1,3 +1,4 @@
+import { toast } from "react-hot-toast";
 import { PostingData } from "../pages/posting/UploadPage";
 import { axiosBase } from "./axios";
 
@@ -28,4 +29,19 @@ export const uploadPost = async (data: PostingData): Promise<PostingData> => {
 
 export const deleteTodo = async (id: number): Promise<void> => {
   await axiosBase.delete(`/v1/posts/${id}`);
+};
+
+export const getPlacesBySearchQuery = async (
+  query: string,
+  x: number,
+  y: number
+) => {
+  try {
+    const response = await axiosBase.get(
+      `v1/places/search?query=${query}&x=${x}&y=${y}`
+    );
+    return response.data;
+  } catch (error: any) {
+    toast.error(error.response.data.detail);
+  }
 };

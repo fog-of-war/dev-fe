@@ -8,14 +8,13 @@ import colors from "../../constants/colors";
 import styled from "@emotion/styled";
 
 import { SearchList } from "../../components/Search/RecentSearchesPanel";
-import useModal from "../../hooks/useModal";
 import { Search } from "../../types/types";
+import { useDeleteComfirmModal } from "../../hooks/useDeleteComfirmModal";
 
 import BackButton from "../../components/UI/BackButton";
 import EditSearchItem from "../../components/Search/EditSearchItem";
 import Button from "../../components/UI/Button";
 import RecentSearchesDeleteModal from "../../components/Search/RecentSearchesDeleteModal";
-import { useDeleteComfirmModal } from "../../hooks/useDeleteComfirmModal";
 
 const EditRecentSearchPage = () => {
   const [recentSearches, setRecentSearches] = useRecoilState(searchState);

@@ -10,8 +10,6 @@ const useGoogleMap = (mapRef: MutableRefObject<google.maps.Map | null>) => {
     mapViewState ?? { center: defaultCenter, zoom: 10 }
   );
 
-  console.log(mapViewState);
-
   const handleCurrentLocationClick = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
