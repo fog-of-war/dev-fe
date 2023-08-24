@@ -58,6 +58,7 @@ const Map = ({ places }: MapProps) => {
     handlePolygonClick,
     handleZoomChange,
     handleMapChange,
+    handleMarkerClick,
   } = useGoogleMap(mapRef);
   const { currentLocation, isInSeoul } = useCurrentLocation();
   const polygons = usePolygon(view.zoom);
@@ -148,6 +149,7 @@ const Map = ({ places }: MapProps) => {
                   } else {
                     setOpenMarkerName(marker.placeName);
                   }
+                  handleMarkerClick(marker.position);
                 }}
               />
             ))}
