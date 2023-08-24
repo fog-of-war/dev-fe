@@ -12,7 +12,6 @@ const CurrentLocationButton = ({ onClick }: CurrentLocationButtonProps) => {
         bottom: "115px",
         right: "0px",
         cursor: "pointer",
-        zIndex: 1,
       }}
       onClick={onClick}
     >

@@ -8,6 +8,17 @@ import { Place } from "../../types/types";
 import PlaceImageList from "./PlaceImageList";
 import { useNavigateModal } from "../../hooks/useNavigateModal";
 import NavigateModal from "../Map/NavigateModal";
+import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { mapViewAtomState, selectedPlaceAtom } from "../../store/mapAtom";
+
+const DUMMY_IMAGE = [
+  "https://source.unsplash.com/random",
+  "https://source.unsplash.com/random",
+  "https://source.unsplash.com/random",
+  "https://source.unsplash.com/random",
+  "https://source.unsplash.com/random",
+];
 
 interface PlaceItemProps extends React.HTMLAttributes<HTMLLIElement> {
   place: Place;
@@ -16,18 +27,33 @@ interface PlaceItemProps extends React.HTMLAttributes<HTMLLIElement> {
 
 const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
   const navigateModal = useNavigateModal();
+  const navigate = useNavigate();
+  const setSelectedPlace = useSetRecoilState(selectedPlaceAtom);
+  const setMapCenter = useSetRecoilState(mapViewAtomState);
 
   return (
     <PlaceItemContainer {...props}>
       <NavigateModal
         isOpen={navigateModal.isOpen}
         onClose={navigateModal.onClose}
-        url={place.address}
+        url={place.place_url}
       />
-      <TitleContainer>
+      <TitleContainer
+        onClick={() => {
+          setMapCenter({
+            center: {
+              lat: +place.y,
+              lng: +place.x,
+            },
+            zoom: 18,
+          });
+          setSelectedPlace(place.place_name);
+          navigate(`/search/result?query=${place.place_name}`);
+        }}
+      >
         <TitleWrapper>
-          <h4>{place.name}</h4>
-          <B2 css={{ color: colors.lightGrey }}>{place.category}</B2>
+          <h4>{place.place_name}</h4>
+          <B2 css={{ color: colors.lightGrey }}>{place.category_group_name}</B2>
         </TitleWrapper>
         <B1
           css={{
@@ -41,16 +67,14 @@ const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
       </TitleContainer>
       <RatingWrapper>
         <img src="/images/search/starIcon.png" alt="star" height={21} />
-        <B1>
-          {place.rating} ({place.reviewCount})
-        </B1>
+        <B1>4.5 (499)</B1>
       </RatingWrapper>
       <LocationWrapper>
-        <B1>{place.distance < 1 ? place.distance * 1000 : place.distance}m </B1>
+        <B1>{(+place.distance / 1000).toFixed(1)}km </B1>
         <span css={{ color: colors.paleGrey }}>|</span>
-        <B1> {place.address}</B1>
+        <B1> {place.road_address_name}</B1>
       </LocationWrapper>
-      <PlaceImageList images={place.images} displayAmount={displayAmount} />
+      <PlaceImageList images={DUMMY_IMAGE} displayAmount={displayAmount} />
     </PlaceItemContainer>
   );
 };

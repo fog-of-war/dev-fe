@@ -20,7 +20,7 @@ const BottomNavigation = () => {
         alignItems: "center",
         justifyContent: "space-around",
         padding: "0 10px",
-        zIndex: "50",
+        zIndex: 50,
       }}
     >
       <BottomNavIcon

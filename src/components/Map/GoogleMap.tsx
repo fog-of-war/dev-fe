@@ -1,11 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import { useState, useRef, useEffect } from "react";
 import { GoogleMap, LoadScriptNext, Marker } from "@react-google-maps/api";
 
-import { toast } from "react-hot-toast";
 import retroMapStyle from "../../data/retroMapStyle.json";
-import { defaultCenter, bounds, options } from "../../data/mapData";
+import { bounds, options } from "../../data/mapData";
 
 import SeoulPolygon from "./SeoulPolygon";
 import OutsidePolygon from "./OutsidePolygon";
@@ -14,6 +12,10 @@ import useCurrentLocation from "../../hooks/map/useCurrentLocation";
 import CurrentLocationButton from "./CurrentLocationButton";
 import usePolygon from "../../hooks/map/usePolygon";
 import useGoogleMap from "../../hooks/map/useGoogleMap";
+import { Place } from "../../types/types";
+import { useRecoilValue } from "recoil";
+import { selectedPlaceAtom } from "../../store/mapAtom";
+import { toast } from "react-hot-toast";
 
 // Marker 데이터 인터페이스 정의
 interface MarkerData {
@@ -31,27 +33,24 @@ const containerStyle = {
   height: "100%",
 };
 
-// 숭례문 좌표
-const seongnyemunLocation = {
-  lat: 37.55999955137636,
-  lng: 126.97530447956169,
-};
+interface MapProps {
+  places?: Place[];
+}
 
-const Map = () => {
+const Map = ({ places }: MapProps) => {
   // 지도의 인스턴스를 참조하기 위한 ref 생성
   const mapRef = useRef<google.maps.Map | null>(null);
+
+  const selectedPlace = useRecoilValue(selectedPlaceAtom);
 
   // 마커 데이터 상태 관리
   const [markers, setMarkers] = useState<MarkerData[]>([]);
 
   // 마커 클릭 시 정보창을 열기 위한 상태
-  const [openMarkerIndex, setOpenMarkerIndex] = useState<number | null>(null);
+  const [openMarkerName, setOpenMarkerName] = useState<string | null>(null);
 
   // 현재 위치 마커 아이콘 이미지 URL
   const currentLocationIconUrl = "/images/map/humanIcon.png";
-
-  // 카테고리 상태 관리 아직 사용하지 않음
-  const categories = ["역사", "미술관", "커피", "맛집", "스포스시설"];
 
   const {
     view,
@@ -63,61 +62,38 @@ const Map = () => {
   const { currentLocation, isInSeoul } = useCurrentLocation();
   const polygons = usePolygon(view.zoom);
 
-  // 음식점 검색 및 마커 데이터 업데이트 함수
-  const handleSearch = async () => {
-    try {
-      const category = "스포츠시설";
-
-      // 현재 위치 가져오기
-      navigator.geolocation.getCurrentPosition(async (position) => {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-
-        const response = await axios.get(
-          `https://dapi.kakao.com/v2/local/search/keyword.json?y=${latitude}&x=${longitude}&radius=2000`,
-          {
-            headers: {
-              Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_API_KEY}`,
-            },
-            params: {
-              query: category,
-            },
-          }
-        );
-
-        if (response.status === 200) {
-          const data = response.data;
-          console.log(data);
-          // API에서 받아온 데이터를 기반으로 마커 데이터 생성
-          const newMarkers: MarkerData[] = data.documents.map(
-            (document: any) => ({
-              position: {
-                lat: parseFloat(document.y),
-                lng: parseFloat(document.x),
-              },
-              placeName: document.place_name,
-              roadAddress: document.road_address_name,
-              category: category,
-              x: document.x,
-              y: document.y,
-            })
-          );
-          // 마커 데이터 업데이트
-          setMarkers(newMarkers);
-        } else {
-          toast.error("API 호출 중 오류 발생");
-        }
-      });
-    } catch (error) {
-      toast.error("API 호출 중 오류 발생");
-      console.error("오류 발생:", error);
+  // Map 컴포넌트가 마운트되거나 places props가 변경되면 마커 데이터 업데이트
+  useEffect(() => {
+    if (places) {
+      // places 데이터를 기반으로 markers 배열 생성
+      const newMarkers = places.map((place) => ({
+        position: {
+          lat: +place.y,
+          lng: +place.x,
+        },
+        placeName: place.place_name,
+        roadAddress: place.road_address_name,
+        category: place.category_name,
+        x: +place.y,
+        y: +place.x,
+      }));
+      setMarkers(newMarkers);
     }
-  };
+  }, [places]);
 
   useEffect(() => {
-    // 컴포넌트가 마운트되었을 때 음식점 검색 및 마커 업데이트 실행
-    handleSearch();
-  }, []);
+    setOpenMarkerName(selectedPlace);
+  }, [selectedPlace]);
+
+  useEffect(() => {
+    if (!currentLocation) {
+      toast.loading("현재 위치를 불러오는 중입니다.");
+    }
+
+    if (currentLocation) {
+      toast.dismiss();
+    }
+  }, [currentLocation]);
 
   return (
     <div
@@ -165,12 +141,12 @@ const Map = () => {
                 category={marker.category}
                 x={marker.x}
                 y={marker.y}
-                isMarkerOpen={index === openMarkerIndex}
+                isMarkerOpen={marker.placeName === openMarkerName}
                 onClick={() => {
-                  if (openMarkerIndex === index) {
-                    setOpenMarkerIndex(null);
+                  if (openMarkerName === marker.placeName) {
+                    setOpenMarkerName(null);
                   } else {
-                    setOpenMarkerIndex(index);
+                    setOpenMarkerName(marker.placeName);
                   }
                 }}
               />
