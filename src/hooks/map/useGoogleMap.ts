@@ -77,12 +77,20 @@ const useGoogleMap = (mapRef: MutableRefObject<google.maps.Map | null>) => {
     }, 500); // 디바운스 딜레이 (예: 500 밀리초)
   };
 
+  // 클릭한 마커의 위치로 지도 이동
+  const handleMarkerClick = (markerPosition: google.maps.LatLngLiteral) => {
+    if (mapRef.current) {
+      mapRef.current.panTo(markerPosition);
+    }
+  };
+
   return {
     view,
     handleCurrentLocationClick,
     handlePolygonClick,
     handleZoomChange,
     handleMapChange,
+    handleMarkerClick,
   };
 };
 
