@@ -3,10 +3,18 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+import { getUserData } from "../../api/user";
+
 import ProgressBar from "../ProgressBar";
 import MainCardMap from "../Map/MainCardMap";
 import FogEffect from "./FogEffect";
 import MainBadgeList from "./MainBadgeList";
+
+export interface UserData {
+  user_nickname: string;
+  user_image_url: string;
+  user_authored_posts: any[];
+}
 
 const DUMMY_BADGES = [
   {
@@ -36,7 +44,19 @@ const MainCard = () => {
 
   const [isLoaded, setIsLoaded] = useState(false);
 
+  const [userNickname, setUserNickname] = useState("");
+
+  const [userImageUrl, setUserImageUrl] = useState("");
+
+  const [userAuthoredPosts, setUserAuthoredPosts] = useState<any[]>([]);
+
   useEffect(() => {
+    getUserData().then((userData: UserData) => {
+      setUserNickname(userData.user_nickname);
+      setUserImageUrl(userData.user_image_url);
+      setUserAuthoredPosts(userData.user_authored_posts);
+    });
+
     setIsLoaded(true);
   }, []);
 
@@ -79,7 +99,7 @@ const MainCard = () => {
           }}
         >
           <img
-            src="/images/dummyUserImage.png"
+            src={userImageUrl}
             alt="프로필 사진"
             css={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
@@ -91,7 +111,7 @@ const MainCard = () => {
             fontWeight: 600,
           }}
         >
-          여러분과함께라면행복해
+          {userNickname}
         </div>
       </div>
       <div css={{ ...smallTextStyle, whiteSpace: "nowrap", marginTop: 10 }}>
@@ -115,7 +135,7 @@ const MainCard = () => {
             css={{ width: "24px", height: "24px" }}
           />
         </div>
-        리뷰 26개
+        리뷰 {userAuthoredPosts.length}개
       </div>
       <div css={{ ...smallTextStyle }}>
         <div css={{ marginRight: 5, marginTop: 5 }}>
