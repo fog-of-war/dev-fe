@@ -18,30 +18,50 @@ const PlaceTitle = ({ icon, name, category, roadAddress }: PlaceTitleProps) => {
   // 변환된 카테고리 이름을 저장할 변수 추가
   let displayCategory;
 
-  switch (category) {
-    case "역사":
-      categoryIcon = "/images/certificationModal/historyIcon.png";
-      displayCategory = "역사";
-      break;
-    case "맛집":
-      categoryIcon = "/images/certificationModal/restaurantIcon.png";
-      displayCategory = "미식";
-      break;
-    case "스포츠시설":
-      categoryIcon = "/images/certificationModal/healthIcon.png";
-      displayCategory = "운동";
-      break;
-    case "미술관":
-      categoryIcon = "/images/certificationModal/artIcon.png";
-      displayCategory = "미술관";
-      break;
-    case "커피":
-      categoryIcon = "/images/certificationModal/coffeeIcon.png";
-      displayCategory = "커피";
-      break;
-    default:
-      categoryIcon = ""; // 디폴트 아이콘 경로 설정
-      displayCategory = category; // 변환 없음
+  // 역사 카테고리
+  if (category.includes("역사")) {
+    categoryIcon = "/images/certificationModal/historyIcon.png";
+    displayCategory = "역사";
+  }
+
+  // 커피 카테고리
+  if (category.includes("커피") || category.includes("카페")) {
+    categoryIcon = "/images/certificationModal/coffeeIcon.png";
+    displayCategory = "커피";
+  }
+
+  // 미식 카테고리
+  if (
+    (category.includes("미식") ||
+      category.includes("음식") ||
+      category.includes("맛집")) &&
+    !category.includes("카페") &&
+    !category.includes("커피")
+  ) {
+    categoryIcon = "/images/certificationModal/restaurantIcon.png";
+    displayCategory = "미식";
+  }
+
+  // 운동 카테고리
+  if (
+    category.includes("운동") ||
+    category.includes("스포츠") ||
+    category.includes("헬스")
+  ) {
+    categoryIcon = "/images/certificationModal/healthIcon.png";
+    displayCategory = "운동";
+  }
+
+  // 미술 카테고리
+  if (category.includes("미술")) {
+    categoryIcon = "/images/certificationModal/artIcon.png";
+    displayCategory = "미술";
+  }
+
+  // 기타 카테고리
+  if (!displayCategory) {
+    categoryIcon = "/images/certificationModal/anotherIcon.png";
+    displayCategory = "기타";
   }
 
   return (
