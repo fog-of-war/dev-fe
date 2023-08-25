@@ -13,7 +13,7 @@ import MainBadgeList from "./MainBadgeList";
 export interface UserData {
   user_nickname: string;
   user_image_url: string;
-  user_authored_posts: any[];
+  user_authored_posts: [];
 }
 
 const DUMMY_BADGES = [
@@ -48,7 +48,7 @@ const MainCard = () => {
 
   const [userImageUrl, setUserImageUrl] = useState("");
 
-  const [userAuthoredPosts, setUserAuthoredPosts] = useState<any[]>([]);
+  const [userAuthoredPosts, setUserAuthoredPosts] = useState<string[]>([]);
 
   useEffect(() => {
     getUserData().then((userData: UserData) => {
