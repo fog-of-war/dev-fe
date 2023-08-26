@@ -1,25 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import ProfileStat from "./ProfileStat";
-
-const DUMMY_DATA = [
-  {
-    typeImg: "./images/flagIcon.png",
-    type: "탐험",
-    level: 3,
-  },
-  {
-    typeImg: "./images/badgeIcon.svg",
-    type: "뱃지",
-    badge: 34,
-  },
-  {
-    typeImg: "./images/starIcon.png",
-    type: "순위",
-    rank: 58,
-  },
-];
+import { userDataState } from "../../store/userAtom";
+import { useRecoilValue } from "recoil";
 
 const ProfileInfo = () => {
+  const userData = useRecoilValue(userDataState);
+
   return (
     <div
       css={{
@@ -32,9 +18,9 @@ const ProfileInfo = () => {
         backgroundColor: "white",
       }}
     >
-      {DUMMY_DATA.map((stat, index) => (
-        <ProfileStat key={index} {...stat} />
-      ))}
+      <ProfileStat type="exploration" data={userData} />
+      <ProfileStat type="badge" data={userData} />
+      {/* <ProfileStat type="rank" data={userData} /> */}
     </div>
   );
 };

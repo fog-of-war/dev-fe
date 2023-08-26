@@ -1,4 +1,5 @@
 import { ProfileData } from "../pages/auth/ProfileSetupPage";
+import { UserData } from "../types/types";
 import { axiosBase } from "./axios";
 
 export const setUpProfile = async (data: ProfileData) => {
