@@ -1,22 +1,36 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
 import colors from "../../constants/colors";
+import { UserData } from "../../types/types";
 
 interface ProfileStatProps {
-  typeImg: string;
-  type: string;
-  level?: number;
-  rank?: number;
-  badge?: number;
+  type: "exploration" | "badge"; // rank 추가해야함
+  data: UserData | null;
 }
 
-const ProfileStat = ({
-  typeImg,
-  type,
-  level,
-  rank,
-  badge,
-}: ProfileStatProps) => {
+const ProfileStat = ({ type, data }: ProfileStatProps) => {
+  const statTypes = {
+    exploration: {
+      typeImg: "./images/flagIcon.png",
+      label: "탐험",
+      value: data?.user_level,
+      unit: "Lv",
+    },
+    badge: {
+      typeImg: "./images/badgeIcon.svg",
+      label: "뱃지",
+      value: data?.user_badges.length,
+      unit: "개",
+    },
+    // rank: {
+    //   typeImg: "./images/starIcon.png",
+    //   label: "순위",
+    // value: data.user_rank,
+    //   unit: "위",
+    // },
+  };
+
+  const stat = statTypes[type];
+
   return (
     <div
       css={{
@@ -28,8 +42,8 @@ const ProfileStat = ({
       }}
     >
       <img
-        src={typeImg}
-        alt={`${type}Icon`}
+        src={stat.typeImg}
+        alt={`${stat.label}Icon`}
         css={{
           width: "17px",
           height: "18px",
@@ -41,25 +55,11 @@ const ProfileStat = ({
           fontSize: "16px",
         }}
       >
-        {type}
+        {stat.label}
       </p>
       <p css={{ fontSize: "15px" }}>
-        {level ? (
-          <>
-            <span>{level}</span>
-            <span css={{ marginLeft: "10px" }}>Lv</span>
-          </>
-        ) : badge ? (
-          <>
-            <span>{badge}</span>
-            <span css={{ marginLeft: "10px" }}>개</span>
-          </>
-        ) : rank ? (
-          <>
-            <span>{rank}</span>
-            <span css={{ marginLeft: "10px" }}>위</span>
-          </>
-        ) : null}
+        <span>{stat.value}</span>
+        <span css={{ marginLeft: "10px" }}>{stat.unit}</span>
       </p>
     </div>
   );

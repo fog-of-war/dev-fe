@@ -1,26 +1,24 @@
 /** @jsxImportSource @emotion/react */
 
+import { useEffect } from "react";
+import { getUserData } from "../../api/user";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import ProfileInfo from "../../components/ProfileCard/ProfileInfo";
 import ProgressBar from "../../components/ProgressBar";
+import { useRecoilState } from "recoil";
+import { userDataState } from "../../store/userAtom";
 
-interface UserData {
-  username: string;
-  profileText: string;
-  profileImage: string;
-  level: number;
-  badgeIcon: string;
-}
+const UserProfile = () => {
+  const [userData, setUserData] = useRecoilState(userDataState);
 
-const DUMMY_DATA: UserData = {
-  username: "여러분과함께라면행복",
-  profileText: "마포구 워렌버핏",
-  profileImage: "./images/dummyUserImage.png",
-  level: 3,
-  badgeIcon: "./images/badgeIcon.svg",
-};
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const data = await getUserData();
+      setUserData(data);
+    };
+    fetchUserData();
+  }, []);
 
-const UserProfile = ({ userData = DUMMY_DATA }: { userData?: UserData }) => {
   return (
     <div
       css={{
@@ -30,14 +28,14 @@ const UserProfile = ({ userData = DUMMY_DATA }: { userData?: UserData }) => {
       }}
     >
       <ProfileCard
-        username={userData.username}
-        profileText={userData.profileText}
-        profileImage={userData.profileImage}
-        level={userData.level}
-        badgeIcon={userData.badgeIcon}
+        username={userData?.user_nickname}
+        profileText={userData?.user_badges[0]?.badge_name}
+        profileImage={userData?.user_image_url}
+        level={userData?.user_level}
+        badgeIcon="./images/badgeIcon.svg"
       />
       <ProfileInfo />
-      <ProgressBar progress={80} level={userData.level} />
+      <ProgressBar progress={80} level={userData?.user_level || 0} />
     </div>
   );
 };
