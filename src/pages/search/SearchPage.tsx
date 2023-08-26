@@ -13,7 +13,8 @@ import SearchResultPanel from "../../components/Search/SearchResultPanel";
 
 const SearchPage = () => {
   const [isTyping, setIsTyping] = useState(false);
-  const { inputValue, handleSearchMap, setInputValue } = useSearchMap();
+  const { searchResult, inputValue, handleSearchMap, setInputValue } =
+    useSearchMap();
 
   const searchRef = useRef<HTMLInputElement>(null);
   const location = useLocation();
@@ -47,7 +48,11 @@ const SearchPage = () => {
       />
       <TagButtonList />
       <SearchPannel>
-        {isTyping ? <SearchResultPanel /> : <RecentSearchesPanel />}
+        {isTyping ? (
+          <SearchResultPanel searchResult={searchResult} />
+        ) : (
+          <RecentSearchesPanel />
+        )}
       </SearchPannel>
     </ExplorePageLayout>
   );

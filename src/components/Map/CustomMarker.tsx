@@ -59,7 +59,7 @@ const CustomMarker: React.FC<CustomMarkerProps & { isMarkerOpen: boolean }> = ({
   let iconSrc = "/images/map/BasicIcon.png";
 
   // 역사 카테고리
-  if (category === "역사") {
+  if (category.includes("역사")) {
     overlayBackgroundColor = "#FFFAEE";
     borderTopColor = "#FFFAEE";
     placeNameColor = "#E5A602";
@@ -68,7 +68,11 @@ const CustomMarker: React.FC<CustomMarkerProps & { isMarkerOpen: boolean }> = ({
   }
 
   // 맛집 카테고리
-  if (category === "맛집") {
+  if (
+    category.includes("맛집") ||
+    category.includes("미식") ||
+    category.includes("음식")
+  ) {
     overlayBackgroundColor = "#FFF4F4";
     borderTopColor = "#FFF4F4";
     placeNameColor = "#FA5757";
@@ -77,7 +81,7 @@ const CustomMarker: React.FC<CustomMarkerProps & { isMarkerOpen: boolean }> = ({
   }
 
   // 미술관 카테고리
-  if (category === "미술관") {
+  if (category.includes("미술")) {
     overlayBackgroundColor = "#FCF4FF";
     borderTopColor = "#FCF4FF";
     placeNameColor = "#7F43FF";
@@ -86,7 +90,7 @@ const CustomMarker: React.FC<CustomMarkerProps & { isMarkerOpen: boolean }> = ({
   }
 
   // 커피 카테고리
-  if (category === "커피") {
+  if (category.includes("커피") || category.includes("카페")) {
     overlayBackgroundColor = "#FFF8F5";
     borderTopColor = "#FFF8F5";
     placeNameColor = "#995312";
@@ -95,7 +99,11 @@ const CustomMarker: React.FC<CustomMarkerProps & { isMarkerOpen: boolean }> = ({
   }
 
   // 스포츠시설 카테고리
-  if (category === "스포츠시설") {
+  if (
+    category.includes("헬스") ||
+    category.includes("스포츠") ||
+    category.includes("운동")
+  ) {
     overlayBackgroundColor = "#E7F6FF";
     borderTopColor = "#E7F6FF";
     placeNameColor = "#2C7DF5";

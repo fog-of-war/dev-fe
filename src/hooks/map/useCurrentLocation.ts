@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import Geocode from "react-geocode";
+import { useSetRecoilState } from "recoil";
+import { currentLocationAtom } from "../../store/currentLocationAtom";
 
 const useCurrentLocation = () => {
   // 현재 위치를 저장하는 상태
   const [currentLocation, setCurrentLocation] =
     useState<google.maps.LatLngLiteral | null>(null);
   const [isInSeoul, setIsInSeoul] = useState<boolean>(false);
+  const setCurrentLocationGlobalState = useSetRecoilState(currentLocationAtom);
 
   // 사용자의 현재 위치를 가져와서 상태를 업데이트하는 함수
   const updateCurrentLocation = () => {
@@ -39,6 +42,7 @@ const useCurrentLocation = () => {
       (position) => {
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
+        setCurrentLocationGlobalState({ lat, lng });
 
         // 위도와 경도를 주소로 변환하여 가져오기
         Geocode.fromLatLng(lat.toString(), lng.toString()).then(

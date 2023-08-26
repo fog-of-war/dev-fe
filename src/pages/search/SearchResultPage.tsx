@@ -7,68 +7,24 @@ import { useState } from "react";
 
 import SearchBarDisplay from "../../components/Search/SearchBarDisplay";
 import PlaceItem from "../../components/Place/PlaceItem";
-
-const DUMMY_DATA = [
-  {
-    id: "1",
-    name: "포장마차",
-    address: "서울특별시 강남구 논현동 123-1",
-    category: "한식",
-    rating: 4.5,
-    reviewCount: 123,
-    distance: 0.5,
-    images: [
-      "https://source.unsplash.com/random",
-      "https://source.unsplash.com/random",
-      "https://source.unsplash.com/random",
-      "https://source.unsplash.com/random",
-      "https://source.unsplash.com/random",
-      "https://source.unsplash.com/random",
-    ],
-  },
-  {
-    id: "2",
-    name: "포장마차",
-    address: "서울특별시 강남구 논현동 123-1",
-    category: "한식",
-    rating: 4.5,
-    reviewCount: 123,
-    distance: 0.5,
-    images: [
-      "https://source.unsplash.com/random",
-      "https://source.unsplash.com/random",
-      "https://source.unsplash.com/random",
-      "https://source.unsplash.com/random",
-      "https://source.unsplash.com/random",
-      "https://source.unsplash.com/random",
-    ],
-  },
-  {
-    id: "3",
-    name: "포장마차",
-    address: "서울특별시 강남구 논현동 123-1",
-    category: "한식",
-    rating: 4.5,
-    reviewCount: 123,
-    distance: 0.5,
-    images: [
-      "https://source.unsplash.com/random",
-      "https://source.unsplash.com/random",
-      "https://source.unsplash.com/random",
-      "https://source.unsplash.com/random",
-      "https://source.unsplash.com/random",
-      "https://source.unsplash.com/random",
-    ],
-  },
-];
+import Map from "../../components/Map/GoogleMap";
+import useMapSearchQuery from "../../hooks/useMapSearchQuery";
+import { Place } from "../../types/types";
+import { useRecoilValue } from "recoil";
+import { selectedPlaceAtom } from "../../store/mapAtom";
 
 const SearchResultPage = () => {
-  const [isMapView, setIsMapView] = useState(false);
+  const selectedPlace = useRecoilValue(selectedPlaceAtom);
 
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const searchQuery = query.get("query") ?? "";
+
+  const [isMapView, setIsMapView] = useState(selectedPlace ? true : false);
+
   const navigate = useNavigate();
+
+  const searchResult = useMapSearchQuery(searchQuery);
 
   return (
     <ExplorePageLayout>
@@ -92,19 +48,11 @@ const SearchResultPage = () => {
           <img src="/images/search/xIconBold.png" alt="map_icon" height={22} />
         </IconWrapper>
       </SearchBarContainer>
-      {isMapView ? (
-        <div
-          css={{
-            width: "calc(100% + 40px)",
-            marginLeft: "-20px",
-            height: "100%",
-            backgroundImage: "url(/garbage/map.png)",
-            backgroundSize: "cover",
-          }}
-        />
-      ) : (
+
+      <Map places={searchResult.data} />
+      {!isMapView && (
         <PlaceList>
-          {DUMMY_DATA.map((place) => (
+          {searchResult.data.map((place: Place) => (
             <PlaceItem key={place.id} place={place} displayAmount={3} />
           ))}
         </PlaceList>
@@ -116,13 +64,18 @@ const SearchResultPage = () => {
 export default SearchResultPage;
 
 const SearchBarContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  height: 85px;
   gap: 15px;
   background-color: white;
-  padding-bottom: 10px;
+  z-index: 65;
 `;
 
 const IconWrapper = styled.div`
@@ -134,7 +87,12 @@ const IconWrapper = styled.div`
 `;
 
 const PlaceList = styled.ul`
+  position: absolute;
+  inset: 0;
+  padding: 90px 20px 0 20px;
   display: flex;
   flex-direction: column;
   gap: 15px;
+  background-color: white;
+  overflow: auto;
 `;

@@ -3,9 +3,18 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+import { getUserData } from "../../api/user";
+
 import ProgressBar from "../ProgressBar";
 import MainCardMap from "../Map/MainCardMap";
 import FogEffect from "./FogEffect";
+import MainBadgeList from "./MainBadgeList";
+
+export interface UserData {
+  user_nickname: string;
+  user_image_url: string;
+  user_authored_posts: [];
+}
 
 const DUMMY_BADGES = [
   {
@@ -35,7 +44,19 @@ const MainCard = () => {
 
   const [isLoaded, setIsLoaded] = useState(false);
 
+  const [userNickname, setUserNickname] = useState("");
+
+  const [userImageUrl, setUserImageUrl] = useState("");
+
+  const [userAuthoredPosts, setUserAuthoredPosts] = useState<string[]>([]);
+
   useEffect(() => {
+    getUserData().then((userData: UserData) => {
+      setUserNickname(userData.user_nickname);
+      setUserImageUrl(userData.user_image_url);
+      setUserAuthoredPosts(userData.user_authored_posts);
+    });
+
     setIsLoaded(true);
   }, []);
 
@@ -78,7 +99,7 @@ const MainCard = () => {
           }}
         >
           <img
-            src="/images/dummyUserImage.png"
+            src={userImageUrl}
             alt="프로필 사진"
             css={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
@@ -90,7 +111,7 @@ const MainCard = () => {
             fontWeight: 600,
           }}
         >
-          여러분과함께라면행복해
+          {userNickname}
         </div>
       </div>
       <div css={{ ...smallTextStyle, whiteSpace: "nowrap", marginTop: 10 }}>
@@ -114,7 +135,7 @@ const MainCard = () => {
             css={{ width: "24px", height: "24px" }}
           />
         </div>
-        리뷰 26개
+        리뷰 {userAuthoredPosts.length}개
       </div>
       <div css={{ ...smallTextStyle }}>
         <div css={{ marginRight: 5, marginTop: 5 }}>
@@ -164,42 +185,7 @@ const MainCard = () => {
           zIndex: 1,
         }}
       ></div>
-      <div onClick={() => navigate("/badgeList")}>
-        <div
-          css={{
-            display: "flex",
-            alignItems: "center",
-            color: "#53AF7B",
-            fontWeight: "bold",
-            fontSize: 20,
-            marginBottom: 10,
-          }}
-        >
-          <img
-            src="/images/main/badgeIcon.png"
-            alt="뱃지 아이콘"
-            css={{ width: 18, height: 22, marginRight: 5 }}
-          />
-          뱃지
-        </div>
-        <div
-          css={{
-            display: "grid",
-            gridTemplateColumns: "repeat(5, 1fr)",
-            gap: 10,
-            marginTop: 10,
-          }}
-        >
-          {DUMMY_BADGES.map((badge, index) => (
-            <img
-              key={index}
-              src={badge.imageUrl}
-              alt={badge.badgeName}
-              css={{ width: 56, aspectRatio: 1 }}
-            />
-          ))}
-        </div>
-      </div>
+      <MainBadgeList badges={DUMMY_BADGES} />
     </div>
   );
 };

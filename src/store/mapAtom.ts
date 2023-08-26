@@ -8,3 +8,8 @@ export const mapViewAtomState = atom({
     zoom: 10,
   },
 });
+
+export const selectedPlaceAtom = atom({
+  key: "selectedPlaceAtom",
+  default: null as string | null,
+});

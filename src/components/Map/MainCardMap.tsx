@@ -40,7 +40,7 @@ const MainCardMap = () => {
 
   // map으로 이동하는 함수
   const handleMapClick = () => {
-    navigate("/map");
+    navigate("/explore");
   };
 
   useEffect(() => {
