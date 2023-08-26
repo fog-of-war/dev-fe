@@ -27,7 +27,7 @@ export const uploadPost = async (data: PostingData): Promise<PostingData> => {
 //   return updatedPost;
 // };
 
-export const deleteTodo = async (id: number): Promise<void> => {
+export const deletePost = async (id: number): Promise<void> => {
   await axiosBase.delete(`/v1/posts/${id}`);
 };
 
