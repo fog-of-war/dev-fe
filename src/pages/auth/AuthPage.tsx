@@ -22,6 +22,7 @@ const AuthPage = () => {
 
   const handleClickOAuthButton = (e: React.MouseEvent<HTMLDivElement>) => {
     const oAuthName = e.currentTarget.id;
+    console.log("🚀 ~ file: AuthPage.tsx:25 ~ handleClickOAuthButton ~ oAuthName:",`${process.env.REACT_APP_API_URL}v1/auth/${oAuthName}`)
 
     // OAuth 제공자의 로그인 페이지로 리다이렉션
     window.location.href = `${process.env.REACT_APP_API_URL}v1/auth/${oAuthName}`;
@@ -55,15 +56,16 @@ const AuthPage = () => {
     // URL 쿼리 파라미터에서 코드를 가져옴
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code");
-
+  
     // 현재 URL에서 OAuth 제공자 이름을 필터링
     const currentUrl = window.location.href;
-    const oAuthNAme = ["google", "kakao", "naver"].filter((oAuthName) =>
+    const oAuthNames = ["google", "kakao", "naver"].filter((oAuthName) =>
       currentUrl.includes(oAuthName)
     );
-
-    if (code) {
-      handleAuthentication(code!, oAuthNAme[0]);
+  
+    if (code && oAuthNames.length > 0) {
+      const oAuthName = oAuthNames[0]; // 첫 번째로 매칭된 OAuth 제공자 이름 사용
+      handleAuthentication(code, oAuthName);
     }
   }, []);
 
