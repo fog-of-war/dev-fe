@@ -71,3 +71,17 @@ export interface UserData {
   user_visited_places: string[];
   user_authored_posts: string[];
 }
+
+export interface PostingData {
+  post_id: number | null;
+  post_create_at: string | null;
+  post_updated_at: string | null;
+  post_description: string | null;
+  post_image_url: string | undefined;
+  post_author_id: number | null;
+  post_star_rating: number | null;
+  post_place_id: number | null;
+  place_name: string | null;
+  place_latitude: number | null;
+  place_longitude: number | null;
+}
