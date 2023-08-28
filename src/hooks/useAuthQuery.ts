@@ -12,7 +12,7 @@ export const useAuthQuery = () => {
     data = fallback,
     isLoading,
     isError,
-  } = useQuery<UserData>(queryKey, queryFn);
+  } = useQuery<UserData>(queryKey, queryFn, { retry: false });
 
   return { data, isLoading, isError };
 };
