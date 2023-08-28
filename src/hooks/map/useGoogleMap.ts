@@ -56,6 +56,7 @@ const useGoogleMap = (
         currentIndex++;
         setTimeout(zoomStep, delay);
       }
+      setZoom(16);
     };
 
     zoomStep(); // 첫 번째 단계 시작

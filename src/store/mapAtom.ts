@@ -9,6 +9,11 @@ export const mapViewAtomState = atom({
   },
 });
 
+export const mapStateAtom = atom<google.maps.Map | null>({
+  key: "mapStateAtom",
+  default: null,
+});
+
 export const selectedPlaceAtom = atom({
   key: "selectedPlaceAtom",
   default: null as string | null,

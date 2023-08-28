@@ -14,6 +14,7 @@ import ToasterContext from "./context/ToasterContext";
 import { CertifiedImageProvider } from "./context/CertifiedImageContext";
 import AuthGuard from "./components/Auth/AuthGuard";
 import { PostingDataProvider } from "./context/PostingDataContext";
+import MapContexProvider from "./context/MapContext";
 
 const queryClient = new QueryClient();
 
@@ -27,13 +28,15 @@ function App() {
               <PostingDataProvider>
                 <CropImageProvider>
                   <CertifiedImageProvider>
-                    <AuthGuard>
-                      <Layout>
-                        <ToasterContext />
-                        <AppRoutes />
-                        <LoadingComponent />
-                      </Layout>
-                    </AuthGuard>
+                    <MapContexProvider>
+                      <AuthGuard>
+                        <Layout>
+                          <ToasterContext />
+                          <AppRoutes />
+                          <LoadingComponent />
+                        </Layout>
+                      </AuthGuard>
+                    </MapContexProvider>
                   </CertifiedImageProvider>
                 </CropImageProvider>
               </PostingDataProvider>

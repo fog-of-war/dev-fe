@@ -4,10 +4,11 @@ import styled from "@emotion/styled";
 import colors from "../../constants/colors";
 import { useNavigate } from "react-router-dom";
 import { Place } from "../../types/types";
-import B1 from "../UI/B1";
-import B2 from "../UI/B2";
 import { useSetRecoilState } from "recoil";
 import { mapViewAtomState, selectedPlaceAtom } from "../../store/mapAtom";
+
+import B1 from "../UI/B1";
+import B2 from "../UI/B2";
 
 interface SearchItemProps {
   search: Place;
@@ -15,8 +16,11 @@ interface SearchItemProps {
 
 const SearchItem = ({ search }: SearchItemProps) => {
   const navigate = useNavigate();
+
   const setSelectedPlace = useSetRecoilState(selectedPlaceAtom);
+
   const setMapCenter = useSetRecoilState(mapViewAtomState);
+
   return (
     <SearchItemContainer>
       <SearchContentWrapper
@@ -67,6 +71,7 @@ export const SearchContentWrapper = styled.div`
   justify-content: start;
   flex-grow: 1;
   gap: 16px;
+  cursor: pointer;
 
     img {
       height: 20px;

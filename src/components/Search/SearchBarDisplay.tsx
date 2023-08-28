@@ -23,7 +23,8 @@ const SearchBarDisplay = ({ value, isMap }: SearchBarDisplayProps) => {
       />
       <input
         type="text"
-        defaultValue={value}
+        value={value}
+        readOnly
         css={{
           border: "none",
           outline: "none",
