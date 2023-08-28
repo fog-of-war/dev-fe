@@ -4,21 +4,23 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { ExplorePageLayout } from "../../styles/styles";
 import styled from "@emotion/styled";
 import { useState } from "react";
-
-import SearchBarDisplay from "../../components/Search/SearchBarDisplay";
-import PlaceItem from "../../components/Place/PlaceItem";
-import Map from "../../components/Map/GoogleMap";
-import useMapSearchQuery from "../../hooks/useMapSearchQuery";
 import { Place } from "../../types/types";
 import { useRecoilValue } from "recoil";
 import { selectedPlaceAtom } from "../../store/mapAtom";
 
-const SearchResultPage = () => {
-  const selectedPlace = useRecoilValue(selectedPlaceAtom);
+import SearchBarDisplay from "../Search/SearchBarDisplay";
+import PlaceItem from "../Place/PlaceItem";
+import Map from "../Map/GoogleMap";
+import useMapSearchQuery from "../../hooks/useMapSearchQuery";
 
-  const location = useLocation();
-  const query = new URLSearchParams(location.search);
-  const searchQuery = query.get("query") ?? "";
+interface SearchResultPageComonentProps {
+  searchQuery: string;
+}
+
+const SearchResultPageComponent = ({
+  searchQuery,
+}: SearchResultPageComonentProps) => {
+  const selectedPlace = useRecoilValue(selectedPlaceAtom);
 
   const [isMapView, setIsMapView] = useState(selectedPlace ? true : false);
 
@@ -61,7 +63,7 @@ const SearchResultPage = () => {
   );
 };
 
-export default SearchResultPage;
+export default SearchResultPageComponent;
 
 const SearchBarContainer = styled.div`
   position: absolute;

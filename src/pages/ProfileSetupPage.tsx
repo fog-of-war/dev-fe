@@ -1,4 +1,4 @@
-import ProfileSetupComponent from "../../components/Auth/ProfileSetupComponent";
+import ProfileSetupComponent from "../components/ProfileSetup/ProfileSetupComponent";
 
 const ProfileSetupPage = () => {
   return <ProfileSetupComponent />;

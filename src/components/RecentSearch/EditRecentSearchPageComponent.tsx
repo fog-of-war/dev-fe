@@ -7,16 +7,16 @@ import { useState } from "react";
 import colors from "../../constants/colors";
 import styled from "@emotion/styled";
 
-import { SearchList } from "../../components/Search/RecentSearchesPanel";
+import { SearchList } from "./RecentSearchesPanel";
 import { Search } from "../../types/types";
 import { useDeleteComfirmModal } from "../../hooks/useDeleteComfirmModal";
 
-import BackButton from "../../components/UI/BackButton";
-import EditSearchItem from "../../components/Search/EditSearchItem";
-import Button from "../../components/UI/Button";
-import RecentSearchesDeleteModal from "../../components/Search/RecentSearchesDeleteModal";
+import BackButton from "../UI/BackButton";
+import EditSearchItem from "./EditSearchItem";
+import Button from "../UI/Button";
+import RecentSearchesDeleteModal from "./RecentSearchesDeleteModal";
 
-const EditRecentSearchPage = () => {
+const EditRecentSearchPageComponent = () => {
   const [recentSearches, setRecentSearches] = useRecoilState(searchState);
   const [selectedSearches, setSelectedSearches] = useState<Search[]>([]);
   const deleteConfirmModal = useDeleteComfirmModal();
@@ -96,7 +96,7 @@ const EditRecentSearchPage = () => {
   );
 };
 
-export default EditRecentSearchPage;
+export default EditRecentSearchPageComponent;
 
 const Layout = styled.div`
   position: absolute;
