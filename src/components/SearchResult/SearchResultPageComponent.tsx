@@ -1,17 +1,18 @@
 /** @jsxImportSource @emotion/react */
 
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ExplorePageLayout } from "../../styles/styles";
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Place } from "../../types/types";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { selectedPlaceAtom } from "../../store/mapAtom";
 
 import SearchBarDisplay from "../Search/SearchBarDisplay";
 import PlaceItem from "../Place/PlaceItem";
 import Map from "../Map/GoogleMap";
 import useMapSearchQuery from "../../hooks/useMapSearchQuery";
+import { MapContext } from "../../context/MapContext";
 
 interface SearchResultPageComonentProps {
   searchQuery: string;
@@ -20,13 +21,21 @@ interface SearchResultPageComonentProps {
 const SearchResultPageComponent = ({
   searchQuery,
 }: SearchResultPageComonentProps) => {
-  const selectedPlace = useRecoilValue(selectedPlaceAtom);
-
-  const [isMapView, setIsMapView] = useState(selectedPlace ? true : false);
-
   const navigate = useNavigate();
 
   const searchResult = useMapSearchQuery(searchQuery);
+  const [selectedPlace, setSelectedPlace] = useRecoilState(selectedPlaceAtom);
+  const [isMapView, setIsMapView] = useState(!!selectedPlace);
+
+  const { map } = useContext(MapContext);
+
+  const handleButtonClick = (place: Place) => {
+    setIsMapView(true);
+    map?.panTo({ lat: +place.y, lng: +place.x });
+    map?.setZoom(18);
+    setSelectedPlace(place.place_name);
+    navigate(`/search/result?query=${place.place_name}`);
+  };
 
   return (
     <ExplorePageLayout>
@@ -55,7 +64,12 @@ const SearchResultPageComponent = ({
       {!isMapView && (
         <PlaceList>
           {searchResult.data.map((place: Place) => (
-            <PlaceItem key={place.id} place={place} displayAmount={3} />
+            <PlaceItem
+              key={place.id}
+              place={place}
+              displayAmount={3}
+              onClick={() => handleButtonClick(place)}
+            />
           ))}
         </PlaceList>
       )}

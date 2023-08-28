@@ -1,35 +1,30 @@
 /** @jsxImportSource @emotion/react */
 
 import styled from "@emotion/styled";
-import B2 from "../UI/B2";
 import colors from "../../constants/colors";
-import B1 from "../UI/B1";
-import { Place } from "../../types/types";
-import PlaceImageList from "./PlaceImageList";
 import { useNavigateModal } from "../../hooks/useNavigateModal";
-import NavigateModal from "../Map/NavigateModal";
-import { useNavigate } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
-import { mapViewAtomState, selectedPlaceAtom } from "../../store/mapAtom";
+import { Place } from "../../types/types";
 
-const DUMMY_IMAGE = [
-  "https://source.unsplash.com/random",
-  "https://source.unsplash.com/random",
-  "https://source.unsplash.com/random",
-  "https://source.unsplash.com/random",
-  "https://source.unsplash.com/random",
-];
+import B2 from "../UI/B2";
+import B1 from "../UI/B1";
+import PlaceImageList from "./PlaceImageList";
+import NavigateModal from "../Map/NavigateModal";
+
+const DUMMY_IMAGE: string[] = [];
 
 interface PlaceItemProps extends React.HTMLAttributes<HTMLLIElement> {
   place: Place;
   displayAmount: 3 | 4;
+  onClick: () => void;
 }
 
-const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
+const PlaceItem = ({
+  place,
+  displayAmount,
+  onClick,
+  ...props
+}: PlaceItemProps) => {
   const navigateModal = useNavigateModal();
-  const navigate = useNavigate();
-  const setSelectedPlace = useSetRecoilState(selectedPlaceAtom);
-  const setMapCenter = useSetRecoilState(mapViewAtomState);
 
   return (
     <PlaceItemContainer {...props}>
@@ -38,19 +33,7 @@ const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
         onClose={navigateModal.onClose}
         url={place.place_url}
       />
-      <TitleContainer
-        onClick={() => {
-          setMapCenter({
-            center: {
-              lat: +place.y,
-              lng: +place.x,
-            },
-            zoom: 18,
-          });
-          setSelectedPlace(place.place_name);
-          navigate(`/search/result?query=${place.place_name}`);
-        }}
-      >
+      <TitleContainer onClick={onClick}>
         <TitleWrapper>
           <h4>{place.place_name}</h4>
           <B2 css={{ color: colors.lightGrey }}>{place.category_group_name}</B2>
@@ -96,6 +79,7 @@ const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
 `;
 
 const TitleWrapper = styled.div`

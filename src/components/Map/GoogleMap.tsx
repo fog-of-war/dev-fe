@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { GoogleMap, LoadScriptNext, Marker } from "@react-google-maps/api";
 import retroMapStyle from "../../data/retroMapStyle.json";
 import { bounds, options } from "../../data/mapData";
@@ -7,6 +7,7 @@ import { Place } from "../../types/types";
 import { useRecoilValue } from "recoil";
 import { selectedPlaceAtom } from "../../store/mapAtom";
 import { toast } from "react-hot-toast";
+import { MapContext } from "../../context/MapContext";
 
 import SeoulPolygon from "./SeoulPolygon";
 import OutsidePolygon from "./OutsidePolygon";
@@ -39,7 +40,8 @@ interface MapProps {
 const Map = ({ places }: MapProps) => {
   // 지도의 인스턴스를 참조하기 위한 ref 생성
   const mapRef = useRef<google.maps.Map | null>(null);
-  const [map, setMap] = useState<google.maps.Map | null>(null);
+  const { map, setMap } = useContext(MapContext);
+  // const [map, setMap] = useState<google.maps.Map | null>(null);
 
   const selectedPlace = useRecoilValue(selectedPlaceAtom);
 
