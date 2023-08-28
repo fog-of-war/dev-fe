@@ -4,3 +4,5 @@ export const LINK = {
   PROFILE_SETUP_PAGE: "/profile-setup",
   EXPLORE_PAGE: "/explore",
 };
+
+export const ALLOWED_LINK = [LINK.AUTH_PAGE];

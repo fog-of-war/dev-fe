@@ -2,7 +2,6 @@
 
 import { useRef, useState } from "react";
 import { toast } from "react-hot-toast";
-import { ProfileData } from "../../pages/auth/ProfileSetupPage";
 import { useNavigate } from "react-router-dom";
 
 import BottomLinedInput from "../UI/BottomLinedInput";
@@ -10,11 +9,12 @@ import Button from "../UI/Button";
 import SetupProfileForm from "./SetupProfileForm";
 import Title from "../Title";
 import SetupProfileHeader from "./SetupProfileHeader";
+import { ProfileSetupData } from "../../types/types";
 
 interface SetupNickNameProps {
   onNext: () => void;
-  profileData: ProfileData;
-  setProfileData: React.Dispatch<React.SetStateAction<ProfileData>>;
+  profileData: ProfileSetupData;
+  setProfileData: React.Dispatch<React.SetStateAction<ProfileSetupData>>;
 }
 
 const SetupNickName = ({
@@ -22,11 +22,11 @@ const SetupNickName = ({
   profileData,
   setProfileData,
 }: SetupNickNameProps) => {
-  const [nickName, setNickName] = useState(profileData.user_nickname);
-  const [isFocused, setIsFocused] = useState(false);
-
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+
+  const [nickName, setNickName] = useState(profileData.user_nickname);
+  const [isFocused, setIsFocused] = useState(false);
 
   const validateNickName = (nickName: string) => {
     if (nickName.trim().length === 0) {

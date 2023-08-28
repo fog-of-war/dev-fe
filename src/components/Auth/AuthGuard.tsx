@@ -1,7 +1,7 @@
 import { ReactNode, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthQuery from "../../hooks/useAuthQuery";
-import { LINK } from "../../constants/links";
+import { ALLOWED_LINK, LINK } from "../../constants/links";
 
 const UserGuard = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const UserGuard = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  if (currentUser === null && window.location.pathname !== LINK.AUTH_PAGE) {
+  if (currentUser === null && ALLOWED_LINK.includes(window.location.pathname)) {
     return null;
   }
 
