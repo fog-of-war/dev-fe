@@ -12,15 +12,6 @@ import { uploadPost } from "../../api/post";
 import uploadImage from "../../api/aws";
 import { usePostingContext } from "../../context/PostingDataContext";
 
-export interface PostingData {
-  place_name: string | null;
-  post_star_rating: number | null;
-  post_description: string | null;
-  post_image_url: string | undefined;
-  place_latitude: number | null;
-  place_longitude: number | null;
-}
-
 const UploadPage = () => {
   const navigate = useNavigate();
   const { setLoading, setLoadingMessage } = useLoading();

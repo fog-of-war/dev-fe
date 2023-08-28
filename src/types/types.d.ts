@@ -85,3 +85,7 @@ export interface PostingData {
   place_latitude: number | null;
   place_longitude: number | null;
 }
+export interface ProfileSetupData {
+  user_nickname: string;
+  user_image_url: string;
+}

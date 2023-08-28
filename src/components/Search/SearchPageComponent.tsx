@@ -4,22 +4,22 @@ import { useEffect, useRef, useState } from "react";
 import useSearchMap from "../../hooks/useSearchMap";
 import styled from "@emotion/styled";
 import { ExplorePageLayout } from "../../styles/styles";
-import { useLocation } from "react-router-dom";
 
-import SearchBar from "../../components/Search/SearchBar";
-import TagButtonList from "../../components/Map/TagButtonList";
-import RecentSearchesPanel from "../../components/Search/RecentSearchesPanel";
-import SearchResultPanel from "../../components/Search/SearchResultPanel";
+import SearchBar from "./SearchBar";
+import TagButtonList from "../Map/TagButtonList";
+import SearchResultPanel from "./SearchResultPanel";
+import RecentSearchesPanel from "../RecentSearch/RecentSearchesPanel";
 
-const SearchPage = () => {
+interface SearchPageComonentProps {
+  searchQuery: string;
+}
+
+const SearchPageComponent = ({ searchQuery }: SearchPageComonentProps) => {
   const [isTyping, setIsTyping] = useState(false);
   const { searchResult, inputValue, handleSearchMap, setInputValue } =
     useSearchMap();
 
   const searchRef = useRef<HTMLInputElement>(null);
-  const location = useLocation();
-  const query = new URLSearchParams(location.search);
-  const searchQuery = query.get("query") ?? "";
 
   // 검색창에 타이핑중이면 true, 아니면 false
   useEffect(() => {
@@ -58,7 +58,7 @@ const SearchPage = () => {
   );
 };
 
-export default SearchPage;
+export default SearchPageComponent;
 
 const SearchPannel = styled.div`
   position: absolute;

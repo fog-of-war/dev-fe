@@ -1,28 +1,25 @@
 /** @jsxImportSource @emotion/react */
 
 import { useState } from "react";
-import { useFunnel } from "../../hooks/useFunnel";
-import { setUpProfile } from "../../api/user";
-import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-
-import SetupNickName from "../../components/Auth/SetupNickName";
-import SetupProfileImage from "../../components/Auth/SetupProfileImage";
 import styled from "@emotion/styled";
+import { useFunnel } from "../../hooks/useFunnel";
+import { toast } from "react-hot-toast";
+import { LINK } from "../../constants/links";
+import { setUpProfile } from "../../api/user";
 
-export interface ProfileData {
-  user_nickname: string;
-  user_image_url: string;
-}
+import SetupNickName from "./SetupNickName";
+import SetupProfileImage from "./SetupProfileImage";
+import { DEFAULT_PROFILE_IMAGE_URL } from "../../constants/images";
+import { ProfileSetupData } from "../../types/types";
 
-const ProfileSetupPage = () => {
-  const [profileData, setProfileData] = useState<ProfileData>({
-    user_nickname: "",
-    user_image_url:
-      "https://fog-of-war.s3.ap-northeast-2.amazonaws.com/defaultProfile.png",
-  });
-
+const ProfileSetupComponent = () => {
   const navigate = useNavigate();
+
+  const [profileData, setProfileData] = useState<ProfileSetupData>({
+    user_nickname: "",
+    user_image_url: DEFAULT_PROFILE_IMAGE_URL,
+  });
 
   const [Funnel, Step, setStep] = useFunnel("닉네임");
 
@@ -30,7 +27,7 @@ const ProfileSetupPage = () => {
     try {
       await setUpProfile(profileData);
       toast.success("가입이 완료되었습니다.");
-      navigate("/");
+      navigate(LINK.HOME_PAGE);
     } catch (error: any) {
       toast.error(error.response.data.message);
     }
@@ -59,7 +56,7 @@ const ProfileSetupPage = () => {
   );
 };
 
-export default ProfileSetupPage;
+export default ProfileSetupComponent;
 
 const ProfileSetupLayout = styled.div`
   padding: 0 20px;

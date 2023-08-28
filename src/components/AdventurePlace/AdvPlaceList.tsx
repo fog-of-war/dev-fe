@@ -1,13 +1,15 @@
 /** @jsxImportSource @emotion/react */
 
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AdvPlaceTitle from "./AdvPlaceTitle";
 import AdvPlaceImage from "./AdvPlaceImage";
 import { getMyPosts } from "../../api/post";
-import { PostingData } from "../../pages/posting/UploadPage";
+import { PostingData } from "../../types/types";
 
 const AdvPlaceList = () => {
   const [userPosts, setUserPosts] = useState<PostingData[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -22,6 +24,10 @@ const AdvPlaceList = () => {
     fetchPosts();
   }, []);
 
+  const handlePlaceClick = (place_id: number | null) => {
+    if (place_id) navigate(`/reviewList/${place_id}`);
+  };
+
   return (
     <>
       <div
@@ -35,12 +41,14 @@ const AdvPlaceList = () => {
         }}
       >
         <AdvPlaceTitle />
-        {userPosts.map((place, index) => (
-          <AdvPlaceImage
-            key={index}
-            post_image_url={place.post_image_url}
-            place_name={place.place_name}
-          />
+        {userPosts.map((place, id) => (
+          <div key={id} onClick={() => handlePlaceClick(place.post_place_id)}>
+            <AdvPlaceImage
+              key={id}
+              post_image_url={place.post_image_url}
+              place_name={place.place_name}
+            />
+          </div>
         ))}
       </div>
     </>

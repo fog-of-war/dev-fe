@@ -1,21 +1,23 @@
 /** @jsxImportSource @emotion/react */
 
 import { ChangeEvent, useRef, useState } from "react";
-import { ProfileData } from "../../pages/auth/ProfileSetupPage";
 import uploadImage from "../../api/aws";
 import styled from "@emotion/styled";
 import colors from "../../constants/colors";
+import { DEFAULT_PROFILE_IMAGE_URL } from "../../constants/images";
+import { toast } from "react-hot-toast";
 
 import SetupProfileForm from "./SetupProfileForm";
 import Title from "../Title";
 import Button from "../UI/Button";
 import SetupProfileHeader from "./SetupProfileHeader";
+import { ProfileSetupData } from "../../types/types";
 
 interface SetupProfileImageProps {
   onNext: () => void;
   onPrev: () => void;
-  profileData: ProfileData;
-  setProfileData: React.Dispatch<React.SetStateAction<ProfileData>>;
+  profileData: ProfileSetupData;
+  setProfileData: React.Dispatch<React.SetStateAction<ProfileSetupData>>;
 }
 
 const SetupProfileImage = ({
@@ -24,11 +26,11 @@ const SetupProfileImage = ({
   profileData,
   setProfileData,
 }: SetupProfileImageProps) => {
-  const [profileImage, setProfileImage] = useState(
-    profileData.user_image_url || "/images/default_profile_image.png"
-  );
-
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [profileImage, setProfileImage] = useState(
+    profileData.user_image_url || DEFAULT_PROFILE_IMAGE_URL
+  );
 
   const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -39,7 +41,7 @@ const SetupProfileImage = ({
         setProfileImage(imageUrl);
         setProfileData({ ...profileData, user_image_url: imageUrl });
       } catch (error: any) {
-        console.error("Image upload failed:", error);
+        toast.error(error.response.data.message);
       }
     }
   };

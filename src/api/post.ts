@@ -1,6 +1,12 @@
 import { toast } from "react-hot-toast";
-import { PostingData } from "../pages/posting/UploadPage";
+import { PostingData } from "../types/types";
 import { axiosBase } from "./axios";
+
+export const getAllPosts = async (): Promise<PostingData[]> => {
+  const response = await axiosBase.get<PostingData[]>("/v1/posts");
+
+  return response.data;
+};
 
 export const getMyPosts = async (): Promise<PostingData[]> => {
   const response = await axiosBase.get<PostingData[]>("/v1/posts/me");
@@ -15,13 +21,15 @@ export const uploadPost = async (data: PostingData): Promise<PostingData> => {
 };
 
 // export const updatePost = async (post: PostingData): Promise<PostingData> => {
-
 //   const data = {
-//   post_star_rating: post.post_star_rating,
-//   post_description: post.post_description,
-//   }
+//     post_star_rating: post.post_star_rating,
+//     post_description: post.post_description,
+//   };
 
-//   const response = await axiosBase.patch<PostingData>(`/v1/posts/${post.id}`, data);
+//   const response = await axiosBase.patch<PostingData>(
+//     `/v1/posts/${post.post_id}`,
+//     data
+//   );
 //   const updatedPost = response.data;
 
 //   return updatedPost;
