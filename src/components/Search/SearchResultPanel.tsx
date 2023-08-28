@@ -1,5 +1,5 @@
 import { Place } from "../../types/types";
-import { SearchList } from "./RecentSearchesPanel";
+import { SearchList } from "../RecentSearch/RecentSearchesPanel";
 import SearchItem from "./SearchItem";
 
 const SearchResultPanel = ({ searchResult }: { searchResult: Place[] }) => {

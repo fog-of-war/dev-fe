@@ -71,3 +71,8 @@ export interface UserData {
   user_visited_places: string[];
   user_authored_posts: string[];
 }
+
+export interface ProfileSetupData {
+  user_nickname: string;
+  user_image_url: string;
+}
