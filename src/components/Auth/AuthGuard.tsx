@@ -1,20 +1,22 @@
 import { ReactNode, useEffect } from "react";
-import { getCurrentUser } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
+import useAuthQuery from "../../hooks/useAuthQuery";
+import { LINK } from "../../constants/links";
 
 const UserGuard = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate();
 
+  const currentUser = useAuthQuery().data;
+
   useEffect(() => {
-    const checkUser = async () => {
-      const currentUser = await getCurrentUser();
-      console.log(currentUser);
-      if (!currentUser) {
-        navigate("/auth");
-      }
-    };
-    checkUser();
+    if (currentUser === null) {
+      navigate(LINK.AUTH_PAGE);
+    }
   }, []);
+
+  if (currentUser === null && window.location.pathname !== LINK.AUTH_PAGE) {
+    return null;
+  }
 
   return <>{children}</>;
 };

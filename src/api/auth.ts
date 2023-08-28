@@ -9,15 +9,16 @@ export const oAuthLogin = async (code: string, selectedOAuth: string) => {
 };
 
 export const getCurrentUser = async () => {
-  const accessToken = JSON.parse(
-    localStorage.getItem("accessToken") ?? "{}"
-  ).access_token;
+  const accessTokenJSON = localStorage.getItem("accessToken");
+  const accessToken: string =
+    accessTokenJSON && JSON.parse(accessTokenJSON).access_token;
+
   if (!accessToken) return null;
   try {
     const response = await axiosBase.get(`v1/users/me`);
     return response.data;
   } catch (error: any) {
-    if (error.response.status === 401) {
+    if (error.response?.status === 401) {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
       toast.error("로그인이 만료되었습니다. 다시 로그인해주세요.");
