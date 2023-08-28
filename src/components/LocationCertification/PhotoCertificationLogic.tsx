@@ -1,4 +1,5 @@
 import exifr from "exifr";
+import { toast } from "react-hot-toast";
 
 interface PhotoData {
   latitude?: number;
@@ -13,8 +14,8 @@ interface CertificationResults {
 
 const PhotoCertificationLogic = async (
   file: File,
-  x: number,
-  y: number
+  place_latitude: number,
+  place_longitude: number
 ): Promise<{
   photoData: PhotoData;
   certificationResults: CertificationResults;
@@ -29,7 +30,7 @@ const PhotoCertificationLogic = async (
     const exifData = await readExifData(file);
 
     if (!exifData) {
-      console.log("사진에 EXIF data를 찾을 수 없음");
+      toast.error("사진의 위치정보를 찾을 수 없습니다.");
       return { photoData, certificationResults };
     }
     const longitude = exifData?.longitude;
@@ -43,23 +44,23 @@ const PhotoCertificationLogic = async (
       photoData.latitude = latitude;
       photoData.date = date;
 
-      const placeLongitude = x; // 장소의 경도
-      const placeLatitude = y; // 장소의 위도
-      const placeDate = new Date();
+      const photoLongitude = longitude; // 사진의 경도
+      const photoLatitude = latitude; // 사진의 위도
+      const photoDate = new Date(dateStr);
 
       // 사진을 찍은 자정 시간을 계산
-      const photoMidnight = new Date(date);
+      const photoMidnight = new Date(photoDate);
       photoMidnight.setHours(0, 0, 0, 0);
 
       const distance = calculateDistance(
-        longitude,
-        latitude,
-        placeLongitude,
-        placeLatitude
+        photoLongitude,
+        photoLatitude,
+        place_longitude, // 수정된 부분: 장소의 경도
+        place_latitude // 수정된 부분: 장소의 위도
       );
 
       // 자정까지의 시간 차이를 계산
-      const timeDiff = Math.abs(photoMidnight.getTime() - placeDate.getTime());
+      const timeDiff = Math.abs(photoMidnight.getTime() - photoDate.getTime());
 
       // 100m 이내의 거리이면 통과, 그렇지 않으면 미통과
       const locationResult = distance > 100 ? "미통과" : "통과";
@@ -71,7 +72,7 @@ const PhotoCertificationLogic = async (
       certificationResults.date = dateResult;
     }
   } catch (error) {
-    console.error("Error processing photo:", error);
+    console.error("사진 처리 중 오류:", error);
   }
 
   return { photoData, certificationResults };
