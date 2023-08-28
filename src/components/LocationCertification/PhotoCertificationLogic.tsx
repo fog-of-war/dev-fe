@@ -60,7 +60,7 @@ const PhotoCertificationLogic = async (
       );
 
       // 자정까지의 시간 차이를 계산
-      const timeDiff = Math.abs(photoMidnight.getTime() - photoDate.getTime());
+      const timeDiff = Math.abs(photoMidnight.getTime() - new Date().getTime());
 
       // 100m 이내의 거리이면 통과, 그렇지 않으면 미통과
       const locationResult = distance > 100 ? "미통과" : "통과";
