@@ -1,9 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { useState, useRef, useEffect } from "react";
 import { GoogleMap, LoadScriptNext, Marker } from "@react-google-maps/api";
-
 import retroMapStyle from "../../data/retroMapStyle.json";
 import { bounds, options } from "../../data/mapData";
+import { Place } from "../../types/types";
+import { useRecoilValue } from "recoil";
+import { mapViewAtomState, selectedPlaceAtom } from "../../store/mapAtom";
+import { toast } from "react-hot-toast";
 
 import SeoulPolygon from "./SeoulPolygon";
 import OutsidePolygon from "./OutsidePolygon";
@@ -12,10 +15,6 @@ import useCurrentLocation from "../../hooks/map/useCurrentLocation";
 import CurrentLocationButton from "./CurrentLocationButton";
 import usePolygon from "../../hooks/map/usePolygon";
 import useGoogleMap from "../../hooks/map/useGoogleMap";
-import { Place } from "../../types/types";
-import { useRecoilValue } from "recoil";
-import { selectedPlaceAtom } from "../../store/mapAtom";
-import { toast } from "react-hot-toast";
 
 // Marker 데이터 인터페이스 정의
 interface MarkerData {
@@ -40,6 +39,9 @@ interface MapProps {
 const Map = ({ places }: MapProps) => {
   // 지도의 인스턴스를 참조하기 위한 ref 생성
   const mapRef = useRef<google.maps.Map | null>(null);
+  const [map, setMap] = useState<google.maps.Map | null>(null);
+
+  const mapView = useRecoilValue(mapViewAtomState);
 
   const selectedPlace = useRecoilValue(selectedPlaceAtom);
 
@@ -53,15 +55,14 @@ const Map = ({ places }: MapProps) => {
   const currentLocationIconUrl = "/images/map/humanIcon.png";
 
   const {
-    view,
     handleCurrentLocationClick,
     handlePolygonClick,
     handleZoomChange,
     handleMapChange,
     handleMarkerClick,
-  } = useGoogleMap(mapRef);
+  } = useGoogleMap(mapRef, map);
   const { currentLocation, isInSeoul } = useCurrentLocation();
-  const polygons = usePolygon(view.zoom);
+  const polygons = usePolygon(mapView.zoom);
 
   // Map 컴포넌트가 마운트되거나 places props가 변경되면 마커 데이터 업데이트
   useEffect(() => {
@@ -110,8 +111,8 @@ const Map = ({ places }: MapProps) => {
       >
         <GoogleMap
           mapContainerStyle={containerStyle}
-          center={view.center}
-          zoom={view.zoom}
+          center={mapView.center}
+          zoom={mapView.zoom}
           options={{
             minZoom: 10.3,
             restriction: {
@@ -125,6 +126,7 @@ const Map = ({ places }: MapProps) => {
           }}
           onLoad={(map) => {
             mapRef.current = map;
+            setMap(map);
           }}
           onZoomChanged={handleZoomChange}
           onCenterChanged={handleMapChange}
@@ -132,7 +134,7 @@ const Map = ({ places }: MapProps) => {
           {/* 서울 주변 폴리곤 */}
           <OutsidePolygon />
           {/* 마커 렌더링 */}
-          {view.zoom >= 14 &&
+          {mapView.zoom >= 14 &&
             markers.map((marker, index) => (
               <CustomMarker
                 key={index}
@@ -153,7 +155,7 @@ const Map = ({ places }: MapProps) => {
                 }}
               />
             ))}
-          {view.zoom <= 14 &&
+          {mapView.zoom <= 14 &&
             polygons.map((polygon, index) => (
               <SeoulPolygon
                 key={index}
@@ -172,7 +174,7 @@ const Map = ({ places }: MapProps) => {
           )}
 
           {/* 현재 위치 마커 */}
-          {view.zoom >= 14 && currentLocation && (
+          {mapView.zoom >= 14 && currentLocation && (
             <Marker
               position={currentLocation}
               icon={{

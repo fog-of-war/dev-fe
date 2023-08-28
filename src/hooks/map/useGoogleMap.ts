@@ -4,18 +4,18 @@ import { mapViewAtomState } from "../../store/mapAtom";
 import { toast } from "react-hot-toast";
 import { useRecoilState } from "recoil";
 
-const useGoogleMap = (mapRef: MutableRefObject<google.maps.Map | null>) => {
+const useGoogleMap = (
+  mapRef: MutableRefObject<google.maps.Map | null>,
+  map: google.maps.Map | null
+) => {
   const [mapViewState, setMapViewState] = useRecoilState(mapViewAtomState);
-  const [view, setView] = useState(
-    mapViewState ?? { center: defaultCenter, zoom: 10 }
-  );
 
   const handleCurrentLocationClick = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          setView({ center: { lat: latitude, lng: longitude }, zoom: 16 });
+          map?.panTo({ lat: latitude, lng: longitude });
         },
         (error) => {
           console.error("현재 위치를 가져오는데 에러가 발생했습니다:", error);
@@ -41,7 +41,21 @@ const useGoogleMap = (mapRef: MutableRefObject<google.maps.Map | null>) => {
   // 폴리곤 클릭시 폴리곤 중앙으로 이동시키는 함수
   const handlePolygonClick = (polygonPath: { lat: number; lng: number }[]) => {
     const center = getCentroid(polygonPath);
-    setView({ center, zoom: 16 });
+    const zoomSteps = [12, 14, 16]; // 확대할 줌 레벨
+    const delay = 300; // 각 단계별 지연 시간 (밀리초)
+
+    let currentIndex = 0;
+
+    const zoomStep = () => {
+      if (currentIndex < zoomSteps.length) {
+        map?.setZoom(zoomSteps[currentIndex]);
+        map?.panTo(center);
+        currentIndex++;
+        setTimeout(zoomStep, delay);
+      }
+    };
+
+    zoomStep(); // 첫 번째 단계 시작
   };
 
   let debounceTimer: NodeJS.Timeout;
@@ -59,14 +73,12 @@ const useGoogleMap = (mapRef: MutableRefObject<google.maps.Map | null>) => {
       // 새로운 타이머 설정
       debounceTimer = setTimeout(() => {
         setMapViewState({ center: { lat, lng }, zoom });
-      }, 500); // 디바운스 딜레이 (예: 500 밀리초)
+      }, 300); // 디바운스 딜레이 (예: 500 밀리초)
     }
   };
 
   const handleZoomChange = () => {
     const zoom = mapRef.current?.getZoom() ?? mapViewState.zoom ?? 10.3;
-
-    setView({ ...view, zoom });
 
     // 기존 타이머를 취소하고 새로운 타이머를 설정
     clearTimeout(debounceTimer);
@@ -74,7 +86,7 @@ const useGoogleMap = (mapRef: MutableRefObject<google.maps.Map | null>) => {
     // 새로운 타이머 설정
     debounceTimer = setTimeout(() => {
       setMapViewState({ ...mapViewState, zoom });
-    }, 500); // 디바운스 딜레이 (예: 500 밀리초)
+    }, 300); // 디바운스 딜레이 (예: 500 밀리초)
   };
 
   // 클릭한 마커의 위치로 지도 이동
@@ -85,7 +97,6 @@ const useGoogleMap = (mapRef: MutableRefObject<google.maps.Map | null>) => {
   };
 
   return {
-    view,
     handleCurrentLocationClick,
     handlePolygonClick,
     handleZoomChange,

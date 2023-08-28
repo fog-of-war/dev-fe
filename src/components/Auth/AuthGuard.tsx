@@ -21,6 +21,10 @@ const UserGuard = ({ children }: { children: ReactNode }) => {
     return null;
   }
 
+  if (currentUser.isError) {
+    return <div>에러삐비빕</div>;
+  }
+
   return <>{children}</>;
 };
 
