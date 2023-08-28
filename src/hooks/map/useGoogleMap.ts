@@ -9,6 +9,8 @@ const useGoogleMap = (
   map: google.maps.Map | null
 ) => {
   const [mapViewState, setMapViewState] = useRecoilState(mapViewAtomState);
+  const [center] = useState(mapViewState.center);
+  const [zoom, setZoom] = useState(mapViewState.zoom);
 
   const handleCurrentLocationClick = () => {
     if (navigator.geolocation) {
@@ -49,6 +51,7 @@ const useGoogleMap = (
     const zoomStep = () => {
       if (currentIndex < zoomSteps.length) {
         map?.setZoom(zoomSteps[currentIndex]);
+        setZoom(zoomSteps[currentIndex]);
         map?.panTo(center);
         currentIndex++;
         setTimeout(zoomStep, delay);
@@ -79,6 +82,7 @@ const useGoogleMap = (
 
   const handleZoomChange = () => {
     const zoom = mapRef.current?.getZoom() ?? mapViewState.zoom ?? 10.3;
+    setZoom(zoom);
 
     // 기존 타이머를 취소하고 새로운 타이머를 설정
     clearTimeout(debounceTimer);
@@ -97,6 +101,8 @@ const useGoogleMap = (
   };
 
   return {
+    center,
+    zoom,
     handleCurrentLocationClick,
     handlePolygonClick,
     handleZoomChange,

@@ -5,7 +5,7 @@ import retroMapStyle from "../../data/retroMapStyle.json";
 import { bounds, options } from "../../data/mapData";
 import { Place } from "../../types/types";
 import { useRecoilValue } from "recoil";
-import { mapViewAtomState, selectedPlaceAtom } from "../../store/mapAtom";
+import { selectedPlaceAtom } from "../../store/mapAtom";
 import { toast } from "react-hot-toast";
 
 import SeoulPolygon from "./SeoulPolygon";
@@ -41,8 +41,6 @@ const Map = ({ places }: MapProps) => {
   const mapRef = useRef<google.maps.Map | null>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
 
-  const mapView = useRecoilValue(mapViewAtomState);
-
   const selectedPlace = useRecoilValue(selectedPlaceAtom);
 
   // 마커 데이터 상태 관리
@@ -55,6 +53,8 @@ const Map = ({ places }: MapProps) => {
   const currentLocationIconUrl = "/images/map/humanIcon.png";
 
   const {
+    center,
+    zoom,
     handleCurrentLocationClick,
     handlePolygonClick,
     handleZoomChange,
@@ -62,7 +62,7 @@ const Map = ({ places }: MapProps) => {
     handleMarkerClick,
   } = useGoogleMap(mapRef, map);
   const { currentLocation, isInSeoul } = useCurrentLocation();
-  const polygons = usePolygon(mapView.zoom);
+  const polygons = usePolygon(zoom);
 
   // Map 컴포넌트가 마운트되거나 places props가 변경되면 마커 데이터 업데이트
   useEffect(() => {
@@ -111,8 +111,8 @@ const Map = ({ places }: MapProps) => {
       >
         <GoogleMap
           mapContainerStyle={containerStyle}
-          center={mapView.center}
-          zoom={mapView.zoom}
+          center={center}
+          zoom={zoom}
           options={{
             minZoom: 10.3,
             restriction: {
@@ -134,7 +134,7 @@ const Map = ({ places }: MapProps) => {
           {/* 서울 주변 폴리곤 */}
           <OutsidePolygon />
           {/* 마커 렌더링 */}
-          {mapView.zoom >= 14 &&
+          {zoom >= 14 &&
             markers.map((marker, index) => (
               <CustomMarker
                 key={index}
@@ -155,7 +155,7 @@ const Map = ({ places }: MapProps) => {
                 }}
               />
             ))}
-          {mapView.zoom <= 14 &&
+          {zoom <= 14 &&
             polygons.map((polygon, index) => (
               <SeoulPolygon
                 key={index}
@@ -174,7 +174,7 @@ const Map = ({ places }: MapProps) => {
           )}
 
           {/* 현재 위치 마커 */}
-          {mapView.zoom >= 14 && currentLocation && (
+          {zoom >= 14 && currentLocation && (
             <Marker
               position={currentLocation}
               icon={{
