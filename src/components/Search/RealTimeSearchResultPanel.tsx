@@ -1,12 +1,13 @@
 import { Place } from "../../types/types";
 import { SearchList } from "../RecentSearch/RecentSearchesPanel";
-import SearchItem from "./SearchItem";
+
+import RealTimeSearchItem from "./RealTimeSearchItem";
 
 const SearchResultPanel = ({ searchResult }: { searchResult: Place[] }) => {
   return (
     <SearchList>
-      {searchResult.map((search: Place) => (
-        <SearchItem key={search.id} search={search} />
+      {searchResult.map((place: Place) => (
+        <RealTimeSearchItem key={place.id} place={place} />
       ))}
     </SearchList>
   );

@@ -3,16 +3,15 @@
 import { useNavigate } from "react-router-dom";
 import { ExplorePageLayout } from "../../styles/styles";
 import styled from "@emotion/styled";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Place } from "../../types/types";
-import { useRecoilState } from "recoil";
-import { selectedPlaceAtom } from "../../store/mapAtom";
 
 import SearchBarDisplay from "../Search/SearchBarDisplay";
 import PlaceItem from "../Place/PlaceItem";
 import Map from "../Map/GoogleMap";
 import useMapSearchQuery from "../../hooks/useMapSearchQuery";
 import { MapContext } from "../../context/MapContext";
+import { LINK } from "../../constants/links";
 
 interface SearchResultPageComonentProps {
   searchQuery: string;
@@ -24,18 +23,7 @@ const SearchResultPageComponent = ({
   const navigate = useNavigate();
 
   const searchResult = useMapSearchQuery(searchQuery);
-  const [selectedPlace, setSelectedPlace] = useRecoilState(selectedPlaceAtom);
-  const [isMapView, setIsMapView] = useState(!!selectedPlace);
-
-  const { map } = useContext(MapContext);
-
-  const handleButtonClick = (place: Place) => {
-    setIsMapView(true);
-    map?.panTo({ lat: +place.y, lng: +place.x });
-    map?.setZoom(18);
-    setSelectedPlace(place.place_name);
-    navigate(`/search/result?query=${place.place_name}`);
-  };
+  const { isMapView, setIsMapView } = useContext(MapContext);
 
   return (
     <ExplorePageLayout>
@@ -55,7 +43,7 @@ const SearchResultPageComponent = ({
         )}
 
         <SearchBarDisplay value={searchQuery} isMap={false} />
-        <IconWrapper onClick={() => navigate("/explore")}>
+        <IconWrapper onClick={() => navigate(LINK.EXPLORE_PAGE)}>
           <img src="/images/search/xIconBold.png" alt="map_icon" height={22} />
         </IconWrapper>
       </SearchBarContainer>
@@ -64,12 +52,7 @@ const SearchResultPageComponent = ({
       {!isMapView && (
         <PlaceList>
           {searchResult.data.map((place: Place) => (
-            <PlaceItem
-              key={place.id}
-              place={place}
-              displayAmount={3}
-              onClick={() => handleButtonClick(place)}
-            />
+            <PlaceItem key={place.id} place={place} displayAmount={3} />
           ))}
         </PlaceList>
       )}

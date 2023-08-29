@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { SetStateAction, useEffect, useState } from "react";
+import { SetStateAction, useContext, useEffect, useState } from "react";
 import debounce from "lodash/debounce";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { searchState } from "../store/searchAtom";
@@ -8,7 +8,7 @@ import { Place, Search } from "../types/types";
 import { useNavigate } from "react-router-dom";
 import { getPlacesBySearchQuery } from "../api/post";
 import { currentLocationAtom } from "../store/currentLocationAtom";
-import { selectedPlaceAtom } from "../store/mapAtom";
+import { MapContext } from "../context/MapContext";
 
 const useSearchMap = () => {
   const [inputValue, setInputValue] = useState("");
@@ -16,7 +16,7 @@ const useSearchMap = () => {
   const [searchResult, setSearchResult] = useState<Place[]>([]);
   const currentLocation = useRecoilValue(currentLocationAtom);
   const setRecentSearches = useSetRecoilState(searchState);
-  const setSelectedPlace = useSetRecoilState(selectedPlaceAtom);
+  const { setSelectedPlace, setIsMapView } = useContext(MapContext);
   const navigate = useNavigate();
 
   // 실시간 인풋 디바운싱하여 서치쿼리로 넘기는 함수
@@ -72,6 +72,7 @@ const useSearchMap = () => {
       };
       updateRecentSearches(newRecentSearch);
       setSelectedPlace(null);
+      setIsMapView(false);
       navigate(`/search/result?query=${inputValue}`);
       // 검색 로직
     }

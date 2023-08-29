@@ -7,7 +7,7 @@ import { ExplorePageLayout } from "../../styles/styles";
 
 import SearchBar from "./SearchBar";
 import TagButtonList from "../Map/TagButtonList";
-import SearchResultPanel from "./SearchResultPanel";
+import SearchResultPanel from "./RealTimeSearchResultPanel";
 import RecentSearchesPanel from "../RecentSearch/RecentSearchesPanel";
 
 interface SearchPageComonentProps {
