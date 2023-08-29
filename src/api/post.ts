@@ -1,39 +1,39 @@
 import { toast } from "react-hot-toast";
-import { PostingData } from "../types/types";
+import { PostUploadData, PlacePost, PlaceData, MyPosts } from "../types/types";
 import { axiosBase } from "./axios";
 
-export const getAllPosts = async (): Promise<PostingData[]> => {
-  const response = await axiosBase.get<PostingData[]>("/v1/posts");
-
+export const getAllPostsByPlaceId = async (id: number): Promise<PlaceData> => {
+  const response = await axiosBase.get<PlaceData>(`/v1/places/${id}/posts`);
   return response.data;
 };
 
-export const getMyPosts = async (): Promise<PostingData[]> => {
-  const response = await axiosBase.get<PostingData[]>("/v1/posts/me");
+export const getMyPosts = async (): Promise<MyPosts[]> => {
+  const response = await axiosBase.get<MyPosts[]>("/v1/posts/me");
   return response.data;
 };
 
-export const uploadPost = async (data: PostingData): Promise<PostingData> => {
-  const response = await axiosBase.post<PostingData>("v1/posts", data);
+export const uploadPost = async (
+  data: PostUploadData
+): Promise<PostUploadData> => {
+  const response = await axiosBase.post<PostUploadData>("v1/posts", data);
   const newPosting = response.data;
 
   return newPosting;
 };
 
-// export const updatePost = async (post: PostingData): Promise<PostingData> => {
-//   const data = {
-//     post_star_rating: post.post_star_rating,
-//     post_description: post.post_description,
-//   };
+export const updatePost = async (post: PlacePost): Promise<PlacePost> => {
+  const data = {
+    post_star_rating: post.post_star_rating,
+    post_description: post.post_description,
+  };
 
-//   const response = await axiosBase.patch<PostingData>(
-//     `/v1/posts/${post.post_id}`,
-//     data
-//   );
-//   const updatedPost = response.data;
-
-//   return updatedPost;
-// };
+  const response = await axiosBase.patch<PlacePost>(
+    `/v1/posts/${post.post_id}`,
+    data
+  );
+  const updatedPost = response.data;
+  return updatedPost;
+};
 
 export const deletePost = async (id: number): Promise<void> => {
   await axiosBase.delete(`/v1/posts/${id}`);
