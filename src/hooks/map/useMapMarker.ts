@@ -37,14 +37,14 @@ const useMapMarker = (
       // places 데이터를 기반으로 markers 배열 생성
       const newMarkers = places.map((place) => ({
         position: {
-          lat: +place.y,
           lng: +place.x,
+          lat: +place.y,
         },
         placeName: place.place_name,
         roadAddress: place.road_address_name,
         category: place.category_name,
-        x: +place.y,
-        y: +place.x,
+        x: +place.x,
+        y: +place.y,
       }));
       setMarkers(newMarkers);
     }
