@@ -9,6 +9,7 @@ import ProgressBar from "../ProgressBar";
 import MainCardMap from "../Map/MainCardMap";
 import FogEffect from "./FogEffect";
 import MainBadgeList from "./MainBadgeList";
+import { getMyRank } from "../../api/rank";
 
 export interface UserData {
   user_nickname: string;
@@ -50,11 +51,24 @@ const MainCard = () => {
 
   const [userAuthoredPosts, setUserAuthoredPosts] = useState<string[]>([]);
 
+  const [rankData, setRankData] = useState({
+    user_points: 0,
+    rank: 0,
+  });
+
+  // 유저 데이터 불러오기
   useEffect(() => {
     getUserData().then((userData: UserData) => {
       setUserNickname(userData.user_nickname);
       setUserImageUrl(userData.user_image_url);
       setUserAuthoredPosts(userData.user_authored_posts);
+    });
+
+    getMyRank().then((data) => {
+      setRankData({
+        user_points: data.user_points,
+        rank: data.rank,
+      });
     });
 
     setIsLoaded(true);
@@ -145,7 +159,7 @@ const MainCard = () => {
             css={{ width: "24px", height: "24px" }}
           />
         </div>
-        랭킹 5400위
+        랭킹 {rankData.rank}위
       </div>
       <div
         style={{
@@ -157,7 +171,7 @@ const MainCard = () => {
         onClick={() => {
           setIsLoaded(false);
           setTimeout(() => {
-            navigate("/map");
+            navigate("/explore");
           }, 500);
         }}
       >
