@@ -40,7 +40,6 @@ const DUMMY_DATA = [
 const TagButtonList = () => {
   const navigate = useNavigate();
   const { setIsMapView, setSelectedPlace } = useContext(MapContext);
-  const updateRecentSearches = useSetRecoilState(searchState);
 
   return (
     <div
@@ -69,12 +68,6 @@ const TagButtonList = () => {
             key={tag.id}
             icon={tag.icon}
             onClick={() => {
-              const newRecentSearch = {
-                id: Date.now(),
-                search: tag.name,
-                type: "keword",
-              };
-              updateRecentSearches(newRecentSearch);
               setSelectedPlace(null);
               setIsMapView(false);
               navigate(`/search/result?query=${tag.name}`);
