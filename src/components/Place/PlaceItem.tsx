@@ -4,6 +4,8 @@ import styled from "@emotion/styled";
 import colors from "../../constants/colors";
 import { useNavigateModal } from "../../hooks/useNavigateModal";
 import { Place } from "../../types/types";
+import { useContext } from "react";
+import { MapContext } from "../../context/MapContext";
 
 import B2 from "../UI/B2";
 import B1 from "../UI/B1";
@@ -15,16 +17,11 @@ const DUMMY_IMAGE: string[] = [];
 interface PlaceItemProps extends React.HTMLAttributes<HTMLLIElement> {
   place: Place;
   displayAmount: 3 | 4;
-  onClick: () => void;
 }
 
-const PlaceItem = ({
-  place,
-  displayAmount,
-  onClick,
-  ...props
-}: PlaceItemProps) => {
+const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
   const navigateModal = useNavigateModal();
+  const { handleMoveSelectedPlace } = useContext(MapContext);
 
   return (
     <PlaceItemContainer {...props}>
@@ -33,7 +30,11 @@ const PlaceItem = ({
         onClose={navigateModal.onClose}
         url={place.place_url}
       />
-      <TitleContainer onClick={onClick}>
+      <TitleContainer
+        onClick={() => {
+          handleMoveSelectedPlace(place);
+        }}
+      >
         <TitleWrapper>
           <h4>{place.place_name}</h4>
           <B2 css={{ color: colors.lightGrey }}>{place.category_group_name}</B2>

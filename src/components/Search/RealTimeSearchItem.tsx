@@ -2,50 +2,37 @@
 
 import styled from "@emotion/styled";
 import colors from "../../constants/colors";
-import { useNavigate } from "react-router-dom";
 import { Place } from "../../types/types";
-import { useSetRecoilState } from "recoil";
-import { mapViewAtomState, selectedPlaceAtom } from "../../store/mapAtom";
+import { useContext } from "react";
+import { MapContext } from "../../context/MapContext";
 
 import B1 from "../UI/B1";
 import B2 from "../UI/B2";
 
 interface SearchItemProps {
-  search: Place;
+  place: Place;
 }
 
-const SearchItem = ({ search }: SearchItemProps) => {
-  const navigate = useNavigate();
-
-  const setSelectedPlace = useSetRecoilState(selectedPlaceAtom);
-
-  const setMapCenter = useSetRecoilState(mapViewAtomState);
+const RealTimeSearchItem = ({ place }: SearchItemProps) => {
+  const { handleMoveSelectedPlace } = useContext(MapContext);
 
   return (
     <SearchItemContainer>
       <SearchContentWrapper
         onClick={() => {
-          setMapCenter({
-            center: {
-              lat: +search.y,
-              lng: +search.x,
-            },
-            zoom: 18,
-          });
-          setSelectedPlace(search.place_name);
-          navigate(`/search/result?query=${search.place_name}`);
+          handleMoveSelectedPlace(place);
         }}
       >
         <DistanceWrapper>
           <img src={"/images/search/locationIcon.png"} alt="icon" />
           <span css={{ fontWeight: "400", fontSize: 12 }}>
-            {(+search.distance / 1000).toFixed(1)}km
+            {(+place.distance / 1000).toFixed(1)}km
           </span>
         </DistanceWrapper>
         <PlaceDataWrapper>
-          <B1 css={{ fontWeight: "500", flexGrow: 1 }}>{search.place_name}</B1>
+          <B1 css={{ fontWeight: "500", flexGrow: 1 }}>{place.place_name}</B1>
           <B2 css={{ fontWeight: "400", color: colors.lightGrey }}>
-            {search.address_name}
+            {place.address_name}
           </B2>
         </PlaceDataWrapper>
       </SearchContentWrapper>
@@ -53,7 +40,7 @@ const SearchItem = ({ search }: SearchItemProps) => {
   );
 };
 
-export default SearchItem;
+export default RealTimeSearchItem;
 
 export const SearchItemContainer = styled.li`
   display: flex;

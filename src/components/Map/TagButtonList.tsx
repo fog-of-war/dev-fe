@@ -2,6 +2,10 @@
 
 import { useNavigate } from "react-router-dom";
 import { MapTag } from "../../types/types";
+import { useContext } from "react";
+import { MapContext } from "../../context/MapContext";
+import { useSetRecoilState } from "recoil";
+import { searchState } from "../../store/searchAtom";
 
 import TagButton from "./TagButton";
 
@@ -35,6 +39,8 @@ const DUMMY_DATA = [
 
 const TagButtonList = () => {
   const navigate = useNavigate();
+  const { setIsMapView, setSelectedPlace } = useContext(MapContext);
+  const updateRecentSearches = useSetRecoilState(searchState);
 
   return (
     <div
@@ -62,7 +68,17 @@ const TagButtonList = () => {
           <TagButton
             key={tag.id}
             icon={tag.icon}
-            onClick={() => navigate(`/search/result?query=${tag.name}`)}
+            onClick={() => {
+              const newRecentSearch = {
+                id: Date.now(),
+                search: tag.name,
+                type: "keword",
+              };
+              updateRecentSearches(newRecentSearch);
+              setSelectedPlace(null);
+              setIsMapView(false);
+              navigate(`/search/result?query=${tag.name}`);
+            }}
           >
             {tag.name}
           </TagButton>
