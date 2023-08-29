@@ -78,7 +78,12 @@ const useSearchMap = () => {
     }
   };
 
-  return { searchResult, inputValue, handleSearchMap, setInputValue };
+  return {
+    searchResult,
+    inputValue,
+    handleSearchMap,
+    setInputValue,
+  };
 };
 
 export default useSearchMap;
