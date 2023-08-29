@@ -109,7 +109,7 @@ const CertificationModal = ({
           certificationResults.location === "통과" &&
           certificationResults.date === "미통과"
         ) {
-          toast.error("시간 인증에 실패했습니다.");
+          toast.error("촬영 당일 자정까지 인증이 가능합니다.");
         }
 
         // 시간만 인증에 성공했을 경우
@@ -117,7 +117,7 @@ const CertificationModal = ({
           certificationResults.location === "미통과" &&
           certificationResults.date === "통과"
         ) {
-          toast.error("장소 인증에 실패했습니다.");
+          toast.error("촬영한 곳과 100m 이내의 장소가 아닙니다.");
         }
 
         // 장소와 시간 모두 인증에 실패했을 경우
@@ -125,7 +125,9 @@ const CertificationModal = ({
           certificationResults.location === "미통과" &&
           certificationResults.date === "미통과"
         ) {
-          toast.error("장소와 시간 인증에 실패했습니다.");
+          toast.error(
+            "100m 이내의 장소, 촬영 당일 자정까지 인증이 가능합니다."
+          );
         }
 
         setLoading(false);
