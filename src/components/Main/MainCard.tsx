@@ -157,7 +157,7 @@ const MainCard = () => {
         onClick={() => {
           setIsLoaded(false);
           setTimeout(() => {
-            navigate("/map");
+            navigate("/explore");
           }, 500);
         }}
       >
