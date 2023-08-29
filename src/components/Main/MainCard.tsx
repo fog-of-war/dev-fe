@@ -52,7 +52,6 @@ const MainCard = () => {
   const [userAuthoredPosts, setUserAuthoredPosts] = useState<string[]>([]);
 
   const [rankData, setRankData] = useState({
-    user_points: 0,
     rank: 0,
   });
 
@@ -66,7 +65,6 @@ const MainCard = () => {
 
     getMyRank().then((data) => {
       setRankData({
-        user_points: data.user_points,
         rank: data.rank,
       });
     });
