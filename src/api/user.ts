@@ -9,3 +9,8 @@ export const getUserData = async () => {
   const response = await axiosBase.get("v1/users/me");
   return response.data;
 };
+
+export const getMyBadge = async () => {
+  const response = await axiosBase.get("v1/users/me/badges");
+  return response.data;
+};
