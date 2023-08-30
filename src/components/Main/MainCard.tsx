@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import { getUserData } from "../../api/user";
+import { getMyRank } from "../../api/rank";
 
 import ProgressBar from "../ProgressBar";
 import MainCardMap from "../Map/MainCardMap";
 import FogEffect from "./FogEffect";
 import MainBadgeList from "./MainBadgeList";
-import { getMyRank } from "../../api/rank";
 
 export interface UserData {
   user_nickname: string;
@@ -52,7 +52,6 @@ const MainCard = () => {
   const [userAuthoredPosts, setUserAuthoredPosts] = useState<string[]>([]);
 
   const [rankData, setRankData] = useState({
-    user_points: 0,
     rank: 0,
   });
 
@@ -66,7 +65,6 @@ const MainCard = () => {
 
     getMyRank().then((data) => {
       setRankData({
-        user_points: data.user_points,
         rank: data.rank,
       });
     });
