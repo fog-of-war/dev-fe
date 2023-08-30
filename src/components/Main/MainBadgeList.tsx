@@ -1,7 +1,14 @@
 /** @jsxImportSource @emotion/react */
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { getMyBadge } from "../../api/user";
+
+export interface BadgeData {
+  badge_name: string;
+  badge_image_url: string;
+}
 
 interface Badge {
   imageUrl: string;
@@ -14,6 +21,12 @@ interface MainBadgeListProps {
 
 const MainBadgeList: React.FC<MainBadgeListProps> = ({ badges }) => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    getMyBadge().then((badgeData: BadgeData) => {
+      console.log(badgeData);
+    });
+  });
 
   return (
     <div onClick={() => navigate("/badgeList")}>
