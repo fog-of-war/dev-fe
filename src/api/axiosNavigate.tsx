@@ -29,9 +29,9 @@ export default function AxiosNavigation() {
             //리프레시 토큰 api
             const response = await postRefreshToken();
             //리프레시 토큰 요청이 성공할 때
-            if (response.status === 200) {
-              const newAccessToken = response.data.token;
-              const newRefreshToken = response.data.refreshToken;
+            if (response?.status === 200) {
+              const newAccessToken = response.data.access_token;
+              const newRefreshToken = response.data.refresh_token;
               setDataToLocalStorage(STORAGE_KEY.ACCESS_TOKEN, newAccessToken);
               setDataToLocalStorage(STORAGE_KEY.REFRESH_TOKEN, newRefreshToken);
               axios.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
@@ -39,7 +39,7 @@ export default function AxiosNavigation() {
               originRequest.headers.Authorization = `Bearer ${newAccessToken}`;
               return axios(originRequest);
               //리프레시 토큰 요청이 실패할때(리프레시 토큰도 만료되었을때 = 재로그인 안내)
-            } else if (response.status === 404) {
+            } else if (response?.status === 404) {
               toast.error(MESSAGE.LOGIN.EXPIRED);
               navigate.current("/auth");
             } else {

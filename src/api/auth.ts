@@ -1,6 +1,7 @@
 import { axiosBase } from "./axios";
 import { getDataFromLocalStorage } from "../utils/localStorage";
 import { STORAGE_KEY } from "../constants/storage";
+import axios from "axios";
 
 export const oAuthLogin = async (code: string, selectedOAuth: string) => {
   const response = await axiosBase.post(`v1/auth/${selectedOAuth}/oauth`, {
@@ -11,9 +12,16 @@ export const oAuthLogin = async (code: string, selectedOAuth: string) => {
 
 export const postRefreshToken = async () => {
   const refreshToken = getDataFromLocalStorage(STORAGE_KEY.REFRESH_TOKEN);
-  const response = await axiosBase.post("v1/auth/refresh", {
-    refreshToken,
-  });
+  if (!refreshToken) return null;
+  const response = await axios.post(
+    `${process.env.REACT_APP_API_URL}v1/auth/refresh`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${refreshToken}`,
+      },
+    }
+  );
   return response;
 };
 
