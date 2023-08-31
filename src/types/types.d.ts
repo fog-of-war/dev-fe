@@ -26,8 +26,8 @@ export interface MapTag {
 
 export interface Search {
   id: number;
-  search: string;
-  type: string;
+  searchQuery: string;
+  type: "keyword" | "place";
 }
 
 export interface Badge {

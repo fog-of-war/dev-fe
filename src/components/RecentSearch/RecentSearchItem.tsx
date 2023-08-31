@@ -1,9 +1,8 @@
 import styled from "@emotion/styled";
 import { Search } from "../../types/types";
 import colors from "../../constants/colors";
-import { useSetRecoilState } from "recoil";
-import { searchState } from "../../store/searchAtom";
-import { useNavigate } from "react-router-dom";
+import useRecentSearch from "../../hooks/search/useRecentSearch";
+import useSearch from "../../hooks/search/useSearch";
 
 import B1 from "../UI/B1";
 
@@ -12,33 +11,28 @@ interface RecentSearchItemProps {
 }
 
 const RecentSearchItem = ({ search }: RecentSearchItemProps) => {
-  const setRecentSearches = useSetRecoilState(searchState);
-  const navigate = useNavigate();
-
-  const handleSearchDelete = () => {
-    setRecentSearches((prev: Search[]) =>
-      prev.filter((item) => item.id !== search.id)
-    );
-  };
+  const { searchQuery, type } = search;
+  const { deleteRecentSearchHistory } = useRecentSearch();
+  const { handleSearchAndRecent } = useSearch();
 
   return (
     <RecentSearchItemContainer>
       <SearchContentWrapper
-        onClick={() => navigate(`/search/result?query=${search.search}`)}
+        onClick={() => handleSearchAndRecent({ searchQuery, type })}
       >
         <div>
           <img
             src={
-              search.type === "keyword"
+              type === "keyword"
                 ? "/images/search/searchIcon.png"
                 : "/images/search/locationIcon.png"
             }
             alt="icon"
           />
         </div>
-        <B1 css={{ fontWeight: "400", flexGrow: 1 }}>{search.search}</B1>
+        <B1 css={{ fontWeight: "400", flexGrow: 1 }}>{searchQuery}</B1>
       </SearchContentWrapper>
-      <DeleteButton onClick={handleSearchDelete}>
+      <DeleteButton onClick={() => deleteRecentSearchHistory(search)}>
         <img src="/images/search/xIcon.png" alt="icon" height={12} />
       </DeleteButton>
     </RecentSearchItemContainer>

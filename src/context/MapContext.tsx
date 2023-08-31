@@ -8,7 +8,7 @@ interface MapContextType {
   selectedPlace: Place | null;
   isMapView: boolean;
   setMap: React.Dispatch<React.SetStateAction<google.maps.Map | null>>;
-  handleMoveSelectedPlace: (place: Place) => void;
+  handleMapMoveSelectedPlace: (place: Place) => void;
   setSelectedPlace: React.Dispatch<React.SetStateAction<Place | null>>;
   setIsMapView: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -19,7 +19,7 @@ export const MapContext = createContext<MapContextType>({
   selectedPlace: null,
   isMapView: false,
   setMap: () => {},
-  handleMoveSelectedPlace: () => {},
+  handleMapMoveSelectedPlace: () => {},
   setSelectedPlace: () => {},
   setIsMapView: () => {},
 });
@@ -31,7 +31,7 @@ const MapContexProvider = ({ children }: { children: ReactNode }) => {
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [isMapView, setIsMapView] = useState(!!selectedPlace);
 
-  const handleMoveSelectedPlace = (place: Place) => {
+  const handleMapMoveSelectedPlace = (place: Place) => {
     setSelectedPlace(place);
     navigate(`/search/result?query=${place.place_name}`);
     setIsMapView(true);
@@ -47,7 +47,7 @@ const MapContexProvider = ({ children }: { children: ReactNode }) => {
         selectedPlace,
         isMapView,
         setMap,
-        handleMoveSelectedPlace,
+        handleMapMoveSelectedPlace,
         setSelectedPlace,
         setIsMapView,
       }}

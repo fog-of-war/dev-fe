@@ -4,15 +4,21 @@ import styled from "@emotion/styled";
 import colors from "../../constants/colors";
 import { useNavigateModal } from "../../hooks/useNavigateModal";
 import { Place } from "../../types/types";
-import { useContext } from "react";
-import { MapContext } from "../../context/MapContext";
+import useSearch from "../../hooks/search/useSearch";
 
 import B2 from "../UI/B2";
 import B1 from "../UI/B1";
 import PlaceImageList from "./PlaceImageList";
 import NavigateModal from "../Map/NavigateModal";
 
-const DUMMY_IMAGE: string[] = [];
+const DUMMY_IMAGE: string[] = [
+  "https://source.unsplash.com/random",
+  "https://source.unsplash.com/random",
+  "https://source.unsplash.com/random",
+  "https://source.unsplash.com/random",
+  "https://source.unsplash.com/random",
+  "https://source.unsplash.com/random",
+];
 
 interface PlaceItemProps extends React.HTMLAttributes<HTMLLIElement> {
   place: Place;
@@ -21,7 +27,7 @@ interface PlaceItemProps extends React.HTMLAttributes<HTMLLIElement> {
 
 const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
   const navigateModal = useNavigateModal();
-  const { handleMoveSelectedPlace } = useContext(MapContext);
+  const { handleSearchAndRecent } = useSearch();
 
   return (
     <PlaceItemContainer {...props}>
@@ -32,7 +38,10 @@ const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
       />
       <TitleContainer
         onClick={() => {
-          handleMoveSelectedPlace(place);
+          handleSearchAndRecent({
+            searchQuery: place.place_name,
+            type: "place",
+          });
         }}
       >
         <TitleWrapper>

@@ -3,25 +3,27 @@
 import styled from "@emotion/styled";
 import colors from "../../constants/colors";
 import { Place } from "../../types/types";
-import { useContext } from "react";
-import { MapContext } from "../../context/MapContext";
 
 import B1 from "../UI/B1";
 import B2 from "../UI/B2";
+import useSearch from "../../hooks/search/useSearch";
 
 interface SearchItemProps {
   place: Place;
 }
 
 const RealTimeSearchItem = ({ place }: SearchItemProps) => {
-  const { handleMoveSelectedPlace } = useContext(MapContext);
+  const { handleSearchAndRecent } = useSearch();
 
   return (
     <SearchItemContainer>
       <SearchContentWrapper
-        onClick={() => {
-          handleMoveSelectedPlace(place);
-        }}
+        onClick={() =>
+          handleSearchAndRecent({
+            searchQuery: place.place_name,
+            type: "place",
+          })
+        }
       >
         <DistanceWrapper>
           <img src={"/images/search/locationIcon.png"} alt="icon" />

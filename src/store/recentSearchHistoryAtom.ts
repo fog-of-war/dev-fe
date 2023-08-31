@@ -3,8 +3,8 @@ import { recoilPersist } from "recoil-persist";
 
 const { persistAtom } = recoilPersist();
 
-export const searchState = atom({
-  key: "searchState",
+export const recentSearchHistoryState = atom({
+  key: "recentSearchHistory",
   default: [],
   effects_UNSTABLE: [persistAtom],
 });
