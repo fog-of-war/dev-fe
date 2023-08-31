@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useRef, useState } from "react";
 import { Place } from "../types/types";
-import { useNavigate } from "react-router-dom";
+import useSearch from "../hooks/search/useSearch";
 
 interface MapContextType {
   mapRef: React.MutableRefObject<google.maps.Map | null>;
@@ -24,16 +24,19 @@ export const MapContext = createContext<MapContextType>({
   setIsMapView: () => {},
 });
 const MapContexProvider = ({ children }: { children: ReactNode }) => {
-  const navigate = useNavigate();
-
   const mapRef = useRef<google.maps.Map | null>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [isMapView, setIsMapView] = useState(!!selectedPlace);
+  const { handleSearchAndRecent } = useSearch();
 
   const handleMapMoveSelectedPlace = (place: Place) => {
     setSelectedPlace(place);
-    navigate(`/search/result?query=${place.place_name}`);
+    handleSearchAndRecent({
+      searchQuery: place.place_name,
+      type: "place",
+      place,
+    });
     setIsMapView(true);
     map?.panTo({ lat: +place.y, lng: +place.x });
     map?.setZoom(18);

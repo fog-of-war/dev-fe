@@ -4,7 +4,8 @@ import styled from "@emotion/styled";
 import colors from "../../constants/colors";
 import { useNavigateModal } from "../../hooks/useNavigateModal";
 import { Place } from "../../types/types";
-import useSearch from "../../hooks/search/useSearch";
+import { useContext } from "react";
+import { MapContext } from "../../context/MapContext";
 
 import B2 from "../UI/B2";
 import B1 from "../UI/B1";
@@ -27,7 +28,7 @@ interface PlaceItemProps extends React.HTMLAttributes<HTMLLIElement> {
 
 const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
   const navigateModal = useNavigateModal();
-  const { handleSearchAndRecent } = useSearch();
+  const { handleMapMoveSelectedPlace } = useContext(MapContext);
 
   return (
     <PlaceItemContainer {...props}>
@@ -36,14 +37,7 @@ const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
         onClose={navigateModal.onClose}
         url={place.place_url}
       />
-      <TitleContainer
-        onClick={() => {
-          handleSearchAndRecent({
-            searchQuery: place.place_name,
-            type: "place",
-          });
-        }}
-      >
+      <TitleContainer onClick={() => handleMapMoveSelectedPlace(place)}>
         <TitleWrapper>
           <h4>{place.place_name}</h4>
           <B2 css={{ color: colors.lightGrey }}>{place.category_group_name}</B2>
