@@ -5,7 +5,7 @@ import { useState } from "react";
 import colors from "../../constants/colors";
 import styled from "@emotion/styled";
 import { SearchList } from "./RecentSearchesPanel";
-import { Search } from "../../types/types";
+import { RecentSearch } from "../../types/types";
 import { useDeleteComfirmModal } from "../../hooks/useDeleteComfirmModal";
 import useRecentSearch from "../../hooks/search/useRecentSearch";
 
@@ -17,12 +17,12 @@ import RecentSearchesDeleteModal from "./RecentSearchesDeleteModal";
 const EditRecentSearchPageComponent = () => {
   const { recentSearchHistory, deleteSelectedRecentSearchHistory } =
     useRecentSearch();
-  const [selectedSearches, setSelectedSearches] = useState<Search[]>([]);
+  const [selectedSearches, setSelectedSearches] = useState<RecentSearch[]>([]);
   const deleteConfirmModal = useDeleteComfirmModal();
 
   const navigate = useNavigate();
 
-  const handleSelect = (targetSearch: Search) => {
+  const handleSelect = (targetSearch: RecentSearch) => {
     if (selectedSearches.includes(targetSearch)) {
       setSelectedSearches((prevSelecedSearches) =>
         prevSelecedSearches.filter((search) => search !== targetSearch)
@@ -65,7 +65,7 @@ const EditRecentSearchPageComponent = () => {
       </Header>
 
       <SearchList>
-        {recentSearchHistory.map((search: Search) => {
+        {recentSearchHistory.map((search: RecentSearch) => {
           const isSelected = selectedSearches.includes(search);
           return (
             <EditSearchItem

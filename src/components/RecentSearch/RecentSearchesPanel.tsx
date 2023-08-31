@@ -2,13 +2,13 @@
 
 import styled from "@emotion/styled";
 import colors from "../../constants/colors";
-import { Search } from "../../types/types";
+import { RecentSearch } from "../../types/types";
 import { useNavigate } from "react-router-dom";
 import { LINK } from "../../constants/links";
 
 import B2 from "../UI/B2";
-import SearchItem from "./RecentSearchItem";
 import useRecentSearch from "../../hooks/search/useRecentSearch";
+import RecentSearchItem from "./RecentSearchItem";
 
 const RecentSearchesPanel = () => {
   const { recentSearchHistory } = useRecentSearch();
@@ -26,8 +26,8 @@ const RecentSearchesPanel = () => {
         </B2>
       </Header>
       <SearchList>
-        {recentSearchHistory.map((search: Search) => (
-          <SearchItem key={search.id} search={search} />
+        {recentSearchHistory.map((recentSearch: RecentSearch) => (
+          <RecentSearchItem key={recentSearch.id} recentSearch={recentSearch} />
         ))}
       </SearchList>
     </>

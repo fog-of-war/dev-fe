@@ -24,10 +24,11 @@ export interface MapTag {
   icon: string;
 }
 
-export interface Search {
+export interface RecentSearch {
   id: number;
   searchQuery: string;
   type: "keyword" | "place";
+  place?: Place;
 }
 
 export interface Badge {

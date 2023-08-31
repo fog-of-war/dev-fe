@@ -1,25 +1,34 @@
 import styled from "@emotion/styled";
-import { Search } from "../../types/types";
+import { RecentSearch } from "../../types/types";
 import colors from "../../constants/colors";
 import useRecentSearch from "../../hooks/search/useRecentSearch";
 import useSearch from "../../hooks/search/useSearch";
+import { useContext } from "react";
+import { MapContext } from "../../context/MapContext";
 
 import B1 from "../UI/B1";
 
 interface RecentSearchItemProps {
-  search: Search;
+  recentSearch: RecentSearch;
 }
 
-const RecentSearchItem = ({ search }: RecentSearchItemProps) => {
-  const { searchQuery, type } = search;
+const RecentSearchItem = ({ recentSearch }: RecentSearchItemProps) => {
+  const { searchQuery, type, place } = recentSearch;
   const { deleteRecentSearchHistory } = useRecentSearch();
   const { handleSearchAndRecent } = useSearch();
+  const { handleMapMoveSelectedPlace } = useContext(MapContext);
+
+  const handleSearchClick = () => {
+    if (type === "keyword") {
+      handleSearchAndRecent({ searchQuery, type });
+    } else {
+      handleMapMoveSelectedPlace(place!);
+    }
+  };
 
   return (
     <RecentSearchItemContainer>
-      <SearchContentWrapper
-        onClick={() => handleSearchAndRecent({ searchQuery, type })}
-      >
+      <SearchContentWrapper onClick={handleSearchClick}>
         <div>
           <img
             src={
@@ -32,7 +41,7 @@ const RecentSearchItem = ({ search }: RecentSearchItemProps) => {
         </div>
         <B1 css={{ fontWeight: "400", flexGrow: 1 }}>{searchQuery}</B1>
       </SearchContentWrapper>
-      <DeleteButton onClick={() => deleteRecentSearchHistory(search)}>
+      <DeleteButton onClick={() => deleteRecentSearchHistory(recentSearch)}>
         <img src="/images/search/xIcon.png" alt="icon" height={12} />
       </DeleteButton>
     </RecentSearchItemContainer>
