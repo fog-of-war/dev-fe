@@ -30,7 +30,7 @@ const EditSearchItem = ({
             alt="icon"
           />
         </div>
-        <B1 css={{ fontWeight: "400" }}>{search.search}</B1>
+        <B1 css={{ fontWeight: "400" }}>{search.searchQuery}</B1>
       </SearchContentWrapper>
     </RecentSearchItemContainer>
   );
