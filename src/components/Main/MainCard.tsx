@@ -17,29 +17,6 @@ export interface UserData {
   user_authored_posts: [];
 }
 
-const DUMMY_BADGES = [
-  {
-    imageUrl: "/images/main/dummyBadge.png",
-    badgeName: "더미뱃지",
-  },
-  {
-    imageUrl: "/images/main/dummyBadge.png",
-    badgeName: "더미뱃지",
-  },
-  {
-    imageUrl: "/images/main/dummyBadge.png",
-    badgeName: "더미뱃지",
-  },
-  {
-    imageUrl: "/images/main/dummyBadge.png",
-    badgeName: "더미뱃지",
-  },
-  {
-    imageUrl: "/images/main/dummyBadge.png",
-    badgeName: "더미뱃지",
-  },
-];
-
 const MainCard = () => {
   const navigate = useNavigate();
 
@@ -197,7 +174,7 @@ const MainCard = () => {
           zIndex: 1,
         }}
       ></div>
-      <MainBadgeList badges={DUMMY_BADGES} />
+      <MainBadgeList />
     </div>
   );
 };

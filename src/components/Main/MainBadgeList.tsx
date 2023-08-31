@@ -1,32 +1,28 @@
 /** @jsxImportSource @emotion/react */
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { getMyBadge } from "../../api/user";
 
 export interface BadgeData {
+  user_badges: any;
   badge_name: string;
   badge_image_url: string;
 }
 
-interface Badge {
-  imageUrl: string;
-  badgeName: string;
-}
-
-interface MainBadgeListProps {
-  badges: Badge[];
-}
-
-const MainBadgeList: React.FC<MainBadgeListProps> = ({ badges }) => {
+const MainBadgeList: React.FC = () => {
   const navigate = useNavigate();
 
+  // 유저 뱃지 데이터
+  const [userBadges, setUserBadges] = useState<BadgeData[]>([]);
+
+  // 유저 뱃지 데이터 불러오기
   useEffect(() => {
     getMyBadge().then((badgeData: BadgeData) => {
-      console.log(badgeData);
+      setUserBadges(badgeData.user_badges);
     });
-  });
+  }, []);
 
   return (
     <div onClick={() => navigate("/badgeList")}>
@@ -55,11 +51,11 @@ const MainBadgeList: React.FC<MainBadgeListProps> = ({ badges }) => {
           marginTop: 10,
         }}
       >
-        {badges.slice(0, 5).map((badge, index) => (
+        {userBadges.slice(0, 5).map((badge, index) => (
           <img
             key={index}
-            src={badge.imageUrl}
-            alt={badge.badgeName}
+            src={badge.badge_image_url}
+            alt={badge.badge_name}
             css={{ width: 56, aspectRatio: 1 }}
           />
         ))}
