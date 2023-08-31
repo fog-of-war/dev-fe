@@ -24,8 +24,11 @@ const useOAuth = () => {
   const handleAuthentication = async (code: string, oAuthName: string) => {
     try {
       // 액세스 토큰을 받아 로컬 스토리지에 저장
-      const accessToken = await oAuthLogin(code, oAuthName);
+      const { access_token: accessToken, refresh_token: refreshToken } =
+        await oAuthLogin(code, oAuthName);
+
       localStorage.setItem("accessToken", JSON.stringify(accessToken));
+      localStorage.setItem("refreshToken", JSON.stringify(refreshToken));
 
       // 유저정보 요청 및 유저 캐시 업데이트
       const currentUser = await getCurrentUser();

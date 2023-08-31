@@ -15,12 +15,14 @@ import { CertifiedImageProvider } from "./context/CertifiedImageContext";
 import AuthGuard from "./components/Auth/AuthGuard";
 import { PostingDataProvider } from "./context/PostingDataContext";
 import MapContexProvider from "./context/MapContext";
+import AxiosNavigation from "./api/axiosNavigate";
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <Router>
+      <AxiosNavigation />
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
           <LoadingProvider>
