@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { LINK } from "../../../constants/links";
 import { useQueryClient } from "react-query";
 import { getCurrentUser, oAuthLogin } from "../../../api/auth";
@@ -14,10 +14,6 @@ const useOAuth = () => {
   /** OAuth 버튼 클릭 핸들러 */
   const handleClickOAuthButton = (e: React.MouseEvent<HTMLDivElement>) => {
     const oAuthName = e.currentTarget.id;
-    console.log(
-      "🚀 ~ file: AuthPage.tsx:25 ~ handleClickOAuthButton ~ oAuthName:",
-      `${process.env.REACT_APP_API_URL}v1/auth/${oAuthName}`
-    );
 
     // OAuth 제공자의 로그인 페이지로 리다이렉션
     window.location.href = `${process.env.REACT_APP_API_URL}v1/auth/${oAuthName}`;
@@ -53,17 +49,13 @@ const useOAuth = () => {
   useEffect(() => {
     // URL 쿼리 파라미터에서 코드를 가져옴
     const urlParams = new URLSearchParams(window.location.search);
+    const provider = urlParams.get("provider");
     const code = urlParams.get("code");
 
     // 현재 URL에서 OAuth 제공자 이름을 필터링
-    const currentUrl = window.location.href;
-    const oAuthNames = ["google", "kakao", "naver"].filter((oAuthName) =>
-      currentUrl.includes(oAuthName)
-    );
 
-    if (code && oAuthNames.length > 0) {
-      const oAuthName = oAuthNames[0]; // 첫 번째로 매칭된 OAuth 제공자 이름 사용
-      handleAuthentication(code, oAuthName);
+    if (code && provider) {
+      handleAuthentication(code, provider);
     }
   }, []);
 
