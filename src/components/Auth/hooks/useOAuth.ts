@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { LINK } from "../../../constants/links";
 import { useQueryClient } from "react-query";
 import { getCurrentUser, oAuthLogin } from "../../../api/auth";
+import { setDataToLocalStorage } from "../../../utils/localStorage";
+import { STORAGE_KEY } from "../../../constants/storage";
 
 const useOAuth = () => {
   const navigate = useNavigate();
@@ -27,8 +29,8 @@ const useOAuth = () => {
       const { access_token: accessToken, refresh_token: refreshToken } =
         await oAuthLogin(code, oAuthName);
 
-      localStorage.setItem("accessToken", JSON.stringify(accessToken));
-      localStorage.setItem("refreshToken", JSON.stringify(refreshToken));
+      setDataToLocalStorage(STORAGE_KEY.ACCESS_TOKEN, accessToken);
+      setDataToLocalStorage(STORAGE_KEY.REFRESH_TOKEN, refreshToken);
 
       // 유저정보 요청 및 유저 캐시 업데이트
       const currentUser = await getCurrentUser();
