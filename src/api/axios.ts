@@ -1,6 +1,13 @@
 import axios from "axios";
+import { STORAGE_KEY } from "../constants/storage";
+import { getDataFromLocalStorage } from "../utils/localStorage";
 
 // axios.defaults.withCredentials = true;
+
+const accessToken: string =
+  getDataFromLocalStorage(STORAGE_KEY.ACCESS_TOKEN) || null;
+const refreshToken: string =
+  getDataFromLocalStorage(STORAGE_KEY.REFRESH_TOKEN) || null;
 
 export const axiosBase = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -11,10 +18,7 @@ export const axiosBase = axios.create({
 
 axiosBase.interceptors.request.use(
   (config) => {
-    const accessToken = JSON.parse(
-      localStorage.getItem("accessToken") ?? "{}"
-    ).access_token;
-    if (accessToken) {
+    if (accessToken && refreshToken) {
       // accessToken이 있는 경우 헤더에 토큰을 추가합니다.
       config.headers.Authorization = `Bearer ${accessToken}`;
     }

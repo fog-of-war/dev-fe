@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useRef, useState } from "react";
 import { Place } from "../types/types";
-import { useNavigate } from "react-router-dom";
+import useSearch from "../hooks/search/useSearch";
 
 interface MapContextType {
   mapRef: React.MutableRefObject<google.maps.Map | null>;
@@ -8,7 +8,7 @@ interface MapContextType {
   selectedPlace: Place | null;
   isMapView: boolean;
   setMap: React.Dispatch<React.SetStateAction<google.maps.Map | null>>;
-  handleMoveSelectedPlace: (place: Place) => void;
+  handleMapMoveSelectedPlace: (place: Place) => void;
   setSelectedPlace: React.Dispatch<React.SetStateAction<Place | null>>;
   setIsMapView: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -19,21 +19,24 @@ export const MapContext = createContext<MapContextType>({
   selectedPlace: null,
   isMapView: false,
   setMap: () => {},
-  handleMoveSelectedPlace: () => {},
+  handleMapMoveSelectedPlace: () => {},
   setSelectedPlace: () => {},
   setIsMapView: () => {},
 });
 const MapContexProvider = ({ children }: { children: ReactNode }) => {
-  const navigate = useNavigate();
-
   const mapRef = useRef<google.maps.Map | null>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [isMapView, setIsMapView] = useState(!!selectedPlace);
+  const { handleSearchAndRecent } = useSearch();
 
-  const handleMoveSelectedPlace = (place: Place) => {
+  const handleMapMoveSelectedPlace = (place: Place) => {
     setSelectedPlace(place);
-    navigate(`/search/result?query=${place.place_name}`);
+    handleSearchAndRecent({
+      searchQuery: place.place_name,
+      type: "place",
+      place,
+    });
     setIsMapView(true);
     map?.panTo({ lat: +place.y, lng: +place.x });
     map?.setZoom(18);
@@ -47,7 +50,7 @@ const MapContexProvider = ({ children }: { children: ReactNode }) => {
         selectedPlace,
         isMapView,
         setMap,
-        handleMoveSelectedPlace,
+        handleMapMoveSelectedPlace,
         setSelectedPlace,
         setIsMapView,
       }}

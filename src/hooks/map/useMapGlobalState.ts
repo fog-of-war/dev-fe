@@ -43,7 +43,7 @@ const useMapGlobalState = (
     // 새로운 타이머 설정
     debounceTimer = setTimeout(() => {
       setMapViewState({ ...mapViewState, zoom });
-    }, 300); // 디바운스 딜레이 (예: 500 밀리초)
+    }, 300);
   };
 
   return {
@@ -51,6 +51,7 @@ const useMapGlobalState = (
     zoom,
     handleZoomChange,
     handleMapChange,
+    setMapViewState,
   };
 };
 

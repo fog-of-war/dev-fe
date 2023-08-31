@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
 
 import { useEffect, useRef, useState } from "react";
-import useSearchMap from "../../hooks/useSearchMap";
+import useSearchMap from "../../hooks/search/useSearchMap";
 import styled from "@emotion/styled";
 import { ExplorePageLayout } from "../../styles/styles";
 
 import SearchBar from "./SearchBar";
 import TagButtonList from "../Map/TagButtonList";
-import SearchResultPanel from "./RealTimeSearchResultPanel";
+import RealtimeSearchResultPanel from "./RealTimeSearchResultPanel";
 import RecentSearchesPanel from "../RecentSearch/RecentSearchesPanel";
 
 interface SearchPageComonentProps {
@@ -16,8 +16,12 @@ interface SearchPageComonentProps {
 
 const SearchPageComponent = ({ searchQuery }: SearchPageComonentProps) => {
   const [isTyping, setIsTyping] = useState(false);
-  const { searchResult, inputValue, handleSearchMap, setInputValue } =
-    useSearchMap();
+  const {
+    realtimeSearchResult,
+    inputValue,
+    handleSearchByKeyboard,
+    setInputValue,
+  } = useSearchMap();
 
   const searchRef = useRef<HTMLInputElement>(null);
 
@@ -42,14 +46,16 @@ const SearchPageComponent = ({ searchQuery }: SearchPageComonentProps) => {
     <ExplorePageLayout>
       <SearchBar
         inputValue={inputValue}
-        onKeyDown={handleSearchMap}
+        onKeyDown={handleSearchByKeyboard}
         onChange={(e) => setInputValue(e.target.value)}
         ref={searchRef}
       />
       <TagButtonList />
       <SearchPannel>
         {isTyping ? (
-          <SearchResultPanel searchResult={searchResult} />
+          <RealtimeSearchResultPanel
+            realtimeSearchResult={realtimeSearchResult}
+          />
         ) : (
           <RecentSearchesPanel />
         )}

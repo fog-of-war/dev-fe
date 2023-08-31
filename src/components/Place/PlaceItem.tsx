@@ -12,7 +12,14 @@ import B1 from "../UI/B1";
 import PlaceImageList from "./PlaceImageList";
 import NavigateModal from "../Map/NavigateModal";
 
-const DUMMY_IMAGE: string[] = [];
+const DUMMY_IMAGE: string[] = [
+  "https://source.unsplash.com/random",
+  "https://source.unsplash.com/random",
+  "https://source.unsplash.com/random",
+  "https://source.unsplash.com/random",
+  "https://source.unsplash.com/random",
+  "https://source.unsplash.com/random",
+];
 
 interface PlaceItemProps extends React.HTMLAttributes<HTMLLIElement> {
   place: Place;
@@ -21,7 +28,7 @@ interface PlaceItemProps extends React.HTMLAttributes<HTMLLIElement> {
 
 const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
   const navigateModal = useNavigateModal();
-  const { handleMoveSelectedPlace } = useContext(MapContext);
+  const { handleMapMoveSelectedPlace } = useContext(MapContext);
 
   return (
     <PlaceItemContainer {...props}>
@@ -30,11 +37,7 @@ const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
         onClose={navigateModal.onClose}
         url={place.place_url}
       />
-      <TitleContainer
-        onClick={() => {
-          handleMoveSelectedPlace(place);
-        }}
-      >
+      <TitleContainer onClick={() => handleMapMoveSelectedPlace(place)}>
         <TitleWrapper>
           <h4>{place.place_name}</h4>
           <B2 css={{ color: colors.lightGrey }}>{place.category_group_name}</B2>

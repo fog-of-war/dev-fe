@@ -14,15 +14,11 @@ interface SearchItemProps {
 }
 
 const RealTimeSearchItem = ({ place }: SearchItemProps) => {
-  const { handleMoveSelectedPlace } = useContext(MapContext);
+  const { handleMapMoveSelectedPlace } = useContext(MapContext);
 
   return (
     <SearchItemContainer>
-      <SearchContentWrapper
-        onClick={() => {
-          handleMoveSelectedPlace(place);
-        }}
-      >
+      <SearchContentWrapper onClick={() => handleMapMoveSelectedPlace(place)}>
         <DistanceWrapper>
           <img src={"/images/search/locationIcon.png"} alt="icon" />
           <span css={{ fontWeight: "400", fontSize: 12 }}>

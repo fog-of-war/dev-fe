@@ -2,16 +2,16 @@
 
 import styled from "@emotion/styled";
 import colors from "../../constants/colors";
-import { useRecoilValue } from "recoil";
-import { searchState } from "../../store/searchAtom";
-import { Search } from "../../types/types";
+import { RecentSearch } from "../../types/types";
 import { useNavigate } from "react-router-dom";
+import { LINK } from "../../constants/links";
 
 import B2 from "../UI/B2";
-import SearchItem from "./RecentSearchItem";
+import useRecentSearch from "../../hooks/search/useRecentSearch";
+import RecentSearchItem from "./RecentSearchItem";
 
 const RecentSearchesPanel = () => {
-  const recentSearches = useRecoilValue(searchState);
+  const { recentSearchHistory } = useRecentSearch();
   const navigate = useNavigate();
 
   return (
@@ -19,15 +19,15 @@ const RecentSearchesPanel = () => {
       <Header>
         <h4>최근검색</h4>
         <B2
-          onClick={() => navigate("/edit/search")}
+          onClick={() => navigate(LINK.EDIT_RECENT_SEARCH_PAGE)}
           css={{ color: colors.lightGrey }}
         >
           편집
         </B2>
       </Header>
       <SearchList>
-        {recentSearches.map((search: Search) => (
-          <SearchItem key={search.id} search={search} />
+        {recentSearchHistory.map((recentSearch: RecentSearch) => (
+          <RecentSearchItem key={recentSearch.id} recentSearch={recentSearch} />
         ))}
       </SearchList>
     </>

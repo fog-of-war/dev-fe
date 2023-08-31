@@ -29,7 +29,8 @@ interface MapProps {
 }
 
 const Map = ({ places }: MapProps) => {
-  const { map, mapRef, selectedPlace, setMap } = useContext(MapContext);
+  const { map, mapRef, selectedPlace, setSelectedPlace, setMap } =
+    useContext(MapContext);
 
   // 마커 관련 로직을 관리하는 커스텀 훅
   const { markers, openMarkerName, setOpenMarkerName, handleMarkerClick } =
@@ -51,6 +52,10 @@ const Map = ({ places }: MapProps) => {
       map?.panTo({ lat: +selectedPlace.y, lng: +selectedPlace.x });
       map?.setZoom(18);
     }
+
+    setTimeout(() => {
+      setSelectedPlace(null);
+    }, 1000);
   }, [selectedPlace, map]);
 
   return (

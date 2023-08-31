@@ -5,13 +5,13 @@ import { ExplorePageLayout } from "../../styles/styles";
 import styled from "@emotion/styled";
 import { useContext } from "react";
 import { Place } from "../../types/types";
+import { MapContext } from "../../context/MapContext";
+import useMapSearchQuery from "../../hooks/useMapSearchQuery";
+import { LINK } from "../../constants/links";
 
 import SearchBarDisplay from "../Search/SearchBarDisplay";
 import PlaceItem from "../Place/PlaceItem";
 import Map from "../Map/GoogleMap";
-import useMapSearchQuery from "../../hooks/useMapSearchQuery";
-import { MapContext } from "../../context/MapContext";
-import { LINK } from "../../constants/links";
 
 interface SearchResultPageComonentProps {
   searchQuery: string;
@@ -21,9 +21,8 @@ const SearchResultPageComponent = ({
   searchQuery,
 }: SearchResultPageComonentProps) => {
   const navigate = useNavigate();
-
-  const searchResult = useMapSearchQuery(searchQuery);
   const { isMapView, setIsMapView } = useContext(MapContext);
+  const searchResult = useMapSearchQuery(searchQuery);
 
   return (
     <ExplorePageLayout>
@@ -94,4 +93,7 @@ const PlaceList = styled.ul`
   gap: 15px;
   background-color: white;
   overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
