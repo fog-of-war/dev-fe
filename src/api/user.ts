@@ -14,3 +14,8 @@ export const getMyBadge = async () => {
   const response = await axiosBase.get("v1/users/me/badges");
   return response.data;
 };
+
+export const getMyRegion = async () => {
+  const response = await axiosBase.get("v1/users/me/region");
+  return response.data;
+};
