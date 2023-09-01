@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { GoogleMap, LoadScriptNext, Marker } from "@react-google-maps/api";
 import retroMapStyle from "../../data/retroMapStyle.json";
 import { bounds, options } from "../../data/mapData";
@@ -9,6 +9,8 @@ import usePolygon from "../../hooks/map/usePolygon";
 import useMapMarker from "../../hooks/map/useMapMarker";
 import useMapGlobalState from "../../hooks/map/useMapGlobalState";
 import useCurrentLocation from "../../hooks/map/useCurrentLocation";
+
+import { getMyRegion } from "../../api/user";
 
 import SeoulPolygon from "./SeoulPolygon";
 import OutsidePolygon from "./OutsidePolygon";
@@ -26,6 +28,12 @@ const CONTAINER_STYLE = {
 
 interface MapProps {
   places?: Place[];
+}
+
+interface RegionData {
+  region_id: number;
+  region_name: string;
+  region_visited_count: number;
 }
 
 const Map = ({ places }: MapProps) => {
@@ -57,6 +65,28 @@ const Map = ({ places }: MapProps) => {
       setSelectedPlace(null);
     }, 1000);
   }, [selectedPlace, map]);
+
+  const [regionName, setRegionName] = useState<string | null>(null);
+
+  const [regionVisitedCount, setRegionVisitedCount] = useState<number | null>(
+    null
+  );
+
+  useEffect(() => {
+    getMyRegion().then((regionData) => {
+      // Response 데이터에서 구 이름과 포인트 값을 추출하여 options 객체에 반영
+      regionData.forEach(
+        (region: { region_english_name: any; region_visited_count: any }) => {
+          const regionEnglishName = region.region_english_name;
+          const regionVisitedCount = region.region_visited_count;
+
+          if (options.hasOwnProperty(regionEnglishName)) {
+            options[regionEnglishName].point = regionVisitedCount;
+          }
+        }
+      );
+    });
+  }, []);
 
   return (
     <div

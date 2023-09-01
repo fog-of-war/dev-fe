@@ -20,25 +20,177 @@ const bounds = {
   east: 127.183463,
 };
 
+const mockData: any[] = [
+  {
+    region_id: 1,
+    region_name: "종로구",
+    region_english_name: "Jongno",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 2,
+    region_name: "중구",
+    region_english_name: "Jung",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 3,
+    region_name: "용산구",
+    region_english_name: "Yongsan",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 4,
+    region_name: "성동구",
+    region_english_name: "Seongdong",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 5,
+    region_name: "광진구",
+    region_english_name: "Gwangjin",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 6,
+    region_name: "동대문구",
+    region_english_name: "Dongdaemun",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 7,
+    region_name: "중랑구",
+    region_english_name: "Jungnang",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 8,
+    region_name: "성북구",
+    region_english_name: "Seongbuk",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 9,
+    region_name: "강북구",
+    region_english_name: "Gangbuk",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 10,
+    region_name: "도봉구",
+    region_english_name: "Dobong",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 11,
+    region_name: "노원구",
+    region_english_name: "Nowon",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 12,
+    region_name: "은평구",
+    region_english_name: "Eunpyeong",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 13,
+    region_name: "서대문구",
+    region_english_name: "Seodaemun",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 14,
+    region_name: "마포구",
+    region_english_name: "Mapo",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 15,
+    region_name: "양천구",
+    region_english_name: "Yangcheon",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 16,
+    region_name: "강서구",
+    region_english_name: "Gangseo",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 17,
+    region_name: "구로구",
+    region_english_name: "Guro",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 18,
+    region_name: "금천구",
+    region_english_name: "Geumcheon",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 19,
+    region_name: "영등포구",
+    region_english_name: "Yeongdeungpo",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 20,
+    region_name: "동작구",
+    region_english_name: "Dongjak",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 21,
+    region_name: "관악구",
+    region_english_name: "Gwanak",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 22,
+    region_name: "서초구",
+    region_english_name: "Seocho",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 23,
+    region_name: "강남구",
+    region_english_name: "Gangnam",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 24,
+    region_name: "송파구",
+    region_english_name: "Songpa",
+    region_visited_count: 1,
+  },
+  {
+    region_id: 25,
+    region_name: "강동구",
+    region_english_name: "Gangdong",
+    region_visited_count: 1,
+  },
+];
 // 각 구의 포인트
 const options: { [key: string]: { point: number } } = {
   Gangdong: { point: 0 },
-  Songpa: { point: 1100 },
-  Gangnam: { point: 2200 },
+  Songpa: { point: 0 },
+  Gangnam: { point: 0 },
   Seocho: { point: 0 },
-  Gwanak: { point: 5000 },
+  Gwanak: { point: 0 },
   Dongjak: { point: 0 },
   Yeongdeungpo: { point: 0 },
-  Geumcheon: { point: 2300 },
+  Geumcheon: { point: 0 },
   Guro: { point: 0 },
   Gangseo: { point: 0 },
-  Yangcheon: { point: 3300 },
+  Yangcheon: { point: 0 },
   Mapo: { point: 0 },
   Seodaemun: { point: 0 },
   Eunpyeong: { point: 0 },
   Nowon: { point: 0 },
-  Dobong: { point: 500 },
-  Gangbuk: { point: 1300 },
+  Dobong: { point: 0 },
+  Gangbuk: { point: 0 },
   Seongbuk: { point: 0 },
   Jungnang: { point: 0 },
   Dongdaemun: { point: 0 },
@@ -46,8 +198,20 @@ const options: { [key: string]: { point: number } } = {
   Seongdong: { point: 0 },
   Yongsan: { point: 0 },
   Jung: { point: 0 },
-  Jongno: { point: 4500 },
+  Jongno: { point: 0 },
 };
+
+// mockData 배열의 각 요소를 순회하면서 포인트를 할당
+// mockData.forEach((data) => {
+//   const regionEnglishName = data.region_english_name;
+//   if (options.hasOwnProperty(regionEnglishName)) {
+//     options[regionEnglishName].point = data.region_visited_count;
+//   }
+// });
+
+// // // 결과 확인을 위해 mockData 출력
+// console.log("🚀 ~ file: mapData.ts:215 ~ mockData:", mockData);
+// console.log("🚀 ~ file: mapData.ts:215 ~ options:", options);
 
 // 서울 지역 좌표
 const COORDINATES_STRING =

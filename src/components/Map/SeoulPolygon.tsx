@@ -15,7 +15,17 @@ const SeoulPolygon: React.FC<SeoulPolygonProps> = ({
   onPolygonClick,
 }) => {
   let opacity =
-    point < 1000 ? 0.9 : point < 2000 ? 0.7 : point < 3000 ? 0.5 : 0.3;
+    point <= 3
+      ? 0.9
+      : point <= 10
+      ? 0.7
+      : point <= 20
+      ? 0.5
+      : point <= 50
+      ? 0.3
+      : point <= 100
+      ? 0.1
+      : 0;
 
   return (
     <Polygon
