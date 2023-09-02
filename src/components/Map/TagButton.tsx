@@ -19,6 +19,7 @@ const TagButton = ({ icon, children, ...props }: TagButtonProps) => {
         borderRadius: "20px",
         boxShadow: "0px 0px 3px 0px rgba(0, 0, 0, 0.3)",
         background: "#fff",
+        cursor: "pointer",
       }}
       {...props}
     >

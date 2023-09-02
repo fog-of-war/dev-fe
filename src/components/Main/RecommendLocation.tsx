@@ -3,39 +3,53 @@
 import { useEffect, useState } from "react";
 import SkeletonLoader from "../UI/SkeletonLoader";
 
-const DUMMY_BOXES = [
-  {
-    imageUrl: "https://source.unsplash.com/random ",
-    placeName: "고양이카페",
-  },
-  {
-    imageUrl: "https://source.unsplash.com/random ",
-    placeName: "냄셴테월",
-  },
-  {
-    imageUrl: "https://source.unsplash.com/random ",
-    placeName: "윤수와인바",
-  },
-  {
-    imageUrl: "https://source.unsplash.com/random ",
-    placeName: "동균버거",
-  },
-  {
-    imageUrl: "https://source.unsplash.com/random ",
-    placeName: "기가막힌경복궁",
-  },
-];
+import { getLandmarks } from "../../api/place";
+
+export interface LandmarkData {
+  place_name: string;
+  place_posts: {
+    post_image_url: string;
+  }[];
+}
 
 const RecommendLocation = () => {
-  const [loadingStates, setLoadingStates] = useState<boolean[]>(
-    new Array(DUMMY_BOXES.length).fill(true)
-  );
+  // 로딩 상태
+  const [loadingStates, setLoadingStates] = useState<boolean[]>([]);
 
+  // 랜드마크 데이터
+  const [landmarks, setLandmarks] = useState<LandmarkData[]>([]);
+
+  // 랜덤한 인덱스를 생성하는 함수
+  const generateRandomIndexes = (max: number, count: number): number[] => {
+    const indexes: number[] = [];
+    while (indexes.length < count) {
+      const randomIndex = Math.floor(Math.random() * max);
+      if (!indexes.includes(randomIndex)) {
+        indexes.push(randomIndex);
+      }
+    }
+    return indexes;
+  };
+
+  // 랜드마크 데이터 불러오기
   useEffect(() => {
-    // 각 이미지의 로딩 상태를 체크하고 업데이트
-    const imageLoadHandlers = DUMMY_BOXES.map((place, index) => {
+    getLandmarks().then((landmarksData: LandmarkData[]) => {
+      const randomIndexes = generateRandomIndexes(landmarksData.length, 3); // 랜덤한 인덱스 생성
+      const randomLandmarks = randomIndexes.map(
+        (index) => landmarksData[index]
+      ); // 선택된 랜드마크 추출
+      setLandmarks(randomLandmarks);
+    });
+  }, []);
+
+  // 이미지 로드 상태
+  useEffect(() => {
+    setLoadingStates(new Array(3).fill(true));
+
+    // 이미지 로드 핸들러
+    const imageLoadHandlers = landmarks.map((landmark, index) => {
       const image = new Image();
-      image.src = place.imageUrl;
+      image.src = "https://source.unsplash.com/random";
 
       const handleImageLoaded = () => {
         setLoadingStates((prevStates) => {
@@ -50,12 +64,11 @@ const RecommendLocation = () => {
     });
 
     return () => {
-      // 컴포넌트 언마운트 시 이미지 로딩 핸들러 정리
       imageLoadHandlers.forEach((image) => {
         image.onload = null;
       });
     };
-  }, []);
+  }, [landmarks]);
 
   return (
     <>
@@ -84,12 +97,15 @@ const RecommendLocation = () => {
           marginTop: 10,
         }}
       >
-        {DUMMY_BOXES.map((place, index) => (
+        {landmarks.map((landmark, index) => (
           <div
             key={index}
             style={{
               width: "100%",
-              backgroundImage: `url(${place.imageUrl})`,
+              backgroundImage: `url(${
+                landmark.place_posts[landmark.place_posts.length - 1]
+                  ?.post_image_url
+              })`,
               backgroundSize: "cover",
               display: "flex",
               justifyContent: "center",
@@ -104,8 +120,10 @@ const RecommendLocation = () => {
           >
             {loadingStates[index] ? (
               <SkeletonLoader width="100%" height="100%" />
+            ) : landmark.place_name.length > 6 ? (
+              `${landmark.place_name.slice(0, 6)}...`
             ) : (
-              place.placeName
+              landmark.place_name
             )}
           </div>
         ))}

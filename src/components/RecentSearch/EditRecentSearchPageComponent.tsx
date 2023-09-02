@@ -1,15 +1,13 @@
 /** @jsxImportSource @emotion/react */
 
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import { searchState } from "../../store/searchAtom";
 import { useState } from "react";
 import colors from "../../constants/colors";
 import styled from "@emotion/styled";
-
 import { SearchList } from "./RecentSearchesPanel";
-import { Search } from "../../types/types";
+import { RecentSearch } from "../../types/types";
 import { useDeleteComfirmModal } from "../../hooks/useDeleteComfirmModal";
+import useRecentSearch from "../../hooks/search/useRecentSearch";
 
 import BackButton from "../UI/BackButton";
 import EditSearchItem from "./EditSearchItem";
@@ -17,32 +15,36 @@ import Button from "../UI/Button";
 import RecentSearchesDeleteModal from "./RecentSearchesDeleteModal";
 
 const EditRecentSearchPageComponent = () => {
-  const [recentSearches, setRecentSearches] = useRecoilState(searchState);
-  const [selectedSearches, setSelectedSearches] = useState<Search[]>([]);
+  const { recentSearchHistory, deleteSelectedRecentSearchHistory } =
+    useRecentSearch();
+  const [selectedSearches, setSelectedSearches] = useState<RecentSearch[]>([]);
   const deleteConfirmModal = useDeleteComfirmModal();
 
   const navigate = useNavigate();
 
-  const handleSelect = (search: Search) => {
-    if (selectedSearches.includes(search)) {
-      setSelectedSearches((prev) => prev.filter((item) => item !== search));
+  const handleSelect = (targetSearch: RecentSearch) => {
+    if (selectedSearches.includes(targetSearch)) {
+      setSelectedSearches((prevSelecedSearches) =>
+        prevSelecedSearches.filter((search) => search !== targetSearch)
+      );
     } else {
-      setSelectedSearches((prev) => [...prev, search]);
+      setSelectedSearches((prevSelecedSearches) => [
+        ...prevSelecedSearches,
+        targetSearch,
+      ]);
     }
   };
 
   const handleSelectAll = () => {
-    if (selectedSearches.length === recentSearches.length) {
+    if (selectedSearches.length === recentSearchHistory.length) {
       setSelectedSearches([]);
     } else {
-      setSelectedSearches(recentSearches);
+      setSelectedSearches(recentSearchHistory);
     }
   };
 
-  const handleDelete = () => {
-    setRecentSearches((prev: Search[]) =>
-      prev.filter((search) => !selectedSearches.includes(search))
-    );
+  const handleDeleteSelected = () => {
+    deleteSelectedRecentSearchHistory(selectedSearches);
     setSelectedSearches([]);
     deleteConfirmModal.onClose();
   };
@@ -51,19 +53,19 @@ const EditRecentSearchPageComponent = () => {
     <Layout>
       <RecentSearchesDeleteModal
         onClose={deleteConfirmModal.onClose}
-        onDelete={handleDelete}
+        onDelete={handleDeleteSelected}
       />
 
       <Header>
         <BackButton onClick={() => navigate(-1)} size={18} />
         <Title>
           최근검색 편집&nbsp;
-          <ColoredText>{recentSearches.length}</ColoredText>
+          <ColoredText>{recentSearchHistory.length}</ColoredText>
         </Title>
       </Header>
 
       <SearchList>
-        {recentSearches.map((search: Search) => {
+        {recentSearchHistory.map((search: RecentSearch) => {
           const isSelected = selectedSearches.includes(search);
           return (
             <EditSearchItem

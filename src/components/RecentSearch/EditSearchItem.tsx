@@ -1,4 +1,4 @@
-import { Search } from "../../types/types";
+import { RecentSearch } from "../../types/types";
 import {
   SearchContentWrapper,
   RecentSearchItemContainer,
@@ -8,8 +8,8 @@ import B1 from "../UI/B1";
 
 interface EditSearchItemProps {
   isSelected: boolean;
-  search: Search;
-  handleClick: (search: Search) => void;
+  search: RecentSearch;
+  handleClick: (search: RecentSearch) => void;
 }
 
 const EditSearchItem = ({
@@ -30,7 +30,7 @@ const EditSearchItem = ({
             alt="icon"
           />
         </div>
-        <B1 css={{ fontWeight: "400" }}>{search.search}</B1>
+        <B1 css={{ fontWeight: "400" }}>{search.searchQuery}</B1>
       </SearchContentWrapper>
     </RecentSearchItemContainer>
   );

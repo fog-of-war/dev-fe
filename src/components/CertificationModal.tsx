@@ -98,45 +98,31 @@ const CertificationModal = ({
         toast.success("인증에 성공했습니다.");
         navigate("/crop_image");
 
-        // // 인증에 성공했을 경우
-        // if (
-        //   certificationResults.location === "통과" &&
-        //   certificationResults.date === "통과"
-        // ) {
-        //   setCertifiedImage({
-        //     imageURL,
-        //     place_name,
-        //     place_latitude,
-        //     place_longitude,
-        //   });
+        // 장소만 인증에 성공했을 경우
+        if (
+          certificationResults.location === "통과" &&
+          certificationResults.date === "미통과"
+        ) {
+          toast.error("촬영 당일 자정까지 인증이 가능합니다.");
+        }
 
-        //   toast.success("인증에 성공했습니다.");
-        //   navigate("/crop_image");
-        // }
+        // 시간만 인증에 성공했을 경우
+        if (
+          certificationResults.location === "미통과" &&
+          certificationResults.date === "통과"
+        ) {
+          toast.error("촬영한 곳과 100m 이내의 장소가 아닙니다.");
+        }
 
-        // // 장소만 인증에 성공했을 경우
-        // if (
-        //   certificationResults.location === "통과" &&
-        //   certificationResults.date === "미통과"
-        // ) {
-        //   toast.error("시간 인증에 실패했습니다.");
-        // }
-
-        // // 시간만 인증에 성공했을 경우
-        // if (
-        //   certificationResults.location === "미통과" &&
-        //   certificationResults.date === "통과"
-        // ) {
-        //   toast.error("장소 인증에 실패했습니다.");
-        // }
-
-        // // 장소와 시간 모두 인증에 실패했을 경우
-        // if (
-        //   certificationResults.location === "미통과" &&
-        //   certificationResults.date === "미통과"
-        // ) {
-        //   toast.error("장소와 시간 인증에 실패했습니다.");
-        // }
+        // 장소와 시간 모두 인증에 실패했을 경우
+        if (
+          certificationResults.location === "미통과" &&
+          certificationResults.date === "미통과"
+        ) {
+          toast.error(
+            "100m 이내의 장소, 촬영 당일 자정까지 인증이 가능합니다."
+          );
+        }
 
         setLoading(false);
       }

@@ -1,34 +1,27 @@
 /** @jsxImportSource @emotion/react */
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useContext, useState } from "react";
 import { GoogleMap, LoadScriptNext, Marker } from "@react-google-maps/api";
-
 import retroMapStyle from "../../data/retroMapStyle.json";
 import { bounds, options } from "../../data/mapData";
+import { Place } from "../../types/types";
+import { MapContext } from "../../context/MapContext";
+import usePolygon from "../../hooks/map/usePolygon";
+import useMapMarker from "../../hooks/map/useMapMarker";
+import useMapGlobalState from "../../hooks/map/useMapGlobalState";
+import useCurrentLocation from "../../hooks/map/useCurrentLocation";
+
+import { getMyRegion } from "../../api/user";
 
 import SeoulPolygon from "./SeoulPolygon";
 import OutsidePolygon from "./OutsidePolygon";
 import CustomMarker from "./CustomMarker";
-import useCurrentLocation from "../../hooks/map/useCurrentLocation";
 import CurrentLocationButton from "./CurrentLocationButton";
-import usePolygon from "../../hooks/map/usePolygon";
-import useGoogleMap from "../../hooks/map/useGoogleMap";
-import { Place } from "../../types/types";
-import { useRecoilValue } from "recoil";
-import { selectedPlaceAtom } from "../../store/mapAtom";
-import { toast } from "react-hot-toast";
 
-// Marker 데이터 인터페이스 정의
-interface MarkerData {
-  position: google.maps.LatLngLiteral;
-  placeName: string;
-  roadAddress: string;
-  category: string;
-  x: number;
-  y: number;
-}
+// 현재 위치 마커 아이콘 이미지 URL
+const CURRENT_LOCATION_ICON = "/images/map/humanIcon.png";
 
 // 컨테이너 크기 정의
-const containerStyle = {
+const CONTAINER_STYLE = {
   width: "100%",
   height: "100%",
 };
@@ -37,64 +30,63 @@ interface MapProps {
   places?: Place[];
 }
 
+interface RegionData {
+  region_id: number;
+  region_name: string;
+  region_visited_count: number;
+}
+
 const Map = ({ places }: MapProps) => {
-  // 지도의 인스턴스를 참조하기 위한 ref 생성
-  const mapRef = useRef<google.maps.Map | null>(null);
+  const { map, mapRef, selectedPlace, setSelectedPlace, setMap } =
+    useContext(MapContext);
 
-  const selectedPlace = useRecoilValue(selectedPlaceAtom);
+  // 마커 관련 로직을 관리하는 커스텀 훅
+  const { markers, openMarkerName, setOpenMarkerName, handleMarkerClick } =
+    useMapMarker(places, mapRef);
 
-  // 마커 데이터 상태 관리
-  const [markers, setMarkers] = useState<MarkerData[]>([]);
+  // 지도 View 전역 상태 로직을 관리하는 커스텀 훅
+  const { center, zoom, handleZoomChange, handleMapChange } =
+    useMapGlobalState(mapRef);
 
-  // 마커 클릭 시 정보창을 열기 위한 상태
-  const [openMarkerName, setOpenMarkerName] = useState<string | null>(null);
+  // 현재 위치 기반 로직을 관리하는 커스텀 훅
+  const { currentLocation, isInSeoul, handleCurrentLocationClick } =
+    useCurrentLocation();
 
-  // 현재 위치 마커 아이콘 이미지 URL
-  const currentLocationIconUrl = "/images/map/humanIcon.png";
-
-  const {
-    view,
-    handleCurrentLocationClick,
-    handlePolygonClick,
-    handleZoomChange,
-    handleMapChange,
-    handleMarkerClick,
-  } = useGoogleMap(mapRef);
-  const { currentLocation, isInSeoul } = useCurrentLocation();
-  const polygons = usePolygon(view.zoom);
-
-  // Map 컴포넌트가 마운트되거나 places props가 변경되면 마커 데이터 업데이트
-  useEffect(() => {
-    if (places) {
-      // places 데이터를 기반으로 markers 배열 생성
-      const newMarkers = places.map((place) => ({
-        position: {
-          lat: +place.y,
-          lng: +place.x,
-        },
-        placeName: place.place_name,
-        roadAddress: place.road_address_name,
-        category: place.category_name,
-        x: +place.y,
-        y: +place.x,
-      }));
-      setMarkers(newMarkers);
-    }
-  }, [places]);
+  // 폴리곤 기반 로직을 관리하는 커스텀 훅
+  const { polygons, handlePolygonClick } = usePolygon(zoom, map);
 
   useEffect(() => {
-    setOpenMarkerName(selectedPlace);
-  }, [selectedPlace]);
+    if (selectedPlace) {
+      map?.panTo({ lat: +selectedPlace.y, lng: +selectedPlace.x });
+      map?.setZoom(18);
+    }
+
+    setTimeout(() => {
+      setSelectedPlace(null);
+    }, 1000);
+  }, [selectedPlace, map]);
+
+  const [regionName, setRegionName] = useState<string | null>(null);
+
+  const [regionVisitedCount, setRegionVisitedCount] = useState<number | null>(
+    null
+  );
 
   useEffect(() => {
-    if (!currentLocation) {
-      toast.loading("현재 위치를 불러오는 중입니다.");
-    }
+    getMyRegion().then((regionData) => {
+      // Response 데이터에서 구 이름과 포인트 값을 추출하여 options 객체에 반영
+      regionData.forEach(
+        (region: { region_english_name: any; region_visited_count: any }) => {
+          const regionEnglishName = region.region_english_name;
+          const regionVisitedCount = region.region_visited_count;
 
-    if (currentLocation) {
-      toast.dismiss();
-    }
-  }, [currentLocation]);
+          if (options.hasOwnProperty(regionEnglishName)) {
+            options[regionEnglishName].point = regionVisitedCount;
+          }
+        }
+      );
+    });
+  }, []);
 
   return (
     <div
@@ -109,9 +101,9 @@ const Map = ({ places }: MapProps) => {
         googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string}
       >
         <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={view.center}
-          zoom={view.zoom}
+          mapContainerStyle={CONTAINER_STYLE}
+          center={center}
+          zoom={zoom}
           options={{
             minZoom: 10.3,
             restriction: {
@@ -125,6 +117,7 @@ const Map = ({ places }: MapProps) => {
           }}
           onLoad={(map) => {
             mapRef.current = map;
+            setMap(map);
           }}
           onZoomChanged={handleZoomChange}
           onCenterChanged={handleMapChange}
@@ -132,7 +125,7 @@ const Map = ({ places }: MapProps) => {
           {/* 서울 주변 폴리곤 */}
           <OutsidePolygon />
           {/* 마커 렌더링 */}
-          {view.zoom >= 14 &&
+          {zoom >= 14 &&
             markers.map((marker, index) => (
               <CustomMarker
                 key={index}
@@ -153,7 +146,7 @@ const Map = ({ places }: MapProps) => {
                 }}
               />
             ))}
-          {view.zoom <= 14 &&
+          {zoom <= 14 &&
             polygons.map((polygon, index) => (
               <SeoulPolygon
                 key={index}
@@ -172,11 +165,11 @@ const Map = ({ places }: MapProps) => {
           )}
 
           {/* 현재 위치 마커 */}
-          {view.zoom >= 14 && currentLocation && (
+          {zoom >= 14 && currentLocation && (
             <Marker
               position={currentLocation}
               icon={{
-                url: currentLocationIconUrl,
+                url: CURRENT_LOCATION_ICON,
                 scaledSize: new google.maps.Size(30, 30),
               }}
             />

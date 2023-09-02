@@ -26,7 +26,7 @@ const AppRoutes = () => {
       <Route path="/profile" Component={MyPage} />
       <Route path="/explore" Component={ExplorePage} />
       <Route path="/search" Component={SearchPage} />
-      <Route path="/edit/search" Component={EditRecentSearchPage} />
+      <Route path="/edit/recent_search" Component={EditRecentSearchPage} />
       <Route path="/search/result" Component={SearchResultPage} />
       <Route path="/profile_edit" Component={ProfileEditPage} />
       <Route path="/reviewList/:placeId" Component={ReviewPage} />

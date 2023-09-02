@@ -12,13 +12,17 @@ const UserGuard = ({ children }: { children: ReactNode }) => {
     if (currentUser.data === null && !currentUser.isLoading) {
       navigate(LINK.AUTH_PAGE);
     }
-  }, []);
+  }, [currentUser.data, currentUser.isLoading]);
 
   if (
     currentUser.data === null &&
     !ALLOWED_LINK.includes(window.location.pathname)
   ) {
     return null;
+  }
+
+  if (currentUser.isError) {
+    return <div>에러삐비빕</div>;
   }
 
   return <>{children}</>;

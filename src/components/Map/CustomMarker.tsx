@@ -207,8 +207,8 @@ const CustomMarker: React.FC<CustomMarkerProps & { isMarkerOpen: boolean }> = ({
               place_name={placeName}
               category={category}
               roadAddress={roadAddress}
-              place_latitude={x}
-              place_longitude={y}
+              place_longitude={x}
+              place_latitude={y}
             />
           </div>
         </div>

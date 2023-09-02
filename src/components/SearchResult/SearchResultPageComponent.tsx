@@ -1,17 +1,17 @@
 /** @jsxImportSource @emotion/react */
 
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ExplorePageLayout } from "../../styles/styles";
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useContext } from "react";
 import { Place } from "../../types/types";
-import { useRecoilValue } from "recoil";
-import { selectedPlaceAtom } from "../../store/mapAtom";
+import { MapContext } from "../../context/MapContext";
+import useMapSearchQuery from "../../hooks/useMapSearchQuery";
+import { LINK } from "../../constants/links";
 
 import SearchBarDisplay from "../Search/SearchBarDisplay";
 import PlaceItem from "../Place/PlaceItem";
 import Map from "../Map/GoogleMap";
-import useMapSearchQuery from "../../hooks/useMapSearchQuery";
 
 interface SearchResultPageComonentProps {
   searchQuery: string;
@@ -20,12 +20,8 @@ interface SearchResultPageComonentProps {
 const SearchResultPageComponent = ({
   searchQuery,
 }: SearchResultPageComonentProps) => {
-  const selectedPlace = useRecoilValue(selectedPlaceAtom);
-
-  const [isMapView, setIsMapView] = useState(selectedPlace ? true : false);
-
   const navigate = useNavigate();
-
+  const { isMapView, setIsMapView } = useContext(MapContext);
   const searchResult = useMapSearchQuery(searchQuery);
 
   return (
@@ -46,7 +42,7 @@ const SearchResultPageComponent = ({
         )}
 
         <SearchBarDisplay value={searchQuery} isMap={false} />
-        <IconWrapper onClick={() => navigate("/explore")}>
+        <IconWrapper onClick={() => navigate(LINK.EXPLORE_PAGE)}>
           <img src="/images/search/xIconBold.png" alt="map_icon" height={22} />
         </IconWrapper>
       </SearchBarContainer>
@@ -97,4 +93,7 @@ const PlaceList = styled.ul`
   gap: 15px;
   background-color: white;
   overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;

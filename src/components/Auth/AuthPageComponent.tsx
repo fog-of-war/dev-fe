@@ -1,14 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
 import styled from "@emotion/styled";
-import { useEffect } from "react";
-import { useQueryClient } from "react-query";
-import { getCurrentUser, oAuthLogin } from "../../api/auth";
-import { useNavigate } from "react-router-dom";
-import { LINK } from "../../constants/links";
 
 import Spacing from "../UI/Spacing";
-import { toast } from "react-hot-toast";
 import useOAuth from "./hooks/useOAuth";
 
 const OAUTH_ICONS = [

@@ -1,44 +1,47 @@
 import styled from "@emotion/styled";
-import { Search } from "../../types/types";
+import { RecentSearch } from "../../types/types";
 import colors from "../../constants/colors";
-import { useSetRecoilState } from "recoil";
-import { searchState } from "../../store/searchAtom";
-import { useNavigate } from "react-router-dom";
+import useRecentSearch from "../../hooks/search/useRecentSearch";
+import useSearch from "../../hooks/search/useSearch";
+import { useContext } from "react";
+import { MapContext } from "../../context/MapContext";
 
 import B1 from "../UI/B1";
 
 interface RecentSearchItemProps {
-  search: Search;
+  recentSearch: RecentSearch;
 }
 
-const RecentSearchItem = ({ search }: RecentSearchItemProps) => {
-  const setRecentSearches = useSetRecoilState(searchState);
-  const navigate = useNavigate();
+const RecentSearchItem = ({ recentSearch }: RecentSearchItemProps) => {
+  const { searchQuery, type, place } = recentSearch;
+  const { deleteRecentSearchHistory } = useRecentSearch();
+  const { handleSearchAndRecent } = useSearch();
+  const { handleMapMoveSelectedPlace } = useContext(MapContext);
 
-  const handleSearchDelete = () => {
-    setRecentSearches((prev: Search[]) =>
-      prev.filter((item) => item.id !== search.id)
-    );
+  const handleSearchClick = () => {
+    if (type === "keyword") {
+      handleSearchAndRecent({ searchQuery, type });
+    } else {
+      handleMapMoveSelectedPlace(place!);
+    }
   };
 
   return (
     <RecentSearchItemContainer>
-      <SearchContentWrapper
-        onClick={() => navigate(`/search/result?query=${search.search}`)}
-      >
+      <SearchContentWrapper onClick={handleSearchClick}>
         <div>
           <img
             src={
-              search.type === "keyword"
+              type === "keyword"
                 ? "/images/search/searchIcon.png"
                 : "/images/search/locationIcon.png"
             }
             alt="icon"
           />
         </div>
-        <B1 css={{ fontWeight: "400", flexGrow: 1 }}>{search.search}</B1>
+        <B1 css={{ fontWeight: "400", flexGrow: 1 }}>{searchQuery}</B1>
       </SearchContentWrapper>
-      <DeleteButton onClick={handleSearchDelete}>
+      <DeleteButton onClick={() => deleteRecentSearchHistory(recentSearch)}>
         <img src="/images/search/xIcon.png" alt="icon" height={12} />
       </DeleteButton>
     </RecentSearchItemContainer>

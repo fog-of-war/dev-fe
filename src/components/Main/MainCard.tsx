@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import { getUserData } from "../../api/user";
+import { getMyRank } from "../../api/rank";
 
 import ProgressBar from "../ProgressBar";
 import MainCardMap from "../Map/MainCardMap";
@@ -16,29 +17,6 @@ export interface UserData {
   user_authored_posts: [];
 }
 
-const DUMMY_BADGES = [
-  {
-    imageUrl: "/images/main/dummyBadge.png",
-    badgeName: "더미뱃지",
-  },
-  {
-    imageUrl: "/images/main/dummyBadge.png",
-    badgeName: "더미뱃지",
-  },
-  {
-    imageUrl: "/images/main/dummyBadge.png",
-    badgeName: "더미뱃지",
-  },
-  {
-    imageUrl: "/images/main/dummyBadge.png",
-    badgeName: "더미뱃지",
-  },
-  {
-    imageUrl: "/images/main/dummyBadge.png",
-    badgeName: "더미뱃지",
-  },
-];
-
 const MainCard = () => {
   const navigate = useNavigate();
 
@@ -50,11 +28,22 @@ const MainCard = () => {
 
   const [userAuthoredPosts, setUserAuthoredPosts] = useState<string[]>([]);
 
+  const [rankData, setRankData] = useState({
+    rank: 0,
+  });
+
+  // 유저 데이터 불러오기
   useEffect(() => {
     getUserData().then((userData: UserData) => {
       setUserNickname(userData.user_nickname);
       setUserImageUrl(userData.user_image_url);
       setUserAuthoredPosts(userData.user_authored_posts);
+    });
+
+    getMyRank().then((data) => {
+      setRankData({
+        rank: data.rank,
+      });
     });
 
     setIsLoaded(true);
@@ -145,7 +134,7 @@ const MainCard = () => {
             css={{ width: "24px", height: "24px" }}
           />
         </div>
-        랭킹 5400위
+        랭킹 {rankData.rank}위
       </div>
       <div
         style={{
@@ -157,7 +146,7 @@ const MainCard = () => {
         onClick={() => {
           setIsLoaded(false);
           setTimeout(() => {
-            navigate("/map");
+            navigate("/explore");
           }, 500);
         }}
       >
@@ -185,7 +174,7 @@ const MainCard = () => {
           zIndex: 1,
         }}
       ></div>
-      <MainBadgeList badges={DUMMY_BADGES} />
+      <MainBadgeList />
     </div>
   );
 };

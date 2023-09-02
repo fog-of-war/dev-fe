@@ -10,7 +10,11 @@ interface SearchBarDisplayProps {
   placeholder?: string;
 }
 
-const SearchBarDisplay = ({ value, isMap }: SearchBarDisplayProps) => {
+const SearchBarDisplay = ({
+  value,
+  isMap,
+  placeholder,
+}: SearchBarDisplayProps) => {
   const navigate = useNavigate();
   const url = value ? `/search?query=${value}` : "/search";
 
@@ -23,7 +27,9 @@ const SearchBarDisplay = ({ value, isMap }: SearchBarDisplayProps) => {
       />
       <input
         type="text"
-        defaultValue={value}
+        value={value}
+        readOnly
+        placeholder={placeholder}
         css={{
           border: "none",
           outline: "none",

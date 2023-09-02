@@ -1,5 +1,7 @@
-import { toast } from "react-hot-toast";
 import { axiosBase } from "./axios";
+import { getDataFromLocalStorage } from "../utils/localStorage";
+import { STORAGE_KEY } from "../constants/storage";
+import axios from "axios";
 
 export const oAuthLogin = async (code: string, selectedOAuth: string) => {
   const response = await axiosBase.post(`v1/auth/${selectedOAuth}/oauth`, {
@@ -8,22 +10,26 @@ export const oAuthLogin = async (code: string, selectedOAuth: string) => {
   return response.data;
 };
 
+export const postRefreshToken = async () => {
+  const refreshToken = getDataFromLocalStorage(STORAGE_KEY.REFRESH_TOKEN);
+  if (!refreshToken) return null;
+  const response = await axios.post(
+    `${process.env.REACT_APP_API_URL}v1/auth/refresh`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${refreshToken}`,
+      },
+    }
+  );
+  return response;
+};
+
 export const getCurrentUser = async () => {
-  const accessTokenJSON = localStorage.getItem("accessToken");
   const accessToken: string =
-    accessTokenJSON && JSON.parse(accessTokenJSON).access_token;
+    getDataFromLocalStorage(STORAGE_KEY.ACCESS_TOKEN) || null;
 
   if (!accessToken) return null;
-  try {
-    const response = await axiosBase.get(`v1/users/me`);
-    return response.data;
-  } catch (error: any) {
-    if (error.response?.status === 401) {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
-      toast.error("로그인이 만료되었습니다. 다시 로그인해주세요.");
-      return null;
-    }
-    toast.error(error.response.data.message);
-  }
+  const response = await axiosBase.get(`v1/users/me`);
+  return response.data;
 };
