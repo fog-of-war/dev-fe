@@ -1,5 +1,11 @@
 import { toast } from "react-hot-toast";
-import { PostUploadData, PlacePost, PlaceData, MyPosts } from "../types/types";
+import {
+  PostUploadData,
+  PlacePost,
+  UpdatedReview,
+  PlaceData,
+  MyPosts,
+} from "../types/types";
 import { axiosBase } from "./axios";
 
 export const getAllPostsByPlaceId = async (id: number): Promise<PlaceData> => {
@@ -21,14 +27,17 @@ export const uploadPost = async (
   return newPosting;
 };
 
-export const updatePost = async (post: PlacePost): Promise<PlacePost> => {
+export const updatePost = async (
+  postId: number,
+  post: UpdatedReview
+): Promise<PlacePost> => {
   const data = {
     post_star_rating: post.post_star_rating,
     post_description: post.post_description,
   };
 
   const response = await axiosBase.patch<PlacePost>(
-    `/v1/posts/${post.post_id}`,
+    `/v1/posts/${postId}`,
     data
   );
   const updatedPost = response.data;
