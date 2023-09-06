@@ -15,13 +15,19 @@ import Button from "../UI/Button";
 import RecentSearchesDeleteModal from "./RecentSearchesDeleteModal";
 
 const EditRecentSearchPageComponent = () => {
-  const { recentSearchHistory, deleteSelectedRecentSearchHistory } =
-    useRecentSearch();
-  const [selectedSearches, setSelectedSearches] = useState<RecentSearch[]>([]);
-  const deleteConfirmModal = useDeleteComfirmModal();
-
   const navigate = useNavigate();
 
+  // 선택한 최근 검색어들을 담는 상태
+  const [selectedSearches, setSelectedSearches] = useState<RecentSearch[]>([]);
+
+  // 최근 검색어들을 관리하는 로직을 담은 커스텀 훅
+  const { recentSearchHistory, deleteSelectedRecentSearchHistory } =
+    useRecentSearch();
+
+  // 삭제 확인 모달을 관리하는 커스텀 훅
+  const deleteConfirmModal = useDeleteComfirmModal();
+
+  /** 최근검색어 선택 핸들러 */
   const handleSelect = (targetSearch: RecentSearch) => {
     if (selectedSearches.includes(targetSearch)) {
       setSelectedSearches((prevSelecedSearches) =>
@@ -35,6 +41,7 @@ const EditRecentSearchPageComponent = () => {
     }
   };
 
+  /** 최근검색어 전체 선택 핸들러 */
   const handleSelectAll = () => {
     if (selectedSearches.length === recentSearchHistory.length) {
       setSelectedSearches([]);
@@ -43,6 +50,7 @@ const EditRecentSearchPageComponent = () => {
     }
   };
 
+  /** 선택된 최근검색어 삭제 핸들러 */
   const handleDeleteSelected = () => {
     deleteSelectedRecentSearchHistory(selectedSearches);
     setSelectedSearches([]);
