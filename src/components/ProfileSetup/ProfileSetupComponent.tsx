@@ -7,14 +7,17 @@ import { useFunnel } from "../../hooks/useFunnel";
 import { toast } from "react-hot-toast";
 import { LINK } from "../../constants/links";
 import { setUpProfile } from "../../api/user";
+import { DEFAULT_PROFILE_IMAGE_URL } from "../../constants/images";
+import { ProfileSetupData } from "../../types/types";
+import { useQueryClient } from "react-query";
+import { QUERY_KEY } from "../../react-query/queryKey";
 
 import SetupNickName from "./SetupNickName";
 import SetupProfileImage from "./SetupProfileImage";
-import { DEFAULT_PROFILE_IMAGE_URL } from "../../constants/images";
-import { ProfileSetupData } from "../../types/types";
 
 const ProfileSetupComponent = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [profileData, setProfileData] = useState<ProfileSetupData>({
     user_nickname: "",
@@ -26,6 +29,7 @@ const ProfileSetupComponent = () => {
   const handleSubmit = async () => {
     try {
       await setUpProfile(profileData);
+      queryClient.invalidateQueries([QUERY_KEY.CURRENT_USER]);
       toast.success("가입이 완료되었습니다.");
       navigate(LINK.HOME_PAGE);
     } catch (error: any) {
