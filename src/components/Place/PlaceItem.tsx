@@ -10,7 +10,6 @@ import { MapContext } from "../../context/MapContext";
 import B2 from "../UI/B2";
 import B1 from "../UI/B1";
 import PlaceImageList from "./PlaceImageList";
-import NavigateModal from "../Map/NavigateModal";
 
 interface PlaceItemProps extends React.HTMLAttributes<HTMLLIElement> {
   place: Place;
@@ -28,17 +27,13 @@ const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
     road_address_name,
     naver_place_url,
   } = place;
+
   const navigateModal = useNavigateModal();
+
   const { handleMapMoveSelectedPlace } = useContext(MapContext);
 
   return (
     <PlaceItemContainer {...props}>
-      <NavigateModal
-        isOpen={navigateModal.isOpen}
-        onClose={navigateModal.onClose}
-        naverPlaceUrl={naver_place_url}
-        kakaoPlaceUrl={place_url}
-      />
       <TitleContainer onClick={() => handleMapMoveSelectedPlace(place)}>
         <TitleWrapper>
           <h4>{place_name}</h4>
@@ -51,7 +46,10 @@ const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
           }}
           onClick={(event) => {
             event.stopPropagation();
-            navigateModal.onOpen();
+            navigateModal.onOpen({
+              kakaoUrl: place_url,
+              naverUrl: naver_place_url,
+            });
           }}
         >
           지도 자세히 보기
