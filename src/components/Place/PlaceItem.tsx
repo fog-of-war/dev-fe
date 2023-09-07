@@ -26,6 +26,7 @@ const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
     place_star_rating,
     distance,
     road_address_name,
+    naver_place_url,
   } = place;
   const navigateModal = useNavigateModal();
   const { handleMapMoveSelectedPlace } = useContext(MapContext);
@@ -35,7 +36,8 @@ const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
       <NavigateModal
         isOpen={navigateModal.isOpen}
         onClose={navigateModal.onClose}
-        url={place_url}
+        naverPlaceUrl={naver_place_url}
+        kakaoPlaceUrl={place_url}
       />
       <TitleContainer onClick={() => handleMapMoveSelectedPlace(place)}>
         <TitleWrapper>
@@ -57,7 +59,7 @@ const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
       </TitleContainer>
       <RatingWrapper>
         <img src="/images/search/starIcon.png" alt="star" height={21} />
-        {place_posts ? (
+        {place_posts.length !== 0 ? (
           <B1>
             {place_star_rating || 0} ({place_posts?.length || 0})
           </B1>
@@ -72,7 +74,7 @@ const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
         <span css={{ color: colors.paleGrey }}>|</span>
         <B1> {road_address_name}</B1>
       </LocationWrapper>
-      <PlaceImageList posts={place_posts} displayAmount={displayAmount} />
+      <PlaceImageList posts={place_posts || []} displayAmount={displayAmount} />
     </PlaceItemContainer>
   );
 };
