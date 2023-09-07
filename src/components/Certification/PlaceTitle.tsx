@@ -73,7 +73,15 @@ const PlaceTitle = ({ icon, name, category, roadAddress }: PlaceTitleProps) => {
         gap: "5px",
       }}
     >
-      <div css={{ display: "flex", alignItems: "center", gap: 5 }}>
+      <div
+        css={{
+          display: "flex",
+          alignItems: "center",
+          gap: 5,
+          width: "100%",
+          justifyContent: "space-between",
+        }}
+      >
         <h1
           css={{
             fontSize: "20px",
@@ -82,6 +90,16 @@ const PlaceTitle = ({ icon, name, category, roadAddress }: PlaceTitleProps) => {
         >
           {truncatedName}
         </h1>
+        <div
+          css={{
+            display: "flex",
+            color: colors.lightGrey,
+            fontWeight: 600,
+            marginLeft: "auto",
+          }}
+        >
+          더보기
+        </div>
       </div>
       <div
         css={{
