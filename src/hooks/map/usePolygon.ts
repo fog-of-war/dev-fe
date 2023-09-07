@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import seoulData from "../../data/seoul2.json";
+import { options } from "../../data/mapData";
+import { getMyRegion } from "../../api/user";
 
 interface Polygon {
   name: string;
@@ -64,7 +66,25 @@ const usePolygon = (zoomLevel: number, map: google.maps.Map | null) => {
     return () => setPolygons([]);
   }, [zoomLevel]);
 
-  return { polygons, handlePolygonClick };
+  // 내가 방문한 지역 정보를 가져와서 options 객체에 반영하는 함수
+  const updateVisitedRegions = () => {
+    getMyRegion().then((regionData) => {
+      const updatedOptions = { ...options }; // options 객체를 복사합니다.
+
+      regionData.forEach(
+        (region: { region_english_name: any; region_visited_count: any }) => {
+          const regionEnglishName = region.region_english_name;
+          const regionVisitedCount = region.region_visited_count;
+
+          if (updatedOptions.hasOwnProperty(regionEnglishName)) {
+            updatedOptions[regionEnglishName].point = regionVisitedCount;
+          }
+        }
+      );
+    });
+  };
+
+  return { polygons, handlePolygonClick, updateVisitedRegions };
 };
 
 export default usePolygon;
