@@ -30,12 +30,6 @@ interface MapProps {
   places?: Place[];
 }
 
-interface RegionData {
-  region_id: number;
-  region_name: string;
-  region_visited_count: number;
-}
-
 const Map = ({ places }: MapProps) => {
   const { map, mapRef, selectedPlace, setSelectedPlace, setMap } =
     useContext(MapContext);
@@ -53,7 +47,10 @@ const Map = ({ places }: MapProps) => {
     useCurrentLocation();
 
   // 폴리곤 기반 로직을 관리하는 커스텀 훅
-  const { polygons, handlePolygonClick } = usePolygon(zoom, map);
+  const { polygons, handlePolygonClick, updateVisitedRegions } = usePolygon(
+    zoom,
+    map
+  );
 
   useEffect(() => {
     if (selectedPlace) {
@@ -66,26 +63,9 @@ const Map = ({ places }: MapProps) => {
     }, 1000);
   }, [selectedPlace, map]);
 
-  const [regionName, setRegionName] = useState<string | null>(null);
-
-  const [regionVisitedCount, setRegionVisitedCount] = useState<number | null>(
-    null
-  );
-
+  // 내가 방문한 지역 정보를 가져오고 options 객체를 업데이트합니다.
   useEffect(() => {
-    getMyRegion().then((regionData) => {
-      // Response 데이터에서 구 이름과 포인트 값을 추출하여 options 객체에 반영
-      regionData.forEach(
-        (region: { region_english_name: any; region_visited_count: any }) => {
-          const regionEnglishName = region.region_english_name;
-          const regionVisitedCount = region.region_visited_count;
-
-          if (options.hasOwnProperty(regionEnglishName)) {
-            options[regionEnglishName].point = regionVisitedCount;
-          }
-        }
-      );
-    });
+    updateVisitedRegions();
   }, []);
 
   return (
