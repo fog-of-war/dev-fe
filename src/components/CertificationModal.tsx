@@ -33,6 +33,8 @@ interface CertificationModalProps {
   place_name: string;
   category: string;
   roadAddress: string;
+  naverPlaceUrl: string;
+  placeUrl: string;
   place_latitude: number;
   place_longitude: number;
 }
@@ -41,6 +43,8 @@ const CertificationModal = ({
   place_name,
   category,
   roadAddress,
+  naverPlaceUrl,
+  placeUrl,
   place_latitude,
   place_longitude,
 }: CertificationModalProps) => {
@@ -145,12 +149,15 @@ const CertificationModal = ({
           display: "flex",
           flexDirection: "column",
           gap: 15,
+          position: "relative",
         }}
       >
         <PlaceTitle
           name={place_name}
           category={category}
           roadAddress={roadAddress}
+          naverPlaceUrl={naverPlaceUrl}
+          placeUrl={placeUrl}
           icon={DUMMY_DATA.icon}
         />
         <PlaceImages

@@ -113,6 +113,8 @@ const Map = ({ places }: MapProps) => {
                 placeName={marker.placeName}
                 roadAddress={marker.roadAddress}
                 category={marker.category}
+                naverPlaceUrl={marker.naverPlaceUrl}
+                placeUrl={marker.placeUrl}
                 x={marker.x}
                 y={marker.y}
                 isMarkerOpen={marker.placeName === openMarkerName}
