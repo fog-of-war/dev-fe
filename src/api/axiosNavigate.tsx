@@ -16,20 +16,13 @@ export default function AxiosNavigation() {
       (config) => {
         return config;
       },
-      async (error) => {
-        const {
-          config,
-          response: { status },
-        } = error;
-
-        console.log("응답에러");
-
+      async (error: any) => {
         //토큰이 만료되을 때
-        if (status === 401) {
+        if (error.response?.status === 401) {
           if (error.response.data.message === "Unauthorized") {
             console.log("토큰 만료");
 
-            const originRequest = config;
+            const originRequest = error.config;
             //리프레시 토큰 api
             const response = await postRefreshToken();
             //리프레시 토큰 요청이 성공할 때

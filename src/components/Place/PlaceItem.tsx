@@ -12,21 +12,22 @@ import B1 from "../UI/B1";
 import PlaceImageList from "./PlaceImageList";
 import NavigateModal from "../Map/NavigateModal";
 
-const DUMMY_IMAGE: string[] = [
-  "https://source.unsplash.com/random",
-  "https://source.unsplash.com/random",
-  "https://source.unsplash.com/random",
-  "https://source.unsplash.com/random",
-  "https://source.unsplash.com/random",
-  "https://source.unsplash.com/random",
-];
-
 interface PlaceItemProps extends React.HTMLAttributes<HTMLLIElement> {
   place: Place;
   displayAmount: 3 | 4;
 }
 
 const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
+  const {
+    place_name,
+    place_url,
+    category_group_name,
+    place_posts,
+    place_star_rating,
+    distance,
+    road_address_name,
+    naver_place_url,
+  } = place;
   const navigateModal = useNavigateModal();
   const { handleMapMoveSelectedPlace } = useContext(MapContext);
 
@@ -35,33 +36,45 @@ const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
       <NavigateModal
         isOpen={navigateModal.isOpen}
         onClose={navigateModal.onClose}
-        url={place.place_url}
+        naverPlaceUrl={naver_place_url}
+        kakaoPlaceUrl={place_url}
       />
       <TitleContainer onClick={() => handleMapMoveSelectedPlace(place)}>
         <TitleWrapper>
-          <h4>{place.place_name}</h4>
-          <B2 css={{ color: colors.lightGrey }}>{place.category_group_name}</B2>
+          <h4>{place_name}</h4>
+          <B2 css={{ color: colors.lightGrey }}>{category_group_name}</B2>
         </TitleWrapper>
         <B1
           css={{
             color: colors.lightGrey,
             cursor: "pointer",
           }}
-          onClick={navigateModal.onOpen}
+          onClick={(event) => {
+            event.stopPropagation();
+            navigateModal.onOpen();
+          }}
         >
           지도 자세히 보기
         </B1>
       </TitleContainer>
       <RatingWrapper>
         <img src="/images/search/starIcon.png" alt="star" height={21} />
-        <B1>4.5 (499)</B1>
+        {place_posts.length !== 0 ? (
+          <B1>
+            {place_star_rating || 0} ({place_posts?.length || 0})
+          </B1>
+        ) : (
+          <B1 css={{ color: colors.primary }}>
+            이 장소의 첫번째 탐험자가 되어 보세요!
+          </B1>
+        )}
       </RatingWrapper>
       <LocationWrapper>
-        <B1>{(+place.distance / 1000).toFixed(1)}km </B1>
+        <B1>{(+distance / 1000).toFixed(1)}km </B1>
         <span css={{ color: colors.paleGrey }}>|</span>
-        <B1> {place.road_address_name}</B1>
+        <B1> {road_address_name}</B1>
       </LocationWrapper>
-      <PlaceImageList images={DUMMY_IMAGE} displayAmount={displayAmount} />
+      <PlaceImageList posts={place_posts || []} displayAmount={displayAmount} />
     </PlaceItemContainer>
   );
 };

@@ -14,6 +14,7 @@ import { QUERY_KEY } from "../../react-query/queryKey";
 
 import SetupNickName from "./SetupNickName";
 import SetupProfileImage from "./SetupProfileImage";
+import { getCurrentUser } from "../../api/auth";
 
 const ProfileSetupComponent = () => {
   const navigate = useNavigate();
@@ -29,7 +30,8 @@ const ProfileSetupComponent = () => {
   const handleSubmit = async () => {
     try {
       await setUpProfile(profileData);
-      queryClient.invalidateQueries([QUERY_KEY.CURRENT_USER]);
+      await getCurrentUser();
+      queryClient.setQueryData(QUERY_KEY.CURRENT_USER, getCurrentUser);
       toast.success("가입이 완료되었습니다.");
       navigate(LINK.HOME_PAGE);
     } catch (error: any) {
