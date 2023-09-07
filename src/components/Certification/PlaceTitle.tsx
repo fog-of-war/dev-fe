@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from "react";
 import colors from "../../constants/colors";
 import B1 from "../UI/B1";
 import NavigateModal from "../Map/NavigateModal";
