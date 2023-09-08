@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useContext } from "react";
 import { GoogleMap, LoadScriptNext, Marker } from "@react-google-maps/api";
 import retroMapStyle from "../../data/retroMapStyle.json";
 import { bounds, options } from "../../data/mapData";
@@ -9,8 +9,6 @@ import usePolygon from "../../hooks/map/usePolygon";
 import useMapMarker from "../../hooks/map/useMapMarker";
 import useMapGlobalState from "../../hooks/map/useMapGlobalState";
 import useCurrentLocation from "../../hooks/map/useCurrentLocation";
-
-import { getMyRegion } from "../../api/user";
 
 import SeoulPolygon from "./SeoulPolygon";
 import OutsidePolygon from "./OutsidePolygon";
@@ -33,6 +31,8 @@ interface MapProps {
 const Map = ({ places }: MapProps) => {
   const { map, mapRef, selectedPlace, setSelectedPlace, setMap } =
     useContext(MapContext);
+
+  console.log(places);
 
   // 마커 관련 로직을 관리하는 커스텀 훅
   const { markers, openMarkerName, setOpenMarkerName, handleMarkerClick } =
@@ -115,6 +115,7 @@ const Map = ({ places }: MapProps) => {
                 category={marker.category}
                 naverPlaceUrl={marker.naverPlaceUrl}
                 placeUrl={marker.placeUrl}
+                placePosts={marker.placePosts}
                 x={marker.x}
                 y={marker.y}
                 isMarkerOpen={marker.placeName === openMarkerName}
