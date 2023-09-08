@@ -32,8 +32,6 @@ const Map = ({ places }: MapProps) => {
   const { map, mapRef, selectedPlace, setSelectedPlace, setMap } =
     useContext(MapContext);
 
-  console.log(places);
-
   // 마커 관련 로직을 관리하는 커스텀 훅
   const { markers, openMarkerName, setOpenMarkerName, handleMarkerClick } =
     useMapMarker(places, mapRef);
