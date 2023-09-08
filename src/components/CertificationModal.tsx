@@ -27,6 +27,7 @@ const DUMMY_DATA = {
     "https://source.unsplash.com/random",
   ],
   point: 500,
+  place_posts: [{ post_image_url: "https://source.unsplash.com/random" }],
 };
 
 interface CertificationModalProps {
@@ -35,6 +36,10 @@ interface CertificationModalProps {
   roadAddress: string;
   naverPlaceUrl: string;
   placeUrl: string;
+  placePosts: Array<{
+    post_id: number;
+    post_image_url: string;
+  }>;
   place_latitude: number;
   place_longitude: number;
 }
@@ -45,6 +50,7 @@ const CertificationModal = ({
   roadAddress,
   naverPlaceUrl,
   placeUrl,
+  placePosts,
   place_latitude,
   place_longitude,
 }: CertificationModalProps) => {
@@ -161,7 +167,7 @@ const CertificationModal = ({
           icon={DUMMY_DATA.icon}
         />
         <PlaceImages
-          images={DUMMY_DATA.images}
+          images={placePosts.map((post) => post.post_image_url)}
           onClick={() => {
             console.log("하위");
           }}
