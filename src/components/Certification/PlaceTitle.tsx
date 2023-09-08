@@ -87,12 +87,6 @@ const PlaceTitle = ({
         gap: "5px",
       }}
     >
-      <NavigateModal
-        isOpen={navigateModal.isOpen}
-        onClose={navigateModal.onClose}
-        naverPlaceUrl={naverPlaceUrl}
-        kakaoPlaceUrl={placeUrl}
-      />
       <div
         css={{
           display: "flex",
@@ -114,7 +108,10 @@ const PlaceTitle = ({
           css={{ color: colors.lightGrey }}
           onClick={(event) => {
             event.stopPropagation();
-            navigateModal.onOpen();
+            navigateModal.onOpen({
+              kakaoUrl: placeUrl,
+              naverUrl: naverPlaceUrl,
+            });
           }}
         >
           더보기
