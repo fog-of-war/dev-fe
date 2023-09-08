@@ -16,6 +16,7 @@ import AuthGuard from "./components/Auth/AuthGuard";
 import { PostingDataProvider } from "./context/PostingDataContext";
 import MapContexProvider from "./context/MapContext";
 import AxiosNavigation from "./api/axiosNavigate";
+import ModalProvider from "./provider/ModalProvider";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ function App() {
                     <MapContexProvider>
                       <AuthGuard>
                         <Layout>
+                          <ModalProvider />
                           <ToasterContext />
                           <AppRoutes />
                           <LoadingComponent />
