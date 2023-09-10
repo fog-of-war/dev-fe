@@ -7,14 +7,13 @@ const AlertWebSocket: React.FC = () => {
   const [receive, setReceive] = useState<any[]>([]);
 
   useEffect(() => {
-    socket.emit("send_alert", "hey");
+    socket.emit("send_alert", "안녕");
 
     const handleReceiveMessage = (data: any) => {
-      console.log(data);
+      console.log(receive);
       if (data && data.message) {
         setReceive((prevReceive) => [...prevReceive, data.message]);
       }
-      console.log(receive);
     };
 
     socket.on("connect", () => {
