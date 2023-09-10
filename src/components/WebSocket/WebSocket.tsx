@@ -1,21 +1,41 @@
-import { set } from "lodash";
 import React, { useEffect, useState } from "react";
-import { io, Socket } from "socket.io-client";
+import { io } from "socket.io-client";
 
-const socket: Socket = io("ws://localhost:5000/v1/ws-react");
+const socket = io("ws://localhost:5000/v1/ws-react");
 
 const WebSocketComponent: React.FC = () => {
   const [message, setMessage] = useState("");
+  const [receive, setReceive] = useState<any[]>([]);
+
   const sendMessage = () => {
-    socket.emit("send_message", { message: message });
+    socket.emit("send_message", message);
   };
+
+  useEffect(() => {
+    const handleReceiveMessage = (data: any) => {
+      setReceive((prevReceive) => [...prevReceive, data.message]);
+    };
+    socket.on("connect", () => {
+      alert("Connected to server");
+    });
+    socket.on("receive_message", handleReceiveMessage);
+
+    return () => {
+      socket.off("receive_message", handleReceiveMessage);
+    };
+  }, [socket]);
 
   return (
     <div>
+      <div>
+        {receive.map((receive, index) => (
+          <div key={index}>{receive}</div>
+        ))}
+      </div>
       <input
         placeholder="message"
         type="text"
-        value={message} // 입력 필드와 상태 변수를 연결
+        value={message}
         onChange={(e) => setMessage(e.target.value)}
       />
       <button onClick={sendMessage}>Send Message</button>
