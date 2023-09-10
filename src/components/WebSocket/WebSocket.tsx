@@ -15,9 +15,7 @@ const WebSocketComponent: React.FC = () => {
     const handleReceiveMessage = (data: any) => {
       setReceive((prevReceive) => [...prevReceive, data.message]);
     };
-    socket.on("connect", () => {
-      alert("Connected to server");
-    });
+    socket.on("connect", () => {});
     socket.on("receive_message", handleReceiveMessage);
 
     return () => {

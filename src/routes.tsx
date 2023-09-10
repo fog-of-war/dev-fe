@@ -20,6 +20,7 @@ import useAuthQuery from "./hooks/useAuthQuery";
 import NotificationsPage from "./pages/NotificationsPage";
 
 import { WebSocketComponent } from "./components/WebSocket";
+import { AlertWebSocket, WebSocketComponent } from "./components/WebSocket";
 const AppRoutes = () => {
   const { data: currentUser } = useAuthQuery();
 
