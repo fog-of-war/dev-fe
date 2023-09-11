@@ -17,10 +17,13 @@ interface SearchResultPageComonentProps {
   searchQuery: string;
 }
 
+/** 검색결과 페이지 컴포넌트 */
 const SearchResultPageComponent = ({
   searchQuery,
 }: SearchResultPageComonentProps) => {
   const navigate = useNavigate();
+
+  // 맵뷰인지 리스트뷰인인지 관리하는 상태 컨텍스트
   const { isMapView, setIsMapView } = useContext(MapContext);
   const searchResult = useMapSearchQuery(searchQuery);
 
@@ -87,7 +90,7 @@ const IconWrapper = styled.div`
 const PlaceList = styled.ul`
   position: absolute;
   inset: 0;
-  padding: 90px 20px 0 20px;
+  padding: 90px 20px;
   display: flex;
   flex-direction: column;
   gap: 15px;
