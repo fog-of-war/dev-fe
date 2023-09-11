@@ -6,6 +6,7 @@ import { useRecoilValue } from "recoil";
 import { Place } from "../../types/types";
 import { getPlacesBySearchQuery } from "../../api/post";
 import { currentLocationAtom } from "../../store/currentLocationAtom";
+import { toast } from "react-hot-toast";
 import useSearch from "./useSearch";
 
 const useSearchMap = () => {
@@ -51,6 +52,10 @@ const useSearchMap = () => {
   ) => {
     if (e.isComposing || e.keyCode === 229) return;
     if (e.key === "Enter") {
+      if (inputValue.trim().length === 0) {
+        toast.error("검색어를 입력해주세요.");
+        return;
+      }
       handleSearchAndRecent({ searchQuery: inputValue, type: "keyword" });
     }
   };
