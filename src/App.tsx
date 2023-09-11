@@ -12,7 +12,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { CropImageProvider } from "./context/CropImageContext";
 import ToasterContext from "./context/ToasterContext";
 import { CertifiedImageProvider } from "./context/CertifiedImageContext";
-import AuthGuard from "./components/Auth/AuthGuard";
+import AuthCheck from "./components/Auth/AuthCheck";
 import { PostingDataProvider } from "./context/PostingDataContext";
 import MapContexProvider from "./context/MapContext";
 import AxiosNavigation from "./api/axiosNavigate";
@@ -32,14 +32,14 @@ function App() {
                 <CropImageProvider>
                   <CertifiedImageProvider>
                     <MapContexProvider>
-                      <AuthGuard>
+                      <AuthCheck>
                         <Layout>
                           <ModalProvider />
                           <ToasterContext />
                           <AppRoutes />
                           <LoadingComponent />
                         </Layout>
-                      </AuthGuard>
+                      </AuthCheck>
                     </MapContexProvider>
                   </CertifiedImageProvider>
                 </CropImageProvider>
