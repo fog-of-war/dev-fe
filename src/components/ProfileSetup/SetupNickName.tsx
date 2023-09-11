@@ -10,6 +10,7 @@ import Button from "../UI/Button";
 import SetupProfileForm from "./SetupProfileForm";
 import Title from "../Title";
 import SetupProfileHeader from "./SetupProfileHeader";
+import { removeTokenInStore } from "../../api/auth";
 
 interface SetupNickNameProps {
   onNext: () => void;
@@ -51,7 +52,14 @@ const SetupNickName = ({
 
   return (
     <SetupProfileForm>
-      <SetupProfileHeader onClick={() => navigate(-1)} />
+      <SetupProfileHeader
+        onClick={() => {
+          if (window.confirm("프로필 설정을 취소하시겠습니까?")) {
+            removeTokenInStore();
+            navigate("/");
+          }
+        }}
+      />
       <div
         css={{
           width: "100%",
