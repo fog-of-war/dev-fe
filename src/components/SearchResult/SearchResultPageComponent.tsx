@@ -25,6 +25,8 @@ const SearchResultPageComponent = ({
 
   // 맵뷰인지 리스트뷰인인지 관리하는 상태 컨텍스트
   const { isMapView, setIsMapView } = useContext(MapContext);
+
+  // 검색 결과 데이터 관리하는 리액트 쿼리 커스텀훅
   const searchResult = useMapSearchQuery(searchQuery);
 
   return (
