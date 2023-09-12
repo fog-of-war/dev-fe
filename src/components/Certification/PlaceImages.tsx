@@ -10,19 +10,17 @@ interface PlaceImagesProps {
 const PlaceImages = ({ images, onClick }: PlaceImagesProps) => {
   const hasImages = images.length > 0;
 
-  return (
-    <div
-      css={{
-        position: "relative",
-        display: "flex",
-        gap: 6,
-        width: "100%",
-      }}
-    >
-      {hasImages ? (
+  // 이미지가 1장인 경우
+  if (hasImages && images.length === 1) {
+    return (
+      <div
+        css={{
+          position: "relative",
+          width: "100%",
+        }}
+      >
         <div
           css={{
-            flex: 1,
             position: "relative",
             paddingTop: "50%",
             borderRadius: 10,
@@ -41,7 +39,165 @@ const PlaceImages = ({ images, onClick }: PlaceImagesProps) => {
             }}
           />
         </div>
-      ) : (
+      </div>
+    );
+  }
+
+  // 이미지가 2장인 경우
+  if (hasImages && images.length === 2) {
+    return (
+      <div
+        css={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: 6,
+          width: "100%",
+        }}
+      >
+        {images.map((image, i) => (
+          <div
+            key={i}
+            css={{
+              position: "relative",
+              paddingTop: "100%",
+              borderRadius: 10,
+              overflow: "hidden",
+            }}
+          >
+            <img
+              src={image}
+              alt={`사진${i + 1}`}
+              css={{
+                position: "absolute",
+                width: "100%",
+                height: "100%",
+                inset: 0,
+                objectFit: "cover",
+              }}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  // 이미지가 3장인 경우
+  if (hasImages && images.length === 3) {
+    return (
+      <div
+        css={{
+          display: "grid",
+          gridTemplateRows: "1fr",
+          gridTemplateColumns: "1fr 1fr",
+          gap: 6,
+          width: "100%",
+        }}
+      >
+        <div
+          css={{
+            position: "relative",
+            paddingTop: "50%",
+            borderRadius: 10,
+            overflow: "hidden",
+          }}
+        >
+          <img
+            src={images[0]}
+            alt={`사진1`}
+            css={{
+              position: "absolute",
+              width: "100%",
+              height: "100%",
+              inset: 0,
+              objectFit: "cover",
+            }}
+          />
+        </div>
+        <div
+          css={{
+            display: "grid",
+            gridTemplateColumns: "1fr",
+            gap: 6,
+          }}
+        >
+          {images.slice(1).map((image, i) => (
+            <div
+              key={i}
+              css={{
+                position: "relative",
+                paddingTop: "50%",
+                borderRadius: 10,
+                overflow: "hidden",
+              }}
+            >
+              <img
+                src={image}
+                alt={`사진${i + 2}`}
+                css={{
+                  position: "absolute",
+                  width: "100%",
+                  height: "100%",
+                  inset: 0,
+                  objectFit: "cover",
+                }}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // 이미지가 4장인 경우
+  if (hasImages && images.length === 4) {
+    return (
+      <div
+        css={{
+          display: "grid",
+          gridTemplateRows: "1fr 1fr",
+          gridTemplateColumns: "1fr 1fr",
+          gap: 6,
+          width: "100%",
+        }}
+      >
+        {images.map((image, i) => (
+          <div
+            key={i}
+            css={{
+              position: "relative",
+              paddingTop: "50%",
+              borderRadius: 10,
+              overflow: "hidden",
+            }}
+          >
+            <img
+              src={image}
+              alt={`사진${i + 1}`}
+              css={{
+                position: "absolute",
+                width: "100%",
+                height: "100%",
+                inset: 0,
+                objectFit: "cover",
+              }}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  // 이미지가 5장 이상인 경우
+  if (hasImages && images.length >= 5) {
+    return (
+      <div
+        css={{
+          position: "relative",
+          display: "flex",
+          gap: 6,
+          width: "100%",
+        }}
+      >
         <div
           css={{
             flex: 1,
@@ -49,39 +205,20 @@ const PlaceImages = ({ images, onClick }: PlaceImagesProps) => {
             paddingTop: "50%",
             borderRadius: 10,
             overflow: "hidden",
-            background: "linear-gradient(to bottom, #c3c3c3, #fff)",
           }}
         >
           <img
-            src="/images/certificationModal/explorerIcon.png"
-            alt="탐험아이콘"
+            src={images[0]}
+            alt="사진1"
             css={{
               position: "absolute",
-              width: "70%",
-              height: "70%",
-              inset: "15%",
-              objectFit: "contain",
+              width: "100%",
+              height: "100%",
+              inset: 0,
+              objectFit: "cover",
             }}
           />
         </div>
-      )}
-      {images.length === 0 && (
-        <h2
-          css={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            color: colors.primary,
-          }}
-        >
-          이 장소의 <br />
-          첫번째 탐험자가 <br />
-          되어 보세요!
-        </h2>
-      )}
-      {hasImages && (
         <div
           css={{
             flex: 1,
@@ -139,9 +276,57 @@ const PlaceImages = ({ images, onClick }: PlaceImagesProps) => {
             </div>
           ))}
         </div>
-      )}
-    </div>
-  );
+      </div>
+    );
+  }
+
+  // 이미지가 없는 경우
+  if (!hasImages) {
+    return (
+      <div
+        css={{
+          position: "relative",
+          width: "100%",
+        }}
+      >
+        <div
+          css={{
+            position: "relative",
+            paddingTop: "50%",
+            borderRadius: 10,
+            overflow: "hidden",
+            background: "linear-gradient(to bottom, #c3c3c3, #fff)",
+          }}
+        >
+          <img
+            src="/images/certificationModal/explorerIcon.png"
+            alt="탐험아이콘"
+            css={{
+              position: "absolute",
+              width: "70%",
+              height: "70%",
+              inset: "15%",
+              objectFit: "contain",
+            }}
+          />
+        </div>
+        <h3
+          css={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            color: colors.primary,
+            whiteSpace: "nowrap",
+          }}
+        >
+          이 장소의 첫번째 탐험자가 되어 보세요!
+        </h3>
+      </div>
+    );
+  }
+  return null;
 };
 
 export default PlaceImages;
