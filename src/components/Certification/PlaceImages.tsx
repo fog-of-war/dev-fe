@@ -48,54 +48,35 @@ const PlaceImages = ({ images, onClick }: PlaceImagesProps) => {
     return (
       <div
         css={{
-          position: "relative",
-          display: "flex",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
           gap: 6,
           width: "100%",
         }}
       >
-        <div
-          css={{
-            flex: 1,
-            position: "relative",
-            paddingTop: "50%",
-            borderRadius: 10,
-            overflow: "hidden",
-          }}
-        >
-          <img
-            src={images[0]}
-            alt="사진1"
+        {images.map((image, i) => (
+          <div
+            key={i}
             css={{
-              position: "absolute",
-              width: "100%",
-              height: "100%",
-              inset: 0,
-              objectFit: "cover",
+              position: "relative",
+              paddingTop: "100%",
+              borderRadius: 10,
+              overflow: "hidden",
             }}
-          />
-        </div>
-        <div
-          css={{
-            flex: 1,
-            position: "relative",
-            paddingTop: "50%",
-            borderRadius: 10,
-            overflow: "hidden",
-          }}
-        >
-          <img
-            src={images[1]}
-            alt="사진2"
-            css={{
-              position: "absolute",
-              width: "100%",
-              height: "100%",
-              inset: 0,
-              objectFit: "cover",
-            }}
-          />
-        </div>
+          >
+            <img
+              src={image}
+              alt={`사진${i + 1}`}
+              css={{
+                position: "absolute",
+                width: "100%",
+                height: "100%",
+                inset: 0,
+                objectFit: "cover",
+              }}
+            />
+          </div>
+        ))}
       </div>
     );
   }
@@ -105,15 +86,15 @@ const PlaceImages = ({ images, onClick }: PlaceImagesProps) => {
     return (
       <div
         css={{
-          position: "relative",
-          display: "flex",
+          display: "grid",
+          gridTemplateRows: "1fr",
+          gridTemplateColumns: "1fr 1fr",
           gap: 6,
           width: "100%",
         }}
       >
         <div
           css={{
-            flex: 1,
             position: "relative",
             paddingTop: "50%",
             borderRadius: 10,
@@ -122,7 +103,7 @@ const PlaceImages = ({ images, onClick }: PlaceImagesProps) => {
         >
           <img
             src={images[0]}
-            alt="사진1"
+            alt={`사진1`}
             css={{
               position: "absolute",
               width: "100%",
@@ -134,52 +115,80 @@ const PlaceImages = ({ images, onClick }: PlaceImagesProps) => {
         </div>
         <div
           css={{
-            flex: 1,
-            position: "relative",
-            paddingTop: "50%",
-            borderRadius: 10,
-            overflow: "hidden",
+            display: "grid",
+            gridTemplateColumns: "1fr",
+            gap: 6,
           }}
         >
-          <img
-            src={images[1]}
-            alt="사진2"
-            css={{
-              position: "absolute",
-              width: "100%",
-              height: "100%",
-              inset: 0,
-              objectFit: "cover",
-            }}
-          />
-        </div>
-        <div
-          css={{
-            flex: 1,
-            position: "relative",
-            paddingTop: "50%",
-            borderRadius: 10,
-            overflow: "hidden",
-          }}
-        >
-          <img
-            src={images[2]}
-            alt="사진3"
-            css={{
-              position: "absolute",
-              width: "100%",
-              height: "100%",
-              inset: 0,
-              objectFit: "cover",
-            }}
-          />
+          {images.slice(1).map((image, i) => (
+            <div
+              key={i}
+              css={{
+                position: "relative",
+                paddingTop: "50%",
+                borderRadius: 10,
+                overflow: "hidden",
+              }}
+            >
+              <img
+                src={image}
+                alt={`사진${i + 2}`}
+                css={{
+                  position: "absolute",
+                  width: "100%",
+                  height: "100%",
+                  inset: 0,
+                  objectFit: "cover",
+                }}
+              />
+            </div>
+          ))}
         </div>
       </div>
     );
   }
 
-  // 이미지가 4장 이상인 경우
-  if (hasImages && images.length >= 4) {
+  // 이미지가 4장인 경우
+  if (hasImages && images.length === 4) {
+    return (
+      <div
+        css={{
+          display: "grid",
+          gridTemplateRows: "1fr 1fr",
+          gridTemplateColumns: "1fr 1fr",
+          gap: 6,
+          width: "100%",
+        }}
+      >
+        {images.map((image, i) => (
+          <div
+            key={i}
+            css={{
+              position: "relative",
+              paddingTop: "50%",
+              borderRadius: 10,
+              overflow: "hidden",
+            }}
+          >
+            <img
+              src={image}
+              alt={`사진${i + 1}`}
+              css={{
+                position: "absolute",
+                width: "100%",
+                height: "100%",
+                inset: 0,
+                objectFit: "cover",
+              }}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  // 이미지가 5장 이상인 경우
+  if (hasImages && images.length >= 5) {
     return (
       <div
         css={{
