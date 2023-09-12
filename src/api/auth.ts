@@ -33,3 +33,8 @@ export const getCurrentUser = async () => {
   const response = await axiosBase.get(`v1/users/me`);
   return response.data;
 };
+
+export const removeTokenInStore = async () => {
+  localStorage.removeItem(STORAGE_KEY.ACCESS_TOKEN);
+  localStorage.removeItem(STORAGE_KEY.REFRESH_TOKEN);
+};
