@@ -154,15 +154,39 @@ const PlaceImages = ({ images, onClick }: PlaceImagesProps) => {
       <div
         css={{
           display: "grid",
-          gridTemplateRows: "1fr 1fr",
           gridTemplateColumns: "1fr 1fr",
           gap: 6,
           width: "100%",
         }}
       >
-        {images.map((image, i) => (
+        <div
+          css={{
+            position: "relative",
+            paddingTop: "50%",
+            borderRadius: 10,
+            overflow: "hidden",
+          }}
+        >
+          <img
+            src={images[0]}
+            alt={`사진1`}
+            css={{
+              position: "absolute",
+              width: "100%",
+              height: "100%",
+              inset: 0,
+              objectFit: "cover",
+            }}
+          />
+        </div>
+        <div
+          css={{
+            display: "grid",
+            gridTemplateRows: "1fr 1fr",
+            gap: 6,
+          }}
+        >
           <div
-            key={i}
             css={{
               position: "relative",
               paddingTop: "50%",
@@ -171,8 +195,8 @@ const PlaceImages = ({ images, onClick }: PlaceImagesProps) => {
             }}
           >
             <img
-              src={image}
-              alt={`사진${i + 1}`}
+              src={images[1]}
+              alt={`사진2`}
               css={{
                 position: "absolute",
                 width: "100%",
@@ -182,7 +206,38 @@ const PlaceImages = ({ images, onClick }: PlaceImagesProps) => {
               }}
             />
           </div>
-        ))}
+          <div
+            css={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: 6,
+            }}
+          >
+            {images.slice(2, 4).map((image, i) => (
+              <div
+                key={i}
+                css={{
+                  position: "relative",
+                  paddingTop: "100%",
+                  borderRadius: 10,
+                  overflow: "hidden",
+                }}
+              >
+                <img
+                  src={image}
+                  alt={`사진${i + 3}`}
+                  css={{
+                    position: "absolute",
+                    width: "100%",
+                    height: "100%",
+                    inset: 0,
+                    objectFit: "cover",
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     );
   }
