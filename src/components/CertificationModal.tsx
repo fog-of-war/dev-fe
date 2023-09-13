@@ -30,6 +30,10 @@ const DUMMY_DATA = {
   place_posts: [{ post_image_url: "https://source.unsplash.com/random" }],
 };
 
+const Icon = {
+  buttonIcon: "/images/buttonIcon.svg",
+};
+
 interface CertificationModalProps {
   place_name: string;
   category: string;
@@ -197,7 +201,7 @@ const CertificationModal = ({
               style={{ display: "none" }}
               onChange={handleCertificationClick}
             />
-            <img src="images/buttonIcon.svg" alt="button" />
+            <img src={Icon.buttonIcon} alt="button_icon" />
             인증하기
           </label>
         </Button>
