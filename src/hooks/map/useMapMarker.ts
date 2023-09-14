@@ -10,6 +10,9 @@ interface MarkerData {
   category: string;
   naverPlaceUrl: string;
   placeUrl: string;
+  placeCategoryMap: Array<{
+    category_points: number;
+  }>;
   placePosts: Array<{
     post_id: number;
     post_image_url: string;
@@ -51,6 +54,7 @@ const useMapMarker = (
         category: place.category_name,
         naverPlaceUrl: place.naver_place_url,
         placeUrl: place.place_url,
+        placeCategoryMap: place.place_category_map,
         placePosts: place.place_posts,
         x: +place.x,
         y: +place.y,
