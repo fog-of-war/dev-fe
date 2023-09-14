@@ -86,7 +86,7 @@ export interface Place {
   y: string;
   place_posts: PlacePost[];
   place_star_rating: number | null;
-  place_category_map: PlaceCategory[];
+  place_category_map: PlaceCategoryMap[];
 }
 
 export interface UserData {
