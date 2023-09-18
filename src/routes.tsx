@@ -25,27 +25,30 @@ const AppRoutes = () => {
     <Routes>
       {!!currentUser ? (
         <>
-          <Route path="/profile_setup" Component={ProfileSetupPage} />
-          <Route path="/" Component={Home} />
-          <Route path="/profile" Component={MyPage} />
-          <Route path="/explore" Component={ExplorePage} />
-          <Route path="/search" Component={SearchPage} />
-          <Route path="/edit/recent_search" Component={EditRecentSearchPage} />
-          <Route path="/search/result" Component={SearchResultPage} />
-          <Route path="/profile_edit" Component={ProfileEditPage} />
-          <Route path="/reviewList" Component={ReviewPage} />
-          <Route path="/ranking" Component={RankingPage} />
-          <Route path="/badgeList" Component={BadgeListPage} />
-          <Route path="/getBadge" Component={GetBadgePage} />
-          <Route path="/crop_image" Component={CropImagePage} />
-          <Route path="/upload" Component={UploadPage} />
-          <Route path="/posting_complete" Component={PostingCompletePage} />
+          <Route path="/profile_setup" element={<ProfileSetupPage />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<MyPage />} />
+          <Route path="/explore" element={<ExplorePage />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route
+            path="/edit/recent_search"
+            element={<EditRecentSearchPage />}
+          />
+          <Route path="/search/result" element={<SearchResultPage />} />
+          <Route path="/profile_edit" element={<ProfileEditPage />} />
+          <Route path="/reviewList" element={<ReviewPage />} />
+          <Route path="/ranking" element={<RankingPage />} />
+          <Route path="/badgeList" element={<BadgeListPage />} />
+          <Route path="/getBadge" element={<GetBadgePage />} />
+          <Route path="/crop_image" element={<CropImagePage />} />
+          <Route path="/upload" element={<UploadPage />} />
+          <Route path="/posting_complete" element={<PostingCompletePage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </>
       ) : (
         <>
           <Route path="/" element={<Navigate to="/auth" />} />
-          <Route path="/auth" Component={AuthPage} />
+          <Route path="/auth" element={<AuthPage />} />
         </>
       )}
     </Routes>
