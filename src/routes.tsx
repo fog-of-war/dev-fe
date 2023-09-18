@@ -17,6 +17,7 @@ import UploadPage from "./pages/posting/UploadPage";
 import CropImagePage from "./pages/posting/CropImagePage";
 import PostingCompletePage from "./pages/posting/PostingCompletePage";
 import useAuthQuery from "./hooks/useAuthQuery";
+import NotificationsPage from "./pages/NotificationsPage";
 
 const AppRoutes = () => {
   const { data: currentUser } = useAuthQuery();
@@ -43,6 +44,7 @@ const AppRoutes = () => {
           <Route path="/crop_image" element={<CropImagePage />} />
           <Route path="/upload" element={<UploadPage />} />
           <Route path="/posting_complete" element={<PostingCompletePage />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </>
       ) : (
