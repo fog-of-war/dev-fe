@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import Home from "./pages/Home";
 import MyPage from "./pages/MyPage";
@@ -16,26 +16,38 @@ import GetBadgePage from "./pages/badge/GetBadgePage";
 import UploadPage from "./pages/posting/UploadPage";
 import CropImagePage from "./pages/posting/CropImagePage";
 import PostingCompletePage from "./pages/posting/PostingCompletePage";
+import useAuthQuery from "./hooks/useAuthQuery";
 
 const AppRoutes = () => {
+  const { data: currentUser } = useAuthQuery();
+
   return (
     <Routes>
-      <Route path="/auth" Component={AuthPage} />
-      <Route path="/profile_setup" Component={ProfileSetupPage} />
-      <Route path="/" Component={Home} />
-      <Route path="/profile" Component={MyPage} />
-      <Route path="/explore" Component={ExplorePage} />
-      <Route path="/search" Component={SearchPage} />
-      <Route path="/edit/recent_search" Component={EditRecentSearchPage} />
-      <Route path="/search/result" Component={SearchResultPage} />
-      <Route path="/profile_edit" Component={ProfileEditPage} />
-      <Route path="/reviewList" Component={ReviewPage} />
-      <Route path="/ranking" Component={RankingPage} />
-      <Route path="/badgeList" Component={BadgeListPage} />
-      <Route path="/getBadge" Component={GetBadgePage} />
-      <Route path="/crop_image" Component={CropImagePage} />
-      <Route path="/upload" Component={UploadPage} />
-      <Route path="/posting_complete" Component={PostingCompletePage} />
+      {!!currentUser ? (
+        <>
+          <Route path="/profile_setup" Component={ProfileSetupPage} />
+          <Route path="/" Component={Home} />
+          <Route path="/profile" Component={MyPage} />
+          <Route path="/explore" Component={ExplorePage} />
+          <Route path="/search" Component={SearchPage} />
+          <Route path="/edit/recent_search" Component={EditRecentSearchPage} />
+          <Route path="/search/result" Component={SearchResultPage} />
+          <Route path="/profile_edit" Component={ProfileEditPage} />
+          <Route path="/reviewList" Component={ReviewPage} />
+          <Route path="/ranking" Component={RankingPage} />
+          <Route path="/badgeList" Component={BadgeListPage} />
+          <Route path="/getBadge" Component={GetBadgePage} />
+          <Route path="/crop_image" Component={CropImagePage} />
+          <Route path="/upload" Component={UploadPage} />
+          <Route path="/posting_complete" Component={PostingCompletePage} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </>
+      ) : (
+        <>
+          <Route path="/" element={<Navigate to="/auth" />} />
+          <Route path="/auth" Component={AuthPage} />
+        </>
+      )}
     </Routes>
   );
 };

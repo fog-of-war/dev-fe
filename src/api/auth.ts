@@ -2,6 +2,7 @@ import { axiosBase } from "./axios";
 import { getDataFromLocalStorage } from "../utils/localStorage";
 import { STORAGE_KEY } from "../constants/storage";
 import axios from "axios";
+import { errorLoging } from "../utils/errorHandler";
 
 export const oAuthLogin = async (code: string, selectedOAuth: string) => {
   const response = await axiosBase.post(`v1/auth/${selectedOAuth}/oauth`, {
@@ -29,9 +30,17 @@ export const getCurrentUser = async () => {
   const accessToken: string =
     getDataFromLocalStorage(STORAGE_KEY.ACCESS_TOKEN) || null;
 
-  if (!accessToken) return null;
-  const response = await axiosBase.get(`v1/users/me`);
-  return response.data;
+  if (accessToken) {
+    try {
+      const response = await axiosBase.get(`v1/users/me`);
+      return response.data;
+    } catch (error: unknown) {
+      errorLoging(error, "로그인 유저정보 요청에러 : ");
+      return null;
+    }
+  }
+
+  return null;
 };
 
 export const removeTokenInStore = async () => {

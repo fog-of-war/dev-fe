@@ -12,13 +12,23 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { CropImageProvider } from "./context/CropImageContext";
 import ToasterContext from "./context/ToasterContext";
 import { CertifiedImageProvider } from "./context/CertifiedImageContext";
-import AuthCheck from "./components/Auth/AuthCheck";
 import { PostingDataProvider } from "./context/PostingDataContext";
 import MapContexProvider from "./context/MapContext";
 import AxiosNavigation from "./api/axiosNavigate";
 import ModalProvider from "./provider/ModalProvider";
+import AsyncBoundary from "./components/Common/AsyncBoudary";
+import LoadingSpinner from "./components/UI/LoadingSpinner";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: false,
+      suspense: true,
+      useErrorBoundary: true,
+    },
+  },
+});
 
 function App() {
   return (
@@ -32,14 +42,14 @@ function App() {
                 <CropImageProvider>
                   <CertifiedImageProvider>
                     <MapContexProvider>
-                      <AuthCheck>
-                        <Layout>
-                          <ModalProvider />
-                          <ToasterContext />
+                      <Layout>
+                        <ModalProvider />
+                        <ToasterContext />
+                        <AsyncBoundary suspenseFallback={<LoadingSpinner />}>
                           <AppRoutes />
-                          <LoadingComponent />
-                        </Layout>
-                      </AuthCheck>
+                        </AsyncBoundary>
+                        <LoadingComponent />
+                      </Layout>
                     </MapContexProvider>
                   </CertifiedImageProvider>
                 </CropImageProvider>
