@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import Geocode from "react-geocode";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { currentLocationAtom } from "../../store/currentLocationAtom";
 import { MapContext } from "../../context/MapContext";
 
@@ -88,7 +88,12 @@ const useCurrentLocation = () => {
     }
   }, [currentLocation]);
 
-  return { currentLocation, isInSeoul, handleCurrentLocationClick };
+  return {
+    currentLocation,
+    updateCurrentLocation,
+    isInSeoul,
+    handleCurrentLocationClick,
+  };
 };
 
 export default useCurrentLocation;

@@ -1,6 +1,7 @@
 import { ComponentProps, Suspense } from "react";
 import ErrorBoundary, { ErrorFallbackType } from "./ErrorBoundary";
 import ErrorFallback from "./ErrorFallback";
+import LoadingSpinner from "../UI/LoadingSpinner";
 
 interface AsyncBoundaryProps {
   children: React.ReactNode;
@@ -10,7 +11,7 @@ interface AsyncBoundaryProps {
 
 const AsyncBoundary = ({
   children,
-  suspenseFallback = <>로딩...</>,
+  suspenseFallback = <LoadingSpinner />,
   errorFallback = ErrorFallback,
 }: AsyncBoundaryProps) => {
   return (

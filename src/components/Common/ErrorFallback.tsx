@@ -4,19 +4,28 @@ import colors from "../../constants/colors";
 
 const ErrorFallback = (props: ErrorFallbackProps) => {
   return (
-    <ErrorFallbackContainer>
-      <ErrorMesageTitle>네트워크 오류가 발생했습니다.</ErrorMesageTitle>
-      <ErrorMessage>{props.error.toString()}</ErrorMessage>
-      <RetryButton onClick={() => props.reset()}>다시시도</RetryButton>
-    </ErrorFallbackContainer>
+    <ErrorFallbackLayout>
+      <ErrorFallbackContainer>
+        <ErrorMesageTitle>에러가 발생했습니다.</ErrorMesageTitle>
+        <ErrorMessage>{props.error.toString()}</ErrorMessage>
+        <RetryButton onClick={() => props.reset()}>다시시도</RetryButton>
+      </ErrorFallbackContainer>
+    </ErrorFallbackLayout>
   );
 };
 
 export default ErrorFallback;
 
-const ErrorFallbackContainer = styled.div`
+const ErrorFallbackLayout = styled.div`
   display: flex;
   flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ErrorFallbackContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: ${colors.pastel};
