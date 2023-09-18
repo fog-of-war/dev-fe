@@ -113,6 +113,7 @@ const Map = ({ places }: MapProps) => {
                 category={marker.category}
                 naverPlaceUrl={marker.naverPlaceUrl}
                 placeUrl={marker.placeUrl}
+                placeCategoryMap={marker.placeCategoryMap}
                 placePosts={marker.placePosts}
                 x={marker.x}
                 y={marker.y}

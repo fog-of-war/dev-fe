@@ -30,12 +30,19 @@ const DUMMY_DATA = {
   place_posts: [{ post_image_url: "https://source.unsplash.com/random" }],
 };
 
+const Icon = {
+  buttonIcon: "/images/buttonIcon.svg",
+};
+
 interface CertificationModalProps {
   place_name: string;
   category: string;
   roadAddress: string;
   naverPlaceUrl: string;
   placeUrl: string;
+  placeCategoryMap: Array<{
+    category_points: number;
+  }>;
   placePosts: Array<{
     post_id: number;
     post_image_url: string;
@@ -50,6 +57,7 @@ const CertificationModal = ({
   roadAddress,
   naverPlaceUrl,
   placeUrl,
+  placeCategoryMap,
   placePosts,
   place_latitude,
   place_longitude,
@@ -57,6 +65,11 @@ const CertificationModal = ({
   const { setCertifiedImage } = useImageContext(); // 이미지 저장 Context 사용
   const navigate = useNavigate();
   const { setLoading, setLoadingMessage } = useLoading();
+
+  const totalCategoryPoints = placeCategoryMap.reduce(
+    (total, category) => total + category.category_points,
+    0
+  );
 
   // 사진 인증
   const handleCertificationClick = async (
@@ -175,7 +188,7 @@ const CertificationModal = ({
         <div css={{ display: "flex", justifyContent: "center" }}>
           <div css={{ display: "flex", fontSize: 18, fontWeight: "bold" }}>
             인증시&nbsp;
-            <div css={{ color: colors.primary }}>+{DUMMY_DATA.point}</div>
+            <div css={{ color: colors.primary }}>+{totalCategoryPoints}</div>
             &nbsp;포인트 획득
           </div>
         </div>
@@ -197,7 +210,7 @@ const CertificationModal = ({
               style={{ display: "none" }}
               onChange={handleCertificationClick}
             />
-            <img src="images/buttonIcon.svg" alt="button" />
+            <img src={Icon.buttonIcon} alt="button_icon" />
             인증하기
           </label>
         </Button>
