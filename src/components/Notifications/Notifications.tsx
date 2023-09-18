@@ -45,7 +45,7 @@ const Notifications = () => {
             flex: "1",
             textAlign: "center",
             borderBottom:
-              activeTab === "공지 "
+              activeTab === "공지"
                 ? `2px solid ${colors.primary}`
                 : `1px solid ${colors.paleGrey}`,
           }}
