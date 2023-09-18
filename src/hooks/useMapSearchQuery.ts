@@ -1,8 +1,8 @@
 import { useQuery } from "react-query";
-import { getPlacesBySearchQuery } from "../api/post";
 import { useRecoilValue } from "recoil";
 import { Place } from "../types/types";
 import { currentLocationAtom } from "../store/currentLocationAtom";
+import { getPlacesBySearchQuery } from "../api/place";
 
 const useMapSearchQuery = (query: string) => {
   const currentLocation = useRecoilValue(currentLocationAtom);
