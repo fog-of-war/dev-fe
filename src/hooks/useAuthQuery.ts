@@ -8,13 +8,11 @@ export const useAuthQuery = () => {
   const queryFn = getCurrentUser;
   const fallback = null;
 
-  const {
-    data = fallback,
-    isLoading,
-    isError,
-  } = useQuery<UserData>(queryKey, queryFn, { retry: false });
+  const { data = fallback } = useQuery<UserData>(queryKey, queryFn, {
+    retry: false,
+  });
 
-  return { data, isLoading, isError };
+  return { data };
 };
 
 export default useAuthQuery;

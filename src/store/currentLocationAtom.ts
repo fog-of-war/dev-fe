@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 
-interface CurrentLocationType {
+export interface CurrentLocationType {
   lat: number;
   lng: number;
 }
