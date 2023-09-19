@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
-
+import "./styles.css";
+const greenTextStyle = {
+  color: "green",
+};
+const AlertContainer = {
+  display: "grid",
+};
 const socket = io("ws://localhost:5000/v1/ws-react");
 
 const AlertWebSocket: React.FC = () => {
   const [receive, setReceive] = useState<any[]>([]);
 
   useEffect(() => {
-    socket.emit("send_alert", "안녕");
-
     const handleReceiveMessage = (data: any) => {
-      console.log(receive);
+      console.log("🐤", receive);
       if (data && data.message) {
+        console.log("🐤", data.message);
         setReceive((prevReceive) => [...prevReceive, data.message]);
       }
     };
@@ -19,10 +24,10 @@ const AlertWebSocket: React.FC = () => {
     socket.on("connect", () => {
       console.log("웹소켓서버연결성공");
     });
-    socket.on("receive_alert", handleReceiveMessage);
+    socket.on("receive_post_alert", handleReceiveMessage);
 
     return () => {
-      socket.off("receive_alert", handleReceiveMessage);
+      socket.off("receive_post_alert", handleReceiveMessage);
     };
   }, [socket]);
   // 상태 업데이트 이후에 현재 상태 출력
@@ -31,7 +36,21 @@ const AlertWebSocket: React.FC = () => {
     <div>
       <div>
         {receive.map((message, index) => (
-          <div key={index}>{message}</div>
+          <div key={index} className="AlertContainer">
+            <img
+              className="image_container"
+              src={message.post_image_url}
+              alt={`${message.place_name} - ${message.post_id}`}
+            />
+            <h4>
+              <span>{message.region_name}</span>에 새로운 장소 발견
+            </h4>
+            <h4>
+              <span style={greenTextStyle}>{message.place_name}</span>를
+              만나보세요
+            </h4>
+            <span>{message.post_created_at}</span>
+          </div>
         ))}
       </div>
     </div>
