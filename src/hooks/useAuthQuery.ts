@@ -1,9 +1,10 @@
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { getCurrentUser } from "../api/auth";
 import { UserData } from "../types/types";
 import { QUERY_KEY } from "../react-query/queryKey";
 
 export const useAuthQuery = () => {
+  const queryClient = useQueryClient();
   const queryKey = [QUERY_KEY.CURRENT_USER];
   const queryFn = getCurrentUser;
   const fallback = null;
@@ -12,7 +13,11 @@ export const useAuthQuery = () => {
     retry: false,
   });
 
-  return { data };
+  const invalidateUser = () => {
+    queryClient.invalidateQueries(QUERY_KEY.CURRENT_USER);
+  };
+
+  return { data, invalidateUser };
 };
 
 export default useAuthQuery;
