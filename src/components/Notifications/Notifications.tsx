@@ -27,12 +27,14 @@ const Notifications = () => {
           style={{
             cursor: "pointer",
             color: activeTab === "활동" ? colors.primary : colors.mediumGrey,
+            fontWeight: activeTab === "활동" ? 600 : 400,
             flex: "1",
             textAlign: "center",
             borderBottom:
               activeTab === "활동"
                 ? `2px solid ${colors.primary}`
                 : `1px solid ${colors.paleGrey}`,
+            paddingBottom: "10px",
           }}
         >
           활동 알림
@@ -42,12 +44,14 @@ const Notifications = () => {
           style={{
             cursor: "pointer",
             color: activeTab === "공지" ? colors.primary : colors.mediumGrey,
+            fontWeight: activeTab === "공지" ? 600 : 400,
             flex: "1",
             textAlign: "center",
             borderBottom:
               activeTab === "공지"
                 ? `2px solid ${colors.primary}`
                 : `1px solid ${colors.paleGrey}`,
+            paddingBottom: "10px",
           }}
         >
           공지사항
