@@ -51,7 +51,7 @@ const ActivityNotifications = () => {
             css={{
               width: "42px",
               height: "42px",
-              backgroundColor: "#ccc",
+              backgroundColor: "#fff",
               borderRadius: "50%",
               display: "inline-block",
               marginRight: "10px",
