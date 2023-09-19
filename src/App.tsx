@@ -40,20 +40,22 @@ function App() {
           <LoadingProvider>
             <ThemeProvider theme={theme}>
               <PostingDataProvider>
-                <CropImageProvider>
-                  <CertifiedImageProvider>
-                    <MapContexProvider>
-                      <Layout>
-                        <ModalProvider />
-                        <ToasterContext />
-                        <AsyncBoundary suspenseFallback={<LoadingSpinner />}>
-                          <AppRoutes />
-                        </AsyncBoundary>
-                        <LoadingComponent />
-                      </Layout>
-                    </MapContexProvider>
-                  </CertifiedImageProvider>
-                </CropImageProvider>
+                <ReviewContextProvider>
+                  <CropImageProvider>
+                    <CertifiedImageProvider>
+                      <MapContexProvider>
+                        <Layout>
+                          <ModalProvider />
+                          <ToasterContext />
+                          <AsyncBoundary suspenseFallback={<LoadingSpinner />}>
+                            <AppRoutes />
+                          </AsyncBoundary>
+                          <LoadingComponent />
+                        </Layout>
+                      </MapContexProvider>
+                    </CertifiedImageProvider>
+                  </CropImageProvider>
+                </ReviewContextProvider>
               </PostingDataProvider>
             </ThemeProvider>
           </LoadingProvider>
