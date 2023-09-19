@@ -1,0 +1,52 @@
+[
+  {
+    "level_level": 0,
+    "level_points": 0,
+    "level_description": "회원가입 레벨"
+  },
+  {
+    "level_level": 1,
+    "level_points": 200,
+    "level_description": "초보 레벨"
+  },
+  {
+    "level_level": 2,
+    "level_points": 500,
+    "level_description": "탐험가 레벨"
+  },
+  {
+    "level_level": 3,
+    "level_points": 1500,
+    "level_description": "도시 열정가 레벨"
+  },
+  {
+    "level_level": 4,
+    "level_points": 3000,
+    "level_description": "관광 명소 마스터 레벨"
+  },
+  {
+    "level_level": 5,
+    "level_points": 5000,
+    "level_description": "커뮤니티 리더 레벨"
+  },
+  {
+    "level_level": 6,
+    "level_points": 10000,
+    "level_description": "지역 전문가 레벨"
+  },
+  {
+    "level_level": 7,
+    "level_points": 20000,
+    "level_description": "여행 열정가 레벨"
+  },
+  {
+    "level_level": 8,
+    "level_points": 50000,
+    "level_description": "세계 탐험가 레벨"
+  },
+  {
+    "level_level": 9,
+    "level_points": 100000,
+    "level_description": "전설적 탐험가 레벨"
+  }
+]

@@ -2,18 +2,60 @@
 
 import styled from "@emotion/styled";
 import colors from "../constants/colors";
-
+import levelData from "../../src/data/levelData.json";
 interface ProgressBarProps {
-  progress: number;
+  progress?: number;
   level: number;
+  userPoints: number;
 }
 
-const ProgressBar = ({ progress, level }: ProgressBarProps) => {
+const ProgressBar = ({ level, userPoints }: ProgressBarProps) => {
+  const calculatePoints = (currentLevel: number, currentUserPoints: number) => {
+    if (currentLevel >= levelData.length - 1) {
+      return 0; // 최대 레벨일 경우
+    }
+
+    const nextLevelPoints = levelData[currentLevel + 1].level_points;
+
+    return nextLevelPoints - currentUserPoints;
+  };
+
+  const calculateProgress = (
+    currentLevel: number,
+    currentUserPoints: number
+  ) => {
+    if (currentLevel >= levelData.length - 1) {
+      return 100; // 최대 레벨일 경우
+    }
+
+    const currentLevelPoints =
+      currentLevel === 0 ? 0 : levelData[currentLevel].level_points;
+    const nextLevelPoints = levelData[currentLevel + 1].level_points;
+
+    return (
+      ((currentUserPoints - currentLevelPoints) /
+        (nextLevelPoints - currentLevelPoints)) *
+      100
+    );
+  };
+
+  const requiredPoints = calculatePoints(level, userPoints);
+
+  const progressPercentage = calculateProgress(level, userPoints);
+
   return (
     <>
       <ProgressBarContainer>
-        <ProgressText>다음 레벨업까지 1,500 포인트</ProgressText>
-        <StyledProgressBar progress={progress} level={level} />
+        <ProgressText>
+          {requiredPoints > 0
+            ? `다음 레벨업까지 ${requiredPoints.toLocaleString()} 포인트`
+            : "최고 레벨에 도달했습니다!"}
+        </ProgressText>
+        <StyledProgressBar
+          progress={progressPercentage}
+          level={level}
+          userPoints={requiredPoints}
+        />
         <LevelText left>{level} Lv</LevelText>
         <LevelText right>{level + 1} Lv</LevelText>
       </ProgressBarContainer>

@@ -1,13 +1,15 @@
 /** @jsxImportSource @emotion/react */
 
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AdvPlaceTitle from "./AdvPlaceTitle";
 import AdvPlaceImage from "./AdvPlaceImage";
 import { getMyPosts } from "../../api/post";
-import { PostingData } from "../../pages/posting/UploadPage";
+import { MyPosts } from "../../types/types";
 
 const AdvPlaceList = () => {
-  const [userPosts, setUserPosts] = useState<PostingData[]>([]);
+  const [userPosts, setUserPosts] = useState<MyPosts[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -22,6 +24,18 @@ const AdvPlaceList = () => {
     fetchPosts();
   }, []);
 
+  const handlePlaceClick = (place_id: number | null) => {
+    if (place_id) navigate(`/reviewList/${place_id}`);
+  };
+
+  // 중복 장소 제거
+  const seenPlaceIds = new Set();
+  const uniquePlaces = userPosts.filter((place) => {
+    const duplicate = seenPlaceIds.has(place.post_place_id);
+    seenPlaceIds.add(place.post_place_id);
+    return !duplicate;
+  });
+
   return (
     <>
       <div
@@ -35,12 +49,17 @@ const AdvPlaceList = () => {
         }}
       >
         <AdvPlaceTitle />
-        {userPosts.map((place, index) => (
-          <AdvPlaceImage
-            key={index}
-            post_image_url={place.post_image_url}
-            place_name={place.place_name}
-          />
+        {uniquePlaces.map((place) => (
+          <div
+            key={place.post_id}
+            onClick={() => handlePlaceClick(place.post_place_id)}
+          >
+            <AdvPlaceImage
+              key={place.post_id}
+              post_image_url={place.post_image_url}
+              place_name={place.place_name}
+            />
+          </div>
         ))}
       </div>
     </>

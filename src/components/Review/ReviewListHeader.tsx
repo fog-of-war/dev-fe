@@ -3,7 +3,7 @@ import BackButton from "../UI/BackButton";
 import { useNavigate } from "react-router-dom";
 
 interface ReviewListHeaderProps {
-  placeName: string;
+  placeName?: string;
   reviewCount?: number;
 }
 

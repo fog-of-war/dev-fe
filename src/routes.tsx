@@ -37,7 +37,7 @@ const AppRoutes = () => {
           />
           <Route path="/search/result" element={<SearchResultPage />} />
           <Route path="/profile_edit" element={<ProfileEditPage />} />
-          <Route path="/reviewList" element={<ReviewPage />} />
+          <Route path="/reviewList/:placeId" element={<ReviewPage />} />
           <Route path="/ranking" element={<RankingPage />} />
           <Route path="/badgeList" element={<BadgeListPage />} />
           <Route path="/getBadge" element={<GetBadgePage />} />

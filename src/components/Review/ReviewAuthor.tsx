@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 
 import colors from "../../constants/colors";
-import { AuthorInfo } from "../../types/types";
+import { PostAuthor } from "../../types/types";
 interface ReviewAuthorProps {
-  authorInfo: AuthorInfo;
+  authorInfo: PostAuthor;
 }
 
 const ReviewAuthor = ({ authorInfo }: ReviewAuthorProps) => {
@@ -41,7 +41,7 @@ const ReviewAuthor = ({ authorInfo }: ReviewAuthorProps) => {
               width: "100%",
               height: "100%",
             }}
-            src={authorInfo.profileImage}
+            src={authorInfo.user_image_url}
             alt="profileImage"
           />
         </div>
@@ -53,7 +53,7 @@ const ReviewAuthor = ({ authorInfo }: ReviewAuthorProps) => {
               color: colors.primary,
             }}
           >
-            {authorInfo.nickname}
+            {authorInfo.user_nickname}
           </p>
         </div>
       </div>

@@ -14,6 +14,7 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       const data = await getUserData();
+      console.log(data);
       setUserData(data);
     };
     fetchUserData();
@@ -35,7 +36,10 @@ const UserProfile = () => {
         badgeIcon="./images/badgeIcon.svg"
       />
       <ProfileInfo />
-      <ProgressBar progress={80} level={userData?.user_level || 0} />
+      <ProgressBar
+        level={userData?.user_level || 0}
+        userPoints={userData?.user_points || 0}
+      />
     </div>
   );
 };

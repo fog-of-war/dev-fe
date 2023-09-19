@@ -111,21 +111,15 @@ const CertificationModal = ({
         const imageURL = URL.createObjectURL(convertedFile);
         console.log("imageURL:", imageURL);
 
-        // 인증에 성공했을 경우
-        if (
-          certificationResults.location === "통과" &&
-          certificationResults.date === "통과"
-        ) {
-          setCertifiedImage({
-            imageURL,
-            place_name,
-            place_latitude,
-            place_longitude,
-          });
+        setCertifiedImage({
+          imageURL,
+          place_name,
+          place_latitude,
+          place_longitude,
+        });
 
-          toast.success("인증에 성공했습니다.");
-          navigate("/crop_image");
-        }
+        toast.success("인증에 성공했습니다.");
+        navigate("/crop_image");
 
         // 장소만 인증에 성공했을 경우
         if (

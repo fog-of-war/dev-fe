@@ -2,22 +2,24 @@
 
 import { useState } from "react";
 import colors from "../../constants/colors";
+import { useReviewContext } from "../../context/ReviewContext";
 interface ReviewCommentProps {
   comment: string;
   isEditing?: boolean;
-  onEditComment?: (newComment: string) => void;
 }
 
-const ReviewComment = ({
-  comment,
-  isEditing = false,
-  onEditComment,
-}: ReviewCommentProps) => {
+const ReviewComment = ({ comment, isEditing = false }: ReviewCommentProps) => {
   const [editedComment, setEditedComment] = useState<string>(comment);
   const [isCommentChanged, setIsCommentChanged] = useState<boolean>(false);
+  const { setUpdateReview } = useReviewContext();
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setEditedComment(e.target.value);
+    const newCommentValue = e.target.value;
+    setEditedComment(newCommentValue);
+    setUpdateReview((prevState) => ({
+      ...prevState,
+      post_description: newCommentValue,
+    }));
   };
 
   return (

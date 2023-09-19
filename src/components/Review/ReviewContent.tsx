@@ -8,7 +8,6 @@ interface ReviewContentProps {
   date: string;
   rating: number;
   isEditing?: boolean;
-  onEditComment?: (newComment: string) => void;
 }
 
 const ReviewContent = ({
@@ -16,8 +15,7 @@ const ReviewContent = ({
   comment,
   date,
   rating,
-  isEditing = false,
-  onEditComment,
+  isEditing,
 }: ReviewContentProps) => {
   return (
     <div
@@ -28,11 +26,7 @@ const ReviewContent = ({
       }}
     >
       <ReviewImage placeImage={placeImage} date={date} rating={rating} />
-      <ReviewComment
-        comment={comment}
-        isEditing={isEditing}
-        onEditComment={onEditComment}
-      />
+      <ReviewComment comment={comment} isEditing={isEditing} />
     </div>
   );
 };

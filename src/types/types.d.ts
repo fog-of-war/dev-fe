@@ -12,6 +12,11 @@ export interface Review {
   comment: string;
 }
 
+export interface UpdatedReview {
+  post_star_rating: number;
+  post_description: string;
+}
+
 export interface AuthorInfo {
   _id: string;
   profileImage: string;
@@ -90,15 +95,56 @@ export interface Place {
 }
 
 export interface UserData {
+  user_id: number;
   user_image_url: string;
   user_nickname: string;
-  user_point: number;
+  user_points: number;
   user_level: number;
   user_is_admin: string;
   user_is_deleted: boolean;
   user_badges: UserBadge[];
   user_visited_places: string[];
   user_authored_posts: string[];
+}
+
+export interface PostAuthor {
+  user_id: number;
+  user_nickname: string;
+  user_image_url: string;
+}
+
+export interface PlacePost {
+  post_id: number;
+  post_created_at: string;
+  post_updated_at: string;
+  post_description: string;
+  post_image_url: string;
+  post_author_id: number;
+  post_star_rating: number;
+  post_author: PostAuthor;
+}
+
+export interface MyPosts {
+  post_id: number;
+  post_image_url: string;
+  place_name: string;
+  post_place_id: number;
+}
+
+export interface PlaceData {
+  place_id: number;
+  place_name: string;
+  place_star_rating: number;
+  place_posts: PlacePost[];
+}
+
+export interface PostUploadData {
+  place_name: string;
+  post_star_rating: number;
+  post_description: string;
+  post_image_url: string;
+  place_latitude: number;
+  place_longitude: number;
 }
 
 export interface ProfileSetupData {
