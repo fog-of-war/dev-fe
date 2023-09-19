@@ -19,6 +19,7 @@ import PostingCompletePage from "./pages/posting/PostingCompletePage";
 import useAuthQuery from "./hooks/useAuthQuery";
 import NotificationsPage from "./pages/NotificationsPage";
 
+import { AlertWebSocket, WebSocketComponent } from "./components/WebSocket";
 const AppRoutes = () => {
   const { data: currentUser } = useAuthQuery();
 
@@ -45,6 +46,7 @@ const AppRoutes = () => {
           <Route path="/upload" element={<UploadPage />} />
           <Route path="/posting_complete" element={<PostingCompletePage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
+          <Route path="/websocket" element={<AlertWebSocket />} />
           <Route path="*" element={<Navigate to="/" />} />
         </>
       ) : (
