@@ -8,6 +8,15 @@ interface CustomMarkerProps {
   placeName: string;
   roadAddress: string;
   category: string;
+  naverPlaceUrl: string;
+  placeUrl: string;
+  placeCategoryMap: Array<{
+    category_points: number;
+  }>;
+  placePosts: Array<{
+    post_id: number;
+    post_image_url: string;
+  }>;
   x: number;
   y: number;
   onClick: () => void;
@@ -19,6 +28,10 @@ const CustomMarker: React.FC<CustomMarkerProps & { isMarkerOpen: boolean }> = ({
   roadAddress,
   category,
   isMarkerOpen,
+  naverPlaceUrl,
+  placeUrl,
+  placeCategoryMap,
+  placePosts,
   x,
   y,
   onClick,
@@ -207,6 +220,10 @@ const CustomMarker: React.FC<CustomMarkerProps & { isMarkerOpen: boolean }> = ({
               place_name={placeName}
               category={category}
               roadAddress={roadAddress}
+              naverPlaceUrl={naverPlaceUrl}
+              placeUrl={placeUrl}
+              placeCategoryMap={placeCategoryMap}
+              placePosts={placePosts}
               place_longitude={x}
               place_latitude={y}
             />

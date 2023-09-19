@@ -16,25 +16,24 @@ export default function AxiosNavigation() {
       (config) => {
         return config;
       },
-      async (error) => {
-        const {
-          config,
-          response: { status },
-        } = error;
-
+      async (error: any) => {
         //토큰이 만료되을 때
-        if (status === 401) {
+        if (error.response?.status === 401) {
           if (error.response.data.message === "Unauthorized") {
-            const originRequest = config;
+            console.log("토큰 만료");
+
+            const originRequest = error.config;
             //리프레시 토큰 api
             const response = await postRefreshToken();
             //리프레시 토큰 요청이 성공할 때
             if (response?.status === 200) {
+              console.log("토큰 요청 성공");
               const newAccessToken = response.data.access_token;
               const newRefreshToken = response.data.refresh_token;
               setDataToLocalStorage(STORAGE_KEY.ACCESS_TOKEN, newAccessToken);
               setDataToLocalStorage(STORAGE_KEY.REFRESH_TOKEN, newRefreshToken);
               axios.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
+              console.log("요청을 이어서 진행합니다.");
               //진행중이던 요청 이어서하기
               originRequest.headers.Authorization = `Bearer ${newAccessToken}`;
               return axios(originRequest);

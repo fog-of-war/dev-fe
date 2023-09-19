@@ -1,16 +1,13 @@
 /** @jsxImportSource @emotion/react */
 
 import colors from "../../constants/colors";
+import { useNavigateModal } from "../../hooks/useNavigateModal";
 
 import Modal from "../UI/Modal";
 
-interface NavigateModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  url: string;
-}
+const NavigateModal = () => {
+  const { isOpen, onClose, navigateModalUrl } = useNavigateModal();
 
-const NavigateModal = ({ isOpen, onClose, url }: NavigateModalProps) => {
   return (
     <Modal isOpen={isOpen} css={{ width: "300px", padding: "30px 32px" }}>
       <div
@@ -37,6 +34,7 @@ const NavigateModal = ({ isOpen, onClose, url }: NavigateModalProps) => {
           color: colors.darkGrey,
           cursor: "pointer",
         }}
+        onClick={() => window.open(navigateModalUrl.kakaoUrl, "_blank")}
       >
         <h4>카카오맵으로 열기</h4>
       </button>
@@ -50,6 +48,7 @@ const NavigateModal = ({ isOpen, onClose, url }: NavigateModalProps) => {
           color: "#fff",
           cursor: "pointer",
         }}
+        onClick={() => window.open(navigateModalUrl.naverUrl, "_blank")}
       >
         <h4>네이버지도로 열기</h4>
       </button>

@@ -51,6 +51,30 @@ export interface BadgeListProps {
   showAllBadges: boolean;
 }
 
+export interface PlacePost {
+  post_id: number;
+  post_created_at: string;
+  post_updated_at: string;
+  post_description: string;
+  post_image_url: string;
+  post_author_id: number;
+  post_star_rating: number;
+  post_place_id: number;
+  post_is_deleted: boolean;
+}
+
+export interface PlaceCategory {
+  placeId: number;
+  categoryId: number;
+  category: {
+    category_id: number;
+    category_name: string;
+    category_points: number;
+    category_created_at: string;
+    category_updated_at: string;
+  };
+}
+
 export interface Place {
   address_name: string;
   category_group_code: string;
@@ -61,9 +85,13 @@ export interface Place {
   phone: string;
   place_name: string;
   place_url: string;
+  naver_place_url: string;
   road_address_name: string;
   x: string;
   y: string;
+  place_posts: PlacePost[];
+  place_star_rating: number | null;
+  place_category_map: PlaceCategoryMap[];
 }
 
 export interface UserData {

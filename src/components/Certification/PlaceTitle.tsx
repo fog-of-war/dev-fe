@@ -1,14 +1,26 @@
 /** @jsxImportSource @emotion/react */
 import colors from "../../constants/colors";
+import B1 from "../UI/B1";
+import NavigateModal from "../Map/NavigateModal";
+import { useNavigateModal } from "../../hooks/useNavigateModal";
 
 interface PlaceTitleProps {
   icon: string;
   name: string;
   category: string;
   roadAddress: string;
+  naverPlaceUrl: string;
+  placeUrl: string;
 }
 
-const PlaceTitle = ({ icon, name, category, roadAddress }: PlaceTitleProps) => {
+const PlaceTitle = ({
+  icon,
+  name,
+  category,
+  roadAddress,
+  naverPlaceUrl,
+  placeUrl,
+}: PlaceTitleProps) => {
   // 글자 수가 16자 이상인 경우에는 줄이고 '...'을 붙임
   const truncatedName = name.length > 16 ? name.slice(0, 16) + "..." : name;
 
@@ -17,6 +29,8 @@ const PlaceTitle = ({ icon, name, category, roadAddress }: PlaceTitleProps) => {
 
   // 변환된 카테고리 이름을 저장할 변수 추가
   let displayCategory;
+
+  const navigateModal = useNavigateModal();
 
   // 역사 카테고리
   if (category.includes("역사")) {
@@ -73,7 +87,15 @@ const PlaceTitle = ({ icon, name, category, roadAddress }: PlaceTitleProps) => {
         gap: "5px",
       }}
     >
-      <div css={{ display: "flex", alignItems: "center", gap: 5 }}>
+      <div
+        css={{
+          display: "flex",
+          alignItems: "center",
+          gap: 5,
+          width: "100%",
+          justifyContent: "space-between",
+        }}
+      >
         <h1
           css={{
             fontSize: "20px",
@@ -82,6 +104,18 @@ const PlaceTitle = ({ icon, name, category, roadAddress }: PlaceTitleProps) => {
         >
           {truncatedName}
         </h1>
+        <B1
+          css={{ color: colors.lightGrey }}
+          onClick={(event) => {
+            event.stopPropagation();
+            navigateModal.onOpen({
+              kakaoUrl: placeUrl,
+              naverUrl: naverPlaceUrl,
+            });
+          }}
+        >
+          더보기
+        </B1>
       </div>
       <div
         css={{

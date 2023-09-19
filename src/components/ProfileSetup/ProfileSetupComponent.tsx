@@ -7,30 +7,59 @@ import { useFunnel } from "../../hooks/useFunnel";
 import { toast } from "react-hot-toast";
 import { LINK } from "../../constants/links";
 import { setUpProfile } from "../../api/user";
+import { DEFAULT_PROFILE_IMAGE_URL } from "../../constants/images";
+import { ProfileSetupData } from "../../types/types";
+import { useMutation, useQueryClient } from "react-query";
+import { QUERY_KEY } from "../../react-query/queryKey";
+import { getCurrentUser } from "../../api/auth";
 
 import SetupNickName from "./SetupNickName";
 import SetupProfileImage from "./SetupProfileImage";
-import { DEFAULT_PROFILE_IMAGE_URL } from "../../constants/images";
-import { ProfileSetupData } from "../../types/types";
 
+/** OAuth 가입 후 필요한 프로필 데이터를 셋업하는 페이지 컴포넌트 */
 const ProfileSetupComponent = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
+  // 프로필 설정 페이지들을 관리하는 퍼널 커스텀훅
+  const [Funnel, Step, setStep] = useFunnel("닉네임");
+
+  // 프로필 설정 데이터
   const [profileData, setProfileData] = useState<ProfileSetupData>({
     user_nickname: "",
     user_image_url: DEFAULT_PROFILE_IMAGE_URL,
   });
 
-  const [Funnel, Step, setStep] = useFunnel("닉네임");
-
-  const handleSubmit = async () => {
-    try {
+  // 프로필 설정 데이터를 서버에 전송하는 뮤테이션
+  const mutation = useMutation(
+    async (profileData: ProfileSetupData) => {
       await setUpProfile(profileData);
-      toast.success("가입이 완료되었습니다.");
-      navigate(LINK.HOME_PAGE);
-    } catch (error: any) {
-      toast.error(error.response.data.message);
+    },
+    {
+      onSuccess: async (data) => {
+        // 현재 유저 데이터를 새로운 데이터로 옵티미스틱 업데이트
+        const currentUser = await getCurrentUser();
+        const newCurrentUserData = {
+          ...currentUser,
+          user_nickname: profileData.user_nickname,
+          user_image_url: profileData.user_image_url,
+        };
+        queryClient.setQueryData(QUERY_KEY.CURRENT_USER, newCurrentUserData);
+
+        // 새로운 유저 데이터를 쿼리 캐시에 업데이트
+        queryClient.invalidateQueries(QUERY_KEY.CURRENT_USER);
+        toast.success("가입이 완료되었습니다.");
+        navigate(LINK.HOME_PAGE);
+      },
+      onError: (error: any) => {
+        toast.error(error.response.data.message);
+      },
     }
+  );
+
+  // 프로필 설정 데이터를 서버에 전송하는 함수
+  const handleSubmit = async () => {
+    mutation.mutate(profileData);
   };
 
   return (

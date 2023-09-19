@@ -9,6 +9,7 @@ import { defaultCenter, bounds, options } from "../../data/mapData";
 
 import SeoulPolygon from "./SeoulPolygon";
 import MainCardMapPolygon from "./MainCardMapPolygon";
+import { getMyRegion } from "../../api/user";
 
 // 컨테이너 크기 정의
 const containerStyle = {
@@ -59,6 +60,22 @@ const MainCardMap = () => {
 
     return () => setPolygons([]);
   }, [zoomLevel]);
+
+  useEffect(() => {
+    getMyRegion().then((regionData) => {
+      // Response 데이터에서 구 이름과 포인트 값을 추출하여 options 객체에 반영
+      regionData.forEach(
+        (region: { region_english_name: any; region_visited_count: any }) => {
+          const regionEnglishName = region.region_english_name;
+          const regionVisitedCount = region.region_visited_count;
+
+          if (options.hasOwnProperty(regionEnglishName)) {
+            options[regionEnglishName].point = regionVisitedCount;
+          }
+        }
+      );
+    });
+  }, []);
 
   return (
     <div
