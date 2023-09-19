@@ -50,6 +50,7 @@ const ActivityNotifications = () => {
               borderRadius: "50%",
               display: "inline-block",
               marginRight: "10px",
+              border: `0.5px solid #EDEDED`,
             }}
           >
             <img
