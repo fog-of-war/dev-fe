@@ -7,7 +7,7 @@ const greenTextStyle = {
 const AlertContainer = {
   display: "grid",
 };
-const socket = io("ws://localhost:5000/v1/ws-react");
+const socket = io("ws://api.yubinhome.com/v1/ws-react");
 
 const AlertWebSocket: React.FC = () => {
   const [receive, setReceive] = useState<any[]>([]);
@@ -25,7 +25,6 @@ const AlertWebSocket: React.FC = () => {
       console.log("웹소켓서버연결성공");
     });
     socket.on("receive_post_alert", handleReceiveMessage);
-
     return () => {
       socket.off("receive_post_alert", handleReceiveMessage);
     };
