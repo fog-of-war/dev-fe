@@ -23,7 +23,7 @@ const ReviewStarPoint = ({ rating }: { rating: number }) => {
             width: "100%",
             height: "100%",
           }}
-          src="./images/starPointIcon.png"
+          src="/images/starPointIcon.png"
           alt="starIcon"
         />
       </div>
