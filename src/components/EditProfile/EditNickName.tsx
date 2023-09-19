@@ -16,8 +16,10 @@ const EditNickName = ({
   setEditProfileData,
   inputRef,
 }: EditNickNameProps) => {
-  const [nickName, setNickName] = useState(profileData.nickName);
-  const [isFocused, setIsFocused] = useState(false);
+  const [nickName, setNickName] = useState<string | undefined>(
+    profileData.user_nickname
+  );
+  const [isFocused, setIsFocused] = useState<boolean>(false);
 
   return (
     <div
@@ -38,7 +40,10 @@ const EditNickName = ({
         value={nickName}
         onChange={(e) => {
           setNickName(e.target.value);
-          setEditProfileData((prev) => ({ ...prev, nickName: e.target.value }));
+          setEditProfileData((prev) => ({
+            ...prev,
+            user_nickname: e.target.value,
+          }));
         }}
         ref={inputRef}
         isFocused={isFocused}

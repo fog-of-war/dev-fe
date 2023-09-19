@@ -16,7 +16,7 @@ const EditProfileImage = ({
   setEditProfileData,
 }: EditProfileImageProps) => {
   const [profileImage, setProfileImage] = useState(
-    profileData.profileImage || "/images/default_profile_image.png"
+    profileData.user_image_url || "/images/default_profile_image.png"
   );
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -28,7 +28,7 @@ const EditProfileImage = ({
         const imageUrl = await uploadImage(file);
 
         setProfileImage(imageUrl);
-        setEditProfileData({ ...profileData, profileImage: imageUrl });
+        setEditProfileData({ ...profileData, user_image_url: imageUrl });
       } catch (error: any) {
         console.error("Image upload failed:", error);
       }
