@@ -3,26 +3,19 @@
 import { useState } from "react";
 import ReviewAuthorInfo from "./ReviewAuthorInfo";
 import ReviewContent from "./ReviewContent";
-import { Review } from "../../types/types";
+import { PlaceData } from "../../types/types";
 
 interface ReviewListProps {
-  reviews: Review[];
+  reviews?: PlaceData["place_posts"];
+  placeId: PlaceData["place_id"];
 }
 
-const ReviewList = ({ reviews }: ReviewListProps) => {
+const ReviewList = ({ reviews, placeId }: ReviewListProps) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
-
-  const handleCompleteEditing = () => {
-    setIsEditing(false);
-  };
-
-  const handleEditComment = (editedComment: string) => {
-    handleCompleteEditing();
-  };
 
   return (
     <>
-      {reviews.map((review: Review, index: number) => (
+      {reviews?.map((review, index) => (
         <div key={index}>
           <div
             css={{
@@ -43,17 +36,18 @@ const ReviewList = ({ reviews }: ReviewListProps) => {
               }}
             >
               <ReviewAuthorInfo
-                authorInfo={review.authorInfo}
+                authorInfo={review.post_author}
+                postId={review.post_id}
+                placeId={placeId}
                 isEditing={isEditing}
                 setIsEditing={setIsEditing}
               />
               <ReviewContent
-                placeImage={review.placeImage}
-                comment={review.comment}
-                rating={review.rating}
-                date={review.date}
+                placeImage={review.post_image_url}
+                comment={review.post_description}
+                rating={review.post_star_rating}
+                date={review.post_created_at}
                 isEditing={isEditing}
-                onEditComment={handleEditComment}
               />
             </div>
           </div>
