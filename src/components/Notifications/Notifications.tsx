@@ -27,7 +27,8 @@ const Notifications = () => {
           style={{
             cursor: "pointer",
             color: activeTab === "활동" ? colors.primary : colors.mediumGrey,
-            fontWeight: activeTab === "활동" ? 600 : 400,
+            fontSize: "15px",
+            fontWeight: activeTab === "활동" ? "bold" : 400,
             flex: "1",
             textAlign: "center",
             borderBottom:
@@ -44,7 +45,8 @@ const Notifications = () => {
           style={{
             cursor: "pointer",
             color: activeTab === "공지" ? colors.primary : colors.mediumGrey,
-            fontWeight: activeTab === "공지" ? 600 : 400,
+            fontSize: "15px",
+            fontWeight: activeTab === "공지" ? "bold" : 400,
             flex: "1",
             textAlign: "center",
             borderBottom:
