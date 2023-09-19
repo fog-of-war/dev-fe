@@ -15,11 +15,11 @@ import { usePostingContext } from "../../context/PostingDataContext";
 const UploadPage = () => {
   const navigate = useNavigate();
   const { setLoading, setLoadingMessage } = useLoading();
-  const { postingData } = usePostingContext();
+  const { postUploadData } = usePostingContext();
 
   const changeBlobToFile = async () => {
-    if (postingData.post_image_url) {
-      const blobUrl = postingData.post_image_url;
+    if (postUploadData.post_image_url) {
+      const blobUrl = postUploadData.post_image_url;
 
       const response = await fetch(blobUrl);
       const blob = await response.blob();
@@ -41,7 +41,9 @@ const UploadPage = () => {
   };
 
   const handleUploadPostClick = async () => {
-    if (!postingData) {
+    console.log(postUploadData);
+
+    if (!postUploadData) {
       toast.error("게시글 작성에 실패했습니다.", {
         id: "upload-post-fail",
       });
@@ -56,10 +58,19 @@ const UploadPage = () => {
 
       const AWSImageUrl = await uploadImageToS3(file!);
 
-      await uploadPost({ ...postingData, post_image_url: AWSImageUrl });
+      // setPostUploadData((prevData) => {
+      //   if (!prevData) return null;
+
+      //   return {
+      //     ...prevData,
+      //     post_image_url: AWSImageUrl,
+      //   };
+      // });
+
+      await uploadPost({ ...postUploadData, post_image_url: AWSImageUrl });
 
       setLoading(false);
-      toast.success("게시글 작성에 성공했습니다.", {
+      toast.success("게시글이 작성되었습니다.", {
         id: "upload-post-success",
       });
       navigate("/posting_complete");
