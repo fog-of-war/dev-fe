@@ -7,7 +7,7 @@ import HalfStarIcon from "./HalfStarIcon";
 import EmptyStarIcon from "./EmptyStarIcon";
 
 const StarRating = () => {
-  const { setPostingData } = usePostingContext();
+  const { setPostUploadData } = usePostingContext();
   const [rating, setRating] = useState<number | null>(null);
   const [hover, setHover] = useState<number | null>(null);
 
@@ -18,10 +18,12 @@ const StarRating = () => {
     const offsetX = e.clientX - rect.left;
     const selectedValue = offsetX < rect.width / 2 ? index + 0.5 : index + 1;
     setRating(selectedValue);
-    setPostingData((prevData) => ({
-      ...prevData,
-      post_star_rating: selectedValue,
-    }));
+    setPostUploadData((prevData) => {
+      return {
+        ...prevData,
+        post_star_rating: selectedValue,
+      };
+    });
   };
 
   const handleMouseOver = (
