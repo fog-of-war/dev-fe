@@ -23,6 +23,8 @@ const initialPlacePost: PlacePost = {
   post_author_id: 0,
   post_star_rating: 0,
   post_author: initialPostAuthor,
+  post_place_id: 0,
+  post_is_deleted: false,
 };
 
 const initialPlaceData: PlaceData = {
