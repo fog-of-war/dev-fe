@@ -29,6 +29,11 @@ const ActivityNotifications = () => {
     },
   ];
 
+  // 'x' 아이콘 클릭 시, 해당 알림 삭제
+  const handleDeleteClick = (notificationId: number) => {
+    console.log("지워!");
+  };
+
   return (
     <div>
       <hr css={{ width: "100%", border: `0.5px solid ${colors.paleGrey}` }} />
@@ -59,7 +64,7 @@ const ActivityNotifications = () => {
               css={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           </div>
-          <div>
+          <div css={{ flex: 1 }}>
             <B2 css={{ color: colors.mediumGrey, fontWeight: 600 }}>
               <span style={{ color: colors.primary }}>
                 {notification.username}
@@ -74,6 +79,17 @@ const ActivityNotifications = () => {
               </span>
             </B3>
           </div>
+          <img
+            src="images/xIcon.png"
+            alt="삭제 아이콘"
+            onClick={() => handleDeleteClick(notification.id)}
+            css={{
+              cursor: "pointer",
+              width: 12,
+              marginLeft: "auto",
+              marginBottom: "35px",
+            }}
+          />
         </div>
       ))}
     </div>
