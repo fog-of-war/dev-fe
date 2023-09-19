@@ -7,12 +7,17 @@ import { usePostingContext } from "../../context/PostingDataContext";
 const UploadPostComment = () => {
   const [isCommentChanged, setIsCommentChanged] = useState<boolean>(false);
   const [comment, setComment] = useState<string>("");
-  const { setPostingData } = usePostingContext();
+  const { setPostUploadData } = usePostingContext();
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     setComment(value);
-    setPostingData((prevData) => ({ ...prevData, post_description: value }));
+    setPostUploadData((prevData) => {
+      return {
+        ...prevData,
+        post_description: value,
+      };
+    });
   };
 
   return (
