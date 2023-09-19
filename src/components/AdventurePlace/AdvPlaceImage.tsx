@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { useState } from "react";
 import SkeletonLoader from "../UI/SkeletonLoader";
-import { PostingData } from "../../types/types";
+import { PostUploadData, PlaceData } from "../../types/types";
 
 interface AdvPlaceImageProps {
-  post_image_url: PostingData["post_image_url"];
-  place_name: PostingData["place_name"];
+  post_image_url: PostUploadData["post_image_url"];
+  place_name: PlaceData["place_name"];
 }
 
 const AdvPlaceImage = ({ post_image_url, place_name }: AdvPlaceImageProps) => {
