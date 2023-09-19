@@ -1,10 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import ProfileStat from "./ProfileStat";
-import { userDataState } from "../../store/userAtom";
-import { useRecoilValue } from "recoil";
+import useAuthQuery from "../../hooks/useAuthQuery";
 
 const ProfileInfo = () => {
-  const userData = useRecoilValue(userDataState);
+  const { data: userData } = useAuthQuery();
 
   return (
     <div

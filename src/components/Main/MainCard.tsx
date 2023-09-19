@@ -2,6 +2,7 @@
 
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import useProgressInfo from "../../hooks/useProgressInfo";
 
 import { getUserData } from "../../api/user";
 import { getMyRank } from "../../api/rank";
@@ -15,6 +16,8 @@ export interface UserData {
   user_nickname: string;
   user_image_url: string;
   user_authored_posts: [];
+  user_level: number;
+  user_points: number;
 }
 
 const MainCard = () => {
@@ -28,9 +31,15 @@ const MainCard = () => {
 
   const [userAuthoredPosts, setUserAuthoredPosts] = useState<string[]>([]);
 
+  const [userLevel, setUserLevel] = useState<number>(0);
+
+  const [userPoints, setUserPoints] = useState<number>(0);
+
   const [rankData, setRankData] = useState({
     rank: 0,
   });
+
+  const { calculatePoints, calculateProgress } = useProgressInfo();
 
   // 유저 데이터 불러오기
   useEffect(() => {
@@ -38,6 +47,8 @@ const MainCard = () => {
       setUserNickname(userData.user_nickname);
       setUserImageUrl(userData.user_image_url);
       setUserAuthoredPosts(userData.user_authored_posts);
+      setUserLevel(userData.user_level);
+      setUserPoints(userData.user_points);
     });
 
     getMyRank().then((data) => {
@@ -48,6 +59,10 @@ const MainCard = () => {
 
     setIsLoaded(true);
   }, []);
+
+  const requiredPoints = calculatePoints(userLevel, userPoints);
+
+  const progressPercentage = calculateProgress(userLevel, userPoints);
 
   // 작은 글자 스타일
   const smallTextStyle = {
@@ -113,7 +128,11 @@ const MainCard = () => {
         </div>
         총탐험포인트
         <div css={{ width: "100%", marginLeft: 5, marginBottom: 18 }}>
-          <ProgressBar progress={60} level={3} />
+          <ProgressBar
+            progress={progressPercentage}
+            userPoints={requiredPoints}
+            level={userLevel}
+          />
         </div>
       </div>
       <div css={{ ...smallTextStyle, marginTop: -12 }}>

@@ -1,24 +1,11 @@
 /** @jsxImportSource @emotion/react */
-
-import { useEffect } from "react";
-import { getUserData } from "../../api/user";
+import useAuthQuery from "../../hooks/useAuthQuery";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import ProfileInfo from "../../components/ProfileCard/ProfileInfo";
 import ProgressBar from "../../components/ProgressBar";
-import { useRecoilState } from "recoil";
-import { userDataState } from "../../store/userAtom";
 
 const UserProfile = () => {
-  const [userData, setUserData] = useRecoilState(userDataState);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const data = await getUserData();
-      console.log(data);
-      setUserData(data);
-    };
-    fetchUserData();
-  }, []);
+  const { data: userData } = useAuthQuery();
 
   return (
     <div

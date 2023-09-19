@@ -2,42 +2,15 @@
 
 import styled from "@emotion/styled";
 import colors from "../constants/colors";
-import levelData from "../../src/data/levelData.json";
-interface ProgressBarProps {
+import useProgressInfo from "../hooks/useProgressInfo";
+export interface ProgressBarProps {
   progress?: number;
   level: number;
   userPoints: number;
 }
 
 const ProgressBar = ({ level, userPoints }: ProgressBarProps) => {
-  const calculatePoints = (currentLevel: number, currentUserPoints: number) => {
-    if (currentLevel >= levelData.length - 1) {
-      return 0; // 최대 레벨일 경우
-    }
-
-    const nextLevelPoints = levelData[currentLevel + 1].level_points;
-
-    return nextLevelPoints - currentUserPoints;
-  };
-
-  const calculateProgress = (
-    currentLevel: number,
-    currentUserPoints: number
-  ) => {
-    if (currentLevel >= levelData.length - 1) {
-      return 100; // 최대 레벨일 경우
-    }
-
-    const currentLevelPoints =
-      currentLevel === 0 ? 0 : levelData[currentLevel].level_points;
-    const nextLevelPoints = levelData[currentLevel + 1].level_points;
-
-    return (
-      ((currentUserPoints - currentLevelPoints) /
-        (nextLevelPoints - currentLevelPoints)) *
-      100
-    );
-  };
+  const { calculatePoints, calculateProgress } = useProgressInfo();
 
   const requiredPoints = calculatePoints(level, userPoints);
 
