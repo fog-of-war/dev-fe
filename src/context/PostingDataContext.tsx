@@ -1,10 +1,45 @@
 import { createContext, useContext, useState, ReactNode } from "react";
-import { PostingData } from "../types/types";
+import { PlacePost, PlaceData, PostUploadData } from "../types/types";
 
 interface PostingDataContextProps {
-  postingData: PostingData;
-  setPostingData: React.Dispatch<React.SetStateAction<PostingData>>;
+  allPlaceData: PlaceData;
+  setAllPlaceData: React.Dispatch<React.SetStateAction<PlaceData>>;
+  postUploadData: PostUploadData;
+  setPostUploadData: React.Dispatch<React.SetStateAction<PostUploadData>>;
 }
+
+const initialPostAuthor = {
+  user_id: 0,
+  user_nickname: "",
+  user_image_url: "",
+};
+
+const initialPlacePost: PlacePost = {
+  post_id: 0,
+  post_created_at: new Date().toISOString(),
+  post_updated_at: new Date().toISOString(),
+  post_description: "",
+  post_image_url: "",
+  post_author_id: 0,
+  post_star_rating: 0,
+  post_author: initialPostAuthor,
+};
+
+const initialPlaceData: PlaceData = {
+  place_id: 0,
+  place_name: "",
+  place_star_rating: 0,
+  place_posts: [initialPlacePost],
+};
+
+const initialPostUploadData: PostUploadData = {
+  place_name: "",
+  post_star_rating: 0,
+  post_description: "",
+  post_image_url: "",
+  place_latitude: 0,
+  place_longitude: 0,
+};
 
 const PostingDataContext = createContext<PostingDataContextProps | undefined>(
   undefined
@@ -23,34 +58,20 @@ interface PostingDataProviderProps {
 }
 
 export function PostingDataProvider({ children }: PostingDataProviderProps) {
-  const [postingData, setPostingData] = useState<{
-    post_id: number | null;
-    post_create_at: string | null;
-    post_updated_at: string | null;
-    post_description: string | null;
-    post_image_url: string | undefined;
-    post_author_id: number | null;
-    post_star_rating: number | null;
-    post_place_id: number | null;
-    place_name: string | null;
-    place_latitude: number | null;
-    place_longitude: number | null;
-  }>({
-    post_id: null,
-    post_create_at: null,
-    post_updated_at: null,
-    post_description: null,
-    post_image_url: undefined,
-    post_author_id: null,
-    post_star_rating: null,
-    post_place_id: null,
-    place_name: null,
-    place_latitude: null,
-    place_longitude: null,
-  });
+  const [allPlaceData, setAllPlaceData] = useState<PlaceData>(initialPlaceData);
+  const [postUploadData, setPostUploadData] = useState<PostUploadData>(
+    initialPostUploadData
+  );
 
   return (
-    <PostingDataContext.Provider value={{ postingData, setPostingData }}>
+    <PostingDataContext.Provider
+      value={{
+        allPlaceData,
+        setAllPlaceData,
+        postUploadData,
+        setPostUploadData,
+      }}
+    >
       {children}
     </PostingDataContext.Provider>
   );
