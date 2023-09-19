@@ -57,6 +57,8 @@ const Notifications = () => {
         <div
           css={{
             display: activeTab === "활동" ? "block" : "none",
+            width: "100%",
+            marginTop: "10px",
           }}
         >
           <ActivityNotifications />
@@ -64,6 +66,8 @@ const Notifications = () => {
         <div
           css={{
             display: activeTab === "공지" ? "block" : "none",
+            width: "100%",
+            marginTop: "10px",
           }}
         >
           <NoticeNotifications />
