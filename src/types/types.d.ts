@@ -12,6 +12,11 @@ export interface Review {
   comment: string;
 }
 
+export interface UpdatedReview {
+  post_star_rating: number;
+  post_description: string;
+}
+
 export interface AuthorInfo {
   _id: string;
   profileImage: string;
