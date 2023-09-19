@@ -20,7 +20,7 @@ const CropImage = ({ enableCropper, setEnableCropper }: CropState) => {
   const { setCroppedImage } = useCroppedImage();
   // const [imageSrc, setImageSrc] = useState<string | null>(null);
   const { certifiedImage } = useImageContext();
-  const { setPostingData } = usePostingContext();
+  const { setPostUploadData } = usePostingContext();
 
   const imageSrc = certifiedImage.imageURL;
   console.log(imageSrc);
@@ -56,11 +56,11 @@ const CropImage = ({ enableCropper, setEnableCropper }: CropState) => {
           });
 
           // PostingData에 자른 이미지 url 및 장소 정보 저장
-          setPostingData((prevData) => ({
+          setPostUploadData((prevData) => ({
             ...prevData,
-            place_name: certifiedImage.place_name,
-            place_latitude: Number(certifiedImage.place_latitude),
-            place_longitude: Number(certifiedImage.place_longitude),
+            place_name: certifiedImage.place_name || "", // null인 경우 빈 문자열로 대체
+            place_latitude: Number(certifiedImage.place_latitude || 0), // null인 경우 0으로 대체
+            place_longitude: Number(certifiedImage.place_longitude || 0), // null인 경우 0으로 대체
             post_image_url: croppedImageUrl,
           }));
 
