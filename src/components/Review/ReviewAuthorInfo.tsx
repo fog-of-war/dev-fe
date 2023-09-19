@@ -2,12 +2,10 @@
 import { PostAuthor, PlacePost, PlaceData } from "../../types/types";
 import ReviewAuthor from "./ReviewAuthor";
 import ReviewEditButton from "../UI/ReviewEditButton";
-import { userDataState } from "../../store/userAtom";
-import { useRecoilValue } from "recoil";
 import { useReviewContext } from "../../context/ReviewContext";
 import { deletePost, updatePost } from "../../api/post";
 import { toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import useAuthQuery from "../../hooks/useAuthQuery";
 
 interface ReviewAuthorInfoProps {
   postId: PlacePost["post_id"];
@@ -21,12 +19,10 @@ const ReviewAuthorInfo = ({
   authorInfo,
   isEditing,
   postId,
-  placeId,
   setIsEditing,
 }: ReviewAuthorInfoProps) => {
-  const userData = useRecoilValue(userDataState);
   const { updateReview } = useReviewContext();
-  const navigate = useNavigate();
+  const { data: userData, invalidateUser } = useAuthQuery();
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -39,7 +35,8 @@ const ReviewAuthorInfo = ({
         toast.success("게시글이 삭제되었습니다.", {
           id: "delete-success",
         });
-        navigate(`/reviewList/${placeId}`);
+        invalidateUser();
+        window.location.reload();
       } catch (error: any) {
         toast.error(
           error.response?.data?.message ||
@@ -65,11 +62,10 @@ const ReviewAuthorInfo = ({
         id: "update-success",
       });
 
-      // 2초 딜레이 후 navigate 실행
-      setTimeout(() => {
-        navigate(`/reviewList/${placeId}`);
-        setIsEditing(false);
-      }, 1000);
+      setIsEditing(false);
+      invalidateUser();
+
+      window.location.reload();
     } catch (error: any) {
       toast.error(error.response.data.message, {
         id: "update-error",
