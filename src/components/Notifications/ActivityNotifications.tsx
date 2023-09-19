@@ -61,7 +61,12 @@ const ActivityNotifications = () => {
             <img
               src={imageUrl}
               alt="프로필 이미지"
-              css={{ width: "100%", height: "100%", objectFit: "cover" }}
+              css={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: "50%",
+              }}
             />
           </div>
           <div css={{ flex: 1 }}>
