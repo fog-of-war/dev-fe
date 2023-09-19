@@ -7,7 +7,9 @@ const greenTextStyle = {
 const AlertContainer = {
   display: "grid",
 };
-const socket = io("ws://api.yubinhome.com/v1/ws-react");
+
+const socketUrl = process.env.REACT_APP_SOCKET_URL as string;
+const socket = io(socketUrl);
 
 const AlertWebSocket: React.FC = () => {
   const [receive, setReceive] = useState<any[]>([]);
