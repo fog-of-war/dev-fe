@@ -157,3 +157,29 @@ export interface UserRank {
   user_points: number;
   rank: number;
 }
+
+export interface AllUserRank {
+  user_id: number;
+  user_nickname: string;
+  user_image_url: string;
+  user_points: number;
+  rank: number;
+  user_badges_count: number;
+}
+
+export interface UserRegionRank {
+  user_id: number;
+  user_nickname: string;
+  user_image_url: string;
+  user_selected_badge: string;
+  visit_count: number;
+  rank: number;
+}
+
+export interface RegionRank {
+  region_id: number;
+  region_name: string;
+  region_english_name: string;
+  regionVisitCount: number;
+  userRanking: UserRegionRank[];
+}
