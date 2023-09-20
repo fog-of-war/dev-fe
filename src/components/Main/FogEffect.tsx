@@ -13,10 +13,10 @@ const FogEffect: React.FC<FogEffectProps> = ({ isLoaded }) => {
           alt="안개 탑 이미지"
           style={{
             position: "absolute",
-            top: -20,
+            top: 20,
             left: 0,
             width: 300,
-            height: 200,
+            height: 135,
             zIndex: 2,
             transition: "transform 0.5s",
             transform: `translateX(${isLoaded ? 0 : -300}px)`,
@@ -29,10 +29,10 @@ const FogEffect: React.FC<FogEffectProps> = ({ isLoaded }) => {
           alt="안개 바텀 이미지"
           style={{
             position: "absolute",
-            top: 120,
+            top: 150,
             left: 10,
             width: 300,
-            height: 200,
+            height: 135,
             zIndex: 2,
             transition: "transform 0.5s",
             transform: `translateX(${isLoaded ? 0 : 300}px)`,

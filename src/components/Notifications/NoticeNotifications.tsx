@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import colors from "../../constants/colors";
 import B2 from "../UI/B2";
-import B3 from "../UI/B3";
+import TimeAgo from "./TimeAgo";
 
 interface Notification {
   place_id: number;
@@ -113,9 +113,7 @@ const NoticeNotifications = () => {
               를 만나보세요
             </B2>
             <br />
-            <B3 style={{ color: colors.lightGrey, fontWeight: 400 }}>
-              {notification.post_created_at}
-            </B3>
+            <TimeAgo timestamp={notification.post_created_at} />
           </div>
           <img
             src="images/xIcon.png"
