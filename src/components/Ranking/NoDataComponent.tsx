@@ -4,7 +4,12 @@ import Button from "../UI/Button";
 import colors from "../../constants/colors";
 import { useNavigate } from "react-router-dom";
 
-const NoRegionRanking = () => {
+interface NoRegionRankingInterface {
+  text: string;
+  image: string;
+}
+
+const NoDataComponent = ({ text, image }: NoRegionRankingInterface) => {
   const navigate = useNavigate();
 
   const handleGoToExplore = () => {
@@ -15,7 +20,7 @@ const NoRegionRanking = () => {
     <NoRegionComponentLayout>
       <ImageContainer>
         <img
-          src="/images/noRanking.png"
+          src={image}
           alt="noRegionRank"
           css={{
             width: "80px",
@@ -25,7 +30,7 @@ const NoRegionRanking = () => {
         />
       </ImageContainer>
       <TextAndButtonContainer>
-        <NoRankInfoText>아직 랭킹 정보가 없어요</NoRankInfoText>
+        <NoRankInfoText>{text}</NoRankInfoText>
         <GrayStyledButton onClick={handleGoToExplore}>
           탐험 시작하러 가기
         </GrayStyledButton>
@@ -34,7 +39,7 @@ const NoRegionRanking = () => {
   );
 };
 
-export default NoRegionRanking;
+export default NoDataComponent;
 
 const NoRegionComponentLayout = styled.div`
   display: flex;
@@ -42,7 +47,11 @@ const NoRegionComponentLayout = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  height: 100%;
   gap: 10px;
+  background-color: ${colors.pastel};
+  padding: 25px;
+  border-radius: 15px;
 `;
 
 const ImageContainer = styled.div`
