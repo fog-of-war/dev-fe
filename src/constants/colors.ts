@@ -7,6 +7,6 @@ const colors = {
   mediumGrey: "#848484",
   lightGrey: "#AAAAAA",
   paleGrey: "#D9D9D9",
-};
+} as const;
 
 export default colors;
