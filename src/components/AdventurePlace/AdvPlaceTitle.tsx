@@ -10,6 +10,7 @@ const AdvPlaceTitle = () => {
         gap: "5px",
         width: "100%",
         paddingTop: "15px",
+        paddingBottom: "15px",
       }}
     >
       <div css={{ display: "flex", alignItems: "center", gap: 5 }}>

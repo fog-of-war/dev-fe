@@ -15,12 +15,21 @@ const MyRankingItem = ({
   ranking,
   district,
 }: MyRankingItemProps) => {
-  const medalIcon =
-    index === 0
-      ? "/images/goldMedal.png"
-      : index === 1
-      ? "/images/silverMedal.png"
-      : "/images/bronzeMedal.png";
+  let medalIcon;
+
+  switch (ranking) {
+    case 1:
+      medalIcon = "/images/goldMedal.png";
+      break;
+    case 2:
+      medalIcon = "/images/silverMedal.png";
+      break;
+    case 3:
+      medalIcon = "/images/bronzeMedal.png";
+      break;
+    default:
+      break;
+  }
 
   return (
     <div
@@ -90,7 +99,7 @@ const MyRankingItem = ({
           css={{
             fontSize: 16,
             fontWeight: "semibold",
-            color: colors.darkGrey,
+            color: colors.secondary,
           }}
         >
           {district}
