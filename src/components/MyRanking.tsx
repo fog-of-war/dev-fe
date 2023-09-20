@@ -4,7 +4,7 @@ import colors from "../constants/colors";
 import MyRankingItem from "./Ranking/MyRankingItem";
 import Title from "./Title";
 import useRankData from "../hooks/useRankData";
-import NoRegionRanking from "./Ranking/NoRegionRanking";
+import NoDataComponent from "./Ranking/NoDataComponent";
 
 const MyRanking = () => {
   const { regionRankData } = useRankData();
@@ -27,13 +27,17 @@ const MyRanking = () => {
         css={{
           display: "flex",
           backgroundColor: colors.pastel,
-          padding: "25px",
           borderRadius: "15px",
           gap: "25px",
           justifyContent: "center",
         }}
       >
-        {regionRankData?.length === 0 && <NoRegionRanking />}
+        {regionRankData?.length === 0 && (
+          <NoDataComponent
+            text="아직 랭킹 정보가 없어요"
+            image="/images/noRanking.png"
+          />
+        )}
         {regionRankData?.map((data, i) => (
           <MyRankingItem
             key={i}

@@ -6,6 +6,7 @@ import AdvPlaceTitle from "./AdvPlaceTitle";
 import AdvPlaceImage from "./AdvPlaceImage";
 import { getMyPosts } from "../../api/post";
 import { MyPosts } from "../../types/types";
+import NoDataComponent from "../Ranking/NoDataComponent";
 
 const AdvPlaceList = () => {
   const [userPosts, setUserPosts] = useState<MyPosts[]>([]);
@@ -49,6 +50,12 @@ const AdvPlaceList = () => {
         }}
       >
         <AdvPlaceTitle />
+        {uniquePlaces.length === 0 && (
+          <NoDataComponent
+            text="아직 탐험된 장소가 없어요"
+            image="/images/certificationModal/explorerIcon.png"
+          />
+        )}
         {uniquePlaces.map((place) => (
           <div
             key={place.post_id}
