@@ -4,6 +4,7 @@ import colors from "../constants/colors";
 import MyRankingItem from "./Ranking/MyRankingItem";
 import Title from "./Title";
 import useRankData from "../hooks/useRankData";
+import NoRegionRanking from "./Ranking/NoRegionRanking";
 
 const MyRanking = () => {
   const { regionRankData } = useRankData();
@@ -32,6 +33,7 @@ const MyRanking = () => {
           justifyContent: "center",
         }}
       >
+        {regionRankData?.length === 0 && <NoRegionRanking />}
         {regionRankData?.map((data, i) => (
           <MyRankingItem
             key={i}
