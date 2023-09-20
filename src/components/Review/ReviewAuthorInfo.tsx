@@ -29,11 +29,11 @@ const ReviewAuthorInfo = React.memo(
       if (window.confirm("정말 삭제하시겠습니까?")) {
         try {
           await deletePost(postId);
+          invalidateUser();
+          window.location.reload();
           toast.success("게시글이 삭제되었습니다.", {
             id: "delete-success",
           });
-          invalidateUser();
-          window.location.reload();
         } catch (error: any) {
           toast.error(
             error.response?.data?.message ||
@@ -55,14 +55,12 @@ const ReviewAuthorInfo = React.memo(
 
       try {
         await updatePost(postId, updateReview);
+        setIsEditing(false);
+        invalidateUser();
+        window.location.reload();
         toast.success("게시글이 수정되었습니다.", {
           id: "update-success",
         });
-
-        setIsEditing(false);
-        invalidateUser();
-
-        window.location.reload();
       } catch (error: any) {
         toast.error(error.response.data.message, {
           id: "update-error",
