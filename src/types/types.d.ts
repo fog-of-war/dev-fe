@@ -176,10 +176,15 @@ export interface UserRegionRank {
   rank: number;
 }
 
-export interface RegionRank {
+export interface Region {
   region_id: number;
   region_name: string;
   region_english_name: string;
-  regionVisitCount: number;
+  region_thumbnail_url: string;
+}
+
+export interface RegionRank {
+  region: Region;
+  ranking: UserRegionRank[];
   userRanking: UserRegionRank[];
 }

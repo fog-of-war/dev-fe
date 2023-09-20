@@ -28,7 +28,6 @@ const MyRankingItem = ({
         position: "relative",
         display: "flex",
         flexDirection: "column",
-        flex: 1,
       }}
     >
       <img
@@ -45,14 +44,15 @@ const MyRankingItem = ({
       <div
         css={{
           position: "relative",
-          paddingTop: "100%",
           borderRadius: "9999px",
           overflow: "hidden",
+          width: "85px",
+          height: "85px",
         }}
       >
         <img
           src={image}
-          alt="숭례문"
+          alt="지역 이미지"
           css={{
             position: "absolute",
             width: "100%",

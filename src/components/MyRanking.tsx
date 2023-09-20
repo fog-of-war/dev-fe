@@ -3,26 +3,13 @@
 import colors from "../constants/colors";
 import MyRankingItem from "./Ranking/MyRankingItem";
 import Title from "./Title";
-
-const DUMMY_DATA = [
-  {
-    image: "https://source.unsplash.com/random",
-    ranking: 1,
-    district: "강남구",
-  },
-  {
-    image: "https://source.unsplash.com/random",
-    ranking: 10,
-    district: "강서구",
-  },
-  {
-    image: "https://source.unsplash.com/random",
-    ranking: 32,
-    district: "양천구",
-  },
-];
+import useRankData from "../hooks/useRankData";
 
 const MyRanking = () => {
+  const { regionRankData } = useRankData();
+
+  console.log(regionRankData);
+
   return (
     <div
       css={{
@@ -44,13 +31,13 @@ const MyRanking = () => {
           gap: "25px",
         }}
       >
-        {DUMMY_DATA.map((item, i) => (
+        {regionRankData?.map((data, i) => (
           <MyRankingItem
             key={i}
             index={i}
-            image={item.image}
-            ranking={item.ranking}
-            district={item.district}
+            image={data.region.region_thumbnail_url}
+            ranking={data.ranking[0].rank}
+            district={data.region.region_name}
           />
         ))}
       </div>

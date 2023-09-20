@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import useAuthQuery from "./useAuthQuery";
 import { getMyRank, getAllRank, getRegionRank } from "../api/rank";
 import { UserRank, AllUserRank, RegionRank } from "../types/types";
 
@@ -8,6 +9,7 @@ const useRankData = () => {
   const [regionRankData, setRegionRankData] = useState<RegionRank[] | null>(
     null
   );
+  const currentUserId = useAuthQuery().data?.user_id;
 
   useEffect(() => {
     const getRankData = async () => {
@@ -32,7 +34,22 @@ const useRankData = () => {
     const getRegionRankData = async () => {
       const myRegionRank = await getRegionRank();
 
-      setRegionRankData(myRegionRank);
+      const currentUserRegionRanks = myRegionRank
+        .map((region) => ({
+          ...region,
+          userRanking: region.ranking.filter(
+            (userRank) => userRank.user_id === currentUserId
+          ),
+        }))
+        .filter((region) => region.userRanking[0]);
+
+      const sortedRegionRankData = currentUserRegionRanks.sort(
+        (a, b) =>
+          (a.userRanking[0]?.rank || Infinity) -
+          (b.userRanking[0]?.rank || Infinity)
+      );
+
+      setRegionRankData(sortedRegionRankData);
     };
 
     getRegionRankData();

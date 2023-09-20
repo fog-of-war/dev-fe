@@ -9,8 +9,6 @@ import useRankData from "../hooks/useRankData";
 const RankingPage = () => {
   const { allRankData } = useRankData();
 
-  console.log(allRankData);
-
   return (
     <div
       css={{
