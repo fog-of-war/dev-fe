@@ -12,7 +12,15 @@ const NotificationsPage = () => {
         width: "100%",
         position: "absolute",
         top: 60,
-        backgroundColor: "white",
+        overflowY: "auto",
+        maxHeight: "calc(100vh - 130px)",
+        // 스크롤바 숨기기
+        "&::-webkit-scrollbar": {
+          width: "0.5em",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          background: "transparent",
+        },
       }}
     >
       <NotificationsHeader />
