@@ -153,7 +153,13 @@ const MainCard = () => {
             css={{ width: "24px", height: "24px" }}
           />
         </div>
-        랭킹 {rankData.rank}위
+        <div
+          onClick={() => {
+            navigate("/ranking");
+          }}
+        >
+          랭킹 {rankData.rank}위
+        </div>
       </div>
       <div
         style={{
