@@ -74,6 +74,9 @@ const TotalRanking = ({
           fontSize: "16px",
           fontWeight: "bold",
           color: colors.secondary,
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
         }}
       >
         {nickname}
@@ -84,7 +87,8 @@ const TotalRanking = ({
           flexDirection: "column",
           alignItems: "center",
           gap: "3px",
-          marginLeft: "auto",
+          position: "absolute",
+          right: "40px",
         }}
       >
         <div
@@ -93,6 +97,8 @@ const TotalRanking = ({
             alignItems: "center",
             gap: "5px",
             flexDirection: "row",
+            width: "6rem",
+            justifyContent: "space-between",
           }}
         >
           <img
@@ -108,6 +114,9 @@ const TotalRanking = ({
               fontSize: "14px",
               fontWeight: "600",
               color: "#6F6F6F",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
             }}
           >
             {advanturePoint.toLocaleString()}점
@@ -136,6 +145,9 @@ const TotalRanking = ({
               fontSize: "14px",
               fontWeight: "600",
               color: "#6F6F6F",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
             }}
           >
             {badgeCount}개
