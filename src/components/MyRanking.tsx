@@ -29,6 +29,7 @@ const MyRanking = () => {
           padding: "25px",
           borderRadius: "15px",
           gap: "25px",
+          justifyContent: "center",
         }}
       >
         {regionRankData?.map((data, i) => (
