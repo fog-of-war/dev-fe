@@ -90,7 +90,7 @@ const MyRankingItem = ({
           css={{
             fontSize: 16,
             fontWeight: "semibold",
-            color: colors.darkGrey,
+            color: colors.secondary,
           }}
         >
           {district}
