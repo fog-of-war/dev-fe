@@ -16,7 +16,14 @@ interface Notification {
 }
 
 const socketUrl = process.env.REACT_APP_SOCKET_URL as string;
-const socket = io(socketUrl);
+
+// 액세스 토큰이 존재하는 경우에만 소켓 연결에 추가합니다.
+const accessToken = localStorage.getItem("access_token");
+
+// 액세스 토큰을 웹소켓에 헤더에 담아 요청을 보냅니다.
+const socket = io(socketUrl, {
+  query: accessToken ? { Authorization: `Bearer ${accessToken}` } : undefined,
+});
 
 const NoticeNotifications = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -28,7 +35,7 @@ const NoticeNotifications = () => {
     });
 
     // 웹 소켓으로부터 데이터를 받을 때
-    socket.on("receive_post_alert", (data) => {
+    socket.on("message", (data) => {
       console.log("받은 데이터:", data);
 
       // 데이터가 message 내부에 있는지 확인 후 추출
@@ -55,7 +62,7 @@ const NoticeNotifications = () => {
 
     return () => {
       // 컴포넌트 언마운트 시, 웹 소켓 이벤트 리스너 해제
-      socket.off("receive_post_alert");
+      socket.off("message");
     };
   }, []);
 

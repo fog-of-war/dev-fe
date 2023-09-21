@@ -46,7 +46,7 @@ const AppRoutes = () => {
           <Route path="/upload" element={<UploadPage />} />
           <Route path="/posting_complete" element={<PostingCompletePage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
-          <Route path="/websocket" element={<AlertWebSocket />} />
+          {/* <Route path="/websocket" element={<AlertWebSocket />} /> */}
           <Route path="*" element={<Navigate to="/" />} />
         </>
       ) : (
