@@ -5,27 +5,36 @@ import colors from "../../constants/colors";
 import B2 from "../UI/B2";
 import B3 from "../UI/B3";
 
+interface Notification {
+  user_nickname: string;
+  user_image_url: string;
+  comment_id: number;
+  comment_text: string;
+  comment_created_at: string;
+}
+
 const imageUrl = "images/dummyUserImage.png";
 
 const ActivityNotifications = () => {
   const notifications = [
     {
-      id: 1,
-      username: "닉네임1",
-      content: "여기 탕후루 짱맛인뎅",
-      timestamp: "1시간전",
+      comment_id: 1,
+      user_nickname: "모두다차차차",
+      comment_text: "여기 탕후루 짱맛인뎅",
+      comment_created_at: "1시간전",
     },
     {
-      id: 2,
-      username: "닉네임2",
-      content: "다른 내용",
-      timestamp: "2시간전",
+      comment_id: 2,
+      user_nickname: "다함께차차차",
+      comment_text:
+        "안녕하세요 글자테스트입니다. 이거는스무자가넘는문자입니다.",
+      comment_created_at: "2시간전",
     },
     {
-      id: 3,
-      username: "닉네임3",
-      content: "다른 내용",
-      timestamp: "2시간전",
+      comment_id: 3,
+      user_nickname: "갯마을차차차",
+      comment_text: "여기 탕후루 짱맛인뎅",
+      comment_created_at: "3일전",
     },
   ];
 
@@ -39,7 +48,7 @@ const ActivityNotifications = () => {
       <hr css={{ width: "100%", border: `0.5px solid ${colors.paleGrey}` }} />
       {notifications.map((notification) => (
         <div
-          key={notification.id}
+          key={notification.comment_id}
           css={{
             display: "flex",
             alignItems: "center",
@@ -72,22 +81,24 @@ const ActivityNotifications = () => {
           <div css={{ flex: 1 }}>
             <B2 css={{ color: colors.mediumGrey, fontWeight: 600 }}>
               <span style={{ color: colors.primary }}>
-                {notification.username}
+                {notification.user_nickname}
               </span>
               님이 댓글을 남겼어요
             </B2>
             <br />
             <B3 css={{ color: colors.mediumGrey, fontWeight: 400 }}>
-              {notification.content}{" "}
+              {notification.comment_text.length > 20
+                ? `${notification.comment_text.slice(0, 20)}...`
+                : notification.comment_text}{" "}
               <span style={{ color: colors.lightGrey }}>
-                {notification.timestamp}
+                {notification.comment_created_at}
               </span>
             </B3>
           </div>
           <img
             src="images/xIcon.png"
             alt="삭제 아이콘"
-            onClick={() => handleDeleteClick(notification.id)}
+            onClick={() => handleDeleteClick(notification.comment_id)}
             css={{
               cursor: "pointer",
               width: 12,
