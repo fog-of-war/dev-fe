@@ -14,23 +14,23 @@ const socket = io(socketUrl);
 const AlertWebSocket: React.FC = () => {
   const [receive, setReceive] = useState<any[]>([]);
 
-  useEffect(() => {
-    const handleReceiveMessage = (data: any) => {
-      console.log("🐤", receive);
-      if (data && data.message) {
-        console.log("🐤", data.message);
-        setReceive((prevReceive) => [...prevReceive, data.message]);
-      }
-    };
+  // useEffect(() => {
+  //   const handleReceiveMessage = (data: any) => {
+  //     console.log("🐤", receive);
+  //     if (data && data.message) {
+  //       console.log("🐤", data.message);
+  //       setReceive((prevReceive) => [...prevReceive, data.message]);
+  //     }
+  //   };
 
-    socket.on("connect", () => {
-      console.log("웹소켓서버연결성공");
-    });
-    socket.on("receive_post_alert", handleReceiveMessage);
-    return () => {
-      socket.off("receive_post_alert", handleReceiveMessage);
-    };
-  }, [socket]);
+  //   socket.on("connect", () => {
+  //     console.log("웹소켓서버연결성공");
+  //   });
+  //   socket.on("receive_post_alert", handleReceiveMessage);
+  //   return () => {
+  //     socket.off("receive_post_alert", handleReceiveMessage);
+  //   };
+  // }, [socket]);
   // 상태 업데이트 이후에 현재 상태 출력
 
   return (
