@@ -56,7 +56,7 @@ const MainBadgeList: React.FC = () => {
             key={index}
             src={badge.badge_image_url}
             alt={badge.badge_name}
-            css={{ width: 56, aspectRatio: 1 }}
+            css={{ width: "100%", aspectRatio: 1 }}
           />
         ))}
       </div>
