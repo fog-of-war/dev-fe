@@ -1,6 +1,6 @@
 import colors from "../../constants/colors";
 import styled from "@emotion/styled";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 interface ProfileCardProps {
   username?: string;
@@ -18,6 +18,7 @@ const ProfileCard = ({
   badgeIcon,
 }: ProfileCardProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <ProfileCardWrapper>
@@ -35,12 +36,14 @@ const ProfileCard = ({
           <ProfileTextBox>
             <span>{profileText}</span>
           </ProfileTextBox>
-          <ProfileEditButton onClick={() => navigate("/profile_edit")}>
-            <ProfileEditIcon
-              src="./images/profileEditIcon.svg"
-              alt="editIcon"
-            />
-          </ProfileEditButton>
+          {location.pathname === "/profile" && (
+            <ProfileEditButton onClick={() => navigate("/profile_edit")}>
+              <ProfileEditIcon
+                src="./images/profileEditIcon.svg"
+                alt="editIcon"
+              />
+            </ProfileEditButton>
+          )}
         </ProfileBadgeContainer>
         <ProfileNicknameBox>{username}</ProfileNicknameBox>
       </ProfileInfoContainer>

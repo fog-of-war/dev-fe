@@ -1,9 +1,16 @@
 /** @jsxImportSource @emotion/react */
+
 import ProfileStat from "./ProfileStat";
 import useAuthQuery from "../../hooks/useAuth";
+import useRankData from "../../hooks/useRankData";
+import { useNavigate } from "react-router-dom";
 
 const ProfileInfo = () => {
   const { data: userData } = useAuthQuery();
+  const { myRankData } = useRankData();
+  const navigate = useNavigate();
+
+  const goToRankPage = () => navigate("/ranking");
 
   return (
     <div
@@ -17,9 +24,14 @@ const ProfileInfo = () => {
         backgroundColor: "white",
       }}
     >
-      <ProfileStat type="exploration" data={userData} />
-      <ProfileStat type="badge" data={userData} />
-      {/* <ProfileStat type="rank" data={userData} /> */}
+      <ProfileStat type="exploration" data={userData} rankData={myRankData} />
+      <ProfileStat type="badge" data={userData} rankData={myRankData} />
+      <ProfileStat
+        type="rank"
+        data={userData}
+        rankData={myRankData}
+        onClick={goToRankPage}
+      />
     </div>
   );
 };

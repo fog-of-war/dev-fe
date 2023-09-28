@@ -151,3 +151,40 @@ export interface ProfileSetupData {
   user_nickname: string;
   user_image_url: string;
 }
+
+export interface UserRank {
+  user_id: number;
+  user_points: number;
+  rank: number;
+}
+
+export interface AllUserRank {
+  user_id: number;
+  user_nickname: string;
+  user_image_url: string;
+  user_points: number;
+  rank: number;
+  user_badges_count: number;
+}
+
+export interface UserRegionRank {
+  user_id: number;
+  user_nickname: string;
+  user_image_url: string;
+  user_selected_badge: string;
+  visit_count: number;
+  rank: number;
+}
+
+export interface Region {
+  region_id: number;
+  region_name: string;
+  region_english_name: string;
+  region_thumbnail_url: string;
+}
+
+export interface RegionRank {
+  region: Region;
+  ranking: UserRegionRank[];
+  userRanking: UserRegionRank[];
+}

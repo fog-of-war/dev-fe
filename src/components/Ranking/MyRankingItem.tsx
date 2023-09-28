@@ -15,12 +15,21 @@ const MyRankingItem = ({
   ranking,
   district,
 }: MyRankingItemProps) => {
-  const medalIcon =
-    index === 0
-      ? "/images/goldMedal.png"
-      : index === 1
-      ? "/images/silverMedal.png"
-      : "/images/bronzeMedal.png";
+  let medalIcon;
+
+  switch (ranking) {
+    case 1:
+      medalIcon = "/images/goldMedal.png";
+      break;
+    case 2:
+      medalIcon = "/images/silverMedal.png";
+      break;
+    case 3:
+      medalIcon = "/images/bronzeMedal.png";
+      break;
+    default:
+      break;
+  }
 
   return (
     <div
@@ -28,7 +37,6 @@ const MyRankingItem = ({
         position: "relative",
         display: "flex",
         flexDirection: "column",
-        flex: 1,
       }}
     >
       <img
@@ -45,14 +53,15 @@ const MyRankingItem = ({
       <div
         css={{
           position: "relative",
-          paddingTop: "100%",
           borderRadius: "9999px",
           overflow: "hidden",
+          width: "85px",
+          height: "85px",
         }}
       >
         <img
           src={image}
-          alt="숭례문"
+          alt="지역 이미지"
           css={{
             position: "absolute",
             width: "100%",
@@ -90,7 +99,7 @@ const MyRankingItem = ({
           css={{
             fontSize: 16,
             fontWeight: "semibold",
-            color: colors.darkGrey,
+            color: colors.secondary,
           }}
         >
           {district}

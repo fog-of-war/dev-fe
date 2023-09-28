@@ -3,26 +3,14 @@
 import colors from "../constants/colors";
 import MyRankingItem from "./Ranking/MyRankingItem";
 import Title from "./Title";
-
-const DUMMY_DATA = [
-  {
-    image: "https://source.unsplash.com/random",
-    ranking: 1,
-    district: "강남구",
-  },
-  {
-    image: "https://source.unsplash.com/random",
-    ranking: 10,
-    district: "강서구",
-  },
-  {
-    image: "https://source.unsplash.com/random",
-    ranking: 32,
-    district: "양천구",
-  },
-];
+import useRankData from "../hooks/useRankData";
+import NoDataComponent from "./Ranking/NoDataComponent";
 
 const MyRanking = () => {
+  const { regionRankData } = useRankData();
+
+  console.log(regionRankData);
+
   return (
     <div
       css={{
@@ -39,18 +27,24 @@ const MyRanking = () => {
         css={{
           display: "flex",
           backgroundColor: colors.pastel,
-          padding: "25px",
           borderRadius: "15px",
           gap: "25px",
+          justifyContent: "center",
         }}
       >
-        {DUMMY_DATA.map((item, i) => (
+        {regionRankData?.length === 0 && (
+          <NoDataComponent
+            text="아직 랭킹 정보가 없어요"
+            image="/images/noRanking.png"
+          />
+        )}
+        {regionRankData?.map((data, i) => (
           <MyRankingItem
             key={i}
             index={i}
-            image={item.image}
-            ranking={item.ranking}
-            district={item.district}
+            image={data.region.region_thumbnail_url}
+            ranking={data.ranking[0].rank}
+            district={data.region.region_name}
           />
         ))}
       </div>

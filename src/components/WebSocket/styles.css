@@ -1,0 +1,32 @@
+.AlertContainer {
+  display: grid;
+
+  padding: 1rem;
+  grid-template-areas:
+    "image region_text"
+    "image place_text"
+    "image time_text";
+  border: 1px solid green;
+}
+
+.AlertContainer .image_container {
+  grid-area: image;
+  margin-right: 1rem;
+  width: 80px;
+  height: 80px;
+}
+
+.AlertContainer h4:nth-child(0) {
+  grid-area: region_text;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.AlertContainer h4:nth-child(1) {
+  grid-area: place_text;
+}
+
+.AlertContainer > span {
+  grid-area: time_text;
+}

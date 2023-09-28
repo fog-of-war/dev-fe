@@ -118,8 +118,14 @@ const CertificationModal = ({
           place_longitude,
         });
 
-        toast.success("인증에 성공했습니다.");
-        navigate("/crop_image");
+        // 인증에 성공했을 경우
+        if (
+          certificationResults.location === "통과" &&
+          certificationResults.date === "통과"
+        ) {
+          toast.success("인증에 성공했습니다.");
+          navigate("/crop_image");
+        }
 
         // 장소만 인증에 성공했을 경우
         if (
