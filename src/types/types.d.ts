@@ -147,11 +147,6 @@ export interface PostUploadData {
   place_longitude: number;
 }
 
-export interface ProfileSetupData {
-  user_nickname: string;
-  user_image_url: string;
-}
-
 export interface UserRank {
   user_id: number;
   user_points: number;

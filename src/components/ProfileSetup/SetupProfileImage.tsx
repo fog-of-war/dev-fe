@@ -6,12 +6,12 @@ import styled from "@emotion/styled";
 import colors from "../../constants/colors";
 import { DEFAULT_PROFILE_IMAGE_URL } from "../../constants/images";
 import { toast } from "react-hot-toast";
+import { ProfileSetupData } from "./ProfileSetupComponent";
 
 import SetupProfileForm from "./SetupProfileForm";
 import Title from "../Title";
 import Button from "../UI/Button";
 import SetupProfileHeader from "./SetupProfileHeader";
-import { ProfileSetupData } from "../../types/types";
 
 interface SetupProfileImageProps {
   onNext: () => void;

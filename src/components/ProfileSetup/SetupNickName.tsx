@@ -3,14 +3,14 @@
 import { useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { ProfileSetupData } from "../../types/types";
+import { removeTokenInStore } from "../../api/auth";
+import { ProfileSetupData } from "./ProfileSetupComponent";
 
 import BottomLinedInput from "../UI/BottomLinedInput";
 import Button from "../UI/Button";
 import SetupProfileForm from "./SetupProfileForm";
 import Title from "../Title";
 import SetupProfileHeader from "./SetupProfileHeader";
-import { removeTokenInStore } from "../../api/auth";
 
 interface SetupNickNameProps {
   onNext: () => void;
