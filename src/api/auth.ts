@@ -30,7 +30,7 @@ export const postRefreshToken = async () => {
     return response;
   } catch (error: unknown) {
     errorLoging(error, "토큰 재발급 요청에러 : ");
-    return null;
+    throw error;
   }
 };
 
