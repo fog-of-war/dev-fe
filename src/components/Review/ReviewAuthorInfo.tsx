@@ -6,7 +6,7 @@ import ReviewEditButton from "../UI/ReviewEditButton";
 import { useReviewContext } from "../../context/ReviewContext";
 import { deletePost, updatePost } from "../../api/post";
 import { toast } from "react-hot-toast";
-import useAuthQuery from "../../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 
 interface ReviewAuthorInfoProps {
   postId: PlacePost["post_id"];
@@ -19,7 +19,7 @@ interface ReviewAuthorInfoProps {
 const ReviewAuthorInfo = React.memo(
   ({ authorInfo, isEditing, postId, setIsEditing }: ReviewAuthorInfoProps) => {
     const { updateReview } = useReviewContext();
-    const { data: userData, invalidateUser } = useAuthQuery();
+    const { data: userData, invalidateCurrentUser } = useAuth();
 
     const handleEditClick = () => {
       setIsEditing(true);
@@ -29,7 +29,7 @@ const ReviewAuthorInfo = React.memo(
       if (window.confirm("정말 삭제하시겠습니까?")) {
         try {
           await deletePost(postId);
-          invalidateUser();
+          invalidateCurrentUser();
           window.location.reload();
           toast.success("게시글이 삭제되었습니다.", {
             id: "delete-success",
