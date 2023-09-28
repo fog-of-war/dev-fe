@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 
-import colors from "../../constants/colors";
-import { useDeleteComfirmModal } from "../../hooks/useDeleteComfirmModal";
-import B1 from "../UI/B1";
-import Button from "../UI/Button";
-import Modal from "../UI/Modal";
+import colors from "../../../constants/colors";
+import { useDeleteComfirmModal } from "../../../hooks/useDeleteComfirmModal";
+import B1 from "../../UI/B1";
+import Button from "../../UI/Button";
+import Modal from "../../UI/Modal";
 
 interface RecentSearchesDeleteModalProps {
   onClose: () => void;

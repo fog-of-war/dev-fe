@@ -1,4 +1,4 @@
-import EditRecentSearchPageComponent from "../components/RecentSearch/EditRecentSearchPageComponent";
+import EditRecentSearchPageComponent from "../components/Search/EditRecentSearchPageComponent";
 
 const EditRecentSearchPage = () => {
   return <EditRecentSearchPageComponent />;

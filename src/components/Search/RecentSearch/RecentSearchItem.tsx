@@ -1,12 +1,12 @@
 import styled from "@emotion/styled";
-import { RecentSearch } from "../../types/types";
-import colors from "../../constants/colors";
-import useRecentSearch from "../../hooks/search/useRecentSearch";
-import useSearch from "../../hooks/search/useSearch";
+import { RecentSearch } from "../../../types/types";
+import colors from "../../../constants/colors";
+import useRecentSearch from "../../../hooks/search/useRecentSearch";
+import useSearch from "../../../hooks/search/useSearch";
 import { useContext } from "react";
-import { MapContext } from "../../context/MapContext";
+import { MapContext } from "../../../context/MapContext";
 
-import B1 from "../UI/B1";
+import B1 from "../../UI/B1";
 
 interface RecentSearchItemProps {
   recentSearch: RecentSearch;

@@ -1,10 +1,10 @@
-import { RecentSearch } from "../../types/types";
+import { RecentSearch } from "../../../types/types";
 import {
   SearchContentWrapper,
   RecentSearchItemContainer,
 } from "./RecentSearchItem";
 
-import B1 from "../UI/B1";
+import B1 from "../../UI/B1";
 
 interface EditSearchItemProps {
   isSelected: boolean;

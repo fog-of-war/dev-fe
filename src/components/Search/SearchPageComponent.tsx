@@ -5,12 +5,13 @@ import styled from "@emotion/styled";
 import { ExplorePageLayout } from "../../styles/styles";
 import { toast } from "react-hot-toast";
 
-import SearchBar from "./SearchBar";
+import SearchBar from "../Common/SearchBar";
 import TagButtonList from "../Map/TagButtonList";
-import RealtimeSearchResultPanel from "./RealTimeSearchResultPanel";
-import RecentSearchesPanel from "../RecentSearch/RecentSearchesPanel";
+import RealtimeSearchResultPanel from "./RealTimeSearch/RealTimeSearchResultPanel";
+import RecentSearchesPanel from "./RecentSearch/RecentSearchesPanel";
 import useSearch from "../../hooks/search/useSearch";
 import AsyncBoundary from "../Common/AsyncBoudary";
+import useCurrentLocation from "../../hooks/map/useCurrentLocation";
 
 interface SearchPageComonentProps {
   searchQuery: string;
@@ -18,17 +19,13 @@ interface SearchPageComonentProps {
 
 const SearchPageComponent = ({ searchQuery }: SearchPageComonentProps) => {
   const searchRef = useRef<HTMLInputElement>(null);
+  useCurrentLocation();
 
-  // 검색창에 입력된 검색어
   const [inputValue, setInputValue] = useState("");
-
-  // 검색창에 타이핑중인지 여부
   const [isTyping, setIsTyping] = useState(false);
 
-  // 검색창에 입력된 검색어로 검색시 최근검색어에 추가 및 지도 좌표로 이동하는 함수
   const { handleSearchAndRecent } = useSearch();
 
-  // 검색 창 엔터 이벤트 핸들러
   const handleSearchByKeyboard = (
     e: React.KeyboardEvent<HTMLInputElement> & { isComposing: boolean }
   ) => {
@@ -42,22 +39,17 @@ const SearchPageComponent = ({ searchQuery }: SearchPageComonentProps) => {
     }
   };
 
-  // 검색창에 타이핑중이면 true, 아니면 false
-  useEffect(() => {
-    inputValue.length > 0 ? setIsTyping(true) : setIsTyping(false);
-  }, [inputValue]);
-
-  // 컴포넌트가 마운트되면 검색창에 포커스
   useEffect(() => {
     searchRef.current?.focus();
   }, []);
 
-  // 검색쿼리가 있으면 검색창에 검색쿼리 입력
   useEffect(() => {
-    if (searchQuery) {
-      setInputValue(searchQuery);
-    }
-  }, [searchQuery, setInputValue]);
+    !inputValue.length ? setIsTyping(false) : setIsTyping(true);
+  }, [inputValue]);
+
+  useEffect(() => {
+    searchQuery && setInputValue(searchQuery);
+  }, [searchQuery]);
 
   return (
     <ExplorePageLayout>
