@@ -6,7 +6,7 @@ import {
   getCurrentUserFromStorage,
   removeCurrentUserFromStorage,
   setCurrentUserToStorage,
-} from "../utils/currentUserStore";
+} from "../utils/currentUserStorage";
 
 interface UseAuth {
   data: UserData | null;

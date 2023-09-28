@@ -1,4 +1,4 @@
-import { ProfileSetupData } from "../types/types";
+import { ProfileSetupData } from "../components/ProfileSetup/ProfileSetupComponent";
 import { axiosBase } from "./axios";
 
 export const setUpProfile = async (data: ProfileSetupData) => {
