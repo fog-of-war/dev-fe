@@ -2,15 +2,14 @@ import React, { useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { LINK } from "../../../constants/links";
-import { useQueryClient } from "react-query";
 import { getCurrentUser, oAuthLogin } from "../../../api/auth";
 import { setDataToLocalStorage } from "../../../utils/localStorage";
 import { STORAGE_KEY } from "../../../constants/storage";
-import { QUERY_KEY } from "../../../react-query/queryKey";
+import useAuth from "../../../hooks/useAuth";
 
 const useOAuth = () => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  const { updateCurrentUser } = useAuth();
 
   /** OAuth 버튼 클릭 핸들러 */
   const handleClickOAuthButton = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -31,7 +30,7 @@ const useOAuth = () => {
 
       // 유저정보 요청 및 유저 캐시 업데이트
       const currentUser = await getCurrentUser();
-      queryClient.setQueryData([QUERY_KEY.CURRENT_USER], currentUser);
+      updateCurrentUser(currentUser);
 
       // 유저 프로필 셋없이 안돼있으면 프로필 셋업 페이지로 이동 아니면 메인페이지로 이동
       if (

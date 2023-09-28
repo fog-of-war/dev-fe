@@ -6,7 +6,7 @@ import ReviewEditButton from "../UI/ReviewEditButton";
 import { useReviewContext } from "../../context/ReviewContext";
 import { deletePost, updatePost } from "../../api/post";
 import { toast } from "react-hot-toast";
-import useAuthQuery from "../../hooks/useAuthQuery";
+import useAuthQuery from "../../hooks/useAuth";
 
 interface ReviewAuthorInfoProps {
   postId: PlacePost["post_id"];
@@ -56,7 +56,8 @@ const ReviewAuthorInfo = React.memo(
       try {
         await updatePost(postId, updateReview);
         setIsEditing(false);
-        invalidateUser();
+        invalidateCurrentUser();
+
         window.location.reload();
         toast.success("게시글이 수정되었습니다.", {
           id: "update-success",

@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import ProfileStat from "./ProfileStat";
-import useAuthQuery from "../../hooks/useAuthQuery";
+import useAuthQuery from "../../hooks/useAuth";
 import useRankData from "../../hooks/useRankData";
 import { useNavigate } from "react-router-dom";
 

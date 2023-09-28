@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useAuthQuery from "../hooks/useAuthQuery";
+import useAuthQuery from "../hooks/useAuth";
 import { toast } from "react-hot-toast";
 import ProfileEditHeader from "../components/EditProfile/ProfileEditHeader";
 import EditProfileImage from "../components/EditProfile/EditProfileImage";

@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import useAuthQuery from "../../hooks/useAuthQuery";
+import useAuthQuery from "../../hooks/useAuth";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import ProfileInfo from "../../components/ProfileCard/ProfileInfo";
 import ProgressBar from "../../components/ProgressBar";
