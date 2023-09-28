@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import ProfileStat from "./ProfileStat";
-import useAuthQuery from "../../hooks/useAuthQuery";
+import useAuthQuery from "../../hooks/useAuth";
 
 const ProfileInfo = () => {
   const { data: userData } = useAuthQuery();

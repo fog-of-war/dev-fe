@@ -5,7 +5,7 @@ import ReviewEditButton from "../UI/ReviewEditButton";
 import { useReviewContext } from "../../context/ReviewContext";
 import { deletePost, updatePost } from "../../api/post";
 import { toast } from "react-hot-toast";
-import useAuthQuery from "../../hooks/useAuthQuery";
+import useAuthQuery from "../../hooks/useAuth";
 
 interface ReviewAuthorInfoProps {
   postId: PlacePost["post_id"];
@@ -22,7 +22,7 @@ const ReviewAuthorInfo = ({
   setIsEditing,
 }: ReviewAuthorInfoProps) => {
   const { updateReview } = useReviewContext();
-  const { data: userData, invalidateUser } = useAuthQuery();
+  const { data: userData, invalidateCurrentUser } = useAuthQuery();
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -35,7 +35,7 @@ const ReviewAuthorInfo = ({
         toast.success("게시글이 삭제되었습니다.", {
           id: "delete-success",
         });
-        invalidateUser();
+        invalidateCurrentUser();
         window.location.reload();
       } catch (error: any) {
         toast.error(
@@ -63,7 +63,7 @@ const ReviewAuthorInfo = ({
       });
 
       setIsEditing(false);
-      invalidateUser();
+      invalidateCurrentUser();
 
       window.location.reload();
     } catch (error: any) {
