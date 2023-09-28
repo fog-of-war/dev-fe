@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useAuthQuery from "./useAuthQuery";
+import useAuthQuery from "./useAuth";
 import { getMyRank, getAllRank, getRegionRank } from "../api/rank";
 import { UserRank, AllUserRank, RegionRank } from "../types/types";
 
