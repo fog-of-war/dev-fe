@@ -15,7 +15,6 @@ import { CertifiedImageProvider } from "./context/CertifiedImageContext";
 import { PostingDataProvider } from "./context/PostingDataContext";
 import { ReviewContextProvider } from "./context/ReviewContext";
 import MapContexProvider from "./context/MapContext";
-import AxiosNavigation from "./api/axiosNavigate";
 import ModalProvider from "./provider/ModalProvider";
 import AsyncBoundary from "./components/Common/AsyncBoudary";
 import LoadingSpinner from "./components/UI/LoadingSpinner";
@@ -34,7 +33,6 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <Router>
-      <AxiosNavigation />
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
           <LoadingProvider>
