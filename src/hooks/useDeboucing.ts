@@ -1,12 +1,7 @@
 import { debounce } from "lodash";
 import { SetStateAction, useEffect, useState } from "react";
 
-interface UseDebouncingProps {
-  input: string;
-  time?: number;
-}
-
-const useDeboucing = ({ input, time = 500 }: UseDebouncingProps) => {
+const useDeboucing = (input: string, time = 500) => {
   // 디바운스 된 검색 쿼리 상태
   const [debouncedInput, setDebouncedInput] = useState("");
   // 최신 검색어 업데이트 및 겸색결과 페이지로 이동하는 함수

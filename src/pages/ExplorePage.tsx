@@ -3,7 +3,7 @@
 import { ExplorePageLayout } from "../styles/styles";
 
 import TagButtonList from "../components/Map/TagButtonList";
-import SearchBarDisplay from "../components/Search/SearchBarDisplay";
+import SearchBarDisplay from "../components/Search/SearchResult/SearchBarDisplay";
 import Map from "../components/Map/GoogleMap";
 
 const ExplorePage = () => {

@@ -4,6 +4,7 @@ import Geocode from "react-geocode";
 import { useRecoilState } from "recoil";
 import { currentLocationAtom } from "../../store/currentLocationAtom";
 import { MapContext } from "../../context/MapContext";
+import { defaultCenter } from "../../data/mapData";
 
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY!);
 
@@ -42,8 +43,13 @@ const useCurrentLocation = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          setCurrentLocation({ lat: latitude, lng: longitude });
+
           checkIsInSeoul(latitude, longitude);
+          if (isInSeoul) {
+            setCurrentLocation({ lat: latitude, lng: longitude });
+          } else {
+            setCurrentLocation(defaultCenter);
+          }
         },
         (error) => {
           console.error("현재 위치를 가져오는데 에러가 발생했습니다:", error);

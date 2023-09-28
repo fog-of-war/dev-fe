@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
 
 import styled from "@emotion/styled";
-import colors from "../../constants/colors";
-import { Place } from "../../types/types";
+import colors from "../../../constants/colors";
+import { Place } from "../../../types/types";
 import { useContext } from "react";
-import { MapContext } from "../../context/MapContext";
+import { MapContext } from "../../../context/MapContext";
 
-import B1 from "../UI/B1";
-import B2 from "../UI/B2";
+import B1 from "../../UI/B1";
+import B2 from "../../UI/B2";
 
 interface SearchItemProps {
   place: Place;

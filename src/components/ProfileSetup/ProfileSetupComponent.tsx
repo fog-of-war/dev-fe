@@ -8,18 +8,24 @@ import { toast } from "react-hot-toast";
 import { LINK } from "../../constants/links";
 import { setUpProfile } from "../../api/user";
 import { DEFAULT_PROFILE_IMAGE_URL } from "../../constants/images";
-import { ProfileSetupData } from "../../types/types";
 import { useMutation, useQueryClient } from "react-query";
+import { UserData } from "../../types/types";
 import { QUERY_KEY } from "../../react-query/queryKey";
-import { getCurrentUser } from "../../api/auth";
 
 import SetupNickName from "./SetupNickName";
 import SetupProfileImage from "./SetupProfileImage";
+import useAuth from "../../hooks/useAuth";
+
+export interface ProfileSetupData {
+  user_nickname: string;
+  user_image_url: string;
+}
 
 /** OAuth 가입 후 필요한 프로필 데이터를 셋업하는 페이지 컴포넌트 */
 const ProfileSetupComponent = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { data: currentUser, updateCurrentUser } = useAuth();
 
   // 프로필 설정 페이지들을 관리하는 퍼널 커스텀훅
   const [Funnel, Step, setStep] = useFunnel("닉네임");
@@ -36,15 +42,14 @@ const ProfileSetupComponent = () => {
       await setUpProfile(profileData);
     },
     {
-      onSuccess: async (data) => {
+      onSuccess: async () => {
         // 현재 유저 데이터를 새로운 데이터로 옵티미스틱 업데이트
-        const currentUser = await getCurrentUser();
-        const newCurrentUserData = {
-          ...currentUser,
+        const newCurrentUserData: UserData = {
+          ...currentUser!,
           user_nickname: profileData.user_nickname,
           user_image_url: profileData.user_image_url,
         };
-        queryClient.setQueryData(QUERY_KEY.CURRENT_USER, newCurrentUserData);
+        updateCurrentUser(newCurrentUserData);
 
         // 새로운 유저 데이터를 쿼리 캐시에 업데이트
         queryClient.invalidateQueries(QUERY_KEY.CURRENT_USER);

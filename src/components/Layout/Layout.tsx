@@ -22,7 +22,8 @@ const Layout = ({ children }: LayoutProps) => {
         css={{
           position: "relative",
           display: "flex",
-          justifyContent: "center",
+          flexDirection: "column",
+          justifyContent: "flex-start",
           alignItems: "center",
           width: "100%",
           maxWidth: "420px",
