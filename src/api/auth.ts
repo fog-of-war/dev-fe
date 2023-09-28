@@ -1,8 +1,11 @@
 import { axiosBase } from "./axios";
-import { getDataFromLocalStorage } from "../utils/localStorage";
 import { STORAGE_KEY } from "../constants/storage";
 import axios from "axios";
 import { errorLoging } from "../utils/errorHandler";
+import {
+  getAccessTokenFromStorage,
+  getRefreshTokenFromStorage,
+} from "../utils/tokenStorage";
 
 export const oAuthLogin = async (code: string, selectedOAuth: string) => {
   const response = await axiosBase.post(`v1/auth/${selectedOAuth}/oauth`, {
@@ -12,23 +15,27 @@ export const oAuthLogin = async (code: string, selectedOAuth: string) => {
 };
 
 export const postRefreshToken = async () => {
-  const refreshToken = getDataFromLocalStorage(STORAGE_KEY.REFRESH_TOKEN);
+  const refreshToken = getRefreshTokenFromStorage();
   if (!refreshToken) return null;
-  const response = await axios.post(
-    `${process.env.REACT_APP_API_URL}v1/auth/refresh`,
-    {},
-    {
-      headers: {
-        Authorization: `Bearer ${refreshToken}`,
-      },
-    }
-  );
-  return response;
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_URL}v1/auth/refresh`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${refreshToken}`,
+        },
+      }
+    );
+    return response;
+  } catch (error: unknown) {
+    errorLoging(error, "토큰 재발급 요청에러 : ");
+    return null;
+  }
 };
 
 export const getCurrentUser = async () => {
-  const accessToken: string =
-    getDataFromLocalStorage(STORAGE_KEY.ACCESS_TOKEN) || null;
+  const accessToken: string = getAccessTokenFromStorage() || null;
 
   if (accessToken) {
     try {
