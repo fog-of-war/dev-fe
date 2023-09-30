@@ -1,11 +1,11 @@
-import { Place } from "../../../types/types";
+import { Place } from "../../../../types/types";
 import { SearchList } from "../RecentSearch/RecentSearchesPanel";
 import { useEffect, useState } from "react";
-import { getRequest } from "../../../api/utils/getRequest";
+import { getRequest } from "../../../../api/utils/getRequest";
 
-import useCurrentLocation from "../../../hooks/map/useCurrentLocation";
+import useCurrentLocation from "../../../../hooks/map/useCurrentLocation";
 import RealTimeSearchItem from "./RealTimeSearchItem";
-import useDeboucing from "../../../hooks/useDeboucing";
+import useDeboucing from "../../../../hooks/useDeboucing";
 
 const RealtimeSearchResultPanel = ({
   searchQuery,

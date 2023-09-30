@@ -1,6 +1,6 @@
 import React from "react";
 import { Polygon } from "@react-google-maps/api";
-import { COORDINATES_STRING, OUTER_BOUNDS } from "../../data/mapData";
+import { COORDINATES_STRING, OUTER_BOUNDS } from "../../../data/mapData";
 
 const parseCoordinates = (coordinateString: string) => {
   const coordinatePairs = coordinateString.trim().split(" ");

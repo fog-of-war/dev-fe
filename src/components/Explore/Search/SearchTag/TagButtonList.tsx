@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 
-import { MapTag } from "../../types/types";
-import { MAP_TAG_LIST } from "../../constants/tag";
+import { MapTag } from "../../../../types/types";
+import { MAP_TAG_LIST } from "../../../../constants/tag";
 
 import TagButton from "./TagButton";
-import useSearch from "../../hooks/search/useSearch";
+import useSearch from "../../../../hooks/search/useSearch";
 import styled from "@emotion/styled";
 
 const TagButtonList = () => {

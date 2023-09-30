@@ -1,8 +1,8 @@
 import { useQuery } from "react-query";
-import { Place } from "../../../types/types";
-import { getRequest } from "../../../api/utils/getRequest";
-import { QUERY_KEY } from "../../../react-query/queryKey";
-import useCurrentLocation from "../../../hooks/map/useCurrentLocation";
+import { Place } from "../../../../types/types";
+import { getRequest } from "../../../../api/utils/getRequest";
+import { QUERY_KEY } from "../../../../react-query/queryKey";
+import useCurrentLocation from "../../../../hooks/map/useCurrentLocation";
 
 const useSearchPlace = (query: string) => {
   const { currentLocation } = useCurrentLocation();

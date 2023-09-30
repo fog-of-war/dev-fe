@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import colors from "../../constants/colors";
+import colors from "../../../../constants/colors";
 
 interface TagButtonProps extends React.HTMLAttributes<HTMLLIElement> {
   children?: React.ReactNode;

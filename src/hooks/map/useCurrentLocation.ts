@@ -69,8 +69,12 @@ const useCurrentLocation = () => {
         const address = response.results[0].formatted_address;
         if (address.includes("Seoul")) {
           setIsInSeoul(true);
+          toast.success("현재 위치가 서울입니다.");
         } else {
           setIsInSeoul(false);
+          toast.success(
+            `현재 위치가 서울이 아니므로 서울 중심을\n기준으로 지도를 보여드립니다.`
+          );
         }
       },
       (error) => {
@@ -80,8 +84,7 @@ const useCurrentLocation = () => {
   };
 
   useEffect(() => {
-    // 컴포넌트가 마운트되었을 때 현재 위치 업데이트 실행
-    updateCurrentLocation();
+    !currentLocation && updateCurrentLocation();
   }, []);
 
   useEffect(() => {
