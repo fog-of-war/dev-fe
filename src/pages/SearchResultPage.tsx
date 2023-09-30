@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
-import SearchResultPageComponent from "../components/Explore/Search/SearchResultPageComponent";
+
+import SearchResultPageComponent from "../components/Explore/SearchResultPageComponent";
 
 const SearchResultPage = () => {
   const location = useLocation();
