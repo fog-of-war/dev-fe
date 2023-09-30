@@ -2,9 +2,9 @@
 
 import { ExplorePageLayout } from "../styles/styles";
 
-import TagButtonList from "../components/Map/TagButtonList";
-import SearchBarDisplay from "../components/Search/SearchResult/SearchBarDisplay";
-import Map from "../components/Map/GoogleMap";
+import TagButtonList from "../components/Explore/Search/SearchTag/TagButtonList";
+import SearchBarDisplay from "../components/Explore/Search/SearchResult/SearchBarDisplay";
+import Map from "../components/Explore/Map/GoogleMap";
 
 const ExplorePage = () => {
   return (

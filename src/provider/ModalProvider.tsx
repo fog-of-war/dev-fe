@@ -1,4 +1,4 @@
-import NavigateModal from "../components/Map/NavigateModal";
+import NavigateModal from "../components/Explore/Map/NavigateModal";
 
 const ModalProvider = () => {
   return (

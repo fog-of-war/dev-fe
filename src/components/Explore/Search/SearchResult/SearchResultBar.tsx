@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
 import { useContext } from "react";
-import { MapContext } from "../../../context/MapContext";
+import { MapContext } from "../../../../context/MapContext";
 import { useNavigate } from "react-router-dom";
 
 import SearchBarDisplay from "./SearchBarDisplay";
-import { LINK } from "../../../constants/links";
+import { LINK } from "../../../../constants/links";
 
 const SearchResultBar = ({ searchQuery }: { searchQuery: string }) => {
   const navigate = useNavigate();

@@ -8,7 +8,7 @@ import { getUserData } from "../../api/user";
 import { getMyRank } from "../../api/rank";
 
 import ProgressBar from "../ProgressBar";
-import MainCardMap from "../Map/MainCardMap";
+import MainCardMap from "../Explore/Map/MainCardMap";
 import FogEffect from "./FogEffect";
 import MainBadgeList from "./MainBadgeList";
 

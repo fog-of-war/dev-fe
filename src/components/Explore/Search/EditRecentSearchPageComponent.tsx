@@ -2,16 +2,16 @@
 
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import colors from "../../constants/colors";
+import colors from "../../../constants/colors";
 import styled from "@emotion/styled";
 import { SearchList } from "./RecentSearch/RecentSearchesPanel";
-import { RecentSearch } from "../../types/types";
-import { useDeleteComfirmModal } from "../../hooks/useDeleteComfirmModal";
-import useRecentSearch from "../../hooks/search/useRecentSearch";
+import { RecentSearch } from "../../../types/types";
+import { useDeleteComfirmModal } from "../../../hooks/useDeleteComfirmModal";
+import useRecentSearch from "../../../hooks/search/useRecentSearch";
 
-import BackButton from "../UI/BackButton";
+import BackButton from "../../UI/BackButton";
 import EditSearchItem from "./RecentSearch/EditSearchItem";
-import Button from "../UI/Button";
+import Button from "../../UI/Button";
 import RecentSearchesDeleteModal from "./RecentSearch/RecentSearchesDeleteModal";
 
 const EditRecentSearchPageComponent = () => {

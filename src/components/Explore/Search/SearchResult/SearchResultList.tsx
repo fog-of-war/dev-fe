@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
-import { Place } from "../../../types/types";
+import { Place } from "../../../../types/types";
 import { useContext } from "react";
-import { MapContext } from "../../../context/MapContext";
+import { MapContext } from "../../../../context/MapContext";
 import useSearchPlace from "../hooks/useSearchPlace";
 
-import PlaceItem from "../../Place/PlaceItem";
+import PlaceItem from "../../../Place/PlaceItem";
 import Map from "../../Map/GoogleMap";
 
 const SearchResultList = ({ searchQuery }: { searchQuery: string }) => {

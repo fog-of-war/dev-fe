@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
-import BottomModal from "../BottomModal";
-import PlaceItem from "../Place/PlaceItem";
+import BottomModal from "../../BottomModal";
+import PlaceItem from "../../Place/PlaceItem";
 
 const MarkerPressModal = () => {
   return (

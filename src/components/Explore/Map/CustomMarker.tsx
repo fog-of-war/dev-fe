@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useState } from "react";
 import { Marker, OverlayView } from "@react-google-maps/api";
-import CertificationModal from "../CertificationModal";
+import CertificationModal from "../../CertificationModal";
 
 interface CustomMarkerProps {
   position: google.maps.LatLngLiteral;

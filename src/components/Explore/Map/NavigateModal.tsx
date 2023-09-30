@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 
-import colors from "../../constants/colors";
-import { useNavigateModal } from "../../hooks/useNavigateModal";
+import colors from "../../../constants/colors";
+import { useNavigateModal } from "../../../hooks/useNavigateModal";
 
-import Modal from "../UI/Modal";
+import Modal from "../../UI/Modal";
 
 const NavigateModal = () => {
   const { isOpen, onClose, navigateModalUrl } = useNavigateModal();

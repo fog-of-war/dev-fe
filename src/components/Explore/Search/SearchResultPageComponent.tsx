@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 
-import { ExplorePageLayout } from "../../styles/styles";
+import { ExplorePageLayout } from "../../../styles/styles";
 
 import SearchResultList from "./SearchResult/SearchResultList";
-import AsyncBoundary from "../Common/AsyncBoudary";
+import AsyncBoundary from "../../Common/AsyncBoudary";
 import SearchResultBar from "./SearchResult/SearchResultBar";
 
 interface SearchResultPageComonentProps {

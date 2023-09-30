@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import colors from "../../constants/colors";
 import B1 from "../UI/B1";
-import NavigateModal from "../Map/NavigateModal";
+import NavigateModal from "../Explore/Map/NavigateModal";
 import { useNavigateModal } from "../../hooks/useNavigateModal";
 
 interface PlaceTitleProps {

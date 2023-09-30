@@ -1,6 +1,5 @@
 import { useRecoilState } from "recoil";
 import { navigateModalState, navigateModalUrlState } from "../store/modalAtom";
-import { useState } from "react";
 
 export function useNavigateModal() {
   const [isOpen, setIsOpen] = useRecoilState(navigateModalState);

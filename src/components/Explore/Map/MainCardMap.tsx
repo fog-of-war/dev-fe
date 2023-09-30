@@ -3,13 +3,13 @@ import { useState, useEffect, useRef } from "react";
 import { GoogleMap, LoadScriptNext } from "@react-google-maps/api";
 import { useNavigate } from "react-router-dom";
 
-import seoulData from "../../data/seoul2.json";
-import mainCardMapStyle from "../../data/mainCardMapStyle.json";
-import { defaultCenter, bounds, options } from "../../data/mapData";
+import seoulData from "../../../data/seoul2.json";
+import mainCardMapStyle from "../../../data/mainCardMapStyle.json";
+import { defaultCenter, bounds, options } from "../../../data/mapData";
 
 import SeoulPolygon from "./SeoulPolygon";
 import MainCardMapPolygon from "./MainCardMapPolygon";
-import { getMyRegion } from "../../api/user";
+import { getMyRegion } from "../../../api/user";
 
 // 컨테이너 크기 정의
 const containerStyle = {

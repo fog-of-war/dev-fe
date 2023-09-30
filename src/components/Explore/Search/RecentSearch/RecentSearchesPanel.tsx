@@ -1,14 +1,14 @@
 /** @jsxImportSource @emotion/react */
 
 import styled from "@emotion/styled";
-import colors from "../../../constants/colors";
-import { RecentSearch } from "../../../types/types";
+import colors from "../../../../constants/colors";
+import { RecentSearch } from "../../../../types/types";
 import { useNavigate } from "react-router-dom";
-import { LINK } from "../../../constants/links";
-import useRecentSearch from "../../../hooks/search/useRecentSearch";
+import { LINK } from "../../../../constants/links";
+import useRecentSearch from "../../../../hooks/search/useRecentSearch";
 
 import RecentSearchItem from "./RecentSearchItem";
-import B2 from "../../UI/B2";
+import B2 from "../../../UI/B2";
 
 const RecentSearchesPanel = () => {
   const { recentSearchHistory } = useRecentSearch();

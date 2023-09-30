@@ -2,16 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
-import { ExplorePageLayout } from "../../styles/styles";
+import { ExplorePageLayout } from "../../../styles/styles";
 import { toast } from "react-hot-toast";
 
-import SearchBar from "../Common/SearchBar";
-import TagButtonList from "../Map/TagButtonList";
+import SearchBar from "../../Common/SearchBar";
+import TagButtonList from "./SearchTag/TagButtonList";
 import RealtimeSearchResultPanel from "./RealTimeSearch/RealTimeSearchResultPanel";
 import RecentSearchesPanel from "./RecentSearch/RecentSearchesPanel";
-import useSearch from "../../hooks/search/useSearch";
-import AsyncBoundary from "../Common/AsyncBoudary";
-import useCurrentLocation from "../../hooks/map/useCurrentLocation";
+import useSearch from "../../../hooks/search/useSearch";
+import AsyncBoundary from "../../Common/AsyncBoudary";
+import useCurrentLocation from "../../../hooks/map/useCurrentLocation";
 
 interface SearchPageComonentProps {
   searchQuery: string;
