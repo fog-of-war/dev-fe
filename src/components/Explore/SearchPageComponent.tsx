@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { toast } from "react-hot-toast";
 import useCurrentLocation from "../../hooks/map/useCurrentLocation";
-import { ExplorePageLayout } from "../../styles/styles";
 import useSearch from "../../hooks/search/useSearch";
+import { ExplorePageLayout } from "./Explore.styles";
 
 import SearchBar from "../Common/SearchBar";
 import TagButtonList from "./Search/SearchTag/TagButtonList";

@@ -1,6 +1,4 @@
-/** @jsxImportSource @emotion/react */
-
-import { ExplorePageLayout } from "../../styles/styles";
+import { ExplorePageLayout } from "./Explore.styles";
 
 import AsyncBoundary from "../Common/AsyncBoudary";
 import SearchResultBar from "./Search/SearchResult/SearchResultBar";

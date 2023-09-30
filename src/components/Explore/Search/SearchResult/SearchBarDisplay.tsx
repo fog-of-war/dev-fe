@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
 import styled from "@emotion/styled";
-import { SearchBarLayout } from "../../../../styles/styles";
 import { useNavigate } from "react-router-dom";
+import { SearchBarLayout } from "../../Explore.styles";
 
 interface SearchBarDisplayProps {
   value?: string;
