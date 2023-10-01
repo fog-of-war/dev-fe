@@ -18,11 +18,16 @@ interface Notification {
 const socketUrl = process.env.REACT_APP_SOCKET_URL as string;
 
 // 액세스 토큰이 존재하는 경우에만 소켓 연결에 추가합니다.
-const accessToken = localStorage.getItem("access_token");
+const accessToken = localStorage.getItem("accessToken");
 
-// 액세스 토큰을 웹소켓에 헤더에 담아 요청을 보냅니다.
+const sanitizedToken = accessToken ? accessToken.replace(/"/g, "") : undefined;
+console.log(sanitizedToken);
+
+// 헤더에 Authorization을 추가하여 WebSocket 연결을 설정합니다.
 const socket = io(socketUrl, {
-  query: accessToken ? { Authorization: `Bearer ${accessToken}` } : undefined,
+  extraHeaders: {
+    Authorization: `Bearer ${sanitizedToken}`,
+  },
 });
 
 const NoticeNotifications = () => {
@@ -60,11 +65,16 @@ const NoticeNotifications = () => {
       }
     });
 
+    socket.on("notification", (message) => {
+      // 알림 메시지를 처리하는 로직을 여기에 구현
+      console.log("Received notification:", message);
+    });
+
     return () => {
       // 컴포넌트 언마운트 시, 웹 소켓 이벤트 리스너 해제
       socket.off("message");
     };
-  }, []);
+  });
 
   // 'x' 아이콘 클릭 시, 해당 알림 삭제
   const handleDeleteClick = (notificationId: number) => {
