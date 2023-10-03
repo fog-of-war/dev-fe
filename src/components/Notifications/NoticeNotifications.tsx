@@ -19,12 +19,24 @@ const socketUrl = process.env.REACT_APP_SOCKET_URL as string;
 
 // 액세스 토큰이 존재하는 경우에만 소켓 연결에 추가합니다.
 const accessToken = localStorage.getItem("accessToken");
+// currentUser 문자열을 localStorage에서 가져와 파싱
+const currentUserString = localStorage.getItem("currentUser");
+
+let userId;
+
+if (currentUserString) {
+  const currentUser = JSON.parse(currentUserString);
+  userId = currentUser["user_id"];
+} else {
+  // Handle the case when "currentUser" is not found in localStorage
+  userId = ""; // You can set a default value or handle it according to your requirements
+}
 
 const sanitizedToken = accessToken ? accessToken.replace(/"/g, "") : undefined;
 console.log(sanitizedToken);
 
 // 헤더에 Authorization을 추가하여 WebSocket 연결을 설정합니다.
-const socket = io(socketUrl, {
+const socket = io(socketUrl + "-" + userId, {
   extraHeaders: {
     Authorization: `Bearer ${sanitizedToken}`,
   },
