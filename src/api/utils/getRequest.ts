@@ -1,15 +1,16 @@
+import { AxiosRequestConfig } from "axios";
 import { errorLoging } from "../../utils/errorHandler";
 import { axiosBase } from "../axios";
 
 interface GetRequest {
   url: string;
-  headers?: Record<string, string>;
+  config?: AxiosRequestConfig<any>;
 }
 
-export const getRequest = async ({ url, headers }: GetRequest) => {
+export const getRequest = async ({ url, config }: GetRequest) => {
   try {
-    const response = await axiosBase.get(url, { headers: headers || {} });
-    if (response.status === 200) {
+    const response = await axiosBase.get(url, config);
+    if (response.status >= 200 && response.status < 300) {
       return response.data;
     } else {
       throw new Error(response.statusText);
