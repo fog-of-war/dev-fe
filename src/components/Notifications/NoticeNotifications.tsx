@@ -18,7 +18,7 @@ import { Notification, Activity } from "./types"; // 타입을 types 폴더로 �
 const socketUrl = process.env.REACT_APP_SOCKET_URL as string;
 const accessToken = getCookie("access_token"); // 브라우저의 쿠키저장소에서 access_token 취득
 const currentUserString = localStorage.getItem("currentUser"); // 브라우저의 로컬스토리지에서 currentUser 취득
-export const userId = getUserId(currentUserString); // currentUser 에서 user_id 취득
+const userId = getUserId(currentUserString); // currentUser 에서 user_id 취득
 const socket = io(socketUrl + "-" + userId, {
   extraHeaders: {
     Authorization: `Bearer ${accessToken}`, // 헤더에 Authorization 에 accessToken 을 담아보냅니다.
