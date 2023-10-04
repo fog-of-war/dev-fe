@@ -2,6 +2,7 @@
 
 import { ChangeEvent, useRef, useState } from "react";
 import { EditProfileData } from "../../pages/ProfileEditPage";
+import { DEFAULT_PROFILE_IMAGE_URL } from "../../constants/images";
 import styled from "@emotion/styled";
 import colors from "../../constants/colors";
 import uploadImage from "../../api/aws";
@@ -16,7 +17,7 @@ const EditProfileImage = ({
   setEditProfileData,
 }: EditProfileImageProps) => {
   const [profileImage, setProfileImage] = useState(
-    profileData.user_image_url || "/images/default_profile_image.png"
+    profileData.user_image_url || DEFAULT_PROFILE_IMAGE_URL
   );
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -26,6 +27,7 @@ const EditProfileImage = ({
       const file = e.target.files[0];
       try {
         const imageUrl = await uploadImage(file);
+        console.log("Uploaded Image URL:", imageUrl);
 
         setProfileImage(imageUrl);
         setEditProfileData({ ...profileData, user_image_url: imageUrl });
