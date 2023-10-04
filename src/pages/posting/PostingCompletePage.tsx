@@ -4,12 +4,13 @@ import colors from "../../constants/colors";
 import Button from "../../components/UI/Button";
 import { useNavigate } from "react-router-dom";
 import { UploadPageLayout } from "./UploadPage";
+import { LINK } from "../../constants/links";
 
 const PostingCompletePage = () => {
   const navigate = useNavigate();
 
-  const handleGoToMainPage = () => {
-    navigate("/");
+  const handleGoToMyPage = () => {
+    navigate(LINK.MY_PAGE);
   };
 
   return (
@@ -35,7 +36,7 @@ const PostingCompletePage = () => {
           height: "55px",
         }}
         size="large"
-        onClick={handleGoToMainPage}
+        onClick={handleGoToMyPage}
       >
         닫기
       </Button>
