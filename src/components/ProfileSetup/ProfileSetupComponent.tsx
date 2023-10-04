@@ -51,8 +51,6 @@ const ProfileSetupComponent = () => {
         };
         updateCurrentUser(newCurrentUserData);
 
-        // 새로운 유저 데이터를 쿼리 캐시에 업데이트
-        queryClient.invalidateQueries(QUERY_KEY.CURRENT_USER);
         toast.success("가입이 완료되었습니다.");
         navigate(LINK.HOME_PAGE);
       },
