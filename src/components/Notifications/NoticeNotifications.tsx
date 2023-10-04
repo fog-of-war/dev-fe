@@ -6,44 +6,37 @@ import colors from "../../constants/colors";
 import B2 from "../UI/B2";
 import TimeAgo from "./TimeAgo";
 
-interface Notification {
-  place_id: number;
-  place_name: string;
-  post_id: number;
-  post_image_url: string;
-  region_name: string;
-  post_created_at: string;
-}
+import { getCookie, getUserId } from "./utils"; // 필요한 함수를 utils 폴더로 분리
+import { Notification, Activity } from "./types"; // 타입을 types 폴더로 분리
 
+/**
+ *
+ * 웹소켓 연결 설정 부분
+ * 웹소켓 연결 시 user_id 와 access_token 이 필요합니다.
+ *
+ * */
 const socketUrl = process.env.REACT_APP_SOCKET_URL as string;
-
-// 액세스 토큰이 존재하는 경우에만 소켓 연결에 추가합니다.
-const accessToken = localStorage.getItem("accessToken");
-// currentUser 문자열을 localStorage에서 가져와 파싱
-const currentUserString = localStorage.getItem("currentUser");
-
-let userId;
-
-if (currentUserString) {
-  const currentUser = JSON.parse(currentUserString);
-  userId = currentUser["user_id"];
-} else {
-  // Handle the case when "currentUser" is not found in localStorage
-  userId = ""; // You can set a default value or handle it according to your requirements
-}
-
-const sanitizedToken = accessToken ? accessToken.replace(/"/g, "") : undefined;
-console.log(sanitizedToken);
-
-// 헤더에 Authorization을 추가하여 WebSocket 연결을 설정합니다.
+const accessToken = getCookie("access_token"); // 브라우저의 쿠키저장소에서 access_token 취득
+const currentUserString = localStorage.getItem("currentUser"); // 브라우저의 로컬스토리지에서 currentUser 취득
+export const userId = getUserId(currentUserString); // currentUser 에서 user_id 취득
 const socket = io(socketUrl + "-" + userId, {
   extraHeaders: {
-    Authorization: `Bearer ${sanitizedToken}`,
+    Authorization: `Bearer ${accessToken}`, // 헤더에 Authorization 에 accessToken 을 담아보냅니다.
   },
 });
+/** -------------------- */
 
 const NoticeNotifications = () => {
+  /**
+   *
+   * State
+   *
+   * notifications: 공지알림(새로운 장소 추가시),
+   * activities : 활동알림(댓글)
+   *
+   * */
   const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [activities, setActivities] = useState<Activity[]>([]);
 
   useEffect(() => {
     // 웹 소켓 연결 시
@@ -51,15 +44,15 @@ const NoticeNotifications = () => {
       console.log("웹 소켓 서버 연결 성공");
     });
 
-    // 웹 소켓으로부터 데이터를 받을 때
-    socket.on("message", (data) => {
-      console.log("받은 데이터:", data);
-
-      // 데이터가 message 내부에 있는지 확인 후 추출
+    /**
+     *
+     * notification: 웹소켓의 공지알림 이벤트 구독,
+     *
+     * */
+    socket.on("notification", (data) => {
+      console.log("받은 공지 알림:", data);
       const messageData = data.message;
-
       if (messageData) {
-        // message 내부의 데이터를 Notification 객체와 일치하도록 변환
         const newNotification: Notification = {
           place_id: messageData.place_id,
           place_name: messageData.place_name,
@@ -68,8 +61,6 @@ const NoticeNotifications = () => {
           region_name: messageData.region_name,
           post_created_at: messageData.post_created_at,
         };
-
-        // 변환된 알림을 알림 배열에 추가
         setNotifications((prevNotifications) => [
           newNotification,
           ...prevNotifications,
@@ -77,14 +68,34 @@ const NoticeNotifications = () => {
       }
     });
 
-    socket.on("notification", (message) => {
-      // 알림 메시지를 처리하는 로직을 여기에 구현
-      console.log("Received notification:", message);
+    /**
+     *
+     * activity: 웹소켓의 활동알림 이벤트 구독,
+     *
+     * */
+    socket.on("activity", (data) => {
+      console.log("받은 활동알림:", data);
+      const messageData = data.message;
+      if (messageData) {
+        const newNotification: any = {
+          alerted_user_id: messageData.alerted_user_id,
+          comment_created_at: messageData.comment_created_at,
+          comment_id: messageData.comment_id,
+          comment_text: messageData.comment_text,
+          user_image_url: messageData.user_image_url,
+          user_nickname: messageData.user_nickname,
+        };
+        setActivities((prevNotifications) => [
+          newNotification,
+          ...prevNotifications,
+        ]);
+      }
     });
 
     return () => {
       // 컴포넌트 언마운트 시, 웹 소켓 이벤트 리스너 해제
-      socket.off("message");
+      socket.off("notification");
+      socket.off("activity");
     };
   });
 
