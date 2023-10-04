@@ -1,5 +1,5 @@
 import axios from "axios";
-import { postRefreshToken } from "./auth";
+import { logout, postRefreshToken } from "./auth";
 import { toast } from "react-hot-toast";
 import { MESSAGE } from "../constants/messages";
 
@@ -21,6 +21,7 @@ axiosBase.interceptors.response.use(
       try {
         await postRefreshToken();
       } catch (error) {
+        await logout();
         toast.error(MESSAGE.LOGIN.EXPIRED);
       }
 
