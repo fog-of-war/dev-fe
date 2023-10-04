@@ -1,14 +1,15 @@
 /** @jsxImportSource @emotion/react */
 
 import colors from "../../constants/colors";
-import { Badge } from "../../types/types";
+import { Badges, UserBadge } from "../../types/types";
 
 interface BadgeItemProps {
-  badge: Badge;
+  badge: Badges;
+  myBadges?: UserBadge[];
 }
 
 type BadgeColors = {
-  [key: string]: {
+  [key: string | number]: {
     background: string;
     border: string;
   };
@@ -19,36 +20,66 @@ export const badgeColors: BadgeColors = {
     background: "#d9d9d9",
     border: "#aaaaaa",
   },
-  "기본 칭호": {
+  1: {
     background: "#ddfcea",
     border: colors.primary,
   },
-  미식: {
+  2: {
     background: "#ffe7e7",
     border: "#ff8585",
   },
-  운동: {
+  3: {
     background: "#e7f6ff",
     border: "#448cf8",
   },
-  미술관: {
+  4: {
     background: "#fcf4ff",
     border: "#a67cff",
   },
-  역사: {
+  5: {
     background: "#fffaee",
     border: "#e5a602",
   },
-  커피: {
+  6: {
     background: "#fff0ea",
     border: "#995312",
   },
 };
 
-const BadgeItem = ({ badge }: BadgeItemProps) => {
-  const badgeColor = badge.isAcquired
-    ? badgeColors[badge.category]
+const BadgeItem = ({ badge, myBadges }: BadgeItemProps) => {
+  const hasAcquiredBadge = myBadges?.some(
+    (myBadge) => myBadge.badge_id === badge.badge_id
+  );
+
+  const badgeColor = hasAcquiredBadge
+    ? badgeColors[badge.badge_category_id]
     : badgeColors["미획득"];
+
+  let badgeCategory;
+
+  switch (badge.badge_category_id) {
+    case 1:
+      badgeCategory = "장소";
+      break;
+    case 2:
+      badgeCategory = "미식";
+      break;
+    case 3:
+      badgeCategory = "운동";
+      break;
+    case 4:
+      badgeCategory = "예술";
+      break;
+    case 5:
+      badgeCategory = "역사";
+      break;
+    case 6:
+      badgeCategory = "커피";
+      break;
+    default:
+      badgeCategory = "기본 칭호";
+      break;
+  }
 
   return (
     <div
@@ -69,19 +100,18 @@ const BadgeItem = ({ badge }: BadgeItemProps) => {
           width: "83px",
           height: "83px",
           borderRadius: "100%",
-          border: `5px solid ${badgeColor.border}`,
           backgroundColor: badgeColor.background,
-          opacity: badge.isAcquired ? 1 : 0.5,
+          opacity: hasAcquiredBadge ? 1 : 0.5,
         }}
       >
         <img
-          src={badge.imageUrl}
-          alt={`${badge.name}`}
+          src={badge.badge_image_url}
+          alt={`${badge.badge_name}`}
           css={{
-            width: "50px",
-            height: "50px",
+            width: "100%",
+            height: "100%",
             overflow: "hidden",
-            filter: badge.isAcquired ? "none" : "grayscale(100%)",
+            filter: hasAcquiredBadge ? "none" : "grayscale(100%)",
           }}
         />
       </div>
@@ -93,7 +123,7 @@ const BadgeItem = ({ badge }: BadgeItemProps) => {
           marginTop: "5px",
         }}
       >
-        {badge.name}
+        {badge.badge_name}
       </span>
       <span
         css={{
@@ -101,7 +131,7 @@ const BadgeItem = ({ badge }: BadgeItemProps) => {
           color: "#6f6f6f",
         }}
       >
-        {badge.description}
+        {`${badgeCategory} ${badge.badge_criteria}개`}
       </span>
     </div>
   );

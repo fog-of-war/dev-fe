@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-
+import styled from "@emotion/styled";
 import ProfileStat from "./ProfileStat";
 import useAuthQuery from "../../hooks/useAuth";
 import useRankData from "../../hooks/useRankData";
@@ -13,17 +13,7 @@ const ProfileInfo = () => {
   const goToRankPage = () => navigate("/ranking");
 
   return (
-    <div
-      css={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        flexDirection: "row",
-        width: "350px",
-        height: "20px",
-        backgroundColor: "white",
-      }}
-    >
+    <ProfileInfoLayout>
       <ProfileStat type="exploration" data={userData} rankData={myRankData} />
       <ProfileStat type="badge" data={userData} rankData={myRankData} />
       <ProfileStat
@@ -32,8 +22,18 @@ const ProfileInfo = () => {
         rankData={myRankData}
         onClick={goToRankPage}
       />
-    </div>
+    </ProfileInfoLayout>
   );
 };
 
 export default ProfileInfo;
+
+const ProfileInfoLayout = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+  height: 20px;
+  background-color: white;
+`;

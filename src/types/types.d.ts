@@ -36,21 +36,6 @@ export interface RecentSearch {
   place?: Place;
 }
 
-export interface Badge {
-  id: number;
-  name: string;
-  category: string;
-  requirement: number;
-  description: string;
-  imageUrl: string;
-  isAcquired: boolean;
-}
-
-export interface BadgeListProps {
-  badges: Badge[];
-  showAllBadges: boolean;
-}
-
 export interface PlacePost {
   post_id: number;
   post_created_at: string;
@@ -182,4 +167,40 @@ export interface RegionRank {
   region: Region;
   ranking: UserRegionRank[];
   userRanking: UserRegionRank[];
+}
+export interface UserBadge {
+  badge_id: number;
+  badge_name: string;
+  badge_category_id: number;
+  badge_criteria: number;
+  badge_points: number;
+  badge_owned_users_id: number;
+  badge_image_url: string;
+}
+export interface UserSelectedBadge {
+  badge_id: number;
+  badge_name: string;
+  badge_category_id: number;
+  badge_criteria: number;
+  badge_points: number;
+  badge_owned_users_id: number;
+  badge_image_url: string;
+}
+export interface MyBadges {
+  user_badges: UserBadge[];
+  user_selected_badge: UserSelectedBadge;
+}
+
+export interface Badges {
+  badge_id: number;
+  badge_name: string;
+  badge_category_id: number;
+  badge_criteria: number;
+  badge_points: number;
+  badge_image_url: string;
+}
+export interface BadgeListProps {
+  allBadges: Badges[];
+  myBadges?: UserData["user_badges"];
+  showAllBadges: boolean;
 }

@@ -5,7 +5,7 @@ import colors from "../../constants/colors";
 interface BadgePageHeaderProps {
   showAllBadges: boolean;
   handleToggleClick: () => void;
-  acquiredBadgesCount: number;
+  acquiredBadgesCount?: number;
 }
 
 const BadgePageHeader = ({

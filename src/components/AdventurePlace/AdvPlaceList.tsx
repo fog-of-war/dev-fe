@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-
+import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AdvPlaceTitle from "./AdvPlaceTitle";
@@ -39,16 +39,7 @@ const AdvPlaceList = () => {
 
   return (
     <>
-      <div
-        css={{
-          display: "flex",
-          alignItems: "flex-start",
-          flexDirection: "row",
-          flexWrap: "wrap",
-          width: "350px",
-          gap: 8,
-        }}
-      >
+      <AdvPlaceListLayout>
         <AdvPlaceTitle />
         {uniquePlaces.length === 0 && (
           <NoDataComponent
@@ -68,9 +59,18 @@ const AdvPlaceList = () => {
             />
           </div>
         ))}
-      </div>
+      </AdvPlaceListLayout>
     </>
   );
 };
 
 export default AdvPlaceList;
+
+const AdvPlaceListLayout = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 8;
+  width: 100%;
+  flex-wrap: wrap;
+`;

@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import styled from "@emotion/styled";
 import useAuthQuery from "../../hooks/useAuth";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import ProfileInfo from "../../components/ProfileCard/ProfileInfo";
@@ -8,13 +9,7 @@ const UserProfile = () => {
   const { data: userData } = useAuthQuery();
 
   return (
-    <div
-      css={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "20px",
-      }}
-    >
+    <UserProfileLayout>
       <ProfileCard
         username={userData?.user_nickname}
         profileText={userData?.user_badges[0]?.badge_name}
@@ -27,8 +22,16 @@ const UserProfile = () => {
         level={userData?.user_level || 0}
         userPoints={userData?.user_points || 0}
       />
-    </div>
+    </UserProfileLayout>
   );
 };
 
 export default UserProfile;
+
+const UserProfileLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 420px;
+`;

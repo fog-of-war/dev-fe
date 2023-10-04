@@ -50,7 +50,6 @@ const NoRegionComponentLayout = styled.div`
   height: 100%;
   gap: 10px;
   background-color: ${colors.pastel};
-  padding: 25px;
   border-radius: 15px;
 `;
 
@@ -63,8 +62,10 @@ const ImageContainer = styled.div`
 const TextAndButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 15px;
   height: 100%;
+  justify-content: center;
+  align-items: center;
 `;
 
 const NoRankInfoText = styled.p`
