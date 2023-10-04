@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import { LINK } from "./constants/links";
 
 import Home from "./pages/Home";
 import MyPage from "./pages/MyPage";
@@ -18,7 +19,6 @@ import CropImagePage from "./pages/posting/CropImagePage";
 import PostingCompletePage from "./pages/posting/PostingCompletePage";
 import useAuthQuery from "./hooks/useAuth";
 import NotificationsPage from "./pages/NotificationsPage";
-import { LINK } from "./constants/links";
 
 const AppRoutes = () => {
   const { data: currentUser } = useAuthQuery();

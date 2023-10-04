@@ -8,3 +8,7 @@ export const MESSAGE = {
     ERROR: "검색 결과 조회에 실패했습니다.",
   },
 };
+
+export const ERROR_MESSAGE = {
+  LOGOUT: "로그아웃에 실패했습니다.",
+};

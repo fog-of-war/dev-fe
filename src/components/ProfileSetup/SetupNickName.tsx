@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { removeTokenInStore } from "../../api/auth";
+import { logout } from "../../api/auth";
 import { ProfileSetupData } from "./ProfileSetupComponent";
 
 import BottomLinedInput from "../UI/BottomLinedInput";
@@ -50,16 +50,16 @@ const SetupNickName = ({
     onNext();
   };
 
+  const handleClickBackButton = async () => {
+    if (window.confirm("프로필 설정을 취소하시겠습니까?")) {
+      await logout();
+      navigate("/");
+    }
+  };
+
   return (
     <SetupProfileForm>
-      <SetupProfileHeader
-        onClick={() => {
-          if (window.confirm("프로필 설정을 취소하시겠습니까?")) {
-            removeTokenInStore();
-            navigate("/");
-          }
-        }}
-      />
+      <SetupProfileHeader onClick={handleClickBackButton} />
       <div
         css={{
           width: "100%",

@@ -7,6 +7,7 @@ import {
   removeCurrentUserFromStorage,
   setCurrentUserToStorage,
 } from "../utils/currentUserStorage";
+import useCheckProfileSetup from "./useCheckProfileSetup";
 
 interface UseAuth {
   data: UserData | null;
@@ -16,12 +17,16 @@ interface UseAuth {
 }
 
 export const useAuth = (): UseAuth => {
+  const { checkProfileSetupToNavigate } = useCheckProfileSetup();
+
   const queryClient = useQueryClient();
   const queryKey = [QUERY_KEY.CURRENT_USER];
 
   const { data } = useQuery(queryKey, getCurrentUser, {
     initialData: getCurrentUserFromStorage,
     onSuccess: (receivedData) => {
+      checkProfileSetupToNavigate(receivedData);
+
       if (!receivedData) {
         removeCurrentUserFromStorage();
       } else {
