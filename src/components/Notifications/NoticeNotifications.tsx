@@ -19,16 +19,7 @@ const socketUrl = process.env.REACT_APP_SOCKET_URL as string;
 const accessToken = getCookie("access_token"); // 브라우저의 쿠키저장소에서 access_token 취득
 const currentUserString = localStorage.getItem("currentUser"); // 브라우저의 로컬스토리지에서 currentUser 취득
 const userId = getUserId(currentUserString); // currentUser 에서 user_id 취득
-let socket: any = null; // 웹소켓 연결 변수 초기화
 
-if (currentUserString && accessToken) {
-  // currentUser와 access_token이 모두 존재하는 경우에만 웹소켓 연결
-  socket = io(socketUrl + "-" + userId, {
-    extraHeaders: {
-      Authorization: `Bearer ${accessToken}`, // 헤더에 Authorization 에 accessToken 을 담아보냅니다.
-    },
-  });
-}
 /** -------------------- */
 
 const NoticeNotifications = () => {
@@ -44,15 +35,41 @@ const NoticeNotifications = () => {
   const [activities, setActivities] = useState<Activity[]>([]);
 
   useEffect(() => {
+    // 웹 소켓 연결 시
     let socket: any = null;
-
     if (currentUserString && accessToken) {
       socket = io(socketUrl + "-" + userId, {
         extraHeaders: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken}`, // 헤더에 Authorization 에 accessToken 을 담아보냅니다.
         },
       });
+      socket.on("connect", () => {
+        console.log("웹 소켓 서버 연결 성공");
+      });
 
+      /**
+       *
+       * notification: 웹소켓의 공지알림 이벤트 구독,
+       *
+       * */
+      socket.on("notification", (data: any) => {
+        console.log("받은 공지 알림:", data);
+        const messageData = data.message;
+        if (messageData) {
+          const newNotification: Notification = {
+            place_id: messageData.place_id,
+            place_name: messageData.place_name,
+            post_id: messageData.post_id,
+            post_image_url: messageData.post_image_url,
+            region_name: messageData.region_name,
+            post_created_at: messageData.post_created_at,
+          };
+          setNotifications((prevNotifications) => [
+            newNotification,
+            ...prevNotifications,
+          ]);
+        }
+      });
       /**
        *
        * notification: 웹소켓의 공지알림 이벤트 구독,
