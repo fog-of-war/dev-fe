@@ -2,6 +2,8 @@ import { axiosBase } from "./axios";
 import { errorLoging } from "../utils/errorHandler";
 import { postRequest } from "./utils/postRequest";
 import { ERROR_MESSAGE } from "../constants/messages";
+import axios from "axios";
+import { setAccessTokenToStorage } from "../utils/tokenStorage";
 
 export const oAuthLogin = async (code: string, selectedOAuth: string) => {
   return await postRequest({
@@ -11,7 +13,10 @@ export const oAuthLogin = async (code: string, selectedOAuth: string) => {
 };
 
 export const postRefreshToken = async () => {
-  await axiosBase.post(`v1/auth/refresh`);
+  const reponse = await postRequest({ url: "v1/auth/refresh" });
+  const accessToken = reponse.access_token;
+  setAccessTokenToStorage(accessToken);
+  axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 };
 
 export const getCurrentUser = async () => {

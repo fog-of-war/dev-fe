@@ -2,6 +2,8 @@ import axios from "axios";
 import { logout, postRefreshToken } from "./auth";
 import { toast } from "react-hot-toast";
 import { MESSAGE } from "../constants/messages";
+import { removeDataFromLocalStorage } from "../utils/localStorage";
+import { STORAGE_KEY } from "../constants/storage";
 
 axios.defaults.withCredentials = true;
 
@@ -21,7 +23,7 @@ axiosBase.interceptors.response.use(
       try {
         await postRefreshToken();
       } catch (error) {
-        await logout();
+        removeDataFromLocalStorage(STORAGE_KEY.CURRENT_USER);
         toast.error(MESSAGE.LOGIN.EXPIRED);
       }
 

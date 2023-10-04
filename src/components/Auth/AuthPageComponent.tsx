@@ -7,6 +7,8 @@ import useCheckProfileSetup from "../../hooks/useCheckProfileSetup";
 
 import Spacing from "../UI/Spacing";
 import useAuth from "../../hooks/useAuth";
+import axios from "axios";
+import { setAccessTokenToStorage } from "../../utils/tokenStorage";
 
 const OAUTH_ICONS = [
   { name: "google", icon: "/images/auth/googleIcon.png" },
@@ -25,12 +27,13 @@ const AuthPageComponent = () => {
   };
 
   const handleAuthentication = async (code: string, oAuthName: string) => {
-    await oAuthLogin(code, oAuthName);
+    const response = await oAuthLogin(code, oAuthName);
+    const accessToken = response.access_token;
+    setAccessTokenToStorage(accessToken);
+    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 
     const currentUser = await getCurrentUser();
-
     updateCurrentUser(currentUser);
-
     checkProfileSetupToNavigate(currentUser);
   };
 
