@@ -1,18 +1,48 @@
 /** @jsxImportSource @emotion/react */
 
 import styled from "@emotion/styled";
+import { getCurrentUser, oAuthLogin } from "../../api/auth";
+import { useEffect } from "react";
+import useCheckProfileSetup from "../../hooks/useCheckProfileSetup";
 
 import Spacing from "../UI/Spacing";
-import useOAuth from "./hooks/useOAuth";
+import useAuth from "../../hooks/useAuth";
 
 const OAUTH_ICONS = [
   { name: "google", icon: "/images/auth/googleIcon.png" },
-  { name: "kakao", icon: "/images/auth/kakaoIcon.png" },
   { name: "naver", icon: "/images/auth/naverIcon.png" },
 ];
 
 const AuthPageComponent = () => {
-  const handleClickOAuthButton = useOAuth();
+  const { checkProfileSetupToNavigate } = useCheckProfileSetup();
+  const { updateCurrentUser } = useAuth();
+
+  /** OAuth 버튼 클릭 핸들러 */
+  const handleClickOAuthButton = (e: React.MouseEvent<HTMLDivElement>) => {
+    const oAuthName = e.currentTarget.id;
+
+    window.location.href = `${process.env.REACT_APP_API_URL}v1/auth/${oAuthName}`;
+  };
+
+  const handleAuthentication = async (code: string, oAuthName: string) => {
+    await oAuthLogin(code, oAuthName);
+
+    const currentUser = await getCurrentUser();
+
+    updateCurrentUser(currentUser);
+
+    checkProfileSetupToNavigate(currentUser);
+  };
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const provider = urlParams.get("provider");
+    const code = urlParams.get("code");
+
+    if (code && provider) {
+      handleAuthentication(code, provider);
+    }
+  }, []);
 
   return (
     <ImageCoveredLayout>
