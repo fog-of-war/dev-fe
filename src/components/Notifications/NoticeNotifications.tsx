@@ -16,9 +16,14 @@ import { Notification, Activity } from "./types"; // 타입을 types 폴더로 �
  *
  * */
 const socketUrl = process.env.REACT_APP_SOCKET_URL as string;
-const accessToken = getCookie("access_token"); // 브라우저의 쿠키저장소에서 access_token 취득
+
+const accessToken = localStorage.getItem("accessToken");
+const sanitizedToken = accessToken ? accessToken.replace(/"/g, "") : undefined; // 브라우저의 로컬스토리지에서 accessToken 취득
+
 const currentUserString = localStorage.getItem("currentUser"); // 브라우저의 로컬스토리지에서 currentUser 취득
 const userId = getUserId(currentUserString); // currentUser 에서 user_id 취득
+
+// const accessToken = getCookie("access_token"); // deprecated : 브라우저의 쿠키저장소에서 access_token 취득
 
 /** -------------------- */
 
@@ -35,97 +40,79 @@ const NoticeNotifications = () => {
   const [activities, setActivities] = useState<Activity[]>([]);
 
   useEffect(() => {
-    // 웹 소켓 연결 시
     let socket: any = null;
+
     if (currentUserString && accessToken) {
-      socket = io(socketUrl + "-" + userId, {
-        extraHeaders: {
-          Authorization: `Bearer ${accessToken}`, // 헤더에 Authorization 에 accessToken 을 담아보냅니다.
-        },
-      });
-      socket.on("connect", () => {
-        console.log("웹 소켓 서버 연결 성공");
-      });
+      try {
+        socket = io(socketUrl + "-" + userId, {
+          withCredentials: true,
+          extraHeaders: {
+            Authorization: `Bearer ${sanitizedToken}`,
+          },
+        });
 
-      /**
-       *
-       * notification: 웹소켓의 공지알림 이벤트 구독,
-       *
-       * */
-      socket.on("notification", (data: any) => {
-        console.log("받은 공지 알림:", data);
-        const messageData = data.message;
-        if (messageData) {
-          const newNotification: Notification = {
-            place_id: messageData.place_id,
-            place_name: messageData.place_name,
-            post_id: messageData.post_id,
-            post_image_url: messageData.post_image_url,
-            region_name: messageData.region_name,
-            post_created_at: messageData.post_created_at,
-          };
-          setNotifications((prevNotifications) => [
-            newNotification,
-            ...prevNotifications,
-          ]);
-        }
-      });
-      /**
-       *
-       * notification: 웹소켓의 공지알림 이벤트 구독,
-       *
-       * */
-      socket.on("notification", (data: any) => {
-        console.log("받은 공지 알림:", data);
-        const messageData = data.message;
-        if (messageData) {
-          const newNotification: Notification = {
-            place_id: messageData.place_id,
-            place_name: messageData.place_name,
-            post_id: messageData.post_id,
-            post_image_url: messageData.post_image_url,
-            region_name: messageData.region_name,
-            post_created_at: messageData.post_created_at,
-          };
-          setNotifications((prevNotifications) => [
-            newNotification,
-            ...prevNotifications,
-          ]);
-        }
-      });
+        socket.on("connect", () => {
+          console.log("웹 소켓 서버 연결 성공");
+        });
+        /**
+         *
+         * notification: 웹소켓의 공지알림 이벤트 구독,
+         *
+         * */
+        socket.on("notification", (data: any) => {
+          console.log("받은 공지 알림:", data);
+          const messageData = data.message;
+          if (messageData) {
+            const newNotification: Notification = {
+              place_id: messageData.place_id,
+              place_name: messageData.place_name,
+              post_id: messageData.post_id,
+              post_image_url: messageData.post_image_url,
+              region_name: messageData.region_name,
+              post_created_at: messageData.post_created_at,
+            };
+            setNotifications((prevNotifications) => [
+              newNotification,
+              ...prevNotifications,
+            ]);
+          }
+        });
 
-      /**
-       *
-       * activity: 웹소켓의 활동알림 이벤트 구독,
-       *
-       * */
-      socket.on("activity", (data: any) => {
-        console.log("받은 활동알림:", data);
-        const messageData = data.message;
-        if (messageData) {
-          const newNotification: any = {
-            alerted_user_id: messageData.alerted_user_id,
-            comment_created_at: messageData.comment_created_at,
-            comment_id: messageData.comment_id,
-            comment_text: messageData.comment_text,
-            user_image_url: messageData.user_image_url,
-            user_nickname: messageData.user_nickname,
-          };
-          setActivities((prevNotifications) => [
-            newNotification,
-            ...prevNotifications,
-          ]);
-        }
-      });
+        /**
+         *
+         * activity: 웹소켓의 활동알림 이벤트 구독,
+         *
+         * */
+        socket.on("activity", (data: any) => {
+          console.log("받은 활동알림:", data);
+          const messageData = data.message;
+          if (messageData) {
+            const newNotification: any = {
+              alerted_user_id: messageData.alerted_user_id,
+              comment_created_at: messageData.comment_created_at,
+              comment_id: messageData.comment_id,
+              comment_text: messageData.comment_text,
+              user_image_url: messageData.user_image_url,
+              user_nickname: messageData.user_nickname,
+            };
+            setActivities((prevNotifications) => [
+              newNotification,
+              ...prevNotifications,
+            ]);
+          }
+        });
 
-      return () => {
-        // 컴포넌트 언마운트 시, 웹 소켓 이벤트 리스너 해제
-        socket.off("notification");
-        socket.off("activity");
-      };
+        return () => {
+          // 컴포넌트 언마운트 시, 웹 소켓 이벤트 리스너 해제
+          socket.off("notification");
+          socket.off("activity");
+        };
+      } catch (error) {
+        console.error("WebSocket 연결 중 오류 발생:", error);
+        // 예외 처리 코드 추가
+      }
     }
-  });
-
+  }, []);
   // 'x' 아이콘 클릭 시, 해당 알림 삭제
   const handleDeleteClick = (notificationId: number) => {
     console.log("지워!");
