@@ -9,8 +9,6 @@ import NoDataComponent from "./Ranking/NoDataComponent";
 const MyRanking = () => {
   const { regionRankData } = useRankData();
 
-  console.log(regionRankData);
-
   return (
     <div
       css={{
