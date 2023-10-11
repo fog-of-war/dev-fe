@@ -76,6 +76,7 @@ const TotalRanking = ({
           overflow: "hidden",
           textOverflow: "ellipsis",
           whiteSpace: "nowrap",
+          width: "100px",
         }}
       >
         {nickname}
