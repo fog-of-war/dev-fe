@@ -19,15 +19,13 @@ const useProgressInfo = () => {
       return 100; // 최대 레벨일 경우
     }
 
-    const currentLevelPoints =
-      currentLevel === 0 ? 0 : levelData[currentLevel].level_points;
+    const currentLevelPoints = levelData[currentLevel].level_points;
     const nextLevelPoints = levelData[currentLevel + 1].level_points;
 
-    return (
-      ((currentUserPoints - currentLevelPoints) /
-        (nextLevelPoints - currentLevelPoints)) *
-      100
-    );
+    const pointsForCurrentLevel = currentUserPoints - currentLevelPoints;
+    const pointsToReachNextLevel = nextLevelPoints - currentLevelPoints;
+
+    return (pointsForCurrentLevel / pointsToReachNextLevel) * 100;
   };
 
   return { calculatePoints, calculateProgress };
