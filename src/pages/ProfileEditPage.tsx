@@ -82,8 +82,6 @@ const ProfileEditPage = () => {
     }
 
     mutation.mutate(editProfileData);
-
-    console.log(editProfileData);
   };
 
   return (
@@ -106,7 +104,7 @@ const ProfileEditPage = () => {
       {userData && (
         <>
           <EditProfileImage
-            profileData={userData}
+            profileData={editProfileData}
             setEditProfileData={setEditProfileData}
             css={{
               display: "flex",
@@ -116,7 +114,7 @@ const ProfileEditPage = () => {
           />
 
           <EditProfileNickName
-            profileData={userData}
+            profileData={editProfileData}
             setEditProfileData={setEditProfileData}
             inputRef={nickNameInputRef}
           />
