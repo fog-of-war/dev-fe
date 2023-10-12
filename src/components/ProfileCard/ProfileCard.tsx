@@ -48,7 +48,7 @@ const ProfileCard = ({
         </ProfileBadgeContainer>
         <ProfileNicknameBox>{username}</ProfileNicknameBox>
       </ProfileInfoContainer>
-      <DeleteProfileButton />
+      {location.pathname === "/profile" && <DeleteProfileButton />}
     </ProfileCardWrapper>
   );
 };
