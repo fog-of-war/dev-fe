@@ -1,10 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
-import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import colors from "../constants/colors";
 import useProgressInfo from "../hooks/useProgressInfo";
-
 export interface ProgressBarProps {
   progress?: number;
   level: number;
@@ -13,32 +11,28 @@ export interface ProgressBarProps {
 
 const ProgressBar = ({ level, userPoints }: ProgressBarProps) => {
   const { calculatePoints, calculateProgress } = useProgressInfo();
-  const [animate, setAnimate] = useState(false);
-  const [localProgress, setLocalProgress] = useState(0);
 
   const requiredPoints = calculatePoints(level, userPoints);
+
   const progressPercentage = calculateProgress(level, userPoints);
 
-  useEffect(() => {
-    if (localProgress !== progressPercentage && localProgress !== 0) {
-      setAnimate(true);
-    } else {
-      setAnimate(false);
-    }
-    setLocalProgress(progressPercentage);
-  }, [progressPercentage, localProgress]);
-
   return (
-    <ProgressBarContainer>
-      <ProgressText>
-        {requiredPoints > 0
-          ? `다음 레벨업까지 ${requiredPoints.toLocaleString()} 포인트`
-          : "최고 레벨에 도달했습니다!"}
-      </ProgressText>
-      <StyledProgressBar progress={progressPercentage} animate={animate} />
-      <LevelText left>{level} Lv</LevelText>
-      <LevelText right>{level + 1} Lv</LevelText>
-    </ProgressBarContainer>
+    <>
+      <ProgressBarContainer>
+        <ProgressText>
+          {requiredPoints > 0
+            ? `다음 레벨업까지 ${requiredPoints.toLocaleString()} 포인트`
+            : "최고 레벨에 도달했습니다!"}
+        </ProgressText>
+        <StyledProgressBar
+          progress={progressPercentage}
+          level={level}
+          userPoints={requiredPoints}
+        />
+        <LevelText left>{level} Lv</LevelText>
+        <LevelText right>{level + 1} Lv</LevelText>
+      </ProgressBarContainer>
+    </>
   );
 };
 
@@ -51,7 +45,7 @@ const ProgressBarContainer = styled.div`
   margin-top: 20px;
 `;
 
-const StyledProgressBar = styled.div<{ progress: number; animate: boolean }>`
+const StyledProgressBar = styled.div<ProgressBarProps>`
   width: 100%;
   height: 100%;
   border-radius: 10px;
@@ -72,8 +66,7 @@ const StyledProgressBar = styled.div<{ progress: number; animate: boolean }>`
       hsl(148, 41%, 60%) 0%,
       hsl(148, 41%, 35%) 100%
     );
-    animation: ${({ animate }) =>
-      animate ? "ProgressBarfillAnimation 1s ease-out" : "none"};
+    animation: ProgressBarfillAnimation 1s ease-out;
   }
 
   @keyframes ProgressBarfillAnimation {

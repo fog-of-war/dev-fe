@@ -2,7 +2,6 @@
 
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import useProgressInfo from "../../hooks/useProgressInfo";
 
 import { getUserData } from "../../api/user";
 import { getMyRank } from "../../api/rank";
@@ -39,8 +38,6 @@ const MainCard = () => {
     rank: 0,
   });
 
-  const { calculatePoints, calculateProgress } = useProgressInfo();
-
   // 유저 데이터 불러오기
   useEffect(() => {
     getUserData().then((userData: UserData) => {
@@ -59,10 +56,6 @@ const MainCard = () => {
 
     setIsLoaded(true);
   }, []);
-
-  const requiredPoints = calculatePoints(userLevel, userPoints);
-
-  const progressPercentage = calculateProgress(userLevel, userPoints);
 
   // 작은 글자 스타일
   const smallTextStyle = {
@@ -129,8 +122,8 @@ const MainCard = () => {
         총탐험포인트
         <div css={{ width: "100%", marginLeft: 5, marginBottom: 18 }}>
           <ProgressBar
-            progress={progressPercentage}
-            userPoints={requiredPoints}
+            // progress={progressPercentage}
+            userPoints={userPoints}
             level={userLevel}
           />
         </div>
