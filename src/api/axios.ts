@@ -1,9 +1,5 @@
 import axios from "axios";
-import { logout, postRefreshToken } from "./auth";
-import { toast } from "react-hot-toast";
-import { MESSAGE } from "../constants/messages";
-import { removeDataFromLocalStorage } from "../utils/localStorage";
-import { STORAGE_KEY } from "../constants/storage";
+import { refreshTokens } from "./auth";
 
 axios.defaults.withCredentials = true;
 
@@ -20,12 +16,7 @@ axiosBase.interceptors.response.use(
   },
   async (error) => {
     if (error.response?.status === 401) {
-      try {
-        await postRefreshToken();
-      } catch (error) {
-        removeDataFromLocalStorage(STORAGE_KEY.CURRENT_USER);
-        toast.error(MESSAGE.LOGIN.EXPIRED);
-      }
+      await refreshTokens();
 
       const response = await axios.request(error.config);
       return response;
