@@ -19,6 +19,11 @@ const initialPostAuthor = {
   user_image_url: "",
 };
 
+const initialCommentAuthor = {
+  user_nickname: "",
+  user_image_url: "",
+};
+
 const initialPostComment: PostComment = {
   comment_id: 0,
   comment_created_at: new Date().toISOString(),
@@ -27,6 +32,7 @@ const initialPostComment: PostComment = {
   comment_author_id: 0,
   commented_post_id: 0,
   comment_is_deleted: false,
+  comment_author: initialCommentAuthor,
 };
 
 const initialPlacePost: PlacePost = {
