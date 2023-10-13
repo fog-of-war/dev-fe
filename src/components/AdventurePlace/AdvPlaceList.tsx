@@ -70,7 +70,7 @@ const AdvPlaceListLayout = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 8;
+  gap: 8px;
   width: 100%;
   flex-wrap: wrap;
 `;
