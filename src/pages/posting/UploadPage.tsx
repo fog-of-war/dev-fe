@@ -58,15 +58,6 @@ const UploadPage = () => {
 
       const AWSImageUrl = await uploadImageToS3(file!);
 
-      // setPostUploadData((prevData) => {
-      //   if (!prevData) return null;
-
-      //   return {
-      //     ...prevData,
-      //     post_image_url: AWSImageUrl,
-      //   };
-      // });
-
       await uploadPost({ ...postUploadData, post_image_url: AWSImageUrl });
 
       setLoading(false);

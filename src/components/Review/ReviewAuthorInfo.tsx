@@ -51,8 +51,6 @@ const ReviewAuthorInfo = React.memo(
     };
 
     const handleCompleteClick = async () => {
-      console.log(updateReview);
-
       try {
         await updatePost(postId, updateReview);
         setIsEditing(false);
@@ -68,9 +66,6 @@ const ReviewAuthorInfo = React.memo(
         });
       }
     };
-
-    console.log("authorInfo", authorInfo);
-    console.log("userData", userData);
 
     return (
       <div

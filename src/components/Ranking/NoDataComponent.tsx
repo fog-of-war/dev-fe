@@ -51,6 +51,7 @@ const NoRegionComponentLayout = styled.div`
   gap: 10px;
   background-color: ${colors.pastel};
   border-radius: 15px;
+  padding: 10px;
 `;
 
 const ImageContainer = styled.div`

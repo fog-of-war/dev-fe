@@ -16,8 +16,6 @@ const ReviewPage = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       const postList = await getAllPostsByPlaceId(numberPlaceId);
-      console.log(placeId);
-      console.log(postList);
       setPlaceData(postList);
     };
     fetchPosts();

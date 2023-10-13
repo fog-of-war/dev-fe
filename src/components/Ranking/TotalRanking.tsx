@@ -29,7 +29,6 @@ const TotalRanking = ({
         gap: "10px",
         flexDirection: "row",
         width: "100%",
-        height: "100%",
         borderBottom: "1px solid #f1f1f1",
         padding: "10px 0",
       }}
@@ -77,6 +76,7 @@ const TotalRanking = ({
           overflow: "hidden",
           textOverflow: "ellipsis",
           whiteSpace: "nowrap",
+          width: "100px",
         }}
       >
         {nickname}

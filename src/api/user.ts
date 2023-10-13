@@ -19,3 +19,7 @@ export const getMyRegion = async () => {
   const response = await axiosBase.get("v1/users/me/region");
   return response.data;
 };
+
+export const deleteUser = async () => {
+  await axiosBase.delete("v1/users/me/leave");
+};
