@@ -49,4 +49,5 @@ export const SearchList = styled.ul`
   border-top: 0.5px solid ${colors.paleGrey};
   overflow: auto;
   scrollbar-width: none;
+  height: 100%;
 `;

@@ -43,13 +43,7 @@ const useCurrentLocation = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-
           checkIsInSeoul(latitude, longitude);
-          if (isInSeoul) {
-            setCurrentLocation({ lat: latitude, lng: longitude });
-          } else {
-            setCurrentLocation(defaultCenter);
-          }
         },
         (error) => {
           console.error("현재 위치를 가져오는데 에러가 발생했습니다:", error);
@@ -69,9 +63,11 @@ const useCurrentLocation = () => {
         const address = response.results[0].formatted_address;
         if (address.includes("Seoul")) {
           setIsInSeoul(true);
+          setCurrentLocation({ lat, lng });
           toast.success("현재 위치가 서울입니다.");
         } else {
           setIsInSeoul(false);
+          setCurrentLocation(defaultCenter);
           toast.success(
             `현재 위치가 서울이 아니므로 서울 중심을\n기준으로 지도를 보여드립니다.`
           );
