@@ -1,9 +1,11 @@
 /** @jsxImportSource @emotion/react */
+import { useState } from "react";
 import styled from "@emotion/styled";
 import colors from "../../../constants/colors";
 import { PostComment } from "../../../types/types";
 import { timeSince } from "../../../utils/calculateDate";
 import useAuth from "../../../hooks/useAuth";
+import ButtonModal from "./ButtonModal";
 
 interface CommentItemProps {
   comment_author_image_url: PostComment["comment_author"]["user_image_url"];
@@ -20,9 +22,15 @@ const CommentItem = ({
   comment_date,
   comment_author_id,
 }: CommentItemProps) => {
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
   const { data: userData } = useAuth();
 
   const userId = userData?.user_id;
+
+  const toggleModalVisibility = () => {
+    setIsModalVisible((prevState) => !prevState);
+  };
 
   return (
     <CommentItemLayout>
@@ -32,16 +40,17 @@ const CommentItem = ({
           alt="comment_author_profile_image"
         />
         <CommentAuthorNickname>{comment_author_nickname}</CommentAuthorNickname>
-        <CommentButtonContainer>
+        <ButtonContainer onClick={toggleModalVisibility}>
           {userId === comment_author_id && (
-            <CommentButton>
+            <CommentEditButton>
               <CommentButtonImg
                 src="/images/dotButton.svg"
                 alt="comment_delete_button"
               />
-            </CommentButton>
+            </CommentEditButton>
           )}
-        </CommentButtonContainer>
+          {isModalVisible && <ButtonModal />}
+        </ButtonContainer>
       </CommentAuthorInfo>
       <CommentContent>
         <CommentText>{comment_text}</CommentText>
@@ -99,7 +108,7 @@ const CommentDate = styled.p`
   color: ${colors.lightGrey};
 `;
 
-const CommentButtonContainer = styled.div`
+const ButtonContainer = styled.div`
   width: 10px;
   height: 20px;
   position: absolute;
@@ -107,7 +116,7 @@ const CommentButtonContainer = styled.div`
   cursor: pointer;
 `;
 
-const CommentButton = styled.button`
+const CommentEditButton = styled.button`
   width: 100%;
   height: 100%;
   background-color: transparent;
