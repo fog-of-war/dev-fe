@@ -98,6 +98,16 @@ export interface PostAuthor {
   user_image_url: string;
 }
 
+export interface PostComment {
+  comment_id: number;
+  comment_created_at: string;
+  comment_updated_at: string;
+  comment_text: string;
+  comment_author_id: number;
+  commented_post_id: number;
+  comment_is_deleted: boolean;
+}
+
 export interface PlacePost {
   post_id: number;
   post_created_at: string;
@@ -106,7 +116,10 @@ export interface PlacePost {
   post_image_url: string;
   post_author_id: number;
   post_star_rating: number;
+  post_place_id: number;
+  post_is_deleted: boolean;
   post_author: PostAuthor;
+  post_comments: PostComment[];
 }
 
 export interface MyPosts {
