@@ -128,6 +128,11 @@ export interface PlacePost {
   post_comments: PostComment[];
 }
 
+export interface Comment {
+  comment_text: string;
+  commented_post_id: number;
+}
+
 export interface MyPosts {
   post_id: number;
   post_image_url: string;
