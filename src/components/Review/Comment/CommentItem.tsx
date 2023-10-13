@@ -42,6 +42,7 @@ const CommentItemLayout = styled.div`
   gap: 5px;
   padding: 10px 0;
   width: 100%;
+  position: relative;
 `;
 
 const CommentAuthorInfo = styled.div`
