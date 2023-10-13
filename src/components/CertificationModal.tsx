@@ -46,6 +46,7 @@ interface CertificationModalProps {
   placePosts: Array<{
     post_id: number;
     post_image_url: string;
+    post_place_id: number;
   }>;
   place_latitude: number;
   place_longitude: number;
@@ -181,9 +182,8 @@ const CertificationModal = ({
         />
         <PlaceImages
           images={placePosts.map((post) => post.post_image_url)}
-          onClick={() => {
-            console.log("하위");
-          }}
+          placeId={placePosts.map((post) => post.post_place_id)}
+          onClick={() => {}}
         />
         <div css={{ display: "flex", justifyContent: "center" }}>
           <div css={{ display: "flex", fontSize: 18, fontWeight: "bold" }}>

@@ -16,6 +16,7 @@ interface CustomMarkerProps {
   placePosts: Array<{
     post_id: number;
     post_image_url: string;
+    post_place_id: number;
   }>;
   x: number;
   y: number;
