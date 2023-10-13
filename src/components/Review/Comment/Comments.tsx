@@ -1,21 +1,34 @@
 /** @jsxImportSource @emotion/react */
 import styled from "@emotion/styled";
+import { useState } from "react";
+import CommentList from "./CommentList";
+import { PostComment } from "../../../types/types";
 
 interface CommentsProps {
   comments: number;
+  data: PostComment[];
 }
 
-const Comments = ({ comments }: CommentsProps) => {
+const Comments = ({ comments, data }: CommentsProps) => {
+  const [isCommentsVisible, setIsCommentsVisible] = useState<boolean>(false);
+
+  const toggleCommentsVisibility = () => {
+    setIsCommentsVisible((prevState) => !prevState);
+  };
+
   return (
-    <CommentLayout>
-      <CommentIconBox>
-        <CommentIconImg src="/images/comment.svg" alt="comment_icon" />
-      </CommentIconBox>
-      <CommentLengthBox>
-        <CommentText>댓글</CommentText>
-        <CommentCount>{comments}</CommentCount>
-      </CommentLengthBox>
-    </CommentLayout>
+    <>
+      <CommentLayout>
+        <CommentIconBox onClick={toggleCommentsVisibility}>
+          <CommentIconImg src="/images/comment.svg" alt="comment_icon" />
+        </CommentIconBox>
+        <CommentLengthBox>
+          <CommentText>댓글</CommentText>
+          <CommentCount>{comments}</CommentCount>
+        </CommentLengthBox>
+      </CommentLayout>
+      {isCommentsVisible && <CommentList commentsData={data} />}
+    </>
   );
 };
 
@@ -37,6 +50,7 @@ const CommentIconBox = styled.div`
   height: 23px;
   overflow: hidden;
   aspect-ratio: 1/1;
+  cursor: pointer;
 `;
 
 const CommentIconImg = styled.img`
