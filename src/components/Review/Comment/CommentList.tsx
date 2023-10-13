@@ -22,6 +22,7 @@ const CommentList = ({ commentsData, postId }: CommentListProps) => {
             comment_author_nickname={comment.comment_author.user_nickname}
             comment_text={comment.comment_text}
             comment_date={comment.comment_created_at}
+            comment_author_id={comment.comment_author_id}
           />
         ))}
         <CommentTextArea

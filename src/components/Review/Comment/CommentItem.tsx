@@ -3,12 +3,14 @@ import styled from "@emotion/styled";
 import colors from "../../../constants/colors";
 import { PostComment } from "../../../types/types";
 import { timeSince } from "../../../utils/calculateDate";
+import useAuth from "../../../hooks/useAuth";
 
 interface CommentItemProps {
   comment_author_image_url: PostComment["comment_author"]["user_image_url"];
   comment_author_nickname: PostComment["comment_author"]["user_nickname"];
   comment_text: PostComment["comment_text"];
   comment_date: PostComment["comment_created_at"];
+  comment_author_id: PostComment["comment_author_id"];
 }
 
 const CommentItem = ({
@@ -16,7 +18,12 @@ const CommentItem = ({
   comment_author_nickname,
   comment_text,
   comment_date,
+  comment_author_id,
 }: CommentItemProps) => {
+  const { data: userData } = useAuth();
+
+  const userId = userData?.user_id;
+
   return (
     <CommentItemLayout>
       <CommentAuthorInfo>
@@ -25,6 +32,16 @@ const CommentItem = ({
           alt="comment_author_profile_image"
         />
         <CommentAuthorNickname>{comment_author_nickname}</CommentAuthorNickname>
+        <CommentButtonContainer>
+          {userId === comment_author_id && (
+            <CommentButton>
+              <CommentButtonImg
+                src="/images/dotButton.svg"
+                alt="comment_delete_button"
+              />
+            </CommentButton>
+          )}
+        </CommentButtonContainer>
       </CommentAuthorInfo>
       <CommentContent>
         <CommentText>{comment_text}</CommentText>
@@ -82,8 +99,24 @@ const CommentDate = styled.p`
   color: ${colors.lightGrey};
 `;
 
-const CommentButtonContainer = styled.div``;
+const CommentButtonContainer = styled.div`
+  width: 10px;
+  height: 20px;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+`;
 
-const CommentButton = styled.button``;
+const CommentButton = styled.button`
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+`;
 
-const CommentButtonImg = styled.img``;
+const CommentButtonImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+`;
