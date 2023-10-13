@@ -60,6 +60,7 @@ const ReviewList = ({ reviews, placeId }: ReviewListProps) => {
                 <Comments
                   comments={review.post_comments.length}
                   data={review.post_comments}
+                  postId={review.post_id}
                 />
               </div>
             </div>

@@ -7,9 +7,10 @@ import { PostComment } from "../../../types/types";
 interface CommentsProps {
   comments: number;
   data: PostComment[];
+  postId: number;
 }
 
-const Comments = ({ comments, data }: CommentsProps) => {
+const Comments = ({ comments, data, postId }: CommentsProps) => {
   const [isCommentsVisible, setIsCommentsVisible] = useState<boolean>(false);
 
   const toggleCommentsVisibility = () => {
@@ -27,7 +28,7 @@ const Comments = ({ comments, data }: CommentsProps) => {
           <CommentCount>{comments}</CommentCount>
         </CommentLengthBox>
       </CommentLayout>
-      {isCommentsVisible && <CommentList commentsData={data} />}
+      {isCommentsVisible && <CommentList commentsData={data} postId={postId} />}
     </>
   );
 };
