@@ -57,7 +57,10 @@ const ReviewList = ({ reviews, placeId }: ReviewListProps) => {
                   position: "relative",
                 }}
               >
-                <Comments comments={review.post_comments.length} />
+                <Comments
+                  comments={review.post_comments.length}
+                  data={review.post_comments}
+                />
               </div>
             </div>
           </div>
