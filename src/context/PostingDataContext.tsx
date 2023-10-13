@@ -1,5 +1,10 @@
 import { createContext, useContext, useState, ReactNode } from "react";
-import { PlacePost, PlaceData, PostUploadData } from "../types/types";
+import {
+  PlacePost,
+  PlaceData,
+  PostUploadData,
+  PostComment,
+} from "../types/types";
 
 interface PostingDataContextProps {
   allPlaceData: PlaceData;
@@ -14,6 +19,16 @@ const initialPostAuthor = {
   user_image_url: "",
 };
 
+const initialPostComment: PostComment = {
+  comment_id: 0,
+  comment_created_at: new Date().toISOString(),
+  comment_updated_at: new Date().toISOString(),
+  comment_text: "",
+  comment_author_id: 0,
+  commented_post_id: 0,
+  comment_is_deleted: false,
+};
+
 const initialPlacePost: PlacePost = {
   post_id: 0,
   post_created_at: new Date().toISOString(),
@@ -22,9 +37,10 @@ const initialPlacePost: PlacePost = {
   post_image_url: "",
   post_author_id: 0,
   post_star_rating: 0,
-  post_author: initialPostAuthor,
   post_place_id: 0,
   post_is_deleted: false,
+  post_author: initialPostAuthor,
+  post_comments: [initialPostComment],
 };
 
 const initialPlaceData: PlaceData = {
