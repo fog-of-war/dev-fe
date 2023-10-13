@@ -1,14 +1,23 @@
 /** @jsxImportSource @emotion/react */
 
+import { useNavigate } from "react-router-dom";
 import colors from "../../constants/colors";
 
 interface PlaceImagesProps {
   images: string[];
+  placeId: number[];
   onClick: () => void;
 }
 
-const PlaceImages = ({ images, onClick }: PlaceImagesProps) => {
+const PlaceImages = ({ images, placeId, onClick }: PlaceImagesProps) => {
   const hasImages = images.length > 0;
+
+  const navigate = useNavigate(); // useNavigate 훅을 사용
+
+  const handleImageClick = (placeId: number) => {
+    // 이미지 클릭 시 reviewList/{placeId} 경로로 이동
+    navigate(`/reviewList/${placeId}`);
+  };
 
   // 이미지가 1장인 경우
   if (hasImages && images.length === 1) {
@@ -37,6 +46,7 @@ const PlaceImages = ({ images, onClick }: PlaceImagesProps) => {
               inset: 0,
               objectFit: "cover",
             }}
+            onClick={() => handleImageClick(placeId[0])}
           />
         </div>
       </div>
@@ -63,6 +73,7 @@ const PlaceImages = ({ images, onClick }: PlaceImagesProps) => {
               borderRadius: 10,
               overflow: "hidden",
             }}
+            onClick={() => handleImageClick(placeId[0])}
           >
             <img
               src={image}
@@ -100,6 +111,7 @@ const PlaceImages = ({ images, onClick }: PlaceImagesProps) => {
             borderRadius: 10,
             overflow: "hidden",
           }}
+          onClick={() => handleImageClick(placeId[0])}
         >
           <img
             src={images[0]}
@@ -129,6 +141,7 @@ const PlaceImages = ({ images, onClick }: PlaceImagesProps) => {
                 borderRadius: 10,
                 overflow: "hidden",
               }}
+              onClick={() => handleImageClick(placeId[0])}
             >
               <img
                 src={image}
@@ -166,6 +179,7 @@ const PlaceImages = ({ images, onClick }: PlaceImagesProps) => {
             borderRadius: 10,
             overflow: "hidden",
           }}
+          onClick={() => handleImageClick(placeId[0])}
         >
           <img
             src={images[0]}
@@ -193,6 +207,7 @@ const PlaceImages = ({ images, onClick }: PlaceImagesProps) => {
               borderRadius: 10,
               overflow: "hidden",
             }}
+            onClick={() => handleImageClick(placeId[0])}
           >
             <img
               src={images[1]}
@@ -222,6 +237,7 @@ const PlaceImages = ({ images, onClick }: PlaceImagesProps) => {
                   borderRadius: 10,
                   overflow: "hidden",
                 }}
+                onClick={() => handleImageClick(placeId[0])}
               >
                 <img
                   src={image}
@@ -261,6 +277,7 @@ const PlaceImages = ({ images, onClick }: PlaceImagesProps) => {
             borderRadius: 10,
             overflow: "hidden",
           }}
+          onClick={() => handleImageClick(placeId[0])}
         >
           <img
             src={images[0]}
@@ -292,6 +309,7 @@ const PlaceImages = ({ images, onClick }: PlaceImagesProps) => {
                 borderRadius: 10,
                 overflow: "hidden",
               }}
+              onClick={() => handleImageClick(placeId[0])}
             >
               <img
                 src={image}
