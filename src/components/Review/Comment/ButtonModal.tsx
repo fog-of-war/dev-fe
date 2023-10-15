@@ -47,7 +47,6 @@ const ModalLayout = styled.div`
   position: absolute;
   top: 0;
   right: 15px;
-  z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
