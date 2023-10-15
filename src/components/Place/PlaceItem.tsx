@@ -9,7 +9,7 @@ import { MapContext } from "../../context/MapContext";
 
 import B2 from "../UI/B2";
 import B1 from "../UI/B1";
-import PlaceImageList from "./PlaceImageList";
+import PlaceImages from "../Certification/PlaceImages";
 
 interface PlaceItemProps extends React.HTMLAttributes<HTMLLIElement> {
   place: Place;
@@ -57,22 +57,20 @@ const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
       </TitleContainer>
       <RatingWrapper>
         <img src="/images/search/starIcon.png" alt="star" height={21} />
-        {place_posts.length !== 0 ? (
-          <B1>
-            {place_star_rating || 0} ({place_posts?.length || 0})
-          </B1>
-        ) : (
-          <B1 css={{ color: colors.primary }}>
-            이 장소의 첫번째 탐험자가 되어 보세요!
-          </B1>
-        )}
+        <B1>
+          {place_star_rating || 0} ({place_posts?.length || 0})
+        </B1>
       </RatingWrapper>
       <LocationWrapper>
         <B1>{(+distance / 1000).toFixed(1)}km </B1>
         <span css={{ color: colors.paleGrey }}>|</span>
         <B1> {road_address_name}</B1>
       </LocationWrapper>
-      <PlaceImageList posts={place_posts || []} displayAmount={displayAmount} />
+      <PlaceImages
+        images={place_posts.map((post) => post.post_image_url)}
+        placeId={place_posts.map((post) => post.post_place_id)}
+        onClick={() => {}}
+      />
     </PlaceItemContainer>
   );
 };
