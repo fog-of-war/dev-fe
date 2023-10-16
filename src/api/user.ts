@@ -21,5 +21,5 @@ export const getMyRegion = async () => {
 };
 
 export const deleteUser = async () => {
-  await axiosBase.delete("v1/users/me/leave");
+  await axiosBase.delete("v1/auth/leave");
 };
