@@ -47,6 +47,7 @@ const Notifications = () => {
               comment_created_at: data.comment_created_at,
               comment_id: data.comment_id,
               comment_text: data.comment_text,
+              commented_post_place_id: data.commented_post_place_id,
               user_image_url: data.user_image_url,
               user_nickname: data.user_nickname,
             };
@@ -58,7 +59,7 @@ const Notifications = () => {
 
         socket.on("notification", (data) => {
           try {
-            // console.log("받은 공지 알림:", data);
+            console.log("받은 공지 알림:", data);
             // 공지 알림 데이터를 처리하고 notifications 상태를 업데이트
             const newNotification = {
               place_id: data.place_id,
