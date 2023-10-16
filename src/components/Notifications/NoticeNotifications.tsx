@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
+import { useNavigate } from "react-router-dom";
 import colors from "../../constants/colors";
 import B2 from "../UI/B2";
 import TimeAgo from "./TimeAgo";
@@ -13,8 +14,19 @@ interface NoticeNotificationsProps {
 const NoticeNotifications: React.FC<NoticeNotificationsProps> = ({
   notifications,
 }) => {
+  const navigate = useNavigate();
+
+  // 알림 클릭 시, 해당 장소 검색 결과 이동
+  const handleNotificationClick = (place_name: string) => {
+    navigate(`/search/result?query=${place_name}`);
+  };
+
   // 'x' 아이콘 클릭 시, 해당 알림 삭제
-  const handleDeleteClick = (notificationId: number) => {
+  const handleDeleteClick = (
+    notificationId: number,
+    event: React.MouseEvent
+  ) => {
+    event.stopPropagation(); // 클릭 이벤트 중단
     console.log("지워!");
   };
 
@@ -61,6 +73,7 @@ const NoticeNotifications: React.FC<NoticeNotificationsProps> = ({
               padding: 15,
               borderBottom: `1px solid ${colors.paleGrey}`,
             }}
+            onClick={() => handleNotificationClick(notification.place_name)}
           >
             <div
               css={{
