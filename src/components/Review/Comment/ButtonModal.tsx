@@ -1,39 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import styled from "@emotion/styled";
 import colors from "../../../constants/colors";
-import Button from "../../UI/Button";
 
-const ButtonModal = () => {
-  return (
-    <ModalLayout>
-      <ButtonBox>
-        <Button
-          size="small"
-          variant="textOnly"
-          style={{
-            border: "none",
-            borderRadius: "0px",
-            color: colors.secondary,
-          }}
-        >
-          수정
-        </Button>
-      </ButtonBox>
-      <ButtonBox>
-        <Button
-          size="small"
-          variant="textOnly"
-          style={{
-            border: "none",
-            borderRadius: "0px",
-            color: colors.secondary,
-          }}
-        >
-          삭제
-        </Button>
-      </ButtonBox>
-    </ModalLayout>
-  );
+interface ButtonModalProps {
+  children: React.ReactNode;
+}
+
+const ButtonModal = ({ children }: ButtonModalProps) => {
+  return <ModalLayout>{children}</ModalLayout>;
 };
 
 export default ButtonModal;
@@ -55,12 +29,4 @@ const ModalLayout = styled.div`
   button:hover {
     background-color: ${colors.pastel};
   }
-`;
-
-const ButtonBox = styled.div`
-  width: 100%;
-  height: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
