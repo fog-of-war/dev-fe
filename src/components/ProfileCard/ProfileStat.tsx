@@ -42,7 +42,7 @@ const ProfileStat = ({ type, data, rankData, onClick }: ProfileStatProps) => {
         alignItems: "center",
         gap: "8px",
       }}
-      onClick={type === "rank" ? onClick : undefined}
+      onClick={onClick}
     >
       <img
         src={stat.typeImg}
