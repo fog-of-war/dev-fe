@@ -40,13 +40,14 @@ const Notifications = () => {
 
         socket.on("activity", (data) => {
           try {
-            // console.log("받은 활동 알림:", data);
+            console.log("받은 활동 알림:", data);
             // 활동 알림 데이터를 처리하고 activities 상태를 업데이트
             const newActivity = {
               alerted_user_id: data.alerted_user_id,
               comment_created_at: data.comment_created_at,
               comment_id: data.comment_id,
               comment_text: data.comment_text,
+              commented_post_place_id: data.commented_post_place_id,
               user_image_url: data.user_image_url,
               user_nickname: data.user_nickname,
             };
