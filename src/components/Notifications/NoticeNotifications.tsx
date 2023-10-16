@@ -104,7 +104,7 @@ const NoticeNotifications: React.FC<NoticeNotificationsProps> = ({
               <br />
               <TimeAgo timestamp={notification.post_created_at} />
             </div>
-            <img
+            {/* <img
               src="images/xIcon.png"
               alt="삭제 아이콘"
               onClick={() => handleDeleteClick(notification.post_id)}
@@ -114,7 +114,7 @@ const NoticeNotifications: React.FC<NoticeNotificationsProps> = ({
                 marginLeft: "auto",
                 marginBottom: "55px",
               }}
-            />
+            /> */}
           </div>
         ))
       )}

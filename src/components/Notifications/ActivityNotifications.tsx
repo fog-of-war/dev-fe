@@ -119,7 +119,7 @@ const ActivityNotifications: React.FC<ActivityNotificationsProps> = ({
                 </span>
               </B3>
             </div>
-            <img
+            {/* <img
               src="images/xIcon.png"
               alt="삭제 아이콘"
               onClick={(event) => handleDeleteClick(activity.comment_id, event)}
@@ -129,7 +129,7 @@ const ActivityNotifications: React.FC<ActivityNotificationsProps> = ({
                 marginLeft: "auto",
                 marginBottom: "35px",
               }}
-            />
+            /> */}
           </div>
         ))
       )}
