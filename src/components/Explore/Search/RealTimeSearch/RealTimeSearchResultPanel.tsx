@@ -4,6 +4,7 @@ import { Place } from "../../../../types/types";
 import { SearchList } from "../RecentSearch/RecentSearchesPanel";
 import { useEffect, useState } from "react";
 import { getRequest } from "../../../../api/utils/getRequest";
+import { isLastCharKoreanConsonantOrVowel } from "../../../../utils/checkLastChar";
 import useCurrentLocation from "../../../../hooks/map/useCurrentLocation";
 
 import RealTimeSearchItem from "./RealTimeSearchItem";
@@ -30,6 +31,9 @@ const RealtimeSearchResultPanel = ({
   useEffect(() => {
     const getSearchResult = async () => {
       if (!currentLocation || !debouncedInput) return;
+      if (isLastCharKoreanConsonantOrVowel(debouncedInput)) return;
+
+      console.log(isLastCharKoreanConsonantOrVowel(debouncedInput));
 
       const x = currentLocation?.lng!;
       const y = currentLocation?.lat!;
