@@ -43,6 +43,8 @@ const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
           css={{
             color: colors.lightGrey,
             cursor: "pointer",
+            textAlign: "center",
+            textDecoration: "underline",
           }}
           onClick={(event) => {
             event.stopPropagation();
@@ -56,7 +58,7 @@ const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
         </B2>
       </TitleContainer>
       <RatingWrapper>
-        <img src="/images/search/starIcon.png" alt="star" height={21} />
+        <img src="/images/search/starIcon.png" alt="star" height={18} />
         <B1>
           {place_star_rating || 0} ({place_posts?.length || 0})
         </B1>
