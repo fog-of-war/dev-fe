@@ -39,7 +39,7 @@ const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
           <h4>{place_name}</h4>
           <B2 css={{ color: colors.lightGrey }}>{category_group_name}</B2>
         </TitleWrapper>
-        <B1
+        <B2
           css={{
             color: colors.lightGrey,
             cursor: "pointer",
@@ -53,7 +53,7 @@ const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
           }}
         >
           지도 자세히 보기
-        </B1>
+        </B2>
       </TitleContainer>
       <RatingWrapper>
         <img src="/images/search/starIcon.png" alt="star" height={21} />
@@ -84,21 +84,37 @@ const PlaceItemContainer = styled.li`
   border-radius: 10px;
   background: #fff;
   padding: 15px;
-  gap: 8px;
+  gap: 5px;
   box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.3);
 `;
 
 const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   cursor: pointer;
 `;
 
 const TitleWrapper = styled.div`
   display: flex;
-  align-items: end;
+  flex-direction: column;
+  width: 70%;
+  line-height: 1.2;
   gap: 3px;
+
+  h4 {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  span {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 `;
 
 const RatingWrapper = styled.div`
