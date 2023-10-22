@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import SkeletonLoader from "../UI/SkeletonLoader";
 
 import { getLandmarks } from "../../api/place";
+import { useNavigate } from "react-router-dom";
 
 export interface LandmarkData {
   place_name: string;
@@ -13,6 +14,9 @@ export interface LandmarkData {
 }
 
 const RecommendLocation = () => {
+  // 라우터 네비게이션
+  const navigate = useNavigate();
+
   // 로딩 상태
   const [loadingStates, setLoadingStates] = useState<boolean[]>([]);
 
@@ -70,6 +74,11 @@ const RecommendLocation = () => {
     };
   }, [landmarks]);
 
+  // 사진 클릭 시 검색 결과 페이지로 이동
+  const handleLandmarkClick = (place_name: string) => {
+    navigate(`/search/result?query=${place_name}`);
+  };
+
   return (
     <>
       <div
@@ -117,6 +126,7 @@ const RecommendLocation = () => {
               color: "#FFFFFF",
               aspectRatio: 1,
             }}
+            onClick={() => handleLandmarkClick(landmark.place_name)}
           >
             {loadingStates[index] ? (
               <SkeletonLoader width="100%" height="100%" />

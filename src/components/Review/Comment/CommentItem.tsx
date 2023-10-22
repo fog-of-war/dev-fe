@@ -6,6 +6,7 @@ import { PostComment } from "../../../types/types";
 import { timeSince } from "../../../utils/calculateDate";
 import useAuth from "../../../hooks/useAuth";
 import ButtonModal from "./ButtonModal";
+import EditDeleteButton from "./EditDeleteButton";
 
 interface CommentItemProps {
   comment_author_image_url: PostComment["comment_author"]["user_image_url"];
@@ -13,6 +14,8 @@ interface CommentItemProps {
   comment_text: PostComment["comment_text"];
   comment_date: PostComment["comment_created_at"];
   comment_author_id: PostComment["comment_author_id"];
+  comment_id: PostComment["comment_id"];
+  handleDeleteClick: (commentId: number) => void;
 }
 
 const CommentItem = ({
@@ -21,6 +24,8 @@ const CommentItem = ({
   comment_text,
   comment_date,
   comment_author_id,
+  handleDeleteClick,
+  comment_id,
 }: CommentItemProps) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
@@ -49,7 +54,14 @@ const CommentItem = ({
               />
             </CommentEditButton>
           )}
-          {isModalVisible && <ButtonModal />}
+          {isModalVisible && (
+            <ButtonModal>
+              <EditDeleteButton
+                commentId={comment_id}
+                handleDeleteClick={() => handleDeleteClick(comment_id)}
+              />
+            </ButtonModal>
+          )}
         </ButtonContainer>
       </CommentAuthorInfo>
       <CommentContent>

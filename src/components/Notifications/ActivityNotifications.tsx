@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
+import { useNavigate } from "react-router-dom";
 import colors from "../../constants/colors";
 import B2 from "../UI/B2";
 import B3 from "../UI/B3";
@@ -16,8 +17,19 @@ interface ActivityNotificationsProps {
 const ActivityNotifications: React.FC<ActivityNotificationsProps> = ({
   activities,
 }) => {
+  const navigate = useNavigate();
+
+  // 알림 클릭 시, 해당 장소의 리뷰 목록으로 이동
+  const handleNotificationClick = (commented_post_place_id: number) => {
+    navigate(`/reviewList/${commented_post_place_id}`);
+  };
+
   // 'x' 아이콘 클릭 시, 해당 알림 삭제
-  const handleDeleteClick = (notificationId: number) => {
+  const handleDeleteClick = (
+    notificationId: number,
+    event: React.MouseEvent
+  ) => {
+    event.stopPropagation(); // 클릭 이벤트 중단
     console.log("지워!");
   };
 
@@ -64,6 +76,9 @@ const ActivityNotifications: React.FC<ActivityNotificationsProps> = ({
               padding: 15,
               borderBottom: `1px solid ${colors.paleGrey}`,
             }}
+            onClick={() =>
+              handleNotificationClick(activity.commented_post_place_id)
+            }
           >
             <div
               css={{
@@ -104,17 +119,17 @@ const ActivityNotifications: React.FC<ActivityNotificationsProps> = ({
                 </span>
               </B3>
             </div>
-            <img
+            {/* <img
               src="images/xIcon.png"
               alt="삭제 아이콘"
-              onClick={() => handleDeleteClick(activity.comment_id)}
+              onClick={(event) => handleDeleteClick(activity.comment_id, event)}
               css={{
                 cursor: "pointer",
                 width: 12,
                 marginLeft: "auto",
                 marginBottom: "35px",
               }}
-            />
+            /> */}
           </div>
         ))
       )}

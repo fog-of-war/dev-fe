@@ -47,6 +47,7 @@ const Notifications = () => {
               comment_created_at: data.comment_created_at,
               comment_id: data.comment_id,
               comment_text: data.comment_text,
+              commented_post_place_id: data.commented_post_place_id,
               user_image_url: data.user_image_url,
               user_nickname: data.user_nickname,
             };
