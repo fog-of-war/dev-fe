@@ -1,6 +1,12 @@
 /** @jsxImportSource @emotion/react */
 
-const NoSearchData = () => {
+interface NoSearchDataProps {
+  children?: React.ReactNode;
+}
+
+const NoSearchData = ({
+  children = "검색결과가 없습니다.",
+}: NoSearchDataProps) => {
   return (
     <div
       css={{
@@ -11,7 +17,7 @@ const NoSearchData = () => {
         height: "100%",
       }}
     >
-      검색결과가 없습니다.
+      {children}
     </div>
   );
 };
