@@ -7,12 +7,14 @@ interface TitleDropdownProps {
   titles: string[];
   selectedTitle: string;
   onSelectTitle: (newTitle: string) => void;
+  defaultTitle: string; 
 }
 
 const TitleDropdown: React.FC<TitleDropdownProps> = ({
   titles,
   selectedTitle,
   onSelectTitle,
+  defaultTitle, 
 }) => {
   const handleTitleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newTitle = event.target.value;
@@ -67,13 +69,14 @@ const TitleDropdown: React.FC<TitleDropdownProps> = ({
           padding: "6px 0"
         }}
       >
-        <option value="">칭호를 선택하세요</option>
+        {/* <option value="">{defaultTitle}</option> */}
         {titles.map((title) => (
           <option key={title} value={title}>
             {title}
           </option>
         ))}
-      </select></div>
+      </select>
+      </div>
     </div>
   );
 };

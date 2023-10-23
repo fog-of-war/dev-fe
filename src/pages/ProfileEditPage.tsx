@@ -20,18 +20,18 @@ export interface EditProfileData {
 }
 
 const ProfileEditPage = () => {
-  //타이틀
+  const { data: userData } = useAuthQuery();
+  console.log("userData:", userData);
+
+  /** 칭호변경용 state */
   const [selectedTitle, setSelectedTitle] = useState<string>(""); // 선택된 칭호 상태
-
-  const titles: string[] = ["칭호1", "칭호2", "칭호3"]; // 칭호 옵션 목록
-
+  const userBadges = userData?.user_badges || [];
+  const titles = userBadges.map((badge) => badge.badge_name);
+  const defaultTitle = userData?.user_selected_badge.badge_name || "";
   const handleTitleChange = (newTitle: string) => {
     setSelectedTitle(newTitle);
   };
-
-
-  const { data: userData } = useAuthQuery();
-
+  /**-----------------*/
   const [editProfileData, setEditProfileData] = useState<EditProfileData>({
     user_nickname: userData?.user_nickname || "",
     user_image_url: userData?.user_image_url || "",
@@ -129,14 +129,16 @@ const ProfileEditPage = () => {
             setEditProfileData={setEditProfileData}
             inputRef={nickNameInputRef}
           />
+          <TitleDropdown
+              titles={titles}
+              selectedTitle={selectedTitle}
+              onSelectTitle={handleTitleChange} 
+              defaultTitle={defaultTitle}             
+         />
         </>
       )}
 
-    <TitleDropdown
-                titles={titles}
-                selectedTitle={selectedTitle}
-                onSelectTitle={handleTitleChange}
-              />
+
     </div>
   );
 };
