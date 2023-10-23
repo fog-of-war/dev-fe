@@ -90,6 +90,7 @@ export interface UserData {
   user_badges: UserBadge[];
   user_visited_places: string[];
   user_authored_posts: string[];
+  user_selected_badge: UserBadge;
 }
 
 export interface PostAuthor {
