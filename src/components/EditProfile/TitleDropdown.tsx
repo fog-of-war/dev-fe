@@ -56,9 +56,7 @@ const TitleDropdown: React.FC<TitleDropdownProps> = ({
         css={{
           position: "relative",
           width: "100%",
-          marginBottom: "6px",
           borderColor: "#aaa",
-          padding: "6px 0",
         }}
       >
         <div
@@ -70,8 +68,9 @@ const TitleDropdown: React.FC<TitleDropdownProps> = ({
             alignItems: "center",
             justifyContent: "space-between",
             cursor: "pointer",
-            borderBottom: "1px solid #53AF7B",
-            backgroundColor: isHovered ? "#f0f0f0" : "transparent",
+            borderBottom: isDropdownOpen?  "1px solid #53AF7B" : "1px solid #aaa" ,
+            margin:"0 0 6px",
+            padding: "6px 0",
           }}
         >
           <div
@@ -86,7 +85,7 @@ const TitleDropdown: React.FC<TitleDropdownProps> = ({
             css={{
               width: "20px",
               height: "20px",
-              border: "1px solid #53AF7B",
+              border: "0px solid #53AF7B",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -118,7 +117,7 @@ const TitleDropdown: React.FC<TitleDropdownProps> = ({
               width: "100%",
               listStyle: "none",
               backgroundColor: "#fff",
-              boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
+              boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
               zIndex: 1,
             }}
           >
@@ -127,7 +126,7 @@ const TitleDropdown: React.FC<TitleDropdownProps> = ({
                 key={title}
                 onClick={() => handleTitleSelect(title)}
                 css={{
-                  padding: "6px 12px",
+                  padding: "12px 12px",
                   cursor: "pointer",
                   borderBottom: "1px solid #aaa",
                 }}
