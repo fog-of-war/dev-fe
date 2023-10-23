@@ -12,6 +12,7 @@ import { QUERY_KEY } from "../react-query/queryKey";
 import { getCurrentUser } from "../api/auth";
 import { LINK } from "../constants/links";
 import { setUpProfile } from "../api/user";
+import TitleDropdown from "../components/EditProfile/TitleDropdown";
 
 export interface EditProfileData {
   user_nickname: string;
@@ -19,6 +20,16 @@ export interface EditProfileData {
 }
 
 const ProfileEditPage = () => {
+  //타이틀
+  const [selectedTitle, setSelectedTitle] = useState<string>(""); // 선택된 칭호 상태
+
+  const titles: string[] = ["칭호1", "칭호2", "칭호3"]; // 칭호 옵션 목록
+
+  const handleTitleChange = (newTitle: string) => {
+    setSelectedTitle(newTitle);
+  };
+
+
   const { data: userData } = useAuthQuery();
 
   const [editProfileData, setEditProfileData] = useState<EditProfileData>({
@@ -120,6 +131,12 @@ const ProfileEditPage = () => {
           />
         </>
       )}
+
+    <TitleDropdown
+                titles={titles}
+                selectedTitle={selectedTitle}
+                onSelectTitle={handleTitleChange}
+              />
     </div>
   );
 };
