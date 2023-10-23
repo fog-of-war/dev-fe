@@ -1,33 +1,45 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+import React, { useState } from "react";
 import colors from "../../constants/colors";
-import { css } from "@emotion/react";
 
 interface TitleDropdownProps {
   titles: string[];
   selectedTitle: string;
   onSelectTitle: (newTitle: string) => void;
-  defaultTitle: string; 
 }
 
 const TitleDropdown: React.FC<TitleDropdownProps> = ({
   titles,
   selectedTitle,
   onSelectTitle,
-  defaultTitle, 
 }) => {
-  const handleTitleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const newTitle = event.target.value;
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const handleTitleClick = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleTitleSelect = (newTitle: string) => {
     onSelectTitle(newTitle);
+    setIsDropdownOpen(false);
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
   };
 
   return (
     <div
       css={{
         width: "100%",
-        display :"flex",
-      flexDirection:"column",
-        gap: "10px"
+        display: "flex",
+        flexDirection: "column",
+        gap: "10px",
+        position: "relative",
       }}
     >
       <span
@@ -35,47 +47,96 @@ const TitleDropdown: React.FC<TitleDropdownProps> = ({
           fontSize: "16px",
           fontWeight: "bold",
           color: colors.accent,
-          display : "block"
+          display: "block",
         }}
       >
         대표 칭호
       </span>
-      <div 
+      <div
         css={{
-            display: "flex",
-            gap: "10px",
-            alignItems: "center",
-            width: "100%",
-            marginBottom: "6px",
-            // borderBottom: isFocused
-            //   ? `2px solid ${colors.primary}`
-            //   : `1px solid ${colors.primary}`,
-            borderColor: "#aaa",
-            padding: "6px 0",
-          }}>
-      <select
-        id="titleSelect"
-        value={selectedTitle}
-        onChange={handleTitleChange}
-        css={{
+          position: "relative",
           width: "100%",
-          fontSize: "20px",
-          color: colors.darkGrey,
-          border: "none",
-          outline: "none",
           marginBottom: "6px",
-          borderBottom: "1px solid #53AF7B",
           borderColor: "#aaa",
-          padding: "6px 0"
+          padding: "6px 0",
         }}
       >
-        {/* <option value="">{defaultTitle}</option> */}
-        {titles.map((title) => (
-          <option key={title} value={title}>
-            {title}
-          </option>
-        ))}
-      </select>
+        <div
+          onClick={handleTitleClick}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          css={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            cursor: "pointer",
+            borderBottom: "1px solid #53AF7B",
+            backgroundColor: isHovered ? "#f0f0f0" : "transparent",
+          }}
+        >
+          <div
+            css={{
+              fontSize: "20px",
+              color: colors.darkGrey,
+            }}
+          >
+            {selectedTitle}
+          </div>
+          <div
+            css={{
+              width: "20px",
+              height: "20px",
+              border: "1px solid #53AF7B",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              transform: isDropdownOpen ? "rotate(180deg)" : "none",
+              transition: "transform 0.3s ease",
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </div>
+        {isDropdownOpen && (
+          <ul
+            css={{
+              position: "absolute",
+              top: "100%",
+              left: 0,
+              width: "100%",
+              listStyle: "none",
+              backgroundColor: "#fff",
+              boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
+              zIndex: 1,
+            }}
+          >
+            {titles.map((title) => (
+              <li
+                key={title}
+                onClick={() => handleTitleSelect(title)}
+                css={{
+                  padding: "6px 12px",
+                  cursor: "pointer",
+                  borderBottom: "1px solid #aaa",
+                }}
+              >
+                {title}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );

@@ -24,10 +24,10 @@ const ProfileEditPage = () => {
   console.log("userData:", userData);
 
   /** 칭호변경용 state */
-  const [selectedTitle, setSelectedTitle] = useState<string>(""); // 선택된 칭호 상태
   const userBadges = userData?.user_badges || [];
   const titles = userBadges.map((badge) => badge.badge_name);
   const defaultTitle = userData?.user_selected_badge.badge_name || "";
+  const [selectedTitle, setSelectedTitle] = useState<string>(defaultTitle); // 선택된 칭호 상태
   const handleTitleChange = (newTitle: string) => {
     setSelectedTitle(newTitle);
   };
@@ -133,12 +133,10 @@ const ProfileEditPage = () => {
               titles={titles}
               selectedTitle={selectedTitle}
               onSelectTitle={handleTitleChange} 
-              defaultTitle={defaultTitle}             
+              // defaultTitle={defaultTitle}             
          />
         </>
       )}
-
-
     </div>
   );
 };
