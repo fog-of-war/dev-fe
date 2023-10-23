@@ -34,40 +34,42 @@ const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
 
   return (
     <PlaceItemContainer {...props}>
-      <TitleContainer onClick={() => handleMapMoveSelectedPlace(place)}>
-        <TitleWrapper>
-          <h4>{place_name}</h4>
-          <B2 css={{ color: colors.lightGrey }}>{category_group_name}</B2>
-        </TitleWrapper>
-        <B2
-          css={{
-            color: colors.lightGrey,
-            cursor: "pointer",
-            textAlign: "center",
-            textDecoration: "underline",
-          }}
-          onClick={(event) => {
-            event.stopPropagation();
-            navigateModal.onOpen({
-              kakaoUrl: place_url,
-              naverUrl: naver_place_url,
-            });
-          }}
-        >
-          지도 자세히 보기
-        </B2>
-      </TitleContainer>
-      <RatingWrapper>
-        <img src="/images/search/starIcon.png" alt="star" height={18} />
-        <B1>
-          {place_star_rating || 0} ({place_posts?.length || 0})
-        </B1>
-      </RatingWrapper>
-      <LocationWrapper>
-        <B1>{(+distance / 1000).toFixed(1)}km </B1>
-        <span css={{ color: colors.paleGrey }}>|</span>
-        <B1> {road_address_name}</B1>
-      </LocationWrapper>
+      <PlaceInfoWrapper onClick={() => handleMapMoveSelectedPlace(place)}>
+        <TitleContainer>
+          <TitleWrapper>
+            <h4>{place_name}</h4>
+            <B2 css={{ color: colors.lightGrey }}>{category_group_name}</B2>
+          </TitleWrapper>
+          <B2
+            css={{
+              color: colors.lightGrey,
+              cursor: "pointer",
+              textAlign: "center",
+              textDecoration: "underline",
+            }}
+            onClick={(event) => {
+              event.stopPropagation();
+              navigateModal.onOpen({
+                kakaoUrl: place_url,
+                naverUrl: naver_place_url,
+              });
+            }}
+          >
+            지도 자세히 보기
+          </B2>
+        </TitleContainer>
+        <RatingWrapper>
+          <img src="/images/search/starIcon.png" alt="star" height={18} />
+          <B1>
+            {place_star_rating || 0} ({place_posts?.length || 0})
+          </B1>
+        </RatingWrapper>
+        <LocationWrapper>
+          <B1>{(+distance / 1000).toFixed(1)}km </B1>
+          <span css={{ color: colors.paleGrey }}>|</span>
+          <B1> {road_address_name}</B1>
+        </LocationWrapper>
+      </PlaceInfoWrapper>
       <PlaceImages
         images={place_posts.map((post) => post.post_image_url)}
         placeId={place_posts.map((post) => post.post_place_id)}
@@ -88,6 +90,10 @@ const PlaceItemContainer = styled.li`
   padding: 15px;
   gap: 5px;
   box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.3);
+`;
+
+const PlaceInfoWrapper = styled.div`
+  cursor: pointer;
 `;
 
 const TitleContainer = styled.div`

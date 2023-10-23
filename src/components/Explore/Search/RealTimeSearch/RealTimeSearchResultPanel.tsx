@@ -9,7 +9,7 @@ import useCurrentLocation from "../../../../hooks/map/useCurrentLocation";
 
 import RealTimeSearchItem from "./RealTimeSearchItem";
 import useDeboucing from "../../../../hooks/useDeboucing";
-import styled from "@emotion/styled";
+import NoSearchData from "../NoSearchData";
 
 interface RealtimeSearchResultPanelProps {
   searchQuery: string;
@@ -51,19 +51,9 @@ const RealtimeSearchResultPanel = ({
       {realTimeSearchResult.map((place: Place) => (
         <RealTimeSearchItem key={place.id} place={place} />
       ))}
-      {realTimeSearchResult.length === 0 && (
-        <NoSearchData>검색결과가 없습니다.</NoSearchData>
-      )}
+      {realTimeSearchResult.length === 0 && <NoSearchData />}
     </SearchList>
   );
 };
 
 export default RealtimeSearchResultPanel;
-
-const NoSearchData = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-`;

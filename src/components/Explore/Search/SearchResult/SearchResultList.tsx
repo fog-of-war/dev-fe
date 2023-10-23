@@ -6,6 +6,7 @@ import useSearchPlace from "../hooks/useSearchPlace";
 
 import PlaceItem from "../../../Place/PlaceItem";
 import Map from "../../Map/GoogleMap";
+import NoSearchData from "../NoSearchData";
 
 const SearchResultList = ({ searchQuery }: { searchQuery: string }) => {
   const { isMapView } = useContext(MapContext);
@@ -19,6 +20,7 @@ const SearchResultList = ({ searchQuery }: { searchQuery: string }) => {
           {searchResult?.map((place: Place) => (
             <PlaceItem key={place.id} place={place} displayAmount={3} />
           ))}
+          {searchResult?.length === 0 && <NoSearchData />}
         </PlaceList>
       )}
     </>
