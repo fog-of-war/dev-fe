@@ -4,6 +4,7 @@ import colors from "../../constants/colors";
 import { EditProfileData } from "../../pages/ProfileEditPage";
 
 interface TitleDropdownProps {
+  userBadges :any[];
   titles: string[];
   selectedTitle: string;
   onSelectTitle: (newTitle: string) => void;
@@ -11,6 +12,7 @@ interface TitleDropdownProps {
 }
 
 const TitleDropdown: React.FC<TitleDropdownProps> = ({
+  userBadges,
   titles,
   selectedTitle,
   onSelectTitle,
@@ -25,9 +27,10 @@ const TitleDropdown: React.FC<TitleDropdownProps> = ({
   const handleTitleSelect = (newTitle: string) => {
     onSelectTitle(newTitle);
     setIsDropdownOpen(false);
+    const result = userBadges.filter(item => item.badge_name === newTitle)[0]
     setEditProfileData((prevData) => ({
       ...prevData,
-      user_selected_badge: newTitle, 
+      user_selected_badge: result, 
     }));
   };
 

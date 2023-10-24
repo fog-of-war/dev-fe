@@ -9,7 +9,10 @@ export const setUpProfile = async (data: ProfileSetupData) => {
 
 /** 프로필 수정페이지에서 닉네임, 프로필사진, 대표 칭호 설정 */
 export const editProfile = async (data: UserEditdata) => {
-  axiosBase.patch("v1/users/me", data);
+  const reqData= {...data, user_selected_badge_id : data.user_selected_badge.badge_id};
+  delete reqData.user_selected_badge;
+  console.log("Data" ,)
+  axiosBase.patch("v1/users/me", reqData);
 };
 
 export const getUserData = async () => {
