@@ -12,14 +12,19 @@ interface TitleDropdownProps {
 }
 
 const TitleDropdown: React.FC<TitleDropdownProps> = ({
+  // 실제 데이터 조작 props
   userBadges,
+  setEditProfileData,
+  // UI 조작 props
   titles,
   selectedTitle,
-  onSelectTitle,
-  setEditProfileData
+  onSelectTitle
 }) => {
+
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+
   const handleTitleClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -27,7 +32,9 @@ const TitleDropdown: React.FC<TitleDropdownProps> = ({
   const handleTitleSelect = (newTitle: string) => {
     onSelectTitle(newTitle);
     setIsDropdownOpen(false);
+    // userBadges 에서 newTitle의 전체 객체를 찾아 전달
     const result = userBadges.filter(item => item.badge_name === newTitle)[0]
+    // setEditProfileData 로 상위 state 에 변경된 상태 전달
     setEditProfileData((prevData) => ({
       ...prevData,
       user_selected_badge: result, 
@@ -52,6 +59,7 @@ const TitleDropdown: React.FC<TitleDropdownProps> = ({
         position: "relative",
       }}
     >
+      {/* lable */}
       <span
         css={{
           fontSize: "16px",
@@ -59,16 +67,20 @@ const TitleDropdown: React.FC<TitleDropdownProps> = ({
           color: colors.accent,
           display: "block",
         }}
-      >
+      > 
         대표 칭호
       </span>
+      {/*  */}
+      {/* selector wrapper*/}
       <div
         css={{
           position: "relative",
           width: "100%",
           borderColor: "#aaa",
+
         }}
       >
+        {/* selector 내 현재 선택한 칭호가 보이는 div */}
         <div
           onClick={handleTitleClick}
           onMouseEnter={handleMouseEnter}
@@ -91,6 +103,7 @@ const TitleDropdown: React.FC<TitleDropdownProps> = ({
           >
             {selectedTitle}
           </div>
+          {/* selector 내부 ∨*/}
           <div
             css={{
               width: "20px",
@@ -99,7 +112,7 @@ const TitleDropdown: React.FC<TitleDropdownProps> = ({
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              transform: isDropdownOpen ? "rotate(180deg)" : "none",
+              transform: isDropdownOpen ? "rotate(180deg)" : "none", // 드롭다운이 열리면 ∧ 로 회전
               transition: "transform 0.3s ease",
             }}
           >
@@ -118,6 +131,7 @@ const TitleDropdown: React.FC<TitleDropdownProps> = ({
             </svg>
           </div>
         </div>
+        {/* selector 가 클릭되었을때 나타나는 dropdown*/}
         {isDropdownOpen && (
           <ul
             css={{
@@ -139,6 +153,9 @@ const TitleDropdown: React.FC<TitleDropdownProps> = ({
                   padding: "12px 12px",
                   cursor: "pointer",
                   borderBottom: "1px solid #aaa",
+                  "&:hover": {
+                    backgroundColor: colors.accent, 
+                  },
                 }}
               >
                 {title}

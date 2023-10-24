@@ -22,30 +22,27 @@ export interface EditProfileData {
 
 const ProfileEditPage = () => {
   const { data: userData } = useAuthQuery();
-  console.log("userData:", userData);
 
-  /** 칭호변경용 state */
+  /** 칭호변경 UI 용 state */
   const userBadges = userData?.user_badges || [];
+
   const titles = userBadges.map((badge) => badge.badge_name);
   const defaultTitle = userData?.user_selected_badge.badge_name || "";
-  const [selectedTitle, setSelectedTitle] = useState<string>(defaultTitle); // 선택된 칭호 상태
+  const [selectedTitle, setSelectedTitle] = useState<string>(defaultTitle);
   const handleTitleChange = (newTitle: string) => {
     setSelectedTitle(newTitle);
   };
-
   /**-----------------*/
+
   const [editProfileData, setEditProfileData] = useState<EditProfileData>({
     user_nickname: userData?.user_nickname || "",
     user_image_url: userData?.user_image_url || "",
     user_selected_badge:userData?.user_selected_badge|| ""
   });
-
+  
   const navigate = useNavigate();
-
   const queryClient = useQueryClient();
-
   const nickNameInputRef = useRef<HTMLInputElement>(null);
-
   const validateNickName = (nickName: string) => {
     if (nickName.trim().length === 0) {
       toast.error("닉네임을 입력해주세요.");
@@ -66,7 +63,6 @@ const ProfileEditPage = () => {
     },
     {
       onSuccess: async (data) => {
-        // 현재 유저 데이터를 새로운 데이터로 옵티미스틱 업데이트
         const currentUser = await getCurrentUser();
         const newCurrentUserData = {
           ...currentUser,
@@ -74,9 +70,7 @@ const ProfileEditPage = () => {
           user_image_url: editProfileData.user_image_url,
           user_selected_badge:editProfileData.user_selected_badge
         };
-        console.log("newCurrentUserData",newCurrentUserData)
         queryClient.setQueryData(QUERY_KEY.CURRENT_USER, newCurrentUserData);
-
         // 새로운 유저 데이터를 쿼리 캐시에 업데이트
         queryClient.invalidateQueries(QUERY_KEY.CURRENT_USER);
         toast.success("수정이 완료되었습니다.");
@@ -128,18 +122,19 @@ const ProfileEditPage = () => {
               alignItems: "center",
             }}
           />
-
           <EditProfileNickName
             profileData={editProfileData}
             setEditProfileData={setEditProfileData}
             inputRef={nickNameInputRef}
           />
           <TitleDropdown
+              // 실제 데이터 조작 props
+              userBadges={userBadges}
+              setEditProfileData={setEditProfileData} 
+              // UI 조작 props
               titles={titles}
               selectedTitle={selectedTitle}
-              onSelectTitle={handleTitleChange} 
-              setEditProfileData={setEditProfileData}
-              // defaultTitle={defaultTitle}             
+              onSelectTitle={handleTitleChange}  
          />
         </>
       )}

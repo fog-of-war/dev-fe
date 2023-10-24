@@ -11,7 +11,7 @@ export const setUpProfile = async (data: ProfileSetupData) => {
 export const editProfile = async (data: UserEditdata) => {
   const reqData= {...data, user_selected_badge_id : data.user_selected_badge.badge_id};
   delete reqData.user_selected_badge;
-  console.log("Data" ,)
+  // 백엔드에 필요한 정보만 추출하여 전달 (user_selected_badge_id)
   axiosBase.patch("v1/users/me", reqData);
 };
 
