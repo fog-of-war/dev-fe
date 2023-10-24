@@ -1,7 +1,14 @@
 import { ProfileSetupData } from "../components/ProfileSetup/ProfileSetupComponent";
+import { UserEditdata } from "../types/types";
 import { axiosBase } from "./axios";
 
+/** 처음 가입시 닉네임, 프로필사진 설정 */
 export const setUpProfile = async (data: ProfileSetupData) => {
+  axiosBase.patch("v1/users/me", data);
+};
+
+/** 프로필 수정페이지에서 닉네임, 프로필사진, 대표 칭호 설정 */
+export const editProfile = async (data: UserEditdata) => {
   axiosBase.patch("v1/users/me", data);
 };
 

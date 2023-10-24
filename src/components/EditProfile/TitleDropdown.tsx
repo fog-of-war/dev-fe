@@ -1,17 +1,20 @@
 /** @jsxImportSource @emotion/react */
 import React, { useState } from "react";
 import colors from "../../constants/colors";
+import { EditProfileData } from "../../pages/ProfileEditPage";
 
 interface TitleDropdownProps {
   titles: string[];
   selectedTitle: string;
   onSelectTitle: (newTitle: string) => void;
+  setEditProfileData:React.Dispatch<React.SetStateAction<EditProfileData>>;
 }
 
 const TitleDropdown: React.FC<TitleDropdownProps> = ({
   titles,
   selectedTitle,
   onSelectTitle,
+  setEditProfileData
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -22,6 +25,10 @@ const TitleDropdown: React.FC<TitleDropdownProps> = ({
   const handleTitleSelect = (newTitle: string) => {
     onSelectTitle(newTitle);
     setIsDropdownOpen(false);
+    setEditProfileData((prevData) => ({
+      ...prevData,
+      user_selected_badge: newTitle, 
+    }));
   };
 
   const handleMouseEnter = () => {

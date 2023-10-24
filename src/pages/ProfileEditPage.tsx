@@ -11,12 +11,13 @@ import { useMutation, useQueryClient } from "react-query";
 import { QUERY_KEY } from "../react-query/queryKey";
 import { getCurrentUser } from "../api/auth";
 import { LINK } from "../constants/links";
-import { setUpProfile } from "../api/user";
+import { editProfile, setUpProfile } from "../api/user";
 import TitleDropdown from "../components/EditProfile/TitleDropdown";
 
 export interface EditProfileData {
   user_nickname: string;
   user_image_url: string;
+  user_selected_badge:any;
 }
 
 const ProfileEditPage = () => {
@@ -31,10 +32,12 @@ const ProfileEditPage = () => {
   const handleTitleChange = (newTitle: string) => {
     setSelectedTitle(newTitle);
   };
+
   /**-----------------*/
   const [editProfileData, setEditProfileData] = useState<EditProfileData>({
     user_nickname: userData?.user_nickname || "",
     user_image_url: userData?.user_image_url || "",
+    user_selected_badge:userData?.user_selected_badge|| ""
   });
 
   const navigate = useNavigate();
@@ -59,7 +62,7 @@ const ProfileEditPage = () => {
 
   const mutation = useMutation(
     async (editProfileData: EditProfileData) => {
-      await setUpProfile(editProfileData);
+      await editProfile(editProfileData);
     },
     {
       onSuccess: async (data) => {
@@ -69,7 +72,9 @@ const ProfileEditPage = () => {
           ...currentUser,
           user_nickname: editProfileData.user_nickname,
           user_image_url: editProfileData.user_image_url,
+          user_selected_badge:editProfileData.user_selected_badge
         };
+        console.log("newCurrentUserData",newCurrentUserData)
         queryClient.setQueryData(QUERY_KEY.CURRENT_USER, newCurrentUserData);
 
         // 새로운 유저 데이터를 쿼리 캐시에 업데이트
@@ -133,6 +138,7 @@ const ProfileEditPage = () => {
               titles={titles}
               selectedTitle={selectedTitle}
               onSelectTitle={handleTitleChange} 
+              setEditProfileData={setEditProfileData}
               // defaultTitle={defaultTitle}             
          />
         </>
