@@ -11,27 +11,38 @@ import { useMutation, useQueryClient } from "react-query";
 import { QUERY_KEY } from "../react-query/queryKey";
 import { getCurrentUser } from "../api/auth";
 import { LINK } from "../constants/links";
-import { setUpProfile } from "../api/user";
+import { editProfile, setUpProfile } from "../api/user";
+import TitleDropdown from "../components/EditProfile/TitleDropdown";
 
 export interface EditProfileData {
   user_nickname: string;
   user_image_url: string;
+  user_selected_badge:any;
 }
 
 const ProfileEditPage = () => {
   const { data: userData } = useAuthQuery();
 
+  /** 칭호변경 UI 용 state */
+  const userBadges = userData?.user_badges || [];
+
+  const titles = userBadges.map((badge) => badge.badge_name);
+  const defaultTitle = userData?.user_selected_badge.badge_name || "";
+  const [selectedTitle, setSelectedTitle] = useState<string>(defaultTitle);
+  const handleTitleChange = (newTitle: string) => {
+    setSelectedTitle(newTitle);
+  };
+  /**-----------------*/
+
   const [editProfileData, setEditProfileData] = useState<EditProfileData>({
     user_nickname: userData?.user_nickname || "",
     user_image_url: userData?.user_image_url || "",
+    user_selected_badge:userData?.user_selected_badge|| ""
   });
-
+  
   const navigate = useNavigate();
-
   const queryClient = useQueryClient();
-
   const nickNameInputRef = useRef<HTMLInputElement>(null);
-
   const validateNickName = (nickName: string) => {
     if (nickName.trim().length === 0) {
       toast.error("닉네임을 입력해주세요.");
@@ -48,19 +59,18 @@ const ProfileEditPage = () => {
 
   const mutation = useMutation(
     async (editProfileData: EditProfileData) => {
-      await setUpProfile(editProfileData);
+      await editProfile(editProfileData);
     },
     {
       onSuccess: async (data) => {
-        // 현재 유저 데이터를 새로운 데이터로 옵티미스틱 업데이트
         const currentUser = await getCurrentUser();
         const newCurrentUserData = {
           ...currentUser,
           user_nickname: editProfileData.user_nickname,
           user_image_url: editProfileData.user_image_url,
+          user_selected_badge:editProfileData.user_selected_badge
         };
         queryClient.setQueryData(QUERY_KEY.CURRENT_USER, newCurrentUserData);
-
         // 새로운 유저 데이터를 쿼리 캐시에 업데이트
         queryClient.invalidateQueries(QUERY_KEY.CURRENT_USER);
         toast.success("수정이 완료되었습니다.");
@@ -112,12 +122,20 @@ const ProfileEditPage = () => {
               alignItems: "center",
             }}
           />
-
           <EditProfileNickName
             profileData={editProfileData}
             setEditProfileData={setEditProfileData}
             inputRef={nickNameInputRef}
           />
+          <TitleDropdown
+              // 실제 데이터 조작 props
+              userBadges={userBadges}
+              setEditProfileData={setEditProfileData} 
+              // UI 조작 props
+              titles={titles}
+              selectedTitle={selectedTitle}
+              onSelectTitle={handleTitleChange}  
+         />
         </>
       )}
     </div>
