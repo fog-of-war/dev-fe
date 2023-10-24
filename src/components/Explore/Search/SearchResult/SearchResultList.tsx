@@ -7,10 +7,26 @@ import useSearchPlace from "../hooks/useSearchPlace";
 import PlaceItem from "../../../Place/PlaceItem";
 import Map from "../../Map/GoogleMap";
 import NoSearchData from "../NoSearchData";
+import { CurrentLocationType } from "../../../../store/currentLocationAtom";
 
-const SearchResultList = ({ searchQuery }: { searchQuery: string }) => {
+interface SearchResultListProps {
+  searchQuery: string;
+  currentLocation: CurrentLocationType;
+}
+
+const SearchResultList = ({
+  searchQuery,
+  currentLocation,
+}: SearchResultListProps) => {
   const { isMapView } = useContext(MapContext);
-  const { searchResult } = useSearchPlace(searchQuery);
+
+  const { searchResult } = useSearchPlace({
+    query: searchQuery,
+    coordinates: {
+      x: currentLocation.lng,
+      y: currentLocation.lat,
+    },
+  });
 
   return (
     <>
