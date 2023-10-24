@@ -12,7 +12,7 @@ const UserProfile = () => {
     <UserProfileLayout>
       <ProfileCard
         username={userData?.user_nickname}
-        profileText={userData?.user_badges[0]?.badge_name}
+        profileText={userData?.user_selected_badge.badge_name}
         profileImage={userData?.user_image_url}
         level={userData?.user_level}
         badgeIcon="./images/badgeIcon.svg"
