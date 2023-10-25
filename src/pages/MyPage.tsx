@@ -6,7 +6,6 @@ import PageHeader from "../components/UI/PageHeader";
 import ProfileActionButton from "../components/EditProfile/ProfileActionButton";
 import { useNavigate } from "react-router-dom";
 import { deleteUser } from "../api/user";
-import { logout } from "../api/auth";
 import { LINK } from "../constants/links";
 import { clearAllLocalStorage } from "../utils/localStorage";
 import useAuth from "../hooks/useAuth";
