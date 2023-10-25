@@ -7,14 +7,22 @@ import { timeSince } from "../../../utils/calculateDate";
 import useAuth from "../../../hooks/useAuth";
 import ButtonModal from "./ButtonModal";
 import EditDeleteButton from "./EditDeleteButton";
+import CommentTextArea from "./CommentTextArea";
 
 interface CommentItemProps {
   comment_author_image_url: PostComment["comment_author"]["user_image_url"];
   comment_author_nickname: PostComment["comment_author"]["user_nickname"];
   comment_text: PostComment["comment_text"];
   comment_date: PostComment["comment_created_at"];
+  comment_updated_at?: PostComment["comment_updated_at"];
   comment_author_id: PostComment["comment_author_id"];
   comment_id: PostComment["comment_id"];
+  editCommentId: number | null;
+  isEditing: boolean;
+  editCommentText: string;
+  handleEditClick: (commentId: number, initialText: string) => void;
+  handleEditChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  handleSaveEdit: (commentId: number) => void;
   handleDeleteClick: (commentId: number) => void;
 }
 
@@ -23,9 +31,16 @@ const CommentItem = ({
   comment_author_nickname,
   comment_text,
   comment_date,
+  comment_updated_at,
   comment_author_id,
   handleDeleteClick,
   comment_id,
+  editCommentId,
+  isEditing,
+  editCommentText,
+  handleEditClick,
+  handleEditChange,
+  handleSaveEdit,
 }: CommentItemProps) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
@@ -57,7 +72,12 @@ const CommentItem = ({
           {isModalVisible && (
             <ButtonModal>
               <EditDeleteButton
+                isEditing={isEditing}
                 commentId={comment_id}
+                commentText={comment_text}
+                handleEditClick={() =>
+                  handleEditClick(comment_id, comment_text)
+                }
                 handleDeleteClick={() => handleDeleteClick(comment_id)}
               />
             </ButtonModal>
@@ -65,8 +85,25 @@ const CommentItem = ({
         </ButtonContainer>
       </CommentAuthorInfo>
       <CommentContent>
-        <CommentText>{comment_text}</CommentText>
-        <CommentDate>{timeSince(comment_date)}</CommentDate>
+        {isEditing && editCommentId === comment_id ? (
+          <CommentTextArea
+            type="edit"
+            postId={0}
+            onNewComment={() => null}
+            initialText={editCommentText}
+            handleEditChange={handleEditChange}
+            handleEditSubmit={() => handleSaveEdit(comment_id)}
+          />
+        ) : (
+          <>
+            <CommentText>{comment_text}</CommentText>
+            <CommentDate>
+              {comment_updated_at && comment_updated_at !== comment_date
+                ? `${timeSince(comment_updated_at)} 수정됨`
+                : timeSince(comment_date)}
+            </CommentDate>
+          </>
+        )}
       </CommentContent>
     </CommentItemLayout>
   );

@@ -6,11 +6,22 @@ import { createComment } from "../../../api/comment";
 import Button from "../../UI/Button";
 
 interface CommentTextAreaProps {
-  postId: number;
-  onNewComment: (newComment: any) => void;
+  initialText?: string;
+  handleEditChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  handleEditSubmit?: () => void;
+  postId: number | 0;
+  onNewComment: (newComment: any) => void | null;
+  type: "default" | "edit";
 }
 
-const CommentTextArea = ({ postId, onNewComment }: CommentTextAreaProps) => {
+const CommentTextArea = ({
+  initialText,
+  postId,
+  onNewComment,
+  handleEditChange,
+  handleEditSubmit,
+  type,
+}: CommentTextAreaProps) => {
   const [comment, setComment] = useState<string>("");
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -31,8 +42,12 @@ const CommentTextArea = ({ postId, onNewComment }: CommentTextAreaProps) => {
   return (
     <TextAreaContainer>
       <StyledTextArea
-        value={comment}
-        onChange={handleCommentChange}
+        value={type === "edit" ? initialText : comment}
+        onChange={
+          type === "edit" && handleEditChange
+            ? handleEditChange
+            : handleCommentChange
+        }
         placeholder="댓글을 입력해주세요"
         maxLength={100}
       />
@@ -40,10 +55,14 @@ const CommentTextArea = ({ postId, onNewComment }: CommentTextAreaProps) => {
         <Button
           size="small"
           variant="primary"
-          disabled={comment === ""}
-          onClick={handleCommentSubmit}
+          disabled={type === "edit" ? initialText === comment : comment === ""}
+          onClick={
+            type === "edit" && handleEditSubmit
+              ? handleEditSubmit
+              : handleCommentSubmit
+          }
         >
-          작성
+          {type === "edit" ? "수정" : "작성"}
         </Button>
       </SubmitButtonBox>
     </TextAreaContainer>

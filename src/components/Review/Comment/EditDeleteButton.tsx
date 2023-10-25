@@ -4,13 +4,19 @@ import colors from "../../../constants/colors";
 import Button from "../../UI/Button";
 
 interface EditDeleteButtonProps {
+  isEditing: boolean;
   commentId: number;
+  commentText: string;
   handleDeleteClick: (commentId: number) => void;
+  handleEditClick: (commentId: number, commentText: string) => void;
 }
 
 const EditDeleteButton = ({
+  isEditing,
+  handleEditClick,
   handleDeleteClick,
   commentId,
+  commentText,
 }: EditDeleteButtonProps) => {
   return (
     <>
@@ -23,8 +29,9 @@ const EditDeleteButton = ({
             borderRadius: "0px",
             color: colors.secondary,
           }}
+          onClick={() => handleEditClick(commentId, commentText)}
         >
-          수정
+          {isEditing ? "완료" : "수정"}
         </Button>
       </ButtonBox>
       <ButtonBox>
