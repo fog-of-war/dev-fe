@@ -42,7 +42,7 @@ const HeaderLayout = styled.div`
   height: 50px;
   align-items: center;
   position: fixed;
-  top: 0;
+  top: 45px;
   background-color: #ffffff;
   z-index: 1;
   padding: 0 20px;
