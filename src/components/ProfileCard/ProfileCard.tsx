@@ -1,7 +1,6 @@
 import colors from "../../constants/colors";
 import styled from "@emotion/styled";
 import { useNavigate, useLocation } from "react-router-dom";
-import DeleteProfileButton from "../EditProfile/DeleteProfileButton";
 
 interface ProfileCardProps {
   username?: string;
@@ -48,7 +47,6 @@ const ProfileCard = ({
         </ProfileBadgeContainer>
         <ProfileNicknameBox>{username}</ProfileNicknameBox>
       </ProfileInfoContainer>
-      {location.pathname === "/profile" && <DeleteProfileButton />}
     </ProfileCardWrapper>
   );
 };

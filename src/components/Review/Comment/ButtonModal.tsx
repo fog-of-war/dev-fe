@@ -25,6 +25,7 @@ const ModalLayout = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 
   button:hover {
     background-color: ${colors.pastel};
