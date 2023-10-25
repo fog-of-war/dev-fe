@@ -41,6 +41,7 @@ const PageHeaderLayout = styled.div`
   position: fixed;
   top: 0;
   background-color: #fff;
+  z-index: 2;
 `;
 
 const BackButtonWrapper = styled.div`
