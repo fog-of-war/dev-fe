@@ -2,13 +2,17 @@
 import styled from "@emotion/styled";
 import UserProfile from "../components/ProfileCard/UserProfile";
 import AdvPlaceList from "../components/AdventurePlace/AdvPlaceList";
+import PageHeader from "../components/UI/PageHeader";
 
 const MyPage = () => {
   return (
-    <MyPageLayout>
-      <UserProfile />
-      <AdvPlaceList />
-    </MyPageLayout>
+    <>
+      <PageHeader headerTitle="마이페이지" />
+      <MyPageLayout>
+        <UserProfile />
+        <AdvPlaceList />
+      </MyPageLayout>
+    </>
   );
 };
 
@@ -22,4 +26,5 @@ const MyPageLayout = styled.div`
   max-width: 420px;
   height: 100%;
   padding: 20px;
+  padding-top: 60px;
 `;
