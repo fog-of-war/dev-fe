@@ -106,7 +106,7 @@ const TitleContainer = styled.div`
 const TitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 70%;
+  width: 66%;
   line-height: 1.2;
   gap: 3px;
 
