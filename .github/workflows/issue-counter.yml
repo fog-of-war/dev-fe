@@ -2,7 +2,7 @@ name: Daily GitHub Issue Count
 
 on:
   schedule:
-    - cron: "50 18 * * *"
+    - cron: "* * * * *"
 
 jobs:
   build:
