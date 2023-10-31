@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import Notifications from "../components/Notifications/Notifications";
-import NotificationsHeader from "../components/Notifications/NotificationsHeader";
+import Header from "../components/UI/Header";
 
 const NotificationsPage = () => {
   return (
@@ -23,7 +23,7 @@ const NotificationsPage = () => {
         },
       }}
     >
-      <NotificationsHeader />
+      <Header title="알림" />
       <Notifications />
     </div>
   );
