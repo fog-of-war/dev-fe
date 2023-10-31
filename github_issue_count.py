@@ -1,15 +1,15 @@
 import os
 import requests
 import discord
-from discord.ext import tasks
+from discord.ext import commands
 
 # GitHub API 토큰 및 디스코드 봇 토큰 설정
 GITHUB_TOKEN = os.environ["GITHUB_TOKEN"]
 DISCORD_TOKEN = os.environ["DISCORD_TOKEN"]
+DISCORD_BOT_TOKEN = os.environ["DISCORD_BOT_TOKEN"]
 DISCORD_CHANNEL_ID = os.environ["DISCORD_CHANNEL_ID"]
 
-# 디스코드 클라이언트 생성
-client = discord.Client()
+client = discord.Client(intents=discord.Intents.default())
 
 # @tasks.loop(hours=24)  # 매일 오전 9시에 실행하도록 설정
 async def send_github_issue_count():
@@ -39,4 +39,4 @@ async def on_ready():
 
 # 봇 실행
 send_github_issue_count.start()
-client.run(DISCORD_TOKEN)
+client.run(DISCORD_BOT_TOKEN)
