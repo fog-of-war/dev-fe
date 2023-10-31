@@ -2,7 +2,7 @@ name: Print Hello Every Minute
 
 on:
   schedule:
-    - cron: '*/1 * * * *'
+    - cron: '*/10 * * * * *'
 
 jobs:
   print_hello:
