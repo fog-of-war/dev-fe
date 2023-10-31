@@ -1,10 +1,12 @@
+import os
 import requests
 import discord
 from discord.ext import tasks
 
 # GitHub API 토큰 및 디스코드 봇 토큰 설정
-GITHUB_TOKEN = "YOUR_GITHUB_TOKEN"
-DISCORD_TOKEN = "YOUR_DISCORD_TOKEN"
+GITHUB_TOKEN = os.environ["GITHUB_TOKEN"]
+DISCORD_TOKEN = os.environ["DISCORD_TOKEN"]
+DISCORD_CHANNEL_ID = os.environ["DISCORD_CHANNEL_ID"]
 
 # 디스코드 클라이언트 생성
 client = discord.Client()
@@ -28,7 +30,7 @@ async def send_github_issue_count():
                 assignee_count[assignee] = 1
 
         # 디스코드로 보내기
-        channel = client.get_channel(YOUR_DISCORD_CHANNEL_ID)  # 디스코드 채널 ID 설정
+        channel = client.get_channel(int(DISCORD_CHANNEL_ID))  # 디스코드 채널 ID를 정수로 변환
         for assignee, count in assignee_count.items():
             await channel.send(f"{assignee}: {count}개의 이슈")
 
