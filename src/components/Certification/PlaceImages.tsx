@@ -365,37 +365,39 @@ const PlaceImages = ({ images, placeId, onClick }: PlaceImagesProps) => {
         <div
           css={{
             position: "relative",
-            paddingTop: "50%",
+            paddingTop: "30%",
             borderRadius: 10,
             overflow: "hidden",
-            background: "linear-gradient(to bottom, #c3c3c3, #fff)",
+            background: colors.pastel,
           }}
         >
           <img
-            src="/images/certificationModal/explorerIcon.png"
-            alt="탐험아이콘"
+            src="/images/certificationModal/compass.png"
+            alt="나침판 아이콘"
             css={{
               position: "absolute",
-              width: "70%",
-              height: "70%",
-              inset: "15%",
+              width: 70,
+              height: 70,
+              inset: "40% 50%",
+              transform: "translate(-50%, -50%)",
               objectFit: "contain",
             }}
           />
+          <h3
+            css={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "#6C7E75",
+              whiteSpace: "nowrap",
+              marginBottom: 30,
+            }}
+          >
+            이 장소의 첫번째 탐험자가 되어보세요!
+          </h3>
         </div>
-        <h3
-          css={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            color: colors.primary,
-            whiteSpace: "nowrap",
-          }}
-        >
-          이 장소의 첫번째 탐험자가 되어 보세요!
-        </h3>
       </div>
     );
   }
