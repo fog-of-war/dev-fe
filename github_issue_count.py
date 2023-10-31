@@ -17,8 +17,7 @@ async def send_github_issue_count():
     headers = {
         "Authorization": f"token {GITHUB_TOKEN}"
     }
-    response = requests.get("https://api.github.com/repos/OWNER/REPO/issues", headers=headers)
-
+    response = requests.get("https://api.github.com/repos/fog-of-war/dev-fe/issues", headers=headers)
     if response.status_code == 200:
         issues = response.json()
         assignee_count = {}
