@@ -1,10 +1,14 @@
 /** @jsxImportSource @emotion/react */
 
-import { useNavigate } from "react-router-dom";
+import BackButton from "./BackButton";
 import Title from "../Title";
-import BackButton from "../UI/BackButton";
+import { useNavigate } from "react-router-dom";
 
-const NotificationsHeader = () => {
+interface HeaderProps {
+  title: string;
+}
+
+const Header = ({ title }: HeaderProps) => {
   const navigate = useNavigate();
 
   // 뒤로가기 버튼 클릭 시, 이전 페이지로 이동
@@ -39,7 +43,7 @@ const NotificationsHeader = () => {
         <BackButton onClick={handleBackButtonClick} />
       </div>
       <div>
-        <Title text="알림" />
+        <Title text={title} />
       </div>
       <div
         css={{
@@ -50,4 +54,4 @@ const NotificationsHeader = () => {
   );
 };
 
-export default NotificationsHeader;
+export default Header;
