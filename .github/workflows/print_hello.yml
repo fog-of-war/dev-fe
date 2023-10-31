@@ -1,0 +1,12 @@
+name: Print Hello Every Minute
+
+on:
+  schedule:
+    - cron: '*/1 * * * *'
+
+jobs:
+  print_hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Hello
+        run: echo "안녕"
