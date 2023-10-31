@@ -9,6 +9,7 @@ import useRecentSearch from "../../../../hooks/search/useRecentSearch";
 
 import RecentSearchItem from "./RecentSearchItem";
 import B2 from "../../../UI/B2";
+import NoSearchData from "../NoSearchData";
 
 const RecentSearchesPanel = () => {
   const { recentSearchHistory } = useRecentSearch();
@@ -29,6 +30,9 @@ const RecentSearchesPanel = () => {
         {recentSearchHistory.map((recentSearch: RecentSearch) => (
           <RecentSearchItem key={recentSearch.id} recentSearch={recentSearch} />
         ))}
+        {recentSearchHistory.length === 0 && (
+          <NoSearchData>최근 검색한 기록이 없습니다.</NoSearchData>
+        )}
       </SearchList>
     </>
   );
@@ -49,4 +53,5 @@ export const SearchList = styled.ul`
   border-top: 0.5px solid ${colors.paleGrey};
   overflow: auto;
   scrollbar-width: none;
+  height: 100%;
 `;

@@ -9,7 +9,7 @@ import { MapContext } from "../../context/MapContext";
 
 import B2 from "../UI/B2";
 import B1 from "../UI/B1";
-import PlaceImageList from "./PlaceImageList";
+import PlaceImages from "../Certification/PlaceImages";
 
 interface PlaceItemProps extends React.HTMLAttributes<HTMLLIElement> {
   place: Place;
@@ -34,45 +34,47 @@ const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
 
   return (
     <PlaceItemContainer {...props}>
-      <TitleContainer onClick={() => handleMapMoveSelectedPlace(place)}>
-        <TitleWrapper>
-          <h4>{place_name}</h4>
-          <B2 css={{ color: colors.lightGrey }}>{category_group_name}</B2>
-        </TitleWrapper>
-        <B1
-          css={{
-            color: colors.lightGrey,
-            cursor: "pointer",
-          }}
-          onClick={(event) => {
-            event.stopPropagation();
-            navigateModal.onOpen({
-              kakaoUrl: place_url,
-              naverUrl: naver_place_url,
-            });
-          }}
-        >
-          지도 자세히 보기
-        </B1>
-      </TitleContainer>
-      <RatingWrapper>
-        <img src="/images/search/starIcon.png" alt="star" height={21} />
-        {place_posts.length !== 0 ? (
+      <PlaceInfoWrapper onClick={() => handleMapMoveSelectedPlace(place)}>
+        <TitleContainer>
+          <TitleWrapper>
+            <h4>{place_name}</h4>
+            <B2 css={{ color: colors.lightGrey }}>{category_group_name}</B2>
+          </TitleWrapper>
+          <B2
+            css={{
+              color: colors.lightGrey,
+              cursor: "pointer",
+              textAlign: "center",
+              textDecoration: "underline",
+            }}
+            onClick={(event) => {
+              event.stopPropagation();
+              navigateModal.onOpen({
+                kakaoUrl: place_url,
+                naverUrl: naver_place_url,
+              });
+            }}
+          >
+            지도 자세히 보기
+          </B2>
+        </TitleContainer>
+        <RatingWrapper>
+          <img src="/images/search/starIcon.png" alt="star" height={18} />
           <B1>
             {place_star_rating || 0} ({place_posts?.length || 0})
           </B1>
-        ) : (
-          <B1 css={{ color: colors.primary }}>
-            이 장소의 첫번째 탐험자가 되어 보세요!
-          </B1>
-        )}
-      </RatingWrapper>
-      <LocationWrapper>
-        <B1>{(+distance / 1000).toFixed(1)}km </B1>
-        <span css={{ color: colors.paleGrey }}>|</span>
-        <B1> {road_address_name}</B1>
-      </LocationWrapper>
-      <PlaceImageList posts={place_posts || []} displayAmount={displayAmount} />
+        </RatingWrapper>
+        <LocationWrapper>
+          <B1>{(+distance / 1000).toFixed(1)}km </B1>
+          <span css={{ color: colors.paleGrey }}>|</span>
+          <B1> {road_address_name}</B1>
+        </LocationWrapper>
+      </PlaceInfoWrapper>
+      <PlaceImages
+        images={place_posts.map((post) => post.post_image_url)}
+        placeId={place_posts.map((post) => post.post_place_id)}
+        onClick={() => {}}
+      />
     </PlaceItemContainer>
   );
 };
@@ -86,21 +88,41 @@ const PlaceItemContainer = styled.li`
   border-radius: 10px;
   background: #fff;
   padding: 15px;
-  gap: 8px;
+  gap: 5px;
   box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.3);
+`;
+
+const PlaceInfoWrapper = styled.div`
+  cursor: pointer;
 `;
 
 const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   cursor: pointer;
 `;
 
 const TitleWrapper = styled.div`
   display: flex;
-  align-items: end;
+  flex-direction: column;
+  width: 66%;
+  line-height: 1.2;
   gap: 3px;
+
+  h4 {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  span {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 `;
 
 const RatingWrapper = styled.div`

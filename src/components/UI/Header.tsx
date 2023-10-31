@@ -1,18 +1,17 @@
 /** @jsxImportSource @emotion/react */
-import BackButton from "../UI/BackButton";
+
+import BackButton from "./BackButton";
+import Title from "../Title";
 import { useNavigate } from "react-router-dom";
 
-interface ReviewListHeaderProps {
-  placeName?: string;
-  reviewCount?: number;
+interface HeaderProps {
+  title: string;
 }
 
-const ReviewListHeader = ({
-  placeName,
-  reviewCount,
-}: ReviewListHeaderProps) => {
+const Header = ({ title }: HeaderProps) => {
   const navigate = useNavigate();
 
+  // 뒤로가기 버튼 클릭 시, 이전 페이지로 이동
   const handleBackButtonClick = () => {
     navigate(-1);
   };
@@ -28,7 +27,10 @@ const ReviewListHeader = ({
         height: "50px",
         position: "fixed",
         top: "0",
-        backgroundColor: "#FFFFFF",
+        left: "50%",
+        transform: "translateX(-50%)",
+        zIndex: 78,
+        backgroundColor: "#fff",
       }}
     >
       <div
@@ -40,27 +42,8 @@ const ReviewListHeader = ({
       >
         <BackButton onClick={handleBackButtonClick} />
       </div>
-      <div
-        css={{
-          display: "flex",
-          flexDirection: "row",
-          gap: "5px",
-          alignItems: "center",
-        }}
-      >
-        <div>
-          <h1
-            css={{
-              fontSize: "17px",
-              fontWeight: "400",
-            }}
-          >
-            {placeName}
-          </h1>
-        </div>
-        <div>
-          <p>({reviewCount})</p>
-        </div>
+      <div>
+        <Title text={title} />
       </div>
       <div
         css={{
@@ -71,4 +54,4 @@ const ReviewListHeader = ({
   );
 };
 
-export default ReviewListHeader;
+export default Header;

@@ -1,5 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { LINK } from "./constants/links";
+import { useEffect } from "react";
+import useCurrentLocation from "./hooks/map/useCurrentLocation";
 
 import Home from "./pages/Home";
 import MyPage from "./pages/MyPage";
@@ -22,6 +24,11 @@ import NotificationsPage from "./pages/NotificationsPage";
 
 const AppRoutes = () => {
   const { data: currentUser } = useAuthQuery();
+  const { currentLocation, updateCurrentLocation } = useCurrentLocation();
+
+  useEffect(() => {
+    !currentLocation && updateCurrentLocation();
+  }, [currentLocation]);
 
   const isSigningUp =
     currentUser?.user_image_url === null || currentUser?.user_nickname === null;

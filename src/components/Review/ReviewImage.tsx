@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import ReviewStarPoint from "./ReviewStarPoint";
-
+import { formatDateToKoreanFormat } from "../../utils/calculateDate";
 interface ReviewImageProps {
   placeImage: string;
   date: string;
@@ -52,7 +52,7 @@ const ReviewImage = ({ placeImage, date, rating }: ReviewImageProps) => {
             fontSize: "13px",
           }}
         >
-          {date}
+          {formatDateToKoreanFormat(date)}
         </p>
       </div>
     </div>

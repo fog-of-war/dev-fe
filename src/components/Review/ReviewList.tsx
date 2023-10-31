@@ -4,6 +4,7 @@ import { useState } from "react";
 import ReviewAuthorInfo from "./ReviewAuthorInfo";
 import ReviewContent from "./ReviewContent";
 import { PlaceData } from "../../types/types";
+import Comments from "./Comment/Comments";
 
 interface ReviewListProps {
   reviews?: PlaceData["place_posts"];
@@ -22,6 +23,7 @@ const ReviewList = ({ reviews, placeId }: ReviewListProps) => {
               width: "100%",
               height: "100%",
               paddingTop: "40px",
+              paddingBottom: "40px",
             }}
           >
             <div
@@ -49,6 +51,18 @@ const ReviewList = ({ reviews, placeId }: ReviewListProps) => {
                 date={review.post_created_at}
                 isEditing={isEditing}
               />
+              <div
+                css={{
+                  width: "100%",
+                  position: "relative",
+                }}
+              >
+                <Comments
+                  comments={review.post_comments.length}
+                  data={review.post_comments}
+                  postId={review.post_id}
+                />
+              </div>
             </div>
           </div>
         </div>

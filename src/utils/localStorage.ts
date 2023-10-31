@@ -12,3 +12,7 @@ export const setDataToLocalStorage = (storageKey: string, data: any) => {
 export const removeDataFromLocalStorage = (storageKey: string) => {
   localStorage.removeItem(storageKey);
 };
+
+export const clearAllLocalStorage = () => {
+  localStorage.clear();
+};

@@ -20,7 +20,11 @@ const MainBadgeList: React.FC = () => {
   // 유저 뱃지 데이터 불러오기
   useEffect(() => {
     getMyBadge().then((badgeData: BadgeData) => {
-      setUserBadges(badgeData.user_badges);
+      if (badgeData && badgeData.user_badges) {
+        setUserBadges(badgeData.user_badges);
+      } else {
+        setUserBadges([]); // 데이터가 없을 경우 빈 배열로 초기화
+      }
     });
   }, []);
 

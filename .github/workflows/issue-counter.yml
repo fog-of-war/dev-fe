@@ -1,0 +1,29 @@
+name: Daily GitHub Issue Count
+
+on:
+  schedule:
+    - cron: '0/1 * * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install Dependencies
+        run: pip install requests discord.py
+
+      - name: Run Python Script
+        run: |
+          python .github/workflows/github_issue_count.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.ISSUE_GITHUB_TOKEN}}
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+          DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID}}

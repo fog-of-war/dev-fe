@@ -9,8 +9,6 @@ import NoDataComponent from "./Ranking/NoDataComponent";
 const MyRanking = () => {
   const { regionRankData } = useRankData();
 
-  console.log(regionRankData);
-
   return (
     <div
       css={{
@@ -28,6 +26,7 @@ const MyRanking = () => {
           display: "flex",
           backgroundColor: colors.pastel,
           borderRadius: "15px",
+          padding: "20px",
           gap: "25px",
           justifyContent: "center",
         }}
@@ -38,7 +37,7 @@ const MyRanking = () => {
             image="/images/noRanking.png"
           />
         )}
-        {regionRankData?.map((data, i) => (
+        {regionRankData?.slice(0, 3).map((data, i) => (
           <MyRankingItem
             key={i}
             index={i}

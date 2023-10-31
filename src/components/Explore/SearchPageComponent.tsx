@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { toast } from "react-hot-toast";
-import useCurrentLocation from "../../hooks/map/useCurrentLocation";
 import useSearch from "../../hooks/search/useSearch";
 import { ExplorePageLayout } from "./Explore.styles";
 
@@ -19,7 +18,6 @@ interface SearchPageComonentProps {
 
 const SearchPageComponent = ({ searchQuery }: SearchPageComonentProps) => {
   const searchRef = useRef<HTMLInputElement>(null);
-  useCurrentLocation();
 
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);

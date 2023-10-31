@@ -90,12 +90,39 @@ export interface UserData {
   user_badges: UserBadge[];
   user_visited_places: string[];
   user_authored_posts: string[];
+  user_selected_badge: UserBadge;
+}
+
+export interface UserEditdata {
+  user_image_url: string;
+  user_nickname: string;
+  user_selected_badge: any;
+}
+
+export interface UserTitleEditdata {
+  user_selected_badge_id: number;
 }
 
 export interface PostAuthor {
   user_id: number;
   user_nickname: string;
   user_image_url: string;
+}
+
+export interface CommentAuthor {
+  user_image_url: string;
+  user_nickname: string;
+}
+
+export interface PostComment {
+  comment_id: number;
+  comment_created_at: string;
+  comment_updated_at: string;
+  comment_text: string;
+  comment_author_id: number;
+  commented_post_id: number;
+  comment_is_deleted: boolean;
+  comment_author: CommentAuthor;
 }
 
 export interface PlacePost {
@@ -106,7 +133,15 @@ export interface PlacePost {
   post_image_url: string;
   post_author_id: number;
   post_star_rating: number;
+  post_place_id: number;
+  post_is_deleted: boolean;
   post_author: PostAuthor;
+  post_comments: PostComment[];
+}
+
+export interface Comment {
+  comment_text: string;
+  commented_post_id: number;
 }
 
 export interface MyPosts {

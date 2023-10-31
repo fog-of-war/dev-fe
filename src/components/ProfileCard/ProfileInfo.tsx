@@ -12,10 +12,24 @@ const ProfileInfo = () => {
 
   const goToRankPage = () => navigate("/ranking");
 
+  const goToBadgePage = () => navigate("/badgeList");
+
+  const goToExplorationPage = () => navigate("/explore");
+
   return (
     <ProfileInfoLayout>
-      <ProfileStat type="exploration" data={userData} rankData={myRankData} />
-      <ProfileStat type="badge" data={userData} rankData={myRankData} />
+      <ProfileStat
+        type="exploration"
+        data={userData}
+        rankData={myRankData}
+        onClick={goToExplorationPage}
+      />
+      <ProfileStat
+        type="badge"
+        data={userData}
+        rankData={myRankData}
+        onClick={goToBadgePage}
+      />
       <ProfileStat
         type="rank"
         data={userData}

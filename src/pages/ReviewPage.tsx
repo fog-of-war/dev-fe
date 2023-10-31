@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ReviewList from "../components/Review/ReviewList";
-import ReviewListHeader from "../components/Review/ReviewListHeader";
+import PageHeader from "../components/UI/PageHeader";
 import { getAllPostsByPlaceId } from "../api/post";
 import { PlaceData } from "../types/types";
 
@@ -16,8 +16,6 @@ const ReviewPage = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       const postList = await getAllPostsByPlaceId(numberPlaceId);
-      console.log(placeId);
-      console.log(postList);
       setPlaceData(postList);
     };
     fetchPosts();
@@ -37,8 +35,8 @@ const ReviewPage = () => {
     >
       {placeData && (
         <>
-          <ReviewListHeader
-            placeName={placeData.place_name}
+          <PageHeader
+            headerTitle={placeData.place_name}
             reviewCount={placeData.place_posts.length}
           />
           <ReviewList
