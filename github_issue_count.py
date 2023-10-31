@@ -1,7 +1,9 @@
 import os
 import requests
 import discord
-import asyncio
+from discord.ext import commands, tasks
+import time
+from datetime import datetime
 
 # GitHub API 토큰 및 디스코드 봇 토큰 설정
 GITHUB_TOKEN = os.environ["GITHUB_TOKEN"]
