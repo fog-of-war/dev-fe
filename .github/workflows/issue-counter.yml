@@ -23,6 +23,6 @@ jobs:
       - name: Run Python Script
         run: python .github/workflows/github_issue_count.py
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ISSUE_GITHUB_TOKEN}}
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-          DISCORD_CHANNEL_ID: YOUR_DISCORD_CHANNEL_ID
+          DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID}}
