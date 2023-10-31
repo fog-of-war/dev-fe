@@ -11,7 +11,7 @@ DISCORD_CHANNEL_ID = os.environ["DISCORD_CHANNEL_ID"]
 # 디스코드 클라이언트 생성
 client = discord.Client()
 
-@tasks.loop(hours=24)  # 매일 오전 9시에 실행하도록 설정
+# @tasks.loop(hours=24)  # 매일 오전 9시에 실행하도록 설정
 async def send_github_issue_count():
     # GitHub API를 사용하여 이슈 가져오기
     headers = {
