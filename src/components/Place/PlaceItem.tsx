@@ -6,6 +6,7 @@ import { useNavigateModal } from "../../hooks/useNavigateModal";
 import { Place } from "../../types/types";
 import { useContext } from "react";
 import { MapContext } from "../../context/MapContext";
+import { formatDistance } from "../../utils/formatDistance";
 
 import B2 from "../UI/B2";
 import B1 from "../UI/B1";
@@ -65,7 +66,7 @@ const PlaceItem = ({ place, displayAmount, ...props }: PlaceItemProps) => {
           </B1>
         </RatingWrapper>
         <LocationWrapper>
-          <B1>{(+distance / 1000).toFixed(1)}km </B1>
+          <B1>{formatDistance(distance)}</B1>
           <span css={{ color: colors.paleGrey }}>|</span>
           <B1> {road_address_name}</B1>
         </LocationWrapper>
