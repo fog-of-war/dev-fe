@@ -6,6 +6,7 @@ import { useDeferredValue, useEffect, useState, useTransition } from "react";
 import { getRequest } from "../../../../api/utils/getRequest";
 import { isLastCharKoreanConsonantOrVowel } from "../../../../utils/checkLastChar";
 import useCurrentLocation from "../../../../hooks/map/useCurrentLocation";
+import useDeboucing from "../../../../hooks/useDeboucing";
 
 import RealTimeSearchItem from "./RealTimeSearchItem";
 import NoSearchData from "../NoSearchData";
@@ -17,30 +18,35 @@ interface RealtimeSearchResultPanelProps {
 const RealtimeSearchResultPanel = ({
   searchQuery,
 }: RealtimeSearchResultPanelProps) => {
+  const [realTimeSearchResult, setRealTimeSearchResult] = useState<Place[]>([]);
+
   const [isPending, startTransition] = useTransition();
-  const deferredSearchQuery = useDeferredValue(searchQuery);
 
   const { currentLocation } = useCurrentLocation();
 
-  const [realTimeSearchResult, setRealTimeSearchResult] = useState<Place[]>([]);
+  const deferredSearchQuery = useDeferredValue(searchQuery);
+  const { debouncedInput: debouncedSearchQuery } = useDeboucing(
+    deferredSearchQuery,
+    300
+  );
 
   useEffect(() => {
     startTransition(() => {
       const getSearchResult = async () => {
-        if (!currentLocation || !deferredSearchQuery) return;
-        if (isLastCharKoreanConsonantOrVowel(deferredSearchQuery)) return;
+        if (!currentLocation || !debouncedSearchQuery) return;
+        if (isLastCharKoreanConsonantOrVowel(debouncedSearchQuery)) return;
 
         const x = currentLocation?.lng!;
         const y = currentLocation?.lat!;
 
         const searchResult = await getRequest({
-          url: `v1/places/search?query=${deferredSearchQuery}&x=${x}&y=${y}`,
+          url: `v1/places/search?query=${debouncedSearchQuery}&x=${x}&y=${y}`,
         });
         setRealTimeSearchResult(searchResult);
       };
       getSearchResult();
     });
-  }, [deferredSearchQuery, currentLocation, startTransition]);
+  }, [debouncedSearchQuery, currentLocation, startTransition]);
 
   return (
     <SearchList>
