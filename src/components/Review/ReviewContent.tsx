@@ -25,7 +25,12 @@ const ReviewContent = ({
         gap: "10px",
       }}
     >
-      <ReviewImage placeImage={placeImage} date={date} rating={rating} />
+      <ReviewImage
+        placeImage={placeImage}
+        date={date}
+        rating={rating}
+        isEditing={isEditing}
+      />
       <ReviewComment comment={comment} isEditing={isEditing} />
     </div>
   );
