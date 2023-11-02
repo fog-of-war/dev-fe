@@ -4,6 +4,7 @@ import {
   UpdatedReview,
   PlaceData,
   MyPosts,
+  ResponsePostUploadData,
 } from "../types/types";
 import { axiosBase } from "./axios";
 
@@ -19,8 +20,8 @@ export const getMyPosts = async (): Promise<MyPosts[]> => {
 
 export const uploadPost = async (
   data: PostUploadData
-): Promise<PostUploadData> => {
-  const response = await axiosBase.post<PostUploadData>("v1/posts", data);
+): Promise<ResponsePostUploadData> => {
+  const response = await axiosBase.post("v1/posts", data);
   const newPosting = response.data;
 
   return newPosting;

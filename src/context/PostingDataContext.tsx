@@ -52,7 +52,7 @@ const initialPlacePost: PlacePost = {
 const initialPlaceData: PlaceData = {
   place_id: 0,
   place_name: "",
-  place_star_rating: 0,
+  place_star_rating: null,
   place_posts: [initialPlacePost],
 };
 

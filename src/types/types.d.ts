@@ -154,7 +154,7 @@ export interface MyPosts {
 export interface PlaceData {
   place_id: number;
   place_name: string;
-  place_star_rating: number;
+  place_star_rating: number | null;
   place_posts: PlacePost[];
 }
 
@@ -165,6 +165,11 @@ export interface PostUploadData {
   post_image_url: string;
   place_latitude: number;
   place_longitude: number;
+}
+
+export interface ResponsePostUploadData {
+  new_level: number;
+  new_badges: UserBadge[];
 }
 
 export interface UserRank {
@@ -218,7 +223,7 @@ export interface UserSelectedBadge {
   badge_category_id: number;
   badge_criteria: number;
   badge_points: number;
-  badge_owned_users_id: number;
+  badge_user_id: number;
   badge_image_url: string;
 }
 export interface MyBadges {
