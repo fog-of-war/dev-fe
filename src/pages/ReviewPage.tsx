@@ -37,7 +37,7 @@ const ReviewPage = () => {
         <>
           <PageHeader
             headerTitle={placeData.place_name}
-            props={placeData.place_posts.length}
+            pageInfo={placeData.place_posts.length}
           />
           <ReviewList
             reviews={placeData.place_posts}
