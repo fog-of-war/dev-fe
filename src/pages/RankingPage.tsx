@@ -19,6 +19,7 @@ const RankingPage = () => {
           flexDirection: "column",
           gap: "20px",
           padding: "20px",
+          paddingTop: "60px",
           width: "100%",
         }}
       >
