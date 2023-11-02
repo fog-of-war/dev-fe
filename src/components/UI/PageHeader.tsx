@@ -29,7 +29,7 @@ const PageHeader = ({
       </BackButtonWrapper>
       <HeaderTitleContainer>
         <HeaderTitle>{headerTitle}</HeaderTitle>
-        {pageInfo && <ReviewCount>(pageInfo)</ReviewCount>}
+        {pageInfo && <ReviewCount>({pageInfo})</ReviewCount>}
       </HeaderTitleContainer>
       {iconButton ? (
         <CompleteButtonWrapper onClick={onCompleteClick}>
