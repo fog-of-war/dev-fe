@@ -23,13 +23,23 @@ const TagButton = ({ icon, children, ...props }: TagButtonProps) => {
       }}
       {...props}
     >
-      <img
-        src={icon}
-        alt="tag_icon"
+      <div
         css={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "16px",
           height: "16px",
         }}
-      />
+      >
+        <img
+          src={icon}
+          alt="tag_icon"
+          css={{
+            height: "16px",
+          }}
+        />
+      </div>
       <span
         css={{
           fontSize: "14px",
