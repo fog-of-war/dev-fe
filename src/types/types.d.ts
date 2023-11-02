@@ -144,18 +144,37 @@ export interface Comment {
   commented_post_id: number;
 }
 
-export interface MyPosts {
-  post_id: number;
-  post_image_url: string;
-  place_name: string;
-  post_place_id: number;
-}
-
 export interface PlaceData {
   place_id: number;
   place_name: string;
   place_star_rating: number | null;
   place_posts: PlacePost[];
+}
+
+export interface PostPlace {
+  place_address: string;
+  place_created_at: string;
+  place_id: number;
+  place_latitude: number;
+  place_longitude: number;
+  place_name: string;
+  place_points: number | null;
+  place_region_id: number;
+  place_star_rating: number | null;
+  place_updated_at: string;
+}
+
+export interface PostResponse {
+  post_author_id: number;
+  post_created_at: string;
+  post_description: string;
+  post_id: number;
+  post_image_url: string;
+  post_is_deleted: boolean;
+  post_place: PostPlace;
+  post_place_id: number;
+  post_star_rating: number;
+  post_updated_at: string;
 }
 
 export interface PostUploadData {

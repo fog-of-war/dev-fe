@@ -3,8 +3,8 @@ import {
   PlacePost,
   UpdatedReview,
   PlaceData,
-  MyPosts,
   ResponsePostUploadData,
+  PostResponse,
 } from "../types/types";
 import { axiosBase } from "./axios";
 
@@ -13,8 +13,8 @@ export const getAllPostsByPlaceId = async (id: number): Promise<PlaceData> => {
   return response.data;
 };
 
-export const getMyPosts = async (): Promise<MyPosts[]> => {
-  const response = await axiosBase.get<MyPosts[]>("/v1/posts/me");
+export const getMyPosts = async (): Promise<PostResponse[]> => {
+  const response = await axiosBase.get<PostResponse[]>("/v1/posts/me");
   return response.data;
 };
 
