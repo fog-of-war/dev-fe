@@ -58,13 +58,22 @@ const UploadPage = () => {
 
       const AWSImageUrl = await uploadImageToS3(file!);
 
-      await uploadPost({ ...postUploadData, post_image_url: AWSImageUrl });
+      const response = await uploadPost({
+        ...postUploadData,
+        post_image_url: AWSImageUrl,
+      });
 
       setLoading(false);
+
       toast.success("게시글이 작성되었습니다.", {
         id: "upload-post-success",
       });
-      navigate("/posting_complete");
+
+      if (response.new_badges) {
+        navigate("/getBadge", { state: { newBadges: response.new_badges } });
+      } else {
+        navigate("/posting_complete");
+      }
     } catch (error: any) {
       setLoading(false);
       console.log(error);
