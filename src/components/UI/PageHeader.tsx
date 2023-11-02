@@ -31,15 +31,16 @@ const PageHeader = ({
         <HeaderTitle>{headerTitle}</HeaderTitle>
         {pageInfo && <ReviewCount>(pageInfo)</ReviewCount>}
       </HeaderTitleContainer>
-      {iconButton && (
+      {iconButton ? (
         <CompleteButtonWrapper onClick={onCompleteClick}>
           <CompleteButton
             src="/images/completeButton.png"
             alt="complete_button"
           />
         </CompleteButtonWrapper>
+      ) : (
+        <EmptyDiv />
       )}
-      <EmptyDiv />
     </PageHeaderLayout>
   );
 };
@@ -86,14 +87,15 @@ const EmptyDiv = styled.div`
 `;
 
 const CompleteButtonWrapper = styled.div`
+  position: relative;
   width: 25px;
   height: 17px;
-  overflow: hidden;
-  padding-right: 30px;
+  cursor: pointer;
+
+  right: 25px;
 `;
 
 const CompleteButton = styled.img`
   width: 100%;
   height: 100%;
-  object-fit: cover;
 `;
