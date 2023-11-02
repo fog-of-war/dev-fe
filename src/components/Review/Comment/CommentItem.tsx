@@ -8,6 +8,7 @@ import useAuth from "../../../hooks/useAuth";
 import ButtonModal from "./ButtonModal";
 import EditDeleteButton from "./EditDeleteButton";
 import CommentTextArea from "./CommentTextArea";
+import DotButton from "../../UI/DotButton";
 
 interface CommentItemProps {
   comment_author_image_url: PostComment["comment_author"]["user_image_url"];
@@ -60,14 +61,9 @@ const CommentItem = ({
           alt="comment_author_profile_image"
         />
         <CommentAuthorNickname>{comment_author_nickname}</CommentAuthorNickname>
-        <ButtonContainer onClick={toggleModalVisibility}>
+        <ButtonContainer>
           {userId === comment_author_id && (
-            <CommentEditButton>
-              <CommentButtonImg
-                src="/images/dotButton.svg"
-                alt="comment_delete_button"
-              />
-            </CommentEditButton>
+            <DotButton setModalState={toggleModalVisibility} />
           )}
           {isModalVisible && (
             <ButtonModal>
@@ -163,18 +159,4 @@ const ButtonContainer = styled.div`
   position: absolute;
   right: 0;
   cursor: pointer;
-`;
-
-const CommentEditButton = styled.button`
-  width: 100%;
-  height: 100%;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-`;
-
-const CommentButtonImg = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
 `;
