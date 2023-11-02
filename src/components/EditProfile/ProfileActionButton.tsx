@@ -28,7 +28,7 @@ const ProfileActionButton = ({
       size="small"
       variant="secondary"
       onClick={handleButtonClick}
-      style={{ height: "25px" }}
+      style={{ height: "25px", border: "none", borderRadius: "0" }}
     >
       {buttonText}
     </Button>
