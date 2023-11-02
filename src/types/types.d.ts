@@ -75,7 +75,7 @@ export interface Place {
   x: string;
   y: string;
   place_posts: PlacePost[];
-  place_star_rating: number | null;
+  place_star_rating: number;
   place_category_map: PlaceCategoryMap[];
 }
 
