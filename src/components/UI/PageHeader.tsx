@@ -5,10 +5,10 @@ import BackButton from "./BackButton";
 
 interface PageHeaderProps {
   headerTitle: string;
-  reviewCount?: number;
+  props?: any;
 }
 
-const PageHeader = ({ headerTitle, reviewCount }: PageHeaderProps) => {
+const PageHeader = ({ headerTitle, ...props }: PageHeaderProps) => {
   const navigate = useNavigate();
 
   const handleBackButtonClick = () => {
@@ -22,7 +22,7 @@ const PageHeader = ({ headerTitle, reviewCount }: PageHeaderProps) => {
       </BackButtonWrapper>
       <HeaderTitleContainer>
         <HeaderTitle>{headerTitle}</HeaderTitle>
-        {reviewCount && <ReviewCount>({reviewCount})</ReviewCount>}
+        {props && <ReviewCount>(props)</ReviewCount>}
       </HeaderTitleContainer>
       <EmptyDiv />
     </PageHeaderLayout>
