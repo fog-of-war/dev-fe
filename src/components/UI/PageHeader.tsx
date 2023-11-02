@@ -74,10 +74,12 @@ const HeaderTitleContainer = styled.div`
 
 const HeaderTitle = styled.h1`
   font-size: 17px;
-  font-weight: 400;
+  font-weight: bold;
 `;
 
-const ReviewCount = styled.p``;
+const ReviewCount = styled.p`
+  font-weight: bold;
+`;
 
 const EmptyDiv = styled.div`
   padding-right: 30px;
