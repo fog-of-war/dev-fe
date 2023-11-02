@@ -5,10 +5,17 @@ import BackButton from "./BackButton";
 
 interface PageHeaderProps {
   headerTitle: string;
-  props?: any;
+  pageInfo?: number;
+  iconButton?: boolean;
+  onCompleteClick?: () => void;
 }
 
-const PageHeader = ({ headerTitle, ...props }: PageHeaderProps) => {
+const PageHeader = ({
+  headerTitle,
+  pageInfo,
+  iconButton,
+  onCompleteClick,
+}: PageHeaderProps) => {
   const navigate = useNavigate();
 
   const handleBackButtonClick = () => {
@@ -22,8 +29,16 @@ const PageHeader = ({ headerTitle, ...props }: PageHeaderProps) => {
       </BackButtonWrapper>
       <HeaderTitleContainer>
         <HeaderTitle>{headerTitle}</HeaderTitle>
-        {props && <ReviewCount>(props)</ReviewCount>}
+        {pageInfo && <ReviewCount>(pageInfo)</ReviewCount>}
       </HeaderTitleContainer>
+      {iconButton && (
+        <CompleteButtonWrapper onClick={onCompleteClick}>
+          <CompleteButton
+            src="/images/completeButton.png"
+            alt="complete_button"
+          />
+        </CompleteButtonWrapper>
+      )}
       <EmptyDiv />
     </PageHeaderLayout>
   );
@@ -66,4 +81,17 @@ const ReviewCount = styled.p``;
 
 const EmptyDiv = styled.div`
   padding-right: 30px;
+`;
+
+const CompleteButtonWrapper = styled.div`
+  width: 25px;
+  height: 17px;
+  overflow: hidden;
+  padding-right: 30px;
+`;
+
+const CompleteButton = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
