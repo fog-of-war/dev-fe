@@ -78,7 +78,11 @@ const UploadPage = () => {
       setLoading(false);
       console.log(error);
 
-      if (error.response.status === 422) {
+      if (
+        error.response.status === 422 &&
+        (postUploadData.post_star_rating === 0 ||
+          postUploadData.post_description === "")
+      ) {
         toast.error("별점과 리뷰는 필수 항목입니다.", {
           id: "upload-post-error",
         });
