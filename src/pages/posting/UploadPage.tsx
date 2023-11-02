@@ -65,9 +65,16 @@ const UploadPage = () => {
         id: "upload-post-success",
       });
       navigate("/posting_complete");
-    } catch (error) {
+    } catch (error: any) {
       setLoading(false);
       console.log(error);
+
+      if (error.response.status === 422) {
+        toast.error("별점과 리뷰는 필수 항목입니다.", {
+          id: "upload-post-error",
+        });
+        return;
+      }
       toast.error("게시글 작성중 에러가 발생했습니다.", {
         id: "upload-post-error",
       });
@@ -88,6 +95,7 @@ const UploadPage = () => {
             css={ButtonStyle}
             size="large"
             onClick={handleUploadPostClick}
+            disabled={!postUploadData}
           >
             게시글 작성
           </Button>
