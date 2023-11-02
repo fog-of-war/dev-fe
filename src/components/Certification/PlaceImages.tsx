@@ -393,6 +393,9 @@ const PlaceImages = ({ images, placeId, onClick }: PlaceImagesProps) => {
               color: "#6C7E75",
               whiteSpace: "nowrap",
               marginBottom: 30,
+              "@media (max-width: 425px)": {
+                fontSize: 18,
+              },
             }}
           >
             이 장소의 첫번째 탐험자가 되어보세요!
