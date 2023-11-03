@@ -58,16 +58,36 @@ const UploadPage = () => {
 
       const AWSImageUrl = await uploadImageToS3(file!);
 
-      await uploadPost({ ...postUploadData, post_image_url: AWSImageUrl });
+      const response = await uploadPost({
+        ...postUploadData,
+        post_image_url: AWSImageUrl,
+      });
 
       setLoading(false);
+
       toast.success("게시글이 작성되었습니다.", {
         id: "upload-post-success",
       });
-      navigate("/posting_complete");
-    } catch (error) {
+
+      if (response.new_badges) {
+        navigate("/getBadge", { state: { newBadges: response.new_badges } });
+      } else {
+        navigate("/posting_complete");
+      }
+    } catch (error: any) {
       setLoading(false);
       console.log(error);
+
+      if (
+        error.response.status === 422 &&
+        (postUploadData.post_star_rating === 0 ||
+          postUploadData.post_description === "")
+      ) {
+        toast.error("별점과 리뷰는 필수 항목입니다.", {
+          id: "upload-post-error",
+        });
+        return;
+      }
       toast.error("게시글 작성중 에러가 발생했습니다.", {
         id: "upload-post-error",
       });
@@ -88,6 +108,7 @@ const UploadPage = () => {
             css={ButtonStyle}
             size="large"
             onClick={handleUploadPostClick}
+            disabled={!postUploadData}
           >
             게시글 작성
           </Button>

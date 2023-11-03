@@ -61,6 +61,16 @@ const ReviewAuthorInfo = React.memo(
           id: "update-success",
         });
       } catch (error: any) {
+        if (
+          error.response.status === 422 &&
+          (updateReview.post_star_rating === 0 ||
+            updateReview.post_description === "")
+        ) {
+          toast.error("별점과 리뷰는 필수 항목입니다.", {
+            id: "upload-post-error",
+          });
+          return;
+        }
         toast.error(error.response.data.message, {
           id: "update-error",
         });

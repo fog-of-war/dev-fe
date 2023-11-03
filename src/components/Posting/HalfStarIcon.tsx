@@ -1,9 +1,17 @@
 /** @jsxImportSource @emotion/react */
 import { starStyle } from "./StarRating";
 
-const HalfStarIcon = () => {
+interface StarIconProps {
+  isEditing: boolean;
+}
+
+const HalfStarIcon = ({ isEditing = false }: StarIconProps) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" css={starStyle}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      css={starStyle(isEditing)}
+    >
       <defs>
         <linearGradient id="halfGradient">
           <stop offset="50%" stopColor="#FFD700" />

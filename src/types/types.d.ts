@@ -75,7 +75,7 @@ export interface Place {
   x: string;
   y: string;
   place_posts: PlacePost[];
-  place_star_rating: number | null;
+  place_star_rating: number;
   place_category_map: PlaceCategoryMap[];
 }
 
@@ -144,18 +144,37 @@ export interface Comment {
   commented_post_id: number;
 }
 
-export interface MyPosts {
-  post_id: number;
-  post_image_url: string;
-  place_name: string;
-  post_place_id: number;
-}
-
 export interface PlaceData {
   place_id: number;
   place_name: string;
-  place_star_rating: number;
+  place_star_rating: number | null;
   place_posts: PlacePost[];
+}
+
+export interface PostPlace {
+  place_address: string;
+  place_created_at: string;
+  place_id: number;
+  place_latitude: number;
+  place_longitude: number;
+  place_name: string;
+  place_points: number | null;
+  place_region_id: number;
+  place_star_rating: number | null;
+  place_updated_at: string;
+}
+
+export interface PostResponse {
+  post_author_id: number;
+  post_created_at: string;
+  post_description: string;
+  post_id: number;
+  post_image_url: string;
+  post_is_deleted: boolean;
+  post_place: PostPlace;
+  post_place_id: number;
+  post_star_rating: number;
+  post_updated_at: string;
 }
 
 export interface PostUploadData {
@@ -165,6 +184,11 @@ export interface PostUploadData {
   post_image_url: string;
   place_latitude: number;
   place_longitude: number;
+}
+
+export interface ResponsePostUploadData {
+  new_level: number;
+  new_badges: UserBadge[];
 }
 
 export interface UserRank {
@@ -218,7 +242,7 @@ export interface UserSelectedBadge {
   badge_category_id: number;
   badge_criteria: number;
   badge_points: number;
-  badge_owned_users_id: number;
+  badge_user_id: number;
   badge_image_url: string;
 }
 export interface MyBadges {

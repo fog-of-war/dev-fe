@@ -1,9 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import useBadgeData from "../../hooks/useBadgeData";
-import useAuth from "../../hooks/useAuth";
+import { useNavigate, useLocation } from "react-router-dom";
 import Button from "../../components/UI/Button";
 import { GetBadgePageLayout } from "../../styles/styles";
 import { Badges } from "../../types/types";
@@ -11,10 +9,7 @@ import { badgeColors } from "../../components/Badge/BadgeItem";
 
 const GetBadgePage = () => {
   const navigate = useNavigate();
-
-  const { allBadges } = useBadgeData();
-
-  const { data: userData } = useAuth();
+  const location = useLocation();
 
   const [acquiredBadge, setAcquiredBadge] = useState<Badges | null>(null);
 
@@ -47,17 +42,10 @@ const GetBadgePage = () => {
   }
 
   useEffect(() => {
-    const acquiredBadgeIds =
-      userData?.user_badges.map((badge) => badge.badge_id) || [];
-
-    const newlyAcquiredBadge = allBadges.find(
-      (badge) => !acquiredBadgeIds.includes(badge.badge_id)
-    );
-
-    if (newlyAcquiredBadge) {
-      setAcquiredBadge(newlyAcquiredBadge);
+    if (location.state?.newBadges[0]) {
+      setAcquiredBadge(location.state.newBadges[0]);
     }
-  }, [allBadges, userData]);
+  }, [location]);
 
   const handleBackClick = () => {
     navigate("/");
@@ -67,7 +55,7 @@ const GetBadgePage = () => {
     <GetBadgePageLayout>
       {acquiredBadge && (
         <>
-          <div></div>
+          <div />
           <div
             css={{
               display: "flex",
@@ -84,15 +72,15 @@ const GetBadgePage = () => {
                 width: "165px",
                 height: "165px",
                 borderRadius: "100%",
-                border: `10px solid ${badgeColor.border}`,
                 backgroundColor: badgeColor.background,
+                overflow: "hidden",
               }}
             >
               <img
                 css={{
-                  width: "85px",
-                  height: "85px",
-                  overflow: "hidden",
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
                 }}
                 src={acquiredBadge.badge_image_url}
                 alt={acquiredBadge.badge_name}

@@ -5,10 +5,17 @@ import BackButton from "./BackButton";
 
 interface PageHeaderProps {
   headerTitle: string;
-  props?: any;
+  pageInfo?: number;
+  iconButton?: boolean;
+  onCompleteClick?: () => void;
 }
 
-const PageHeader = ({ headerTitle, ...props }: PageHeaderProps) => {
+const PageHeader = ({
+  headerTitle,
+  pageInfo,
+  iconButton,
+  onCompleteClick,
+}: PageHeaderProps) => {
   const navigate = useNavigate();
 
   const handleBackButtonClick = () => {
@@ -22,9 +29,18 @@ const PageHeader = ({ headerTitle, ...props }: PageHeaderProps) => {
       </BackButtonWrapper>
       <HeaderTitleContainer>
         <HeaderTitle>{headerTitle}</HeaderTitle>
-        {props && <ReviewCount>(props)</ReviewCount>}
+        {pageInfo && <ReviewCount>({pageInfo})</ReviewCount>}
       </HeaderTitleContainer>
-      <EmptyDiv />
+      {iconButton ? (
+        <CompleteButtonWrapper onClick={onCompleteClick}>
+          <CompleteButton
+            src="/images/completeButton.png"
+            alt="complete_button"
+          />
+        </CompleteButtonWrapper>
+      ) : (
+        <EmptyDiv />
+      )}
     </PageHeaderLayout>
   );
 };
@@ -59,11 +75,27 @@ const HeaderTitleContainer = styled.div`
 
 const HeaderTitle = styled.h1`
   font-size: 17px;
-  font-weight: 400;
+  font-weight: bold;
 `;
 
-const ReviewCount = styled.p``;
+const ReviewCount = styled.p`
+  font-weight: bold;
+`;
 
 const EmptyDiv = styled.div`
   padding-right: 30px;
+`;
+
+const CompleteButtonWrapper = styled.div`
+  position: relative;
+  width: 25px;
+  height: 17px;
+  cursor: pointer;
+
+  right: 25px;
+`;
+
+const CompleteButton = styled.img`
+  width: 100%;
+  height: 100%;
 `;
