@@ -1,6 +1,6 @@
 import { useRecoilValue } from "recoil";
 import { currentLocationAtom } from "../../store/currentLocationAtom";
-import { ExplorePageLayout } from "./Explore.styles";
+import { SearchPageLayout as SearchResultPageLayout } from "./Search/styles/Search.styles";
 
 import AsyncBoundary from "../Common/AsyncBoudary";
 import SearchResultBar from "./Search/SearchResult/SearchResultBar";
@@ -18,7 +18,7 @@ const SearchResultPageComponent = ({
   const currentLocation = useRecoilValue(currentLocationAtom);
 
   return (
-    <ExplorePageLayout>
+    <SearchResultPageLayout>
       <SearchResultBar searchQuery={searchQuery} />
       <AsyncBoundary>
         {currentLocation ? (
@@ -30,7 +30,7 @@ const SearchResultPageComponent = ({
           <LoadingSpinner />
         )}
       </AsyncBoundary>
-    </ExplorePageLayout>
+    </SearchResultPageLayout>
   );
 };
 

@@ -1,10 +1,11 @@
 /** @jsxImportSource @emotion/react */
 
-import { useEffect, useRef, useState } from "react";
+import { useDeferredValue, useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { toast } from "react-hot-toast";
 import useSearch from "../../hooks/search/useSearch";
-import { ExplorePageLayout } from "./Explore.styles";
+import useDeboucing from "../../hooks/useDeboucing";
+import { SearchPageLayout } from "./Search/styles/Search.styles";
 
 import SearchBar from "../Common/SearchBar";
 import TagButtonList from "./Search/SearchTag/TagButtonList";
@@ -19,8 +20,10 @@ interface SearchPageComonentProps {
 const SearchPageComponent = ({ searchQuery }: SearchPageComonentProps) => {
   const searchRef = useRef<HTMLInputElement>(null);
 
-  const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const deferredInputValue = useDeferredValue(inputValue);
+  const { debouncedInput } = useDeboucing(deferredInputValue, 300);
 
   const { handleSearchAndRecent } = useSearch();
 
@@ -50,7 +53,7 @@ const SearchPageComponent = ({ searchQuery }: SearchPageComonentProps) => {
   }, [searchQuery]);
 
   return (
-    <ExplorePageLayout>
+    <SearchPageLayout>
       <SearchBar
         inputValue={inputValue}
         onKeyDown={handleSearchByKeyboard}
@@ -61,13 +64,13 @@ const SearchPageComponent = ({ searchQuery }: SearchPageComonentProps) => {
       <SearchPannel>
         {isTyping ? (
           <AsyncBoundary>
-            <RealtimeSearchResultPanel searchQuery={inputValue} />
+            <RealtimeSearchResultPanel searchQuery={debouncedInput} />
           </AsyncBoundary>
         ) : (
           <RecentSearchesPanel />
         )}
       </SearchPannel>
-    </ExplorePageLayout>
+    </SearchPageLayout>
   );
 };
 

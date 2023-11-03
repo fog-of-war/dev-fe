@@ -2,7 +2,7 @@
 
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
-import { SearchBarLayout } from "../../Explore.styles";
+import { SearchBarLayout } from "../styles/Search.styles";
 
 interface SearchBarDisplayProps {
   value?: string;

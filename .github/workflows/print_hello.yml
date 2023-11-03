@@ -1,8 +1,9 @@
 name: Print Hello Every 10 Seconds
 
 on:
+  workflow_dispatch:
   schedule:
-    - cron: '0/5 * * * *'
+    - cron: "0/5 * * * *"
 jobs:
   print_hello:
     runs-on: ubuntu-latest

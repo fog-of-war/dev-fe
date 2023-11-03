@@ -1,14 +1,20 @@
 /** @jsxImportSource @emotion/react */
-
 import ReviewStarPoint from "./ReviewStarPoint";
 import { formatDateToKoreanFormat } from "../../utils/calculateDate";
+import StarRating from "../Posting/StarRating";
 interface ReviewImageProps {
   placeImage: string;
   date: string;
   rating: number;
+  isEditing?: boolean;
 }
 
-const ReviewImage = ({ placeImage, date, rating }: ReviewImageProps) => {
+const ReviewImage = ({
+  placeImage,
+  date,
+  rating,
+  isEditing,
+}: ReviewImageProps) => {
   return (
     <div
       css={{
@@ -45,7 +51,11 @@ const ReviewImage = ({ placeImage, date, rating }: ReviewImageProps) => {
           alignItems: "center",
         }}
       >
-        <ReviewStarPoint rating={rating} />
+        {isEditing ? (
+          <StarRating isEditing={isEditing} />
+        ) : (
+          <ReviewStarPoint rating={rating} />
+        )}
         <p
           css={{
             color: "#AAAAAA",

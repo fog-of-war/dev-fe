@@ -4,20 +4,20 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthQuery from "../hooks/useAuth";
 import { toast } from "react-hot-toast";
-import ProfileEditHeader from "../components/EditProfile/ProfileEditHeader";
+import PageHeader from "../components/UI/PageHeader";
 import EditProfileImage from "../components/EditProfile/EditProfileImage";
 import EditProfileNickName from "../components/EditProfile/EditNickName";
 import { useMutation, useQueryClient } from "react-query";
 import { QUERY_KEY } from "../react-query/queryKey";
 import { getCurrentUser } from "../api/auth";
 import { LINK } from "../constants/links";
-import { editProfile, setUpProfile } from "../api/user";
+import { editProfile } from "../api/user";
 import TitleDropdown from "../components/EditProfile/TitleDropdown";
 
 export interface EditProfileData {
   user_nickname: string;
   user_image_url: string;
-  user_selected_badge:any;
+  user_selected_badge: any;
 }
 
 const ProfileEditPage = () => {
@@ -37,9 +37,9 @@ const ProfileEditPage = () => {
   const [editProfileData, setEditProfileData] = useState<EditProfileData>({
     user_nickname: userData?.user_nickname || "",
     user_image_url: userData?.user_image_url || "",
-    user_selected_badge:userData?.user_selected_badge|| ""
+    user_selected_badge: userData?.user_selected_badge || "",
   });
-  
+
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const nickNameInputRef = useRef<HTMLInputElement>(null);
@@ -68,7 +68,7 @@ const ProfileEditPage = () => {
           ...currentUser,
           user_nickname: editProfileData.user_nickname,
           user_image_url: editProfileData.user_image_url,
-          user_selected_badge:editProfileData.user_selected_badge
+          user_selected_badge: editProfileData.user_selected_badge,
         };
         queryClient.setQueryData(QUERY_KEY.CURRENT_USER, newCurrentUserData);
         // 새로운 유저 데이터를 쿼리 캐시에 업데이트
@@ -81,10 +81,6 @@ const ProfileEditPage = () => {
       },
     }
   );
-
-  const handleBackClick = () => {
-    navigate(-1);
-  };
 
   const handleCompleteClick = () => {
     if (!validateNickName(editProfileData.user_nickname)) {
@@ -106,11 +102,11 @@ const ProfileEditPage = () => {
         gap: "36px",
       }}
     >
-      <ProfileEditHeader
-        onBackClick={handleBackClick}
+      <PageHeader
+        headerTitle="프로필수정"
+        iconButton={true}
         onCompleteClick={handleCompleteClick}
       />
-
       {userData && (
         <>
           <EditProfileImage
@@ -128,14 +124,14 @@ const ProfileEditPage = () => {
             inputRef={nickNameInputRef}
           />
           <TitleDropdown
-              // 실제 데이터 조작 props
-              userBadges={userBadges}
-              setEditProfileData={setEditProfileData} 
-              // UI 조작 props
-              titles={titles}
-              selectedTitle={selectedTitle}
-              onSelectTitle={handleTitleChange}  
-         />
+            // 실제 데이터 조작 props
+            userBadges={userBadges}
+            setEditProfileData={setEditProfileData}
+            // UI 조작 props
+            titles={titles}
+            selectedTitle={selectedTitle}
+            onSelectTitle={handleTitleChange}
+          />
         </>
       )}
     </div>

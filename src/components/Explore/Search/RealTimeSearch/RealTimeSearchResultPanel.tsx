@@ -1,15 +1,15 @@
 /** @jsxImportSource @emotion/react */
 
 import { Place } from "../../../../types/types";
-import { SearchList } from "../RecentSearch/RecentSearchesPanel";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { getRequest } from "../../../../api/utils/getRequest";
 import { isLastCharKoreanConsonantOrVowel } from "../../../../utils/checkLastChar";
 import useCurrentLocation from "../../../../hooks/map/useCurrentLocation";
+import { SearchList } from "../styles/Search.styles";
 
 import RealTimeSearchItem from "./RealTimeSearchItem";
-import useDeboucing from "../../../../hooks/useDeboucing";
 import NoSearchData from "../NoSearchData";
+import SearchPannelHeader from "../SearchPannelHeader";
 
 interface RealtimeSearchResultPanelProps {
   searchQuery: string;
@@ -18,41 +18,38 @@ interface RealtimeSearchResultPanelProps {
 const RealtimeSearchResultPanel = ({
   searchQuery,
 }: RealtimeSearchResultPanelProps) => {
-  // 현재 위치
+  const [realTimeSearchResult, setRealTimeSearchResult] = useState<Place[]>([]);
+  const [isPending, startTransition] = useTransition();
   const { currentLocation } = useCurrentLocation();
 
-  // 실시간 검색 결과
-  const [realTimeSearchResult, setRealTimeSearchResult] = useState<Place[]>([]);
-
-  // 검색어 디바운싱
-  const { debouncedInput } = useDeboucing(searchQuery, 500);
-
-  // 검색어가 바뀌면 실시간 검색 결과 업데이트
   useEffect(() => {
-    const getSearchResult = async () => {
-      if (!currentLocation || !debouncedInput) return;
-      if (isLastCharKoreanConsonantOrVowel(debouncedInput)) return;
+    startTransition(() => {
+      const fetchRealTimeSearchResult = async () => {
+        if (!currentLocation || !searchQuery) return;
+        if (isLastCharKoreanConsonantOrVowel(searchQuery)) return;
 
-      console.log(isLastCharKoreanConsonantOrVowel(debouncedInput));
+        const x = currentLocation?.lng!;
+        const y = currentLocation?.lat!;
 
-      const x = currentLocation?.lng!;
-      const y = currentLocation?.lat!;
-
-      const searchResult = await getRequest({
-        url: `v1/places/search?query=${debouncedInput}&x=${x}&y=${y}`,
-      });
-      setRealTimeSearchResult(searchResult);
-    };
-    getSearchResult();
-  }, [debouncedInput, currentLocation]);
+        const searchResult = await getRequest({
+          url: `v1/places/search?query=${searchQuery}&x=${x}&y=${y}`,
+        });
+        setRealTimeSearchResult(searchResult);
+      };
+      fetchRealTimeSearchResult();
+    });
+  }, [searchQuery, currentLocation, startTransition]);
 
   return (
-    <SearchList>
-      {realTimeSearchResult.map((place: Place) => (
-        <RealTimeSearchItem key={place.id} place={place} />
-      ))}
-      {realTimeSearchResult.length === 0 && <NoSearchData />}
-    </SearchList>
+    <>
+      <SearchPannelHeader title="검색 결과" />
+      <SearchList>
+        {realTimeSearchResult.map((place: Place) => (
+          <RealTimeSearchItem key={place.id} place={place} />
+        ))}
+        {realTimeSearchResult.length === 0 && !isPending && <NoSearchData />}
+      </SearchList>
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import { ExplorePageLayout } from "./Explore.styles";
+import { SearchPageLayout as ExplorePageLayout } from "./Search/styles/Search.styles";
 
 import SearchBarDisplay from "./Search/SearchResult/SearchBarDisplay";
 import TagButtonList from "./Search/SearchTag/TagButtonList";

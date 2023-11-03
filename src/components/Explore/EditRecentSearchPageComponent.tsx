@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import colors from "../../constants/colors";
 import styled from "@emotion/styled";
-import { SearchList } from "./Search/RecentSearch/RecentSearchesPanel";
 import { RecentSearch } from "../../types/types";
 import { useDeleteComfirmModal } from "../../hooks/useDeleteComfirmModal";
 import useRecentSearch from "../../hooks/search/useRecentSearch";
+import { SearchList } from "./Search/styles/Search.styles";
 
 import BackButton from "../UI/BackButton";
 import EditSearchItem from "./Search/RecentSearch/EditSearchItem";

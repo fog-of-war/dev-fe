@@ -7,7 +7,7 @@ interface ReviewContextProps {
 }
 
 const defaultReview: UpdatedReview = {
-  post_star_rating: 5,
+  post_star_rating: 0,
   post_description: "",
 };
 

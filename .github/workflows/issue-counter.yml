@@ -1,9 +1,9 @@
 name: Daily GitHub Issue Count
 
 on:
+  workflow_dispatch:
   schedule:
-    - cron: '0/5 * * * *'
-
+    - cron: "0 0 * * *"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,12 +18,16 @@ jobs:
           python-version: 3.x
 
       - name: Install Dependencies
-        run: pip install requests discord.py
+        run: |
+          pip install requests
+          pip install aiohttp==3.7.4
+          pip install discord.py
 
       - name: Run Python Script
         run: |
-          python .github/workflows/github_issue_count.py
+          python github_issue_count.py
         env:
           GITHUB_TOKEN: ${{ secrets.ISSUE_GITHUB_TOKEN}}
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID}}
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN}}

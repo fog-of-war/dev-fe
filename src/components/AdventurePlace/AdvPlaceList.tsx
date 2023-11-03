@@ -5,11 +5,11 @@ import { useNavigate } from "react-router-dom";
 import AdvPlaceTitle from "./AdvPlaceTitle";
 import AdvPlaceImage from "./AdvPlaceImage";
 import { getMyPosts } from "../../api/post";
-import { MyPosts } from "../../types/types";
+import { PostResponse } from "../../types/types";
 import NoDataComponent from "../Ranking/NoDataComponent";
 
 const AdvPlaceList = () => {
-  const [userPosts, setUserPosts] = useState<MyPosts[]>([]);
+  const [userPosts, setUserPosts] = useState<PostResponse[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const AdvPlaceList = () => {
             <AdvPlaceImage
               key={place.post_id}
               post_image_url={place.post_image_url}
-              place_name={place.place_name}
+              place_name={place.post_place.place_name}
             />
           </div>
         ))}
@@ -69,8 +69,8 @@ export default AdvPlaceList;
 const AdvPlaceListLayout = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-  gap: 8px;
+  justify-content: flex-start;
   width: 100%;
   flex-wrap: wrap;
+  gap: 22px;
 `;
