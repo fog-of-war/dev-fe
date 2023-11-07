@@ -34,7 +34,7 @@ const BottomNavigation = () => {
         alt="map"
       />
       <BottomNavIcon
-        onClick={() => navigate("/camera")}
+        onClick={() => navigate("/randomExplore")}
         height={55}
         src="/images/cameraIcon.png"
         alt="home"

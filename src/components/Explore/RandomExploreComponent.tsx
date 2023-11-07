@@ -1,0 +1,17 @@
+import { SearchPageLayout as ExplorePageLayout } from "./Search/styles/Search.styles";
+
+import SearchBarDisplay from "./Search/SearchResult/SearchBarDisplay";
+import TagButtonList from "./Search/SearchTag/TagButtonList";
+import Map from "./Map/GoogleMap";
+
+const RandomExplorePageComponent = () => {
+  return (
+    <ExplorePageLayout>
+      <SearchBarDisplay placeholder="어디로 떠나보실래요?" isMap={true} />
+      <TagButtonList />
+      <Map />
+    </ExplorePageLayout>
+  );
+};
+
+export default RandomExplorePageComponent;
