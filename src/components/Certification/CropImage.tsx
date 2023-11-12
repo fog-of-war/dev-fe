@@ -106,7 +106,7 @@ const CropImage = ({ enableCropper, setEnableCropper }: CropState) => {
       {imageSrc && (
         <Button
           css={CropButtonStyle}
-          size="small"
+          size="medium"
           onClick={() => {
             getCroppedImage();
             setEnableCropper(false);
@@ -178,6 +178,6 @@ const CropperContainer = css`
 
 const CropButtonStyle = css`
   position: absolute;
-  bottom: -35px;
+  bottom: -50px;
   right: 0px;
 `;

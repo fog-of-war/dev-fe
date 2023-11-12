@@ -1,10 +1,12 @@
 /** @jsxImportSource @emotion/react */
 
 import { useRef, useState } from "react";
-import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import useConfirmModal from "../../hooks/useConfirmModal";
+import { toast } from "react-hot-toast";
 import { logout } from "../../api/auth";
 import { ProfileSetupData } from "./ProfileSetupComponent";
+import { MODAL_TYPES } from "../../types/types.d";
 
 import BottomLinedInput from "../UI/BottomLinedInput";
 import Button from "../UI/Button";
@@ -25,6 +27,7 @@ const SetupNickName = ({
 }: SetupNickNameProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  const { openModal, closeModal } = useConfirmModal();
 
   const [nickName, setNickName] = useState(profileData.user_nickname);
   const [isFocused, setIsFocused] = useState(false);
@@ -51,15 +54,26 @@ const SetupNickName = ({
   };
 
   const handleClickBackButton = async () => {
-    if (window.confirm("프로필 설정을 취소하시겠습니까?")) {
-      await logout();
-      navigate("/");
-    }
+    closeModal();
+    await logout();
+    navigate("/");
+  };
+
+  const handleBackButtonModal = () => {
+    openModal({
+      modalType: MODAL_TYPES.ALERT,
+      modalProps: {
+        title: "프로필 설정을 취소하시겠습니까?",
+        content: "확인 클릭시 초기 화면으로 돌아갑니다.",
+        confirmText: "확인",
+        onConfirmHandler: handleClickBackButton,
+      },
+    });
   };
 
   return (
     <SetupProfileForm>
-      <SetupProfileHeader onClick={handleClickBackButton} />
+      <SetupProfileHeader onClick={handleBackButtonModal} />
       <div
         css={{
           width: "100%",

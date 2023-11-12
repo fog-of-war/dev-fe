@@ -1,9 +1,11 @@
 import { useState } from "react";
+import useConfirmModal from "../../../hooks/useConfirmModal";
 import styled from "@emotion/styled";
 import CommentItem from "./CommentItem";
 import CommentTextArea from "./CommentTextArea";
 import { PostComment } from "../../../types/types";
 import { deleteComment, editComment } from "../../../api/comment";
+import { MODAL_TYPES } from "../../../types/types.d";
 import toast from "react-hot-toast";
 
 interface CommentListProps {
@@ -16,6 +18,7 @@ const CommentList = ({ commentsData, postId }: CommentListProps) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editCommentText, setEditCommentText] = useState<string>("");
   const [editCommentId, setEditCommentId] = useState<number | null>(null);
+  const { openModal, closeModal } = useConfirmModal();
 
   const handleEditClick = (commentId: number, initialText: string) => {
     if (editCommentId !== commentId) {
@@ -59,20 +62,31 @@ const CommentList = ({ commentsData, postId }: CommentListProps) => {
 
   const handleDeleteClick = (commentId: number) => {
     try {
-      if (window.confirm("해당 댓글을 삭제하시겠습니까?")) {
-        deleteComment(commentId);
-        const newCommentsData = comments.filter(
-          (comment) => comment.comment_id !== commentId
-        );
-        setComments(newCommentsData);
-        toast.success("댓글이 삭제되었습니다.", {
-          id: "delete-comment-success",
-        });
-      }
+      closeModal();
+      deleteComment(commentId);
+      const newCommentsData = comments.filter(
+        (comment) => comment.comment_id !== commentId
+      );
+      setComments(newCommentsData);
+      toast.success("댓글이 삭제되었습니다.", {
+        id: "delete-comment-success",
+      });
     } catch (err: any) {
       console.error("댓글 삭제 오류 :", err);
       toast.error("댓글 삭제에 실패했습니다.", { id: "delete-comment-fail" });
     }
+  };
+
+  const handleDeleteModal = (commentId: number) => {
+    openModal({
+      modalType: MODAL_TYPES.ALERT,
+      modalProps: {
+        title: "해당 댓글을 삭제하시겠습니까?",
+        content: "삭제된 데이터는 복구할 수 없습니다.",
+        confirmText: "삭제",
+        onConfirmHandler: () => handleDeleteClick(commentId),
+      },
+    });
   };
 
   return (
@@ -96,7 +110,7 @@ const CommentList = ({ commentsData, postId }: CommentListProps) => {
             }
             handleEditChange={handleEditChange}
             handleSaveEdit={() => handleSaveEdit(comment.comment_id)}
-            handleDeleteClick={() => handleDeleteClick(comment.comment_id)}
+            handleDeleteClick={() => handleDeleteModal(comment.comment_id)}
           />
         ))}
         <CommentTextArea
