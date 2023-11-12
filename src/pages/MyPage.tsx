@@ -46,7 +46,8 @@ const MyPage = () => {
                   <ProfileActionButton
                     buttonType="logout"
                     onConfirm={handleLogout}
-                    confirmMessage="로그아웃 하시겠습니까?"
+                    message="로그아웃 하시겠습니까?"
+                    confirmMessage="로그아웃시 로그인 페이지로 이동합니다."
                     successMessage="로그아웃이 완료되었습니다."
                     buttonText="로그아웃"
                   />
@@ -54,7 +55,8 @@ const MyPage = () => {
                   <ProfileActionButton
                     buttonType="delete"
                     onConfirm={handleDelete}
-                    confirmMessage="회원 탈퇴시 프로필 데이터가 모두 삭제됩니다."
+                    message="정말 탈퇴 하시겠습니까?"
+                    confirmMessage="탈퇴한 계정은 복구할 수 없습니다."
                     successMessage="회원 탈퇴가 완료되었습니다."
                     buttonText="회원 탈퇴"
                   />

@@ -1,19 +1,21 @@
 /** @jsxImportSource @emotion/react */
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCroppedImage } from "../../context/CropImageContext";
+import useConfirmModal from "../../hooks/useConfirmModal";
 import CropPageHeader from "../../components/Certification/CropPageHeader";
 import CropImage from "../../components/Certification/CropImage";
 import Button from "../../components/UI/Button";
 import { CropImagePageLayout } from "../../styles/styles";
 import { css } from "@emotion/react";
 import { toast } from "react-hot-toast";
+import { MODAL_TYPES } from "../../types/types.d";
 
 const CropImagePage = () => {
   const navigate = useNavigate();
   const [enableCropper, setEnalbeCropper] = useState<boolean>(false);
   const { croppedImage, setCroppedImage } = useCroppedImage();
+  const { openModal, closeModal } = useConfirmModal();
 
   const handleCancleClick = () => {
     if (!croppedImage) {
@@ -23,14 +25,25 @@ const CropImagePage = () => {
       return;
     }
 
-    if (window.confirm("이미지 편집이 초기화됩니다. 정말 취소하시겠어요?")) {
-      setCroppedImage(null);
-      setEnalbeCropper(true);
-      toast.success("이미지 편집을 취소했습니다.", {
-        id: "crop-cancle",
-      });
-      navigate(-1);
-    }
+    closeModal();
+    setCroppedImage(null);
+    setEnalbeCropper(true);
+    toast.success("이미지 편집을 취소했습니다.", {
+      id: "crop-cancle",
+    });
+    navigate(-1);
+  };
+
+  const handleCancleModal = () => {
+    openModal({
+      modalType: MODAL_TYPES.ALERT,
+      modalProps: {
+        title: "정말 취소하시겠어요?",
+        content: "확인 클릭시 이미지 편집이 초기화됩니다.",
+        confirmText: "확인",
+        onConfirmHandler: handleCancleClick,
+      },
+    });
   };
 
   const handleSelectClick = () => {
@@ -66,7 +79,7 @@ const CropImagePage = () => {
         >
           <Button
             variant="secondary"
-            onClick={handleCancleClick}
+            onClick={handleCancleModal}
             css={{
               width: "100%",
             }}

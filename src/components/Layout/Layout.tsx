@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import BottomNavigation from "./BottomNavigation";
+import GlobalModal from "../UI/GlobalModal";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -33,6 +34,7 @@ const Layout = ({ children }: LayoutProps) => {
         }}
       >
         {children}
+        <GlobalModal />
         <BottomNavigation />
       </div>
     </div>
