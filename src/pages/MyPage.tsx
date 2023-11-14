@@ -32,7 +32,7 @@ const MyPage = () => {
     navigate(LINK.AUTH_PAGE);
   };
 
-  const handleConsent = async () => {
+  const handleTerms = async () => {
     window.location.href = 'https://sapienslee.notion.site/8ab55e74cc254589a018ef709dc4ca11';
   };
 
@@ -66,8 +66,8 @@ const MyPage = () => {
                   />
                   <LineDiv />
                   <ProfileActionButton
-                    buttonType="consent"
-                    onConfirm={handleConsent}
+                    buttonType="terms"
+                    onConfirm={handleTerms}
                     message="개인정보처리약관으로 이동하시겠습니까?"
                     confirmMessage=""
                     successMessage=""
