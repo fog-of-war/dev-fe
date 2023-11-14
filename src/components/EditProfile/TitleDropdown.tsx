@@ -147,7 +147,7 @@ const TitleDropdown: React.FC<TitleDropdownProps> = ({
             zIndex: 1,
             borderRadius: "0 0 10px 10px",
             overflowY: "scroll",
-            height: "30vh",
+            maxHeight: "30vh",
             "&::-webkit-scrollbar": {
               width: "8px",
             },
