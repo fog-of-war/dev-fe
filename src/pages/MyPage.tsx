@@ -32,6 +32,10 @@ const MyPage = () => {
     navigate(LINK.AUTH_PAGE);
   };
 
+  const handleConsent = async () => {
+    window.location.href = 'https://sapienslee.notion.site/8ab55e74cc254589a018ef709dc4ca11';
+  };
+
   return (
     <>
       <PageHeader headerTitle="마이페이지" />
@@ -58,7 +62,16 @@ const MyPage = () => {
                     message="정말 탈퇴 하시겠습니까?"
                     confirmMessage="탈퇴한 계정은 복구할 수 없습니다."
                     successMessage="회원 탈퇴가 완료되었습니다."
-                    buttonText="회원 탈퇴"
+                    buttonText="회원탈퇴"
+                  />
+                  <LineDiv />
+                  <ProfileActionButton
+                    buttonType="consent"
+                    onConfirm={handleConsent}
+                    message="개인정보처리약관으로 이동하시겠습니까?"
+                    confirmMessage=""
+                    successMessage=""
+                    buttonText="개인정보처리약관"
                   />
                 </ActionButtonContainer>
               </ProfileActionModal>
@@ -90,7 +103,6 @@ const ActionButtonContainer = styled.div`
   justify-content: flex-end;
   flex-direction: column;
 `;
-
 const Container = styled.div`
   width: 100%;
   display: flex;

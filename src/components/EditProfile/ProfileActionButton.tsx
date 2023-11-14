@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { MODAL_TYPES } from "../../types/types.d";
 
 interface ProfileActionButtonProps {
-  buttonType: "delete" | "logout";
+  buttonType: "delete" | "logout" | "consent";
   onConfirm: () => Promise<void>;
   message: string;
   confirmMessage: string;
@@ -24,7 +24,9 @@ const ProfileActionButton = ({
   const handleButtonClick = async () => {
     closeModal();
     await onConfirm();
-    toast.success(successMessage);
+    if (successMessage) {
+      toast.success(successMessage);
+    }
   };
 
   const handleButtonModal = () => {
@@ -44,7 +46,7 @@ const ProfileActionButton = ({
       size="small"
       variant="secondary"
       onClick={handleButtonModal}
-      style={{ height: "25px", border: "none", borderRadius: "0" }}
+      style={{ height: "25px", border: "none",borderRadius: "0" }}
     >
       {buttonText}
     </Button>
