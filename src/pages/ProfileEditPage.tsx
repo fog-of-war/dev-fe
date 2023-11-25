@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthQuery from "../hooks/useAuth";
 import { toast } from "react-hot-toast";
@@ -11,10 +11,8 @@ import { useMutation, useQueryClient } from "react-query";
 import { QUERY_KEY } from "../react-query/queryKey";
 import { getCurrentUser } from "../api/auth";
 import { LINK } from "../constants/links";
-import { editProfile, getUserEmail } from "../api/user";
+import { editProfile } from "../api/user";
 import TitleDropdown from "../components/EditProfile/TitleDropdown";
-import EmailCertifed from "../components/EditProfile/EmailCertifed";
-import { axiosBase } from "../api/axios";
 
 export interface EditProfileData {
   user_nickname: string;
@@ -35,20 +33,7 @@ const ProfileEditPage = () => {
     setSelectedTitle(newTitle);
   };
   /**-----------------*/
-  
-  /** user-email api 요청 후 state 설정 */
-  const [email, setEmail] = useState("");
-  useEffect(() => {
-    getUserEmail()
-      .then(res => {
-        setEmail(res.user_email); 
-      })
-      .catch(err => {
-        console.error('Error fetching user email:', err);
-      });
-  }, []); 
-  /**-----------------*/
-  
+
   const [editProfileData, setEditProfileData] = useState<EditProfileData>({
     user_nickname: userData?.user_nickname || "",
     user_image_url: userData?.user_image_url || "",
@@ -149,11 +134,7 @@ const ProfileEditPage = () => {
           />
         </>
       )}
-          <EmailCertifed
-            email={email}
-          />
     </div>
-    
   );
 };
 
