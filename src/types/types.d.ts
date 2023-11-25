@@ -263,3 +263,22 @@ export interface BadgeListProps {
   myBadges?: UserData["user_badges"];
   showAllBadges: boolean;
 }
+
+export const MODAL_TYPES = {
+  ALERT: "ALERT",
+};
+export type ModalType = typeof MODAL_TYPES.ALERT;
+
+export interface IAlertModal {
+  modalType: typeof MODAL_TYPES.ALERT;
+  modalOpen: boolean;
+  modalProps: IModalProps & unknown;
+}
+
+export interface IModal {
+  url?: string | number;
+  title?: string;
+  content?: JSX.Element | string;
+  confirmText?: string;
+  onConfirmHandler?: () => void;
+}

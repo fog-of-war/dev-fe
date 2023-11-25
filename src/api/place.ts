@@ -22,3 +22,14 @@ export const getPlacesBySearchQuery = async (
     throw new Error(MESSAGE.SEARCH.ERROR);
   }
 };
+
+// 랜덤 장소 조회
+export const getRandomPlaces = async (x: number, y: number) => {
+  try {
+    const response = await axiosBase.get(`v1/places/current-xy?x=${x}&y=${y}`);
+    return response.data;
+  } catch (error: unknown) {
+    errorLoging(error, "랜덤 장소 조회 실패 : ");
+    throw new Error(MESSAGE.SEARCH.ERROR);
+  }
+};

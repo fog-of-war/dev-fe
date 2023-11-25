@@ -32,6 +32,10 @@ const MyPage = () => {
     navigate(LINK.AUTH_PAGE);
   };
 
+  const handleTerms = async () => {
+    window.location.href = 'https://sapienslee.notion.site/8ab55e74cc254589a018ef709dc4ca11';
+  };
+
   return (
     <>
       <PageHeader headerTitle="마이페이지" />
@@ -46,7 +50,8 @@ const MyPage = () => {
                   <ProfileActionButton
                     buttonType="logout"
                     onConfirm={handleLogout}
-                    confirmMessage="로그아웃 하시겠습니까?"
+                    message="로그아웃 하시겠습니까?"
+                    confirmMessage="로그아웃시 로그인 페이지로 이동합니다."
                     successMessage="로그아웃이 완료되었습니다."
                     buttonText="로그아웃"
                   />
@@ -54,9 +59,19 @@ const MyPage = () => {
                   <ProfileActionButton
                     buttonType="delete"
                     onConfirm={handleDelete}
-                    confirmMessage="회원 탈퇴시 프로필 데이터가 모두 삭제됩니다."
+                    message="정말 탈퇴 하시겠습니까?"
+                    confirmMessage="탈퇴한 계정은 복구할 수 없습니다."
                     successMessage="회원 탈퇴가 완료되었습니다."
-                    buttonText="회원 탈퇴"
+                    buttonText="회원탈퇴"
+                  />
+                  <LineDiv />
+                  <ProfileActionButton
+                    buttonType="terms"
+                    onConfirm={handleTerms}
+                    message="개인정보처리약관으로 이동하시겠습니까?"
+                    confirmMessage=""
+                    successMessage=""
+                    buttonText="개인정보처리약관"
                   />
                 </ActionButtonContainer>
               </ProfileActionModal>
@@ -88,7 +103,6 @@ const ActionButtonContainer = styled.div`
   justify-content: flex-end;
   flex-direction: column;
 `;
-
 const Container = styled.div`
   width: 100%;
   display: flex;

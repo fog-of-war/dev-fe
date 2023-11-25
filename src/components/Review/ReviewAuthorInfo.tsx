@@ -1,12 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
+import useConfirmModal from "../../hooks/useConfirmModal";
+import useAuth from "../../hooks/useAuth";
 import { PostAuthor, PlacePost, PlaceData } from "../../types/types";
 import ReviewAuthor from "./ReviewAuthor";
 import ReviewEditButton from "../UI/ReviewEditButton";
 import { useReviewContext } from "../../context/ReviewContext";
 import { deletePost, updatePost } from "../../api/post";
 import { toast } from "react-hot-toast";
-import useAuth from "../../hooks/useAuth";
+import { MODAL_TYPES } from "../../types/types.d";
 
 interface ReviewAuthorInfoProps {
   postId: PlacePost["post_id"];
@@ -20,30 +22,42 @@ const ReviewAuthorInfo = React.memo(
   ({ authorInfo, isEditing, postId, setIsEditing }: ReviewAuthorInfoProps) => {
     const { updateReview } = useReviewContext();
     const { data: userData, invalidateCurrentUser } = useAuth();
+    const { closeModal, openModal } = useConfirmModal();
 
     const handleEditClick = () => {
       setIsEditing(true);
     };
 
     const handleDeleteClick = async () => {
-      if (window.confirm("정말 삭제하시겠습니까?")) {
-        try {
-          await deletePost(postId);
-          invalidateCurrentUser();
-          window.location.reload();
-          toast.success("게시글이 삭제되었습니다.", {
-            id: "delete-success",
-          });
-        } catch (error: any) {
-          toast.error(
-            error.response?.data?.message ||
-              "게시글 삭제 중 오류가 발생했습니다.",
-            {
-              id: "delete-error",
-            }
-          );
-        }
+      try {
+        closeModal();
+        await deletePost(postId);
+        invalidateCurrentUser();
+        window.location.reload();
+        toast.success("게시글이 삭제되었습니다.", {
+          id: "delete-success",
+        });
+      } catch (error: any) {
+        toast.error(
+          error.response?.data?.message ||
+            "게시글 삭제 중 오류가 발생했습니다.",
+          {
+            id: "delete-error",
+          }
+        );
       }
+    };
+
+    const handleDeleteModal = () => {
+      openModal({
+        modalType: MODAL_TYPES.ALERT,
+        modalProps: {
+          title: "정말 삭제하시겠습니까?",
+          content: "삭제된 데이터는 복구할 수 없습니다.",
+          confirmText: "삭제",
+          onConfirmHandler: handleDeleteClick,
+        },
+      });
     };
 
     const handleCancelClick = () => {
@@ -119,7 +133,7 @@ const ReviewAuthorInfo = React.memo(
                 </ReviewEditButton>
                 <ReviewEditButton
                   buttonType="delete"
-                  onClick={handleDeleteClick}
+                  onClick={handleDeleteModal}
                 >
                   삭제
                 </ReviewEditButton>

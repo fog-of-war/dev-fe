@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import colors from "../../constants/colors";
 import { EditProfileData } from "../../pages/ProfileEditPage";
+import { css } from "@emotion/react";
 
 interface TitleDropdownProps {
   userBadges :any[];
@@ -114,6 +115,7 @@ const TitleDropdown: React.FC<TitleDropdownProps> = ({
               justifyContent: "center",
               transform: isDropdownOpen ? "rotate(180deg)" : "none", // 드롭다운이 열리면 ∧ 로 회전
               transition: "transform 0.3s ease",
+
             }}
           >
             <svg
@@ -134,30 +136,49 @@ const TitleDropdown: React.FC<TitleDropdownProps> = ({
         {/* selector 가 클릭되었을때 나타나는 dropdown*/}
         {isDropdownOpen && (
           <ul
-            css={{
-              position: "absolute",
-              top: "100%",
-              left: 0,
-              width: "100%",
-              listStyle: "none",
-              backgroundColor: "#fff",
-              boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-              zIndex: 1,
-            }}
+          css={{
+            position: "absolute",
+            top: "100%",
+            left: 0,
+            width: "100%",
+            listStyle: "none",
+            backgroundColor: "#fff",
+            boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+            zIndex: 1,
+            borderRadius: "0 0 10px 10px",
+            overflowY: "scroll",
+            maxHeight: "30vh",
+            "&::-webkit-scrollbar": {
+              width: "8px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: "#ccc",
+              borderRadius: "4px", // Chrome 및 Safari에서 둥글게 만들기
+            },
+            "&::-webkit-scrollbar-thumb:hover": {
+              backgroundColor: "#999", // Chrome 및 Safari에서 둥글게 만들기
+            },
+            "&::-webkit-scrollbar-track": {
+              backgroundColor: "transparent", // Chrome 및 Safari에서 둥글게 만들기
+            },
+            scrollbarWidth: "thin", // Firefox에서 둥글게 만들기
+            scrollbarColor: "#ccc transparent", // Firefox에서 둥글게 만들기
+          }}
           >
-            {titles.map((title) => (
+            {titles.map((title, index) => (
               <li
                 key={title}
                 onClick={() => handleTitleSelect(title)}
-                css={{
-                  padding: "12px 12px",
-                  cursor: "pointer",
-                  borderBottom: "1px solid #aaa",
-                  "&:hover": {
-                    backgroundColor: colors.accent, 
-                  },
-                }}
-              >
+                css={css`
+                padding: 12px 12px;
+                cursor: pointer;
+                border-bottom-left-radius: ${index === titles.length - 1 ? '10px' : '0'};
+                border-bottom-right-radius: ${index === titles.length - 1 ? '10px' : '0'};
+                border-bottom: ${index === titles.length - 1 ?  '0': '1px solid rgba(0,0,0,0.1)'};
+                &:hover: {
+                  background-color: colors.accent, 
+                }`}
+             >
                 {title}
               </li>
             ))}
