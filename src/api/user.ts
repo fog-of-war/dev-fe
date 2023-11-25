@@ -20,11 +20,6 @@ export const getUserData = async () => {
   return response.data;
 };
 
-export const getUserEmail = async () => {
-  const response = await axiosBase.get("v1/users/me/email");
-  return response.data;
-};
-
 export const getMyBadge = async () => {
   const response = await axiosBase.get("v1/users/me/badges");
   return response.data;
