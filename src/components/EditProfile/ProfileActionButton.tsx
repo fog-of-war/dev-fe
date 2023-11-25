@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { MODAL_TYPES } from "../../types/types.d";
 
 interface ProfileActionButtonProps {
-  buttonType: "delete" | "logout" | "consent";
+  buttonType: "delete" | "logout" | "terms";
   onConfirm: () => Promise<void>;
   message: string;
   confirmMessage: string;
