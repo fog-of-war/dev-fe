@@ -29,11 +29,22 @@ async def send_github_issue_count_once():
         current_date = datetime.now().strftime("%Y-%m-%d")
 
         for issue in issues:
-            assignee = issue["assignee"]["login"] if issue["assignee"] else "담당자 없음"
-            if assignee in assignee_count:
-                assignee_count[assignee] += 1
+            # 담당자 목록을 가져옵니다.
+            assignees = issue.get("assignees", [])
+            if assignees:
+                for assignee in assignees:
+                    assignee_login = assignee["login"]
+                    if assignee_login in assignee_count:
+                        assignee_count[assignee_login] += 1
+                    else:
+                        assignee_count[assignee_login] = 1
             else:
-                assignee_count[assignee] = 1
+                # 담당자가 없는 경우
+                no_assignee = "담당자 없음"
+                if no_assignee in assignee_count:
+                    assignee_count[no_assignee] += 1
+                else:
+                    assignee_count[no_assignee] = 1
 
         # 디스코드로 보내기
         channel = client.get_channel(int(DISCORD_CHANNEL_ID))
@@ -45,9 +56,12 @@ async def send_github_issue_count_once():
             # Collect issue titles within a single code block
             code_block = "```md\n"
             for issue in issues:
-                if issue["assignee"] and issue["assignee"]["login"] == assignee:
-                    issue_title = issue["title"]
-                    code_block += f"{issue_title}\n"
+                if issue.get("assignees"):
+                    for issue_assignee in issue["assignees"]:
+                        if issue_assignee["login"] == assignee:
+                            issue_title = issue["title"]
+                            code_block += f"{issue_title}\n"
+                            break  # 현재 이슈에 대한 정보를 추가했으므로 루프 중단
             code_block += "```"
             
             message += code_block
