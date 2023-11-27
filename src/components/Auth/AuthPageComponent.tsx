@@ -67,7 +67,7 @@ const AuthPageComponent = () => {
           ))}
         </AuthButtonWrapper>
         <Disclaimer>
-          <p>시작과 동시에 전장의 안개의 <a href="https://sapienslee.notion.site/d577275ccfde45bca6eddc5d03eacdaf">서비스 이용약관</a>, <a href="https://sapienslee.notion.site/9fdfdfc23e234c5cb069a4660dbce5cb">개인정보 수집 및 이용</a>에 동의하게 됩니다.</p>
+          <p>시작과 동시에 전장의 안개의 <a href="https://www.notion.so/sapienslee/Fog-of-War-Post-Management-Policy-61a8630cf0f045bab65d41259ee0270b">서비스 이용약관</a>, <a href="https://www.notion.so/sapienslee/Fog-of-War-Privacy-Policy-9fdfdfc23e234c5cb069a4660dbce5cb">개인정보 수집 및 이용</a>에 동의하게 됩니다.</p>
         </Disclaimer>
       </Container>
     </ImageCoveredLayout>
