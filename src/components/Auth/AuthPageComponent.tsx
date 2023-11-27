@@ -118,17 +118,17 @@ const StyledText = styled.p`
 `;
 
 const Disclaimer = styled.div`
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0; 
   width: 100%;
-  margin: 0 4px; 
+  margin: 4px 4px 4px 4px; 
   // text-align: center;
   z-index: 100; 
   color: white; 
-  padding: 8px 0; 
+  padding: 8px; 
   & > p {
-    width: 35vw; // 너비를 뷰포트 너비의 30%로 설정합니다.
+    width: 100%; // 너비를 뷰포트 너비의 30%로 설정합니다.
     margin: 0 auto; // 자동 마진을 사용하여 가운데 정렬합니다.
     word-wrap: break-word; // 긴 단어가 있을 경우 줄바뀜을 허용합니다.
     overflow-wrap: break-word; // 뷰포트 너비를 넘어가는 내용에 대해 단어를 나누어 줄바뀜을 허용합니다.
