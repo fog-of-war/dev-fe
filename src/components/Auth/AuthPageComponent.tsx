@@ -11,8 +11,8 @@ import axios from "axios";
 import { setAccessTokenToStorage } from "../../utils/tokenStorage";
 
 const OAUTH_ICONS = [
-  { name: "google", icon: "/images/auth/googleIcon.png" },
-  { name: "naver", icon: "/images/auth/naverIcon.png" },
+  { name: "google", icon: "images/auth/google.svg" },
+  { name: "naver", icon: "/images/auth/naver.svg" },
 ];
 
 const AuthPageComponent = () => {
@@ -53,7 +53,7 @@ const AuthPageComponent = () => {
         <AppTitle>Fog of War</AppTitle>
         <Spacing size={45} direction="vertical" />
         <StyledText>SNS계정으로 간편하게 회원가입</StyledText>
-        <Spacing size={20} direction="vertical" />
+        <Spacing size={45} direction="vertical" />
         <AuthButtonWrapper>
           {OAUTH_ICONS.map((oAuth) => (
             <div
@@ -105,6 +105,7 @@ const AppTitle = styled.h1`
 
 const AuthButtonWrapper = styled.div`
   display: flex;
+  flex-direction:column;
   gap: 12px;
 `;
 
