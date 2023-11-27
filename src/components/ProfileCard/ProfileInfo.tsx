@@ -14,7 +14,7 @@ const ProfileInfo = () => {
 
   const goToBadgePage = () => navigate("/badgeList");
 
-  const goToExplorationPage = () => navigate("/explore");
+  const goToExplorationPage = () => navigate("/profile");
 
   return (
     <ProfileInfoLayout>
