@@ -11,8 +11,8 @@ import axios from "axios";
 import { setAccessTokenToStorage } from "../../utils/tokenStorage";
 
 const OAUTH_ICONS = [
-  { name: "google", icon: "/images/auth/googleIcon.png" },
-  { name: "naver", icon: "/images/auth/naverIcon.png" },
+  { name: "google", icon: "images/auth/google.svg" },
+  { name: "naver", icon: "/images/auth/naver.svg" },
 ];
 
 const AuthPageComponent = () => {
@@ -53,7 +53,7 @@ const AuthPageComponent = () => {
         <AppTitle>Fog of War</AppTitle>
         <Spacing size={45} direction="vertical" />
         <StyledText>SNS계정으로 간편하게 회원가입</StyledText>
-        <Spacing size={20} direction="vertical" />
+        <Spacing size={45} direction="vertical" />
         <AuthButtonWrapper>
           {OAUTH_ICONS.map((oAuth) => (
             <div
@@ -66,6 +66,9 @@ const AuthPageComponent = () => {
             </div>
           ))}
         </AuthButtonWrapper>
+        <Disclaimer>
+          <p>시작과 동시에 전장의 안개의 <a href="https://sapienslee.notion.site/d577275ccfde45bca6eddc5d03eacdaf">서비스 이용약관</a>, <a href="https://sapienslee.notion.site/9fdfdfc23e234c5cb069a4660dbce5cb">개인정보 수집 및 이용</a>에 동의하게 됩니다.</p>
+        </Disclaimer>
       </Container>
     </ImageCoveredLayout>
   );
@@ -105,10 +108,33 @@ const AppTitle = styled.h1`
 
 const AuthButtonWrapper = styled.div`
   display: flex;
+  flex-direction:column;
   gap: 12px;
 `;
 
 const StyledText = styled.p`
   font-size: 18px;
   font-weight: 500;
+`;
+
+const Disclaimer = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0; 
+  width: 100%;
+  margin: 0 4px; 
+  // text-align: center;
+  z-index: 100; 
+  color: white; 
+  padding: 8px 0; 
+  & > p {
+    width: 35vw; // 너비를 뷰포트 너비의 30%로 설정합니다.
+    margin: 0 auto; // 자동 마진을 사용하여 가운데 정렬합니다.
+    word-wrap: break-word; // 긴 단어가 있을 경우 줄바뀜을 허용합니다.
+    overflow-wrap: break-word; // 뷰포트 너비를 넘어가는 내용에 대해 단어를 나누어 줄바뀜을 허용합니다.
+    a {
+      color: inherit; // 부모 요소로부터 색상을 상속받습니다.
+      // text-decoration: none; // 밑줄을 없앱니다.
+    }
+  }
 `;
