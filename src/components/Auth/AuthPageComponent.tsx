@@ -11,7 +11,7 @@ import axios from "axios";
 import { setAccessTokenToStorage } from "../../utils/tokenStorage";
 
 const OAUTH_ICONS = [
-  { name: "google", icon: "images/auth/google.svg" },
+  // { name: "google", icon: "images/auth/google.svg" },
   { name: "naver", icon: "/images/auth/naver.svg" },
 ];
 
