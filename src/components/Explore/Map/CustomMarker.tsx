@@ -73,7 +73,11 @@ const CustomMarker: React.FC<CustomMarkerProps & { isMarkerOpen: boolean }> = ({
   let iconSrc = "/images/map/BasicIcon.png";
 
   // 역사 카테고리
-  if (category.includes("역사")) {
+  if (
+    category.includes("역사") ||
+    category.includes("문화") ||
+    category.includes("문화시설")
+  ) {
     overlayBackgroundColor = "#FFFAEE";
     borderTopColor = "#FFFAEE";
     placeNameColor = "#E5A602";
