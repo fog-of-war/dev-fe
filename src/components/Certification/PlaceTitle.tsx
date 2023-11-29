@@ -33,7 +33,11 @@ const PlaceTitle = ({
   const navigateModal = useNavigateModal();
 
   // 역사 카테고리
-  if (category.includes("역사")) {
+  if (
+    category.includes("역사") ||
+    category.includes("문화") ||
+    category.includes("문화시설")
+  ) {
     categoryIcon = "/images/certificationModal/historyIcon.png";
     displayCategory = "역사";
   }
