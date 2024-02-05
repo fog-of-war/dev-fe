@@ -69,7 +69,9 @@ const UploadPage = () => {
         id: "upload-post-success",
       });
 
-      if (response.new_badges) {
+      console.log(response.new_badges);
+
+      if (response.new_badges.length > 0) {
         navigate("/getBadge", { state: { newBadges: response.new_badges } });
       } else {
         navigate("/posting_complete");
