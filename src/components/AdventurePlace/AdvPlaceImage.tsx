@@ -30,9 +30,8 @@ const AdvPlaceImage = ({ post_image_url, place_name }: AdvPlaceImageProps) => {
 export default AdvPlaceImage;
 
 const ImageContainer = styled.div`
-  width: 110px;
-  height: 110px;
-  display: flex;
+  width: 100%;
+  height: 100%;
   position: relative;
 `;
 

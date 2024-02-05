@@ -48,7 +48,7 @@ const AdvPlaceList = () => {
           />
         )}
         {uniquePlaces.map((place) => (
-          <div
+          <AdvPlaceItem
             key={place.post_id}
             onClick={() => handlePlaceClick(place.post_place_id)}
           >
@@ -57,7 +57,7 @@ const AdvPlaceList = () => {
               post_image_url={place.post_image_url}
               place_name={place.post_place.place_name}
             />
-          </div>
+          </AdvPlaceItem>
         ))}
       </AdvPlaceListLayout>
     </>
@@ -72,5 +72,13 @@ const AdvPlaceListLayout = styled.div`
   justify-content: flex-start;
   width: 100%;
   flex-wrap: wrap;
-  gap: 22px;
+  gap: 15px;
+`;
+
+const AdvPlaceItem = styled.div`
+  width: 30%;
+
+  &:nth-of-type(4n) {
+    margin-left: 2px;
+  }
 `;
